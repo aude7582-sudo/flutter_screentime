@@ -58,7 +58,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:text="Settings"
+            android:text="Fermer"
+            android:textAllCaps="false"
+            android:textSize="16sp"
+            android:background="@android:color/transparent"
             android:visibility="gone" />
     </LinearLayout>
 </FrameLayout>

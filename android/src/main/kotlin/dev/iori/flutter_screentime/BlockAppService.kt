@@ -93,9 +93,48 @@ class BlockAppService : Service() {
             } else {
                 WindowManager.LayoutParams.TYPE_PHONE
             },
-            WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
+            WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN or
+                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
             android.graphics.PixelFormat.TRANSLUCENT,
-        )
+        ).apply {
+            // Léxi : l'écran couvre aussi la barre du haut (sinon on voit
+            // encore un bout de la vidéo).
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                layoutInDisplayCutoutMode =
+                    WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
+            }
+        }
+    }
+
+    // Léxi : après avoir renvoyé l'appli bloquée à l'accueil, on garde
+    // l'écran du renard jusqu'à ce que la personne touche un bouton.
+    private var gardeEcran = false
+    private var dernierRenvoi = 0L
+
+    private fun renvoyerAccueil() {
+        val maintenant = System.currentTimeMillis()
+        if (maintenant - dernierRenvoi < 1500) return
+        dernierRenvoi = maintenant
+        try {
+            startActivity(
+                Intent(Intent.ACTION_MAIN).apply {
+                    addCategory(Intent.CATEGORY_HOME)
+                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                },
+            )
+        } catch (_: Exception) {
+        }
+    }
+
+    private fun accueilDuTelephone(): String? =
+        packageManager.resolveActivity(
+            Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME),
+            PackageManager.MATCH_DEFAULT_ONLY,
+        )?.activityInfo?.packageName
+
+    private fun fermerEcran() {
+        gardeEcran = false
+        removeOverlay()
     }
 
     private val pollingRunnable =
@@ -119,11 +158,21 @@ class BlockAppService : Service() {
                     !isDeviceLocked() && isBlockedPackageInForeground()
 
                 if (shouldDisplayOverlay) {
-                    showOverlay()
-                    // Redemande le son à chaque passage : si l'appli bloquée
-                    // relance sa vidéo, elle est remise en pause.
+                    // L'appli bloquée part en arrière-plan : sa vidéo et
+                    // son son s'arrêtent.
+                    renvoyerAccueil()
                     prendreLeSon()
+                    gardeEcran = true
+                    showOverlay()
+                } else if (gardeEcran && !isDeviceLocked()) {
+                    val devant = lastForegroundPackage()
+                    if (devant == null || devant == accueilDuTelephone()) {
+                        showOverlay()
+                    } else {
+                        fermerEcran()
+                    }
                 } else {
+                    gardeEcran = false
                     removeOverlay()
                 }
 
@@ -181,19 +230,18 @@ class BlockAppService : Service() {
             val label = configuration.primaryButtonLabel
             visibility = if (label.isNullOrBlank()) View.GONE else View.VISIBLE
             text = label
-            setOnClickListener { openHostApp() }
+            setOnClickListener {
+                fermerEcran()
+                openHostApp()
+            }
         }
         view.findViewById<Button>(R.id.block_overlay_secondary_button).apply {
+            // Léxi : bouton « Fermer » pour revenir à l'accueil du téléphone.
             val label = configuration.secondaryButtonLabel
-            visibility = if (label.isNullOrBlank()) View.GONE else View.VISIBLE
-            text = label
-            setOnClickListener {
-                startActivity(
-                    Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS).apply {
-                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    },
-                )
-            }
+            visibility = View.VISIBLE
+            text = if (label.isNullOrBlank()) "Fermer" else label
+            setTextColor(configuration.textColor)
+            setOnClickListener { fermerEcran() }
         }
     }
 
