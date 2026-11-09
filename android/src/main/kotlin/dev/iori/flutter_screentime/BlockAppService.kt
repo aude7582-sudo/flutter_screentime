@@ -11,6 +11,9 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
+import android.media.AudioAttributes
+import android.media.AudioFocusRequest
+import android.media.AudioManager
 import android.os.Build
 import android.os.Handler
 import android.os.IBinder
@@ -34,6 +37,52 @@ class BlockAppService : Service() {
 
     private var overlayView: View? = null
     private var isOverlayDisplayed = false
+
+    // Léxi : coupe le son de l'appli bloquée (TikTok, YouTube…) pendant
+    // que l'écran de blocage est affiché.
+    private val audioManager by lazy {
+        getSystemService(Context.AUDIO_SERVICE) as AudioManager
+    }
+    private val focusListener = AudioManager.OnAudioFocusChangeListener { }
+    private var focusRequest: AudioFocusRequest? = null
+
+    private fun prendreLeSon() {
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                val req = focusRequest ?: AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN)
+                    .setAudioAttributes(
+                        AudioAttributes.Builder()
+                            .setUsage(AudioAttributes.USAGE_MEDIA)
+                            .setContentType(AudioAttributes.CONTENT_TYPE_MOVIE)
+                            .build(),
+                    )
+                    .setOnAudioFocusChangeListener(focusListener)
+                    .build()
+                focusRequest = req
+                audioManager.requestAudioFocus(req)
+            } else {
+                @Suppress("DEPRECATION")
+                audioManager.requestAudioFocus(
+                    focusListener,
+                    AudioManager.STREAM_MUSIC,
+                    AudioManager.AUDIOFOCUS_GAIN,
+                )
+            }
+        } catch (_: Exception) {
+        }
+    }
+
+    private fun rendreLeSon() {
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                focusRequest?.let { audioManager.abandonAudioFocusRequest(it) }
+            } else {
+                @Suppress("DEPRECATION")
+                audioManager.abandonAudioFocus(focusListener)
+            }
+        } catch (_: Exception) {
+        }
+    }
 
     private val overlayParams by lazy {
         WindowManager.LayoutParams(
@@ -71,6 +120,9 @@ class BlockAppService : Service() {
 
                 if (shouldDisplayOverlay) {
                     showOverlay()
+                    // Redemande le son à chaque passage : si l'appli bloquée
+                    // relance sa vidéo, elle est remise en pause.
+                    prendreLeSon()
                 } else {
                     removeOverlay()
                 }
@@ -88,8 +140,8 @@ class BlockAppService : Service() {
     ): Int {
         ensureNotificationChannel()
         val notification = NotificationCompat.Builder(this, channelId)
-            .setContentTitle("Screen Time blocking")
-            .setContentText("Blocking service is active.")
+            .setContentTitle("Léxi veille sur ta concentration 🦊")
+            .setContentText("Le blocage de tes applis est actif.")
             .setSmallIcon(android.R.drawable.ic_lock_lock)
             .build()
 
@@ -149,7 +201,7 @@ class BlockAppService : Service() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 channelId,
-                "Screen Time blocking",
+                "Blocage Léxi",
                 NotificationManager.IMPORTANCE_LOW,
             )
             val manager = getSystemService(NotificationManager::class.java)
@@ -171,6 +223,7 @@ class BlockAppService : Service() {
         if (isOverlayDisplayed && view.windowToken != null) {
             windowManager.removeView(view)
             isOverlayDisplayed = false
+            rendreLeSon()
         }
     }
 
