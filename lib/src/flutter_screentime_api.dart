@@ -115,4 +115,22 @@ class FlutterScreentime {
   Future<void> stopBlocking() {
     return _channel.invokeMethod<void>('stopBlocking');
   }
+
+  /// Léxi : affiche une notification (marche aussi en arrière-plan).
+  Future<bool> lexiNotifier(int id, String titre, String texte) async {
+    final ok = await _channel.invokeMethod<bool>(
+        'lexiNotifier', {'id': id, 'titre': titre, 'texte': texte});
+    return ok ?? false;
+  }
+
+  /// Léxi : les notifications sont-elles autorisées ?
+  Future<bool> lexiNotificationsOk() async {
+    return await _channel.invokeMethod<bool>('lexiNotificationsOk') ?? false;
+  }
+
+  /// Léxi : demande l'autorisation d'envoyer des notifications (Android 13+).
+  Future<bool> lexiDemanderNotifications() async {
+    return await _channel.invokeMethod<bool>('lexiDemanderNotifications') ??
+        false;
+  }
 }

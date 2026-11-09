@@ -2,6 +2,12 @@ package dev.iori.flutter_screentime
 
 import android.app.Activity
 import android.app.AppOpsManager
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.pm.PackageManager
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -109,7 +115,73 @@ class FlutterScreentimePlugin :
                 )
                 result.success(null)
             }
+            // Léxi : notifications de rappel (leçon, début du blocage…).
+            "lexiNotifier" -> {
+                val args = call.arguments as? Map<*, *>
+                val ok = lexiNotifier(
+                    (args?.get("id") as? Number)?.toInt() ?: 100,
+                    args?.get("titre") as? String ?: "Léxi",
+                    args?.get("texte") as? String ?: "",
+                )
+                result.success(ok)
+            }
+            "lexiNotificationsOk" -> result.success(
+                NotificationManagerCompat.from(applicationContext).areNotificationsEnabled(),
+            )
+            "lexiDemanderNotifications" -> {
+                val a = activity
+                if (Build.VERSION.SDK_INT >= 33 && a != null &&
+                    a.checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS) !=
+                    PackageManager.PERMISSION_GRANTED
+                ) {
+                    a.requestPermissions(
+                        arrayOf(android.Manifest.permission.POST_NOTIFICATIONS),
+                        7311,
+                    )
+                }
+                result.success(
+                    NotificationManagerCompat.from(applicationContext).areNotificationsEnabled(),
+                )
+            }
             else -> result.notImplemented()
+        }
+    }
+
+    private fun lexiNotifier(id: Int, titre: String, texte: String): Boolean {
+        val ctx = applicationContext
+        if (!NotificationManagerCompat.from(ctx).areNotificationsEnabled()) return false
+        val canal = "lexi_rappels"
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val manager = ctx.getSystemService(NotificationManager::class.java)
+            manager.createNotificationChannel(
+                NotificationChannel(canal, "Rappels Léxi", NotificationManager.IMPORTANCE_DEFAULT),
+            )
+        }
+        val ouvrir = ctx.packageManager.getLaunchIntentForPackage(ctx.packageName)?.apply {
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        }
+        val pi = ouvrir?.let {
+            PendingIntent.getActivity(
+                ctx,
+                id,
+                it,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
+            )
+        }
+        val notif = NotificationCompat.Builder(ctx, canal)
+            .setSmallIcon(android.R.drawable.ic_popup_reminder)
+            .setContentTitle(titre)
+            .setContentText(texte)
+            .setStyle(NotificationCompat.BigTextStyle().bigText(texte))
+            .setAutoCancel(true)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .apply { if (pi != null) setContentIntent(pi) }
+            .build()
+        return try {
+            NotificationManagerCompat.from(ctx).notify(id, notif)
+            true
+        } catch (_: SecurityException) {
+            false
         }
     }
 
