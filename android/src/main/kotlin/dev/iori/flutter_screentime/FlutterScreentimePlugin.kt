@@ -110,10 +110,24 @@ class FlutterScreentimePlugin :
                     .edit()
                     .putBoolean(ScreenTimePreferences.keyBlockingEnabled, false)
                     .apply()
-                applicationContext.stopService(
-                    Intent(applicationContext, BlockAppService::class.java),
-                )
+                lexiServiceSelonEtat()
                 result.success(null)
+            }
+            // Léxi : rappel « 15 minutes de TikTok aujourd'hui ».
+            "lexiVeille" -> {
+                val args = call.arguments as? Map<*, *>
+                val actif = args?.get("actif") as? Boolean ?: false
+                val minutes = (args?.get("minutes") as? Number)?.toInt() ?: 15
+                val paquets = (args?.get("packages") as? List<*>)
+                    ?.filterIsInstance<String>()?.toSet() ?: emptySet()
+                ScreenTimePreferences.prefs(applicationContext)
+                    .edit()
+                    .putBoolean(ScreenTimePreferences.keyVeilleEnabled, actif)
+                    .putInt(ScreenTimePreferences.keyVeilleMinutes, minutes)
+                    .putStringSet(ScreenTimePreferences.keyVeillePackages, paquets)
+                    .apply()
+                lexiServiceSelonEtat()
+                result.success(currentAuthorizationStatus() == "approved")
             }
             // Léxi : notifications de rappel (leçon, début du blocage…).
             "lexiNotifier" -> {
@@ -144,6 +158,24 @@ class FlutterScreentimePlugin :
                 )
             }
             else -> result.notImplemented()
+        }
+    }
+
+    // Léxi : le service tourne si le blocage OU la veille est actif.
+    private fun lexiServiceSelonEtat() {
+        val ctx = applicationContext
+        val intent = Intent(ctx, BlockAppService::class.java)
+        if (ScreenTimePreferences.blocageActif(ctx) || ScreenTimePreferences.veilleActive(ctx)) {
+            try {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    ctx.startForegroundService(intent)
+                } else {
+                    ctx.startService(intent)
+                }
+            } catch (_: Exception) {
+            }
+        } else {
+            ctx.stopService(intent)
         }
     }
 

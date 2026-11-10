@@ -24,6 +24,23 @@ internal object ScreenTimePreferences {
     const val keyBlockingEnabled = "blocking_enabled"
     const val keyBlockedPackages = "blocked_packages"
 
+    // Léxi : rappel après X minutes sur une appli (hors blocage).
+    const val keyVeilleEnabled = "lexi_veille"
+    const val keyVeilleMinutes = "lexi_veille_minutes"
+    const val keyVeillePackages = "lexi_veille_packages"
+
+    fun veilleActive(context: Context): Boolean =
+        prefs(context).getBoolean(keyVeilleEnabled, false)
+
+    fun blocageActif(context: Context): Boolean =
+        prefs(context).getBoolean(keyBlockingEnabled, false)
+
+    fun veillePackages(context: Context): Set<String> =
+        prefs(context).getStringSet(keyVeillePackages, emptySet()) ?: emptySet()
+
+    fun veilleMinutes(context: Context): Int =
+        prefs(context).getInt(keyVeilleMinutes, 15).coerceAtLeast(1)
+
     fun prefs(context: Context) =
         context.getSharedPreferences(preferencesName, Context.MODE_PRIVATE)
 

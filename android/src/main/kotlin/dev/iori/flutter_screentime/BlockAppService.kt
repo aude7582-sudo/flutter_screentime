@@ -11,6 +11,12 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
+import android.graphics.Color
+import android.graphics.Typeface
+import android.graphics.drawable.GradientDrawable
+import android.view.Gravity
+import android.widget.LinearLayout
+import java.util.Calendar
 import android.media.AudioAttributes
 import android.media.AudioFocusRequest
 import android.media.AudioManager
@@ -140,20 +146,33 @@ class BlockAppService : Service() {
     private val pollingRunnable =
         object : Runnable {
             override fun run() {
-                if (!ScreenTimePreferences.prefs(this@BlockAppService)
-                        .getBoolean(ScreenTimePreferences.keyBlockingEnabled, false)
-                ) {
+                val ctx = this@BlockAppService
+                val blocage = ScreenTimePreferences.blocageActif(ctx)
+                val veille = ScreenTimePreferences.veilleActive(ctx)
+                if (!blocage && !veille) {
                     removeOverlay()
+                    cacherCarte()
                     stopSelf()
                     return
                 }
+                majNotification(blocage)
 
                 if (!hasOverlayPermission() || !hasUsageStatsPermission()) {
                     removeOverlay()
+                    cacherCarte()
                     handler.postDelayed(this, 1000)
                     return
                 }
 
+                if (!blocage) {
+                    gardeEcran = false
+                    removeOverlay()
+                    verifierVeille()
+                    handler.postDelayed(this, 1000)
+                    return
+                }
+
+                cacherCarte()
                 val shouldDisplayOverlay =
                     !isDeviceLocked() && isBlockedPackageInForeground()
 
@@ -188,13 +207,9 @@ class BlockAppService : Service() {
         startId: Int,
     ): Int {
         ensureNotificationChannel()
-        val notification = NotificationCompat.Builder(this, channelId)
-            .setContentTitle("Léxi veille sur ta concentration 🦊")
-            .setContentText("Le blocage de tes applis est actif.")
-            .setSmallIcon(android.R.drawable.ic_lock_lock)
-            .build()
-
-        startForeground(notificationId, notification)
+        dernierModeNotif = null
+        startForeground(notificationId, construireNotification(ScreenTimePreferences.blocageActif(this)))
+        dernierModeNotif = ScreenTimePreferences.blocageActif(this)
 
         if (overlayView == null) {
             overlayView = LayoutInflater.from(this).inflate(R.layout.block_overlay, null)
@@ -210,6 +225,7 @@ class BlockAppService : Service() {
     override fun onDestroy() {
         handler.removeCallbacksAndMessages(null)
         removeOverlay()
+        cacherCarte()
         super.onDestroy()
     }
 
@@ -348,5 +364,238 @@ class BlockAppService : Service() {
         val launchIntent = packageManager.getLaunchIntentForPackage(packageName) ?: return
         launchIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(launchIntent)
+    }
+
+    // ---------------------------------------------------------------------
+    // Léxi : veille (« 15 minutes de TikTok aujourd'hui »)
+    // ---------------------------------------------------------------------
+    private var dernierModeNotif: Boolean? = null
+
+    private fun construireNotification(blocage: Boolean) =
+        NotificationCompat.Builder(this, channelId)
+            .setContentTitle("Léxi veille sur ta concentration 🦊")
+            .setContentText(
+                if (blocage) "Le blocage de tes applis est actif."
+                else "Léxi te prévient quand tu passes trop de temps sur une appli.",
+            )
+            .setSmallIcon(android.R.drawable.ic_lock_lock)
+            .build()
+
+    private fun majNotification(blocage: Boolean) {
+        if (dernierModeNotif == blocage) return
+        dernierModeNotif = blocage
+        try {
+            val manager = getSystemService(NotificationManager::class.java)
+            manager.notify(notificationId, construireNotification(blocage))
+        } catch (_: Exception) {
+        }
+    }
+
+    private var carteView: View? = null
+    private var carteAffichee = false
+    private var cartePaquet: String? = null
+    private var compteurVeille = 0
+
+    private fun debutDuJour(): Long =
+        Calendar.getInstance().apply {
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }.timeInMillis
+
+    private fun cleJour(): String {
+        val c = Calendar.getInstance()
+        return "${c.get(Calendar.YEAR)}-${c.get(Calendar.DAY_OF_YEAR)}"
+    }
+
+    /** Minutes passées aujourd'hui sur [paquet] (au premier plan). */
+    private fun minutesAujourdhui(paquet: String): Long {
+        val usm = getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
+        val fin = System.currentTimeMillis()
+        val events = usm.queryEvents(debutDuJour(), fin)
+        var total = 0L
+        var debut = -1L
+        val e = UsageEvents.Event()
+        while (events.hasNextEvent()) {
+            events.getNextEvent(e)
+            if (e.packageName != paquet) {
+                if (e.eventType == UsageEvents.Event.MOVE_TO_FOREGROUND && debut >= 0) {
+                    total += e.timeStamp - debut
+                    debut = -1L
+                }
+                continue
+            }
+            when (e.eventType) {
+                UsageEvents.Event.MOVE_TO_FOREGROUND -> if (debut < 0) debut = e.timeStamp
+                UsageEvents.Event.MOVE_TO_BACKGROUND -> if (debut >= 0) {
+                    total += e.timeStamp - debut
+                    debut = -1L
+                }
+            }
+        }
+        if (debut >= 0) total += fin - debut
+        return total / 60_000L
+    }
+
+    private fun nomAppli(paquet: String): String =
+        try {
+            packageManager.getApplicationLabel(
+                packageManager.getApplicationInfo(paquet, 0),
+            ).toString()
+        } catch (_: Exception) {
+            paquet
+        }
+
+    private fun verifierVeille() {
+        if (isDeviceLocked()) {
+            cacherCarte()
+            return
+        }
+        val devant = lastForegroundPackage()
+        val surveilles = ScreenTimePreferences.veillePackages(this)
+        if (devant == null || devant == packageName || !surveilles.contains(devant)) {
+            cacherCarte()
+            compteurVeille = 0
+            return
+        }
+        if (carteAffichee) {
+            if (cartePaquet != devant) cacherCarte() else return
+        }
+        // On recalcule le temps toutes les 5 secondes seulement.
+        compteurVeille++
+        if (compteurVeille % 5 != 1) return
+
+        val limite = ScreenTimePreferences.veilleMinutes(this)
+        val minutes = minutesAujourdhui(devant)
+        val prefs = ScreenTimePreferences.prefs(this)
+        val cle = "lexi_veille_prochain_${cleJour()}_$devant"
+        val prochain = prefs.getLong(cle, limite.toLong())
+        if (minutes >= prochain) {
+            prefs.edit().putLong(cle, (minutes / limite + 1) * limite).apply()
+            montrerCarte(devant, minutes)
+        }
+    }
+
+    private fun dp(v: Int): Int = (v * resources.displayMetrics.density).toInt()
+
+    private fun montrerCarte(paquet: String, minutes: Long) {
+        cacherCarte()
+        val orange = Color.parseColor("#F97316")
+        val nom = nomAppli(paquet)
+
+        val carte = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(dp(20), dp(18), dp(20), dp(14))
+            background = GradientDrawable().apply {
+                setColor(Color.WHITE)
+                cornerRadius = dp(26).toFloat()
+            }
+            elevation = dp(12).toFloat()
+        }
+        val haut = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            gravity = Gravity.CENTER_VERTICAL
+        }
+        haut.addView(
+            android.widget.ImageView(this).apply {
+                setImageResource(R.drawable.lexi_renard_bloque)
+                scaleType = android.widget.ImageView.ScaleType.FIT_CENTER
+            },
+            LinearLayout.LayoutParams(dp(54), dp(54)).apply { rightMargin = dp(14) },
+        )
+        val textes = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
+        textes.addView(
+            TextView(this).apply {
+                text = "$minutes minutes de $nom aujourd'hui"
+                setTextColor(Color.parseColor("#1E1640"))
+                textSize = 17f
+                setTypeface(typeface, Typeface.BOLD)
+            },
+        )
+        textes.addView(
+            TextView(this).apply {
+                text = "Continuer, ou t'arrêter ici ?"
+                setTextColor(Color.parseColor("#6B6490"))
+                textSize = 14f
+                setPadding(0, dp(3), 0, 0)
+            },
+        )
+        haut.addView(textes, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f))
+        carte.addView(haut)
+
+        val boutons = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            gravity = Gravity.END or Gravity.CENTER_VERTICAL
+            setPadding(0, dp(14), 0, 0)
+        }
+        fun bouton(t: String, plein: Boolean, action: () -> Unit) =
+            TextView(this).apply {
+                text = t
+                textSize = 15f
+                setTypeface(typeface, Typeface.BOLD)
+                gravity = Gravity.CENTER
+                setPadding(dp(18), dp(11), dp(18), dp(11))
+                if (plein) {
+                    setTextColor(Color.WHITE)
+                    background = GradientDrawable().apply {
+                        setColor(orange)
+                        cornerRadius = dp(24).toFloat()
+                    }
+                } else {
+                    setTextColor(Color.parseColor("#1E1640"))
+                }
+                setOnClickListener { action() }
+            }
+        boutons.addView(
+            bouton("3 mots 🦊", false) {
+                cacherCarte()
+                openHostApp()
+            },
+        )
+        boutons.addView(bouton("Continuer", false) { cacherCarte() })
+        boutons.addView(
+            bouton("Arrêter ici", true) {
+                cacherCarte()
+                dernierRenvoi = 0L
+                renvoyerAccueil()
+            },
+        )
+        carte.addView(boutons)
+
+        val conteneur = android.widget.FrameLayout(this).apply {
+            setPadding(dp(14), dp(14), dp(14), dp(22))
+            addView(carte)
+        }
+        val params = WindowManager.LayoutParams(
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.WRAP_CONTENT,
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
+            } else {
+                WindowManager.LayoutParams.TYPE_PHONE
+            },
+            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
+                WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL,
+            android.graphics.PixelFormat.TRANSLUCENT,
+        ).apply { gravity = Gravity.BOTTOM }
+        try {
+            windowManager.addView(conteneur, params)
+            carteView = conteneur
+            carteAffichee = true
+            cartePaquet = paquet
+        } catch (_: Exception) {
+        }
+    }
+
+    private fun cacherCarte() {
+        val v = carteView ?: return
+        try {
+            if (v.windowToken != null) windowManager.removeView(v)
+        } catch (_: Exception) {
+        }
+        carteView = null
+        carteAffichee = false
+        cartePaquet = null
     }
 }

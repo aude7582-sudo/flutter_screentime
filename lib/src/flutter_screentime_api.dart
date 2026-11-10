@@ -133,4 +133,19 @@ class FlutterScreentime {
     return await _channel.invokeMethod<bool>('lexiDemanderNotifications') ??
         false;
   }
+
+  /// Léxi : rappel quand on passe [minutes] minutes par jour sur une des
+  /// applis [packages] (en dehors des heures de blocage).
+  Future<bool> lexiVeille({
+    required bool actif,
+    int minutes = 15,
+    List<String> packages = const [],
+  }) async {
+    return await _channel.invokeMethod<bool>('lexiVeille', {
+          'actif': actif,
+          'minutes': minutes,
+          'packages': packages,
+        }) ??
+        false;
+  }
 }

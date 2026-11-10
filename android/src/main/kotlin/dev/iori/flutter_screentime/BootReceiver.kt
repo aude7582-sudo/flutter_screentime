@@ -13,8 +13,8 @@ class BootReceiver : BroadcastReceiver() {
             return
         }
 
-        if (!ScreenTimePreferences.prefs(context)
-                .getBoolean(ScreenTimePreferences.keyBlockingEnabled, false)
+        if (!ScreenTimePreferences.blocageActif(context) &&
+            !ScreenTimePreferences.veilleActive(context)
         ) {
             return
         }
