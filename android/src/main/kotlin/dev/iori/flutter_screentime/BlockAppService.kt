@@ -248,6 +248,7 @@ class BlockAppService : Service() {
             text = label
             setOnClickListener {
                 fermerEcran()
+                ScreenTimePreferences.demanderOuverture(this@BlockAppService, "defi")
                 openHostApp()
             }
         }
@@ -550,6 +551,7 @@ class BlockAppService : Service() {
         boutons.addView(
             bouton("3 mots 🦊", false) {
                 cacherCarte()
+                ScreenTimePreferences.demanderOuverture(this, "lecon")
                 openHostApp()
             },
         )

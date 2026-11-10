@@ -148,4 +148,10 @@ class FlutterScreentime {
         }) ??
         false;
   }
+
+  /// Léxi : page demandée en ouvrant l'appli depuis l'écran de blocage, la
+  /// carte de rappel ou une notification : 'defi', 'lecon' ou '' (rien).
+  Future<String> lexiOuverture() async {
+    return await _channel.invokeMethod<String>('lexiOuverture') ?? '';
+  }
 }

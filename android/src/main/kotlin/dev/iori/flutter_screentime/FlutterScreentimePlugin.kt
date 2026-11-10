@@ -39,6 +39,20 @@ class FlutterScreentimePlugin :
 
     override fun onAttachedToActivity(binding: ActivityPluginBinding) {
         activity = binding.activity
+        lireIntention(binding.activity.intent)
+        binding.addOnNewIntentListener { intent ->
+            lireIntention(intent)
+            false
+        }
+    }
+
+    // Léxi : une notification de Léxi peut demander d'ouvrir le défi ou la leçon.
+    private fun lireIntention(intent: Intent?) {
+        val cible = intent?.getStringExtra("lexi_ouvrir") ?: return
+        if (cible.isNotEmpty()) {
+            ScreenTimePreferences.demanderOuverture(applicationContext, cible)
+            intent.removeExtra("lexi_ouvrir")
+        }
     }
 
     override fun onDetachedFromActivityForConfigChanges() {
@@ -139,6 +153,9 @@ class FlutterScreentimePlugin :
                 )
                 result.success(ok)
             }
+            "lexiOuverture" -> result.success(
+                ScreenTimePreferences.lireOuverture(applicationContext),
+            )
             "lexiNotificationsOk" -> result.success(
                 NotificationManagerCompat.from(applicationContext).areNotificationsEnabled(),
             )
@@ -191,6 +208,11 @@ class FlutterScreentimePlugin :
         }
         val ouvrir = ctx.packageManager.getLaunchIntentForPackage(ctx.packageName)?.apply {
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            // 201 / 202 : blocage → défi ; 203 : rappel de leçon → leçon.
+            when (id) {
+                201, 202 -> putExtra("lexi_ouvrir", "defi")
+                203 -> putExtra("lexi_ouvrir", "lecon")
+            }
         }
         val pi = ouvrir?.let {
             PendingIntent.getActivity(

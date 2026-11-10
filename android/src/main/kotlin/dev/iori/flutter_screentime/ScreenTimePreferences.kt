@@ -38,6 +38,23 @@ internal object ScreenTimePreferences {
     fun veillePackages(context: Context): Set<String> =
         prefs(context).getStringSet(keyVeillePackages, emptySet()) ?: emptySet()
 
+    // Léxi : quelle page ouvrir quand on arrive depuis l'écran de blocage,
+    // la carte de rappel ou une notification ('defi' ou 'lecon').
+    fun demanderOuverture(context: Context, cible: String) {
+        prefs(context).edit()
+            .putString("lexi_ouvrir", cible)
+            .putLong("lexi_ouvrir_t", System.currentTimeMillis())
+            .apply()
+    }
+
+    fun lireOuverture(context: Context): String {
+        val p = prefs(context)
+        val cible = p.getString("lexi_ouvrir", "") ?: ""
+        val t = p.getLong("lexi_ouvrir_t", 0L)
+        p.edit().remove("lexi_ouvrir").remove("lexi_ouvrir_t").apply()
+        return if (cible.isNotEmpty() && System.currentTimeMillis() - t < 5 * 60_000L) cible else ""
+    }
+
     fun veilleMinutes(context: Context): Int =
         prefs(context).getInt(keyVeilleMinutes, 15).coerceAtLeast(1)
 
