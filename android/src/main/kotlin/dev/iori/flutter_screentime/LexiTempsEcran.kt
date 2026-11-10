@@ -52,6 +52,7 @@ internal object LexiTempsEcran {
             val debut = c.timeInMillis
             val fin = minOf(debut + 24L * 3600_000L, maintenant)
             val jour = String.format(
+                java.util.Locale.US,
                 "%04d-%02d-%02d",
                 c.get(Calendar.YEAR),
                 c.get(Calendar.MONTH) + 1,
