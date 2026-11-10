@@ -153,6 +153,20 @@ class FlutterScreentimePlugin :
                 )
                 result.success(ok)
             }
+            "lexiTempsEcran" -> {
+                val jours = ((call.arguments as? Map<*, *>)?.get("jours") as? Number)?.toInt() ?: 14
+                val ctx = applicationContext
+                Thread {
+                    val donnees = try {
+                        LexiTempsEcran.calculer(ctx, jours)
+                    } catch (_: Exception) {
+                        null
+                    }
+                    android.os.Handler(android.os.Looper.getMainLooper()).post {
+                        result.success(donnees)
+                    }
+                }.start()
+            }
             "lexiOuverture" -> result.success(
                 ScreenTimePreferences.lireOuverture(applicationContext),
             )

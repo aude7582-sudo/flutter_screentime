@@ -154,4 +154,20 @@ class FlutterScreentime {
   Future<String> lexiOuverture() async {
     return await _channel.invokeMethod<String>('lexiOuverture') ?? '';
   }
+
+  /// Léxi : temps d'écran des [jours] derniers jours (du plus ancien au plus
+  /// récent). Chaque jour : {'jour': 'AAAA-MM-JJ', 'apps': [{'p': paquet,
+  /// 'n': nom, 's': secondes, 'o': ouvertures}]}. null si non autorisé.
+  Future<List<Map<String, dynamic>>?> lexiTempsEcran({int jours = 14}) async {
+    final r = await _channel.invokeMethod<List<dynamic>>(
+        'lexiTempsEcran', {'jours': jours});
+    if (r == null) return null;
+    return r.map((j) {
+      final m = Map<String, dynamic>.from(j as Map);
+      m['apps'] = ((m['apps'] as List?) ?? [])
+          .map((a) => Map<String, dynamic>.from(a as Map))
+          .toList();
+      return m;
+    }).toList();
+  }
 }
