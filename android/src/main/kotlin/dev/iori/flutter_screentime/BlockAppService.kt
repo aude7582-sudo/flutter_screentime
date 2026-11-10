@@ -380,7 +380,21 @@ class BlockAppService : Service() {
                 else "Léxi te prévient quand tu passes trop de temps sur une appli.",
             )
             .setSmallIcon(android.R.drawable.ic_lock_lock)
+            .apply { intentionOuvrir(if (blocage) "defi" else "lecon")?.let { setContentIntent(it) } }
             .build()
+
+    // Toucher la notification ouvre Léxi directement sur le défi (ou la leçon).
+    private fun intentionOuvrir(cible: String): android.app.PendingIntent? {
+        val i = packageManager.getLaunchIntentForPackage(packageName) ?: return null
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        i.putExtra("lexi_ouvrir", cible)
+        return android.app.PendingIntent.getActivity(
+            this,
+            if (cible == "defi") 301 else 302,
+            i,
+            android.app.PendingIntent.FLAG_UPDATE_CURRENT or android.app.PendingIntent.FLAG_IMMUTABLE,
+        )
+    }
 
     private fun majNotification(blocage: Boolean) {
         if (dernierModeNotif == blocage) return
