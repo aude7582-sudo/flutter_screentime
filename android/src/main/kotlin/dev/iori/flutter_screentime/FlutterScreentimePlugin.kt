@@ -167,6 +167,20 @@ class FlutterScreentimePlugin :
                     }
                 }.start()
             }
+            "lexiOuvertures" -> {
+                val args = call.arguments as? Map<*, *>
+                val debut = (args?.get("debut") as? Number)?.toLong() ?: 0L
+                val fin = (args?.get("fin") as? Number)?.toLong() ?: System.currentTimeMillis()
+                val ctx = applicationContext
+                Thread {
+                    val n = try {
+                        LexiTempsEcran.ouvertures(ctx, debut, fin)
+                    } catch (_: Exception) {
+                        -1
+                    }
+                    android.os.Handler(android.os.Looper.getMainLooper()).post { result.success(n) }
+                }.start()
+            }
             "lexiOuverture" -> result.success(
                 ScreenTimePreferences.lireOuverture(applicationContext),
             )

@@ -105,6 +105,36 @@ internal object LexiTempsEcran {
         return resultat
     }
 
+    /** Nombre d'ouvertures d'applis (hors Léxi et accueil) entre [debut] et [fin]. */
+    fun ouvertures(ctx: Context, debut: Long, fin: Long): Int {
+        if (!autorise(ctx)) return -1
+        val usm = ctx.getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
+        val pm = ctx.packageManager
+        val accueil = pm.resolveActivity(
+            Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME),
+            PackageManager.MATCH_DEFAULT_ONLY,
+        )?.activityInfo?.packageName
+        val ouvrables = HashMap<String, Boolean>()
+        var total = 0
+        var dernier: String? = null
+        val events = usm.queryEvents(debut, minOf(fin, System.currentTimeMillis()))
+        val e = UsageEvents.Event()
+        while (events.hasNextEvent()) {
+            events.getNextEvent(e)
+            if (e.eventType == ECRAN_ETEINT) {
+                dernier = null
+                continue
+            }
+            if (e.eventType != UsageEvents.Event.MOVE_TO_FOREGROUND) continue
+            val p = e.packageName
+            if (p == dernier) continue
+            dernier = p
+            if (p == ctx.packageName || p == accueil || p == "com.android.systemui") continue
+            if (ouvrables.getOrPut(p) { pm.getLaunchIntentForPackage(p) != null }) total++
+        }
+        return total
+    }
+
     private fun autorise(ctx: Context): Boolean {
         val ops = ctx.getSystemService(Context.APP_OPS_SERVICE) as AppOpsManager
         @Suppress("DEPRECATION")

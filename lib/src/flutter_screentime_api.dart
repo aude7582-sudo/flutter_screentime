@@ -170,4 +170,12 @@ class FlutterScreentime {
       return m;
     }).toList();
   }
+
+  /// Léxi : nombre d'ouvertures d'applis entre deux instants (millisecondes).
+  /// -1 si l'accès aux données d'utilisation n'est pas autorisé.
+  Future<int> lexiOuvertures(int debut, int fin) async {
+    return await _channel.invokeMethod<int>(
+            'lexiOuvertures', {'debut': debut, 'fin': fin}) ??
+        -1;
+  }
 }
