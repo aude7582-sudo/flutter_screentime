@@ -1,0 +1,1305 @@
+
+import 'dart:convert';
+import 'package:flutter/gestures.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_tts/flutter_tts.dart';
+import 'package:provider/provider.dart';
+import '/app_state.dart';
+import '/auth/firebase_auth/auth_util.dart';
+
+/// Bibliothèque Léxi : rayons de livres en anglais facile (comme EWA),
+/// fiche du livre, lecteur avec mot touché = traduction + prononciation.
+/// Les livres sont en ligne : on peut en ajouter sans refaire l'appli.
+const String kLexiBiblio =
+    'https://raw.githubusercontent.com/aude7582-sudo/flutter_screentime/main/lexi_bibliotheque/';
+
+class LexiLecture extends StatefulWidget {
+  const LexiLecture({
+    super.key,
+    this.width,
+    this.height,
+  });
+
+  final double? width;
+  final double? height;
+
+  @override
+  State<LexiLecture> createState() => _LexiLectureState();
+}
+
+class _LexiCouleurs {
+  _LexiCouleurs(this.s);
+  final bool s;
+  Color get fond => s ? const Color(0xFF14112B) : const Color(0xFFF6F3FF);
+  Color get carte => s ? const Color(0xFF221D3D) : Colors.white;
+  Color get texte => s ? Colors.white : const Color(0xFF1E1640);
+  Color get gris => s ? const Color(0xFFB8B2D6) : const Color(0xFF6B6490);
+  Color get bord => s ? const Color(0xFF3A3460) : const Color(0xFFE2DBF5);
+  static const orange = Color(0xFFF97316);
+  static const violet = Color(0xFF7C3AED);
+}
+
+Color _lexiHex(dynamic h) {
+  try {
+    final t = (h ?? '#7C3AED').toString().replaceAll('#', '');
+    return Color(int.parse('FF' + t, radix: 16));
+  } catch (_) {
+    return const Color(0xFF7C3AED);
+  }
+}
+
+/// Mémoire partagée : catalogue, dictionnaire, livres déjà chargés.
+class _LexiStock {
+  static Map<String, dynamic>? catalogue;
+  static Map<String, dynamic>? dico;
+  static final Map<String, Map<String, dynamic>> livres = {};
+
+  static Future<Map<String, dynamic>?> _json(String chemin) async {
+    final cle = 'lexi_biblio_' + chemin;
+    SharedPreferences? prefs;
+    try {
+      prefs = await SharedPreferences.getInstance();
+    } catch (_) {}
+    try {
+      final r = await http
+          .get(Uri.parse(kLexiBiblio + chemin))
+          .timeout(const Duration(seconds: 20));
+      if (r.statusCode == 200) {
+        final txt = utf8.decode(r.bodyBytes);
+        prefs?.setString(cle, txt);
+        return jsonDecode(txt) as Map<String, dynamic>;
+      }
+    } catch (_) {}
+    final local = prefs?.getString(cle);
+    if (local != null) return jsonDecode(local) as Map<String, dynamic>;
+    return null;
+  }
+
+  static Future<Map<String, dynamic>?> chargerCatalogue() async {
+    catalogue ??= await _json('catalogue.json');
+    return catalogue;
+  }
+
+  static Future<Map<String, dynamic>?> chargerDico() async {
+    dico ??= await _json('dico.json');
+    return dico;
+  }
+
+  static Future<Map<String, dynamic>?> chargerLivre(String id) async {
+    if (livres[id] != null) return livres[id];
+    final l = await _json('livres/' + id + '.json');
+    if (l != null) livres[id] = l;
+    return l;
+  }
+}
+
+class _LexiLectureState extends State<LexiLecture> {
+  bool _charge = false;
+  bool _erreur = false;
+  int _acces = 1;
+  String _niveau = 'Tous';
+  List<Map<String, dynamic>> _livres = [];
+  List<List<String>> _cats = [];
+  Map<String, int> _progres = {};
+  List<String> _recents = [];
+
+  _LexiCouleurs get _p => _LexiCouleurs(FFAppState().isDarkMode);
+
+  @override
+  void initState() {
+    super.initState();
+    _charger();
+  }
+
+  Future<void> _charger() async {
+    setState(() {
+      _charge = false;
+      _erreur = false;
+    });
+    try {
+      _acces = await lexiAcces();
+    } catch (_) {}
+    final c = await _LexiStock.chargerCatalogue();
+    await _lireProgres();
+    if (!mounted) return;
+    if (c == null) {
+      setState(() {
+        _erreur = true;
+        _charge = true;
+      });
+      return;
+    }
+    _LexiStock.chargerDico();
+    setState(() {
+      _livres = [
+        for (final l in (c['livres'] as List)) Map<String, dynamic>.from(l)
+      ];
+      _cats = [
+        for (final x in (c['categories'] as List))
+          [x[0].toString(), x[1].toString()]
+      ];
+      _charge = true;
+    });
+  }
+
+  Future<void> _lireProgres() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      _recents = prefs.getStringList('lexi_lu_recents') ?? [];
+      final m = <String, int>{};
+      for (final k in prefs.getKeys()) {
+        if (k.startsWith('lexi_lu_ch_')) {
+          m[k.substring(11)] = prefs.getInt(k) ?? 0;
+        }
+      }
+      _progres = m;
+    } catch (_) {}
+  }
+
+  List<Map<String, dynamic>> get _filtres => _niveau == 'Tous'
+      ? _livres
+      : _livres.where((l) => l['level'] == _niveau).toList();
+
+  List<Map<String, dynamic>> _deCat(String cat) =>
+      _filtres.where((l) => (l['cats'] as List).contains(cat)).toList();
+
+  Future<void> _ouvrir(Map<String, dynamic> l) async {
+    await Navigator.of(context).push(MaterialPageRoute(
+        builder: (_) => _LexiFicheLivre(
+            livre: l, bloque: _acces < 0, progres: _progres[l['id']] ?? 0)));
+    await _lireProgres();
+    if (mounted) setState(() {});
+  }
+
+  void _ouvrirCat(String id, String nom) {
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (_) => _LexiRayonComplet(
+            titre: nom,
+            livres: id == '*recents'
+                ? [
+                    for (final r in _recents)
+                      ..._livres.where((l) => l['id'] == r)
+                  ]
+                : _deCat(id),
+            ouvrir: _ouvrir)));
+  }
+
+  Widget _couverture(Map<String, dynamic> l, double w) {
+    final h = w * 454 / 320;
+    final nch = (l['nch'] as num?)?.toInt() ?? 1;
+    final pr = _progres[l['id']];
+    return SizedBox(
+      width: w,
+      child: GestureDetector(
+        onTap: () => _ouvrir(l),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Stack(children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: Image.network(
+                kLexiBiblio + 'couv/' + l['id'] + '.jpg',
+                width: w,
+                height: h,
+                fit: BoxFit.cover,
+                errorBuilder: (_, __, ___) => Container(
+                  width: w,
+                  height: h,
+                  color: _lexiHex(l['color']),
+                  alignment: Alignment.center,
+                  child: Text(l['emoji'] ?? '📖',
+                      style: TextStyle(fontSize: w * 0.35)),
+                ),
+              ),
+            ),
+            Positioned(
+              top: 6,
+              left: 6,
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                decoration: BoxDecoration(
+                    color: Colors.black.withOpacity(0.55),
+                    borderRadius: BorderRadius.circular(8)),
+                child: Text(l['level'] ?? '',
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 10,
+                        fontWeight: FontWeight.w800)),
+              ),
+            ),
+            if (pr != null)
+              Positioned(
+                left: 0,
+                right: 0,
+                bottom: 0,
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.vertical(
+                      bottom: Radius.circular(10)),
+                  child: LinearProgressIndicator(
+                    value: ((pr + 1) / nch).clamp(0.0, 1.0),
+                    minHeight: 4,
+                    backgroundColor: Colors.black26,
+                    valueColor:
+                        const AlwaysStoppedAnimation(_LexiCouleurs.orange),
+                  ),
+                ),
+              ),
+          ]),
+          const SizedBox(height: 6),
+          Text(l['title'] ?? '',
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                  color: _p.texte,
+                  fontSize: 12.5,
+                  height: 1.2,
+                  fontWeight: FontWeight.w700)),
+          Text(l['author'] ?? '',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(color: _p.gris, fontSize: 11)),
+        ]),
+      ),
+    );
+  }
+
+  Widget _rayon(String titre, List<Map<String, dynamic>> l, VoidCallback voir) {
+    if (l.isEmpty) return const SizedBox.shrink();
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 18),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        GestureDetector(
+          onTap: voir,
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(18, 0, 18, 10),
+            child: Row(children: [
+              Flexible(
+                child: Text(titre,
+                    style: TextStyle(
+                        color: _p.texte,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w800)),
+              ),
+              const SizedBox(width: 4),
+              Icon(Icons.chevron_right_rounded, color: _p.gris),
+            ]),
+          ),
+        ),
+        SizedBox(
+          height: 112 * 454 / 320 + 50,
+          child: ListView.separated(
+            scrollDirection: Axis.horizontal,
+            padding: const EdgeInsets.symmetric(horizontal: 18),
+            itemCount: l.length,
+            separatorBuilder: (_, __) => const SizedBox(width: 12),
+            itemBuilder: (_, i) => _couverture(l[i], 112),
+          ),
+        ),
+      ]),
+    );
+  }
+
+  Widget _niveaux() {
+    const n = ['Tous', 'A1', 'A2', 'B1'];
+    return SizedBox(
+      height: 36,
+      child: ListView(
+        scrollDirection: Axis.horizontal,
+        padding: const EdgeInsets.symmetric(horizontal: 18),
+        children: [
+          for (final x in n)
+            Padding(
+              padding: const EdgeInsets.only(right: 8),
+              child: GestureDetector(
+                onTap: () => setState(() => _niveau = x),
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  decoration: BoxDecoration(
+                    color: _niveau == x ? _LexiCouleurs.violet : _p.carte,
+                    borderRadius: BorderRadius.circular(18),
+                    border: Border.all(
+                        color:
+                            _niveau == x ? _LexiCouleurs.violet : _p.bord),
+                  ),
+                  child: Text(
+                      x == 'Tous'
+                          ? 'Tous les niveaux'
+                          : x == 'A1'
+                              ? 'A1 · Débutant'
+                              : x == 'A2'
+                                  ? 'A2 · Facile'
+                                  : 'B1 · Moyen',
+                      style: TextStyle(
+                          color: _niveau == x ? Colors.white : _p.texte,
+                          fontSize: 12.5,
+                          fontWeight: FontWeight.w700)),
+                ),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+
+  static const _teintes = [
+    Color(0xFFF59E0B),
+    Color(0xFFDB2777),
+    Color(0xFFB45309),
+    Color(0xFFB91C1C),
+    Color(0xFF15803D),
+    Color(0xFFE11D48),
+    Color(0xFF334155),
+    Color(0xFF0891B2),
+    Color(0xFF7C3AED),
+    Color(0xFFEA580C),
+    Color(0xFF0EA5E9),
+  ];
+  static const _icones = {
+    'afrique': '🌍',
+    'ados': '🎒',
+    'contes': '🕷️',
+    'histoire': '👑',
+    'classiques': '📚',
+    'amour': '💌',
+    'mystere': '🔍',
+    'aventure': '🧭',
+    'fantaisie': '✨',
+    'changer': '🚀',
+    'quotidien': '💬',
+  };
+
+  Widget _grilleCategories() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(18, 4, 18, 24),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Text('Catégories',
+            style: TextStyle(
+                color: _p.texte, fontSize: 18, fontWeight: FontWeight.w800)),
+        const SizedBox(height: 10),
+        GridView.count(
+          crossAxisCount: 2,
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          crossAxisSpacing: 10,
+          mainAxisSpacing: 10,
+          childAspectRatio: 2.4,
+          children: [
+            for (var i = 0; i < _cats.length; i++)
+              GestureDetector(
+                onTap: () => _ouvrirCat(_cats[i][0], _cats[i][1]),
+                child: Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: _teintes[i % _teintes.length],
+                    borderRadius: BorderRadius.circular(14),
+                  ),
+                  child: Row(children: [
+                    Text(_icones[_cats[i][0]] ?? '📖',
+                        style: const TextStyle(fontSize: 22)),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Text(_cats[i][1],
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 12.5,
+                              height: 1.15,
+                              fontWeight: FontWeight.w800)),
+                    ),
+                  ]),
+                ),
+              ),
+          ],
+        ),
+      ]),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+    Widget corps;
+    if (!_charge) {
+      corps = const Center(
+          child: CircularProgressIndicator(color: _LexiCouleurs.orange));
+    } else if (_erreur) {
+      corps = Center(
+        child: Padding(
+          padding: const EdgeInsets.all(30),
+          child: Column(mainAxisSize: MainAxisSize.min, children: [
+            const Text('📡', style: TextStyle(fontSize: 44)),
+            const SizedBox(height: 10),
+            Text('Impossible de charger la bibliothèque.',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    color: _p.texte,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w800)),
+            const SizedBox(height: 6),
+            Text('Vérifie ta connexion Internet, puis réessaie.',
+                textAlign: TextAlign.center,
+                style: TextStyle(color: _p.gris, fontSize: 13.5)),
+            const SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: _charger,
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: _LexiCouleurs.orange,
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(14))),
+              child: const Text('Réessayer'),
+            ),
+          ]),
+        ),
+      );
+    } else {
+      final recents = [
+        for (final r in _recents) ..._filtres.where((l) => l['id'] == r)
+      ];
+      final romans = _filtres
+          .where((l) => ((l['mots'] as num?) ?? 0) > 5000)
+          .toList();
+      corps = RefreshIndicator(
+        onRefresh: () async {
+          _LexiStock.catalogue = null;
+          await _charger();
+        },
+        child: ListView(
+          padding: const EdgeInsets.only(top: 4, bottom: 20),
+          children: [
+            _niveaux(),
+            const SizedBox(height: 16),
+            if (recents.isNotEmpty)
+              _rayon('📖 Continuer la lecture', recents,
+                  () => _ouvrirCat('*recents', 'Continuer la lecture')),
+            if (romans.isNotEmpty)
+              _rayon('⭐ Romans complets', romans,
+                  () => Navigator.of(context).push(MaterialPageRoute(
+                      builder: (_) => _LexiRayonComplet(
+                          titre: 'Romans complets',
+                          livres: romans,
+                          ouvrir: _ouvrir)))),
+            for (final c in _cats)
+              _rayon(c[1], _deCat(c[0]), () => _ouvrirCat(c[0], c[1])),
+            _grilleCategories(),
+          ],
+        ),
+      );
+    }
+    return Container(
+      width: widget.width ?? double.infinity,
+      height: widget.height ?? double.infinity,
+      color: _p.fond,
+      child: corps,
+    );
+  }
+}
+
+/// Tous les livres d'un rayon, en grille.
+class _LexiRayonComplet extends StatelessWidget {
+  const _LexiRayonComplet(
+      {required this.titre, required this.livres, required this.ouvrir});
+  final String titre;
+  final List<Map<String, dynamic>> livres;
+  final Future<void> Function(Map<String, dynamic>) ouvrir;
+
+  @override
+  Widget build(BuildContext context) {
+    final p = _LexiCouleurs(FFAppState().isDarkMode);
+    return Scaffold(
+      backgroundColor: p.fond,
+      appBar: AppBar(
+        backgroundColor: p.fond,
+        elevation: 0,
+        foregroundColor: p.texte,
+        title: Text(titre,
+            style: TextStyle(
+                color: p.texte, fontSize: 18, fontWeight: FontWeight.w800)),
+      ),
+      body: GridView.builder(
+        padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 3,
+            crossAxisSpacing: 12,
+            mainAxisSpacing: 16,
+            childAspectRatio: 0.52),
+        itemCount: livres.length,
+        itemBuilder: (_, i) {
+          final l = livres[i];
+          return GestureDetector(
+            onTap: () => ouvrir(l),
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              AspectRatio(
+                aspectRatio: 320 / 454,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: Image.network(
+                    kLexiBiblio + 'couv/' + l['id'] + '.jpg',
+                    fit: BoxFit.cover,
+                    errorBuilder: (_, __, ___) =>
+                        Container(color: _lexiHex(l['color'])),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 6),
+              Text(l['title'] ?? '',
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                      color: p.texte,
+                      fontSize: 12,
+                      height: 1.2,
+                      fontWeight: FontWeight.w700)),
+              Text(l['level'] ?? '',
+                  style: TextStyle(color: p.gris, fontSize: 11)),
+            ]),
+          );
+        },
+      ),
+    );
+  }
+}
+
+/// Fiche d'un livre : couverture, résumé, chapitres.
+class _LexiFicheLivre extends StatefulWidget {
+  const _LexiFicheLivre(
+      {required this.livre, required this.bloque, required this.progres});
+  final Map<String, dynamic> livre;
+  final bool bloque;
+  final int progres;
+
+  @override
+  State<_LexiFicheLivre> createState() => _LexiFicheLivreState();
+}
+
+class _LexiFicheLivreState extends State<_LexiFicheLivre> {
+  Map<String, dynamic>? _l;
+  bool _erreur = false;
+  int _progres = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _progres = widget.progres;
+    _charger();
+  }
+
+  Future<void> _charger() async {
+    final l = await _LexiStock.chargerLivre(widget.livre['id']);
+    if (!mounted) return;
+    setState(() {
+      _l = l;
+      _erreur = l == null;
+    });
+  }
+
+  Future<void> _lire(int ch) async {
+    if (widget.bloque) {
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (_) => Scaffold(
+                body: SafeArea(child: LexiPro()),
+              )));
+      return;
+    }
+    if (_l == null) return;
+    await Navigator.of(context).push(MaterialPageRoute(
+        builder: (_) => _LexiLecteur(livre: _l!, chapitre: ch)));
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      _progres = prefs.getInt('lexi_lu_ch_' + widget.livre['id']) ?? _progres;
+    } catch (_) {}
+    if (mounted) setState(() {});
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final p = _LexiCouleurs(FFAppState().isDarkMode);
+    final l = widget.livre;
+    final couleur = _lexiHex(l['color']);
+    final chaps = (_l?['chapters'] as List?) ?? [];
+    return Scaffold(
+      backgroundColor: p.fond,
+      body: CustomScrollView(slivers: [
+        SliverAppBar(
+          pinned: true,
+          expandedHeight: 300,
+          backgroundColor: couleur,
+          foregroundColor: Colors.white,
+          flexibleSpace: FlexibleSpaceBar(
+            background: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [couleur, p.fond]),
+              ),
+              alignment: Alignment.bottomCenter,
+              padding: const EdgeInsets.only(bottom: 16),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: Image.network(
+                  kLexiBiblio + 'couv/' + l['id'] + '.jpg',
+                  height: 220,
+                  fit: BoxFit.cover,
+                  errorBuilder: (_, __, ___) => const SizedBox(height: 220),
+                ),
+              ),
+            ),
+          ),
+        ),
+        SliverToBoxAdapter(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(20, 8, 20, 10),
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text(l['title'] ?? '',
+                  style: TextStyle(
+                      color: p.texte,
+                      fontSize: 24,
+                      height: 1.15,
+                      fontWeight: FontWeight.w900)),
+              const SizedBox(height: 4),
+              Text(l['author'] ?? '',
+                  style: TextStyle(
+                      color: p.gris,
+                      fontSize: 14,
+                      fontStyle: FontStyle.italic)),
+              const SizedBox(height: 12),
+              Wrap(spacing: 8, runSpacing: 8, children: [
+                _puce(p, '🎯 Niveau ' + (l['level'] ?? '')),
+                _puce(p, '📑 ' + (l['nch'] ?? 0).toString() + ' chapitres'),
+                _puce(
+                    p,
+                    '⏱️ ' +
+                        ((((l['mots'] as num?) ?? 0) / 120).ceil())
+                            .toString() +
+                        ' min'),
+              ]),
+              const SizedBox(height: 14),
+              Text(l['desc'] ?? '',
+                  style: TextStyle(color: p.texte, fontSize: 15, height: 1.45)),
+              const SizedBox(height: 18),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: _l == null ? null : () => _lire(_progres),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: _LexiCouleurs.orange,
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(vertical: 15),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16)),
+                  ),
+                  child: Text(
+                      widget.bloque
+                          ? '⭐ Lire avec Léxi Pro'
+                          : _progres > 0
+                              ? 'Continuer · chapitre ' +
+                                  (_progres + 1).toString()
+                              : 'Commencer la lecture',
+                      style: const TextStyle(
+                          fontSize: 16, fontWeight: FontWeight.w800)),
+                ),
+              ),
+              const SizedBox(height: 22),
+              Text('Chapitres',
+                  style: TextStyle(
+                      color: p.texte,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w800)),
+              const SizedBox(height: 8),
+              if (_l == null && !_erreur)
+                const Padding(
+                  padding: EdgeInsets.all(20),
+                  child: Center(
+                      child: CircularProgressIndicator(
+                          color: _LexiCouleurs.orange)),
+                ),
+              if (_erreur)
+                Text('Chargement impossible. Vérifie ta connexion.',
+                    style: TextStyle(color: p.gris)),
+            ]),
+          ),
+        ),
+        SliverList(
+          delegate: SliverChildBuilderDelegate(
+            (_, i) {
+              final c = chaps[i] as Map;
+              final lu = i < _progres;
+              return Padding(
+                padding: const EdgeInsets.fromLTRB(20, 0, 20, 8),
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(14),
+                  onTap: () => _lire(i),
+                  child: Container(
+                    padding: const EdgeInsets.all(14),
+                    decoration: BoxDecoration(
+                      color: p.carte,
+                      borderRadius: BorderRadius.circular(14),
+                      border: Border.all(
+                          color: i == _progres ? _LexiCouleurs.orange : p.bord),
+                    ),
+                    child: Row(children: [
+                      Container(
+                        width: 32,
+                        height: 32,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: lu
+                              ? const Color(0xFF16A34A)
+                              : couleur.withOpacity(0.15),
+                          shape: BoxShape.circle,
+                        ),
+                        child: lu
+                            ? const Icon(Icons.check_rounded,
+                                color: Colors.white, size: 18)
+                            : Text((i + 1).toString(),
+                                style: TextStyle(
+                                    color: couleur,
+                                    fontWeight: FontWeight.w800)),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Text(c['t'] ?? '',
+                            style: TextStyle(
+                                color: p.texte,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w700)),
+                      ),
+                      Icon(Icons.chevron_right_rounded, color: p.gris),
+                    ]),
+                  ),
+                ),
+              );
+            },
+            childCount: chaps.length,
+          ),
+        ),
+        const SliverToBoxAdapter(child: SizedBox(height: 30)),
+      ]),
+    );
+  }
+
+  Widget _puce(_LexiCouleurs p, String t) => Container(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+        decoration: BoxDecoration(
+            color: p.carte,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: p.bord)),
+        child: Text(t,
+            style: TextStyle(
+                color: p.texte, fontSize: 12.5, fontWeight: FontWeight.w700)),
+      );
+}
+
+/// Le lecteur : touche un mot → traduction + prononciation.
+class _LexiLecteur extends StatefulWidget {
+  const _LexiLecteur({required this.livre, required this.chapitre});
+  final Map<String, dynamic> livre;
+  final int chapitre;
+
+  @override
+  State<_LexiLecteur> createState() => _LexiLecteurState();
+}
+
+class _LexiLecteurState extends State<_LexiLecteur> {
+  final FlutterTts _tts = FlutterTts();
+  final ScrollController _defil = ScrollController();
+  final List<TapGestureRecognizer> _reco = [];
+  late int _ch;
+  double _taille = 18;
+  bool _lecture = false;
+  int _parLu = -1;
+  Map<String, dynamic> _dico = {};
+  String? _motTouche;
+
+  static final RegExp _motRe = RegExp(r"[A-Za-zÀ-ÿ]+(?:['’][A-Za-z]+)?");
+
+  @override
+  void initState() {
+    super.initState();
+    _ch = widget.chapitre;
+    _preparer();
+  }
+
+  Future<void> _preparer() async {
+    try {
+      await _tts.setLanguage('en-US');
+      await _tts.setSpeechRate(0.45);
+      await _tts.awaitSpeakCompletion(true);
+    } catch (_) {}
+    final d = await _LexiStock.chargerDico();
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      _taille = prefs.getDouble('lexi_lu_taille') ?? 18;
+      final id = widget.livre['id'].toString();
+      final r = prefs.getStringList('lexi_lu_recents') ?? [];
+      r.remove(id);
+      r.insert(0, id);
+      prefs.setStringList('lexi_lu_recents', r.take(12).toList());
+      final avant = prefs.getInt('lexi_lu_ch_' + id) ?? 0;
+      if (_ch > avant || !prefs.containsKey('lexi_lu_ch_' + id)) {
+        prefs.setInt('lexi_lu_ch_' + id, _ch);
+      }
+    } catch (_) {}
+    if (mounted) setState(() => _dico = d ?? {});
+  }
+
+  @override
+  void dispose() {
+    _lecture = false;
+    _tts.stop();
+    for (final r in _reco) {
+      r.dispose();
+    }
+    _defil.dispose();
+    super.dispose();
+  }
+
+  List get _chaps => (widget.livre['chapters'] as List?) ?? [];
+
+  String _cle(String m) {
+    var k = m.toLowerCase().replaceAll('’', "'");
+    return k;
+  }
+
+  String? _traduire(String m) {
+    var k = _cle(m);
+    final c = _chaps[_ch] as Map;
+    for (final w in (c['w'] as List? ?? [])) {
+      if ((w[0] as String).toLowerCase() == k) return w[1] as String;
+    }
+    if (_dico[k] != null) return _dico[k].toString();
+    if (k.endsWith("'s") && _dico[k.substring(0, k.length - 2)] != null) {
+      return _dico[k.substring(0, k.length - 2)].toString();
+    }
+    return null;
+  }
+
+  Future<void> _parler(String t) async {
+    try {
+      await _tts.stop();
+      await _tts.speak(t);
+    } catch (_) {}
+  }
+
+  void _toucherMot(String mot) {
+    final p = _LexiCouleurs(FFAppState().isDarkMode);
+    setState(() => _motTouche = mot);
+    _parler(mot);
+    final tr = _traduire(mot);
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: p.carte,
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(24))),
+      builder: (_) => Padding(
+        padding: const EdgeInsets.fromLTRB(24, 18, 24, 30),
+        child: Column(mainAxisSize: MainAxisSize.min, children: [
+          Container(
+              width: 40,
+              height: 4,
+              decoration: BoxDecoration(
+                  color: p.bord, borderRadius: BorderRadius.circular(2))),
+          const SizedBox(height: 18),
+          Row(children: [
+            Expanded(
+              child: Text(mot,
+                  style: TextStyle(
+                      color: p.texte,
+                      fontSize: 28,
+                      fontWeight: FontWeight.w900)),
+            ),
+            GestureDetector(
+              onTap: () => _parler(mot),
+              child: Container(
+                width: 48,
+                height: 48,
+                decoration: const BoxDecoration(
+                    color: _LexiCouleurs.orange, shape: BoxShape.circle),
+                child: const Icon(Icons.volume_up_rounded,
+                    color: Colors.white),
+              ),
+            ),
+          ]),
+          const SizedBox(height: 12),
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(14),
+            decoration: BoxDecoration(
+                color: _LexiCouleurs.violet.withOpacity(0.12),
+                borderRadius: BorderRadius.circular(14)),
+            child: Text(
+                tr ?? 'Nom propre ou mot rare : écoute sa prononciation 🔊',
+                style: TextStyle(
+                    color: p.texte,
+                    fontSize: tr == null ? 14 : 19,
+                    fontWeight: tr == null ? FontWeight.w500 : FontWeight.w700)),
+          ),
+          const SizedBox(height: 8),
+          Text('🇫🇷 Traduction en français',
+              style: TextStyle(color: p.gris, fontSize: 12)),
+        ]),
+      ),
+    ).whenComplete(() {
+      if (mounted) setState(() => _motTouche = null);
+    });
+  }
+
+  Future<void> _lireChapitre() async {
+    if (_lecture) {
+      setState(() {
+        _lecture = false;
+        _parLu = -1;
+      });
+      await _tts.stop();
+      return;
+    }
+    setState(() => _lecture = true);
+    final ps = ((_chaps[_ch] as Map)['p'] as List? ?? []);
+    for (var i = 0; i < ps.length; i++) {
+      if (!_lecture || !mounted) break;
+      setState(() => _parLu = i);
+      try {
+        await _tts.speak(ps[i].toString().replaceAll('*', ''));
+      } catch (_) {}
+    }
+    if (mounted) {
+      setState(() {
+        _lecture = false;
+        _parLu = -1;
+      });
+    }
+  }
+
+  Future<void> _changerChapitre(int n) async {
+    _lecture = false;
+    await _tts.stop();
+    if (n >= _chaps.length) {
+      await _terminer();
+      return;
+    }
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final id = widget.livre['id'].toString();
+      final avant = prefs.getInt('lexi_lu_ch_' + id) ?? 0;
+      if (n > avant) {
+        prefs.setInt('lexi_lu_ch_' + id, n);
+        _xp(10);
+      }
+    } catch (_) {}
+    setState(() {
+      _ch = n;
+      _parLu = -1;
+    });
+    if (_defil.hasClients) _defil.jumpTo(0);
+  }
+
+  Future<void> _xp(int n) async {
+    try {
+      final q = await FirebaseFirestore.instance
+          .collection('user_stats')
+          .where('uid', isEqualTo: currentUserUid)
+          .limit(1)
+          .get();
+      if (q.docs.isNotEmpty) {
+        await q.docs.first.reference.update({
+          'totalXp': FieldValue.increment(n),
+          'livresChapitres': FieldValue.increment(1),
+        });
+      }
+    } catch (_) {}
+  }
+
+  Future<void> _terminer() async {
+    final id = widget.livre['id'].toString();
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final deja = prefs.getBool('lexi_lu_fini_' + id) ?? false;
+      prefs.setInt('lexi_lu_ch_' + id, _chaps.length);
+      if (!deja) {
+        prefs.setBool('lexi_lu_fini_' + id, true);
+        _xp(30);
+      }
+    } catch (_) {}
+    if (!mounted) return;
+    final p = _LexiCouleurs(FFAppState().isDarkMode);
+    await showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        backgroundColor: p.carte,
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+        content: Column(mainAxisSize: MainAxisSize.min, children: [
+          const Text('🦊🎉', style: TextStyle(fontSize: 52)),
+          const SizedBox(height: 8),
+          Text('Livre terminé !',
+              style: TextStyle(
+                  color: p.texte, fontSize: 22, fontWeight: FontWeight.w900)),
+          const SizedBox(height: 6),
+          Text(
+              'Bravo, tu as lu « ' +
+                  (widget.livre['title'] ?? '') +
+                  ' » en anglais. +30 ⭐',
+              textAlign: TextAlign.center,
+              style: TextStyle(color: p.gris, fontSize: 14.5)),
+        ]),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('Super !',
+                style: TextStyle(
+                    color: _LexiCouleurs.orange,
+                    fontWeight: FontWeight.w800)),
+          ),
+        ],
+      ),
+    );
+    if (mounted) Navigator.of(context).pop();
+  }
+
+  Future<void> _changerTaille(double d) async {
+    setState(() => _taille = (_taille + d).clamp(14.0, 28.0));
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      prefs.setDouble('lexi_lu_taille', _taille);
+    } catch (_) {}
+  }
+
+  /// Transforme un paragraphe en texte où chaque mot se touche.
+  /// *texte* = italique (le carnet de Léa, les pensées…).
+  List<InlineSpan> _spans(String para, _LexiCouleurs p, bool actif) {
+    final res = <InlineSpan>[];
+    final morceaux = para.split('*');
+    for (var j = 0; j < morceaux.length; j++) {
+      final ital = j.isOdd;
+      final txt = morceaux[j];
+      var pos = 0;
+      for (final m in _motRe.allMatches(txt)) {
+        if (m.start > pos) {
+          res.add(TextSpan(
+              text: txt.substring(pos, m.start),
+              style: TextStyle(
+                  fontStyle: ital ? FontStyle.italic : FontStyle.normal)));
+        }
+        final mot = m.group(0)!;
+        final r = TapGestureRecognizer()..onTap = () => _toucherMot(mot);
+        _reco.add(r);
+        res.add(TextSpan(
+          text: mot,
+          recognizer: r,
+          style: TextStyle(
+            fontStyle: ital ? FontStyle.italic : FontStyle.normal,
+            backgroundColor: _motTouche == mot
+                ? _LexiCouleurs.orange.withOpacity(0.35)
+                : null,
+          ),
+        ));
+        pos = m.end;
+      }
+      if (pos < txt.length) {
+        res.add(TextSpan(
+            text: txt.substring(pos),
+            style: TextStyle(
+                fontStyle: ital ? FontStyle.italic : FontStyle.normal)));
+      }
+    }
+    return res;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final p = _LexiCouleurs(FFAppState().isDarkMode);
+    for (final r in _reco) {
+      r.dispose();
+    }
+    _reco.clear();
+    final c = _chaps.isEmpty ? {} : _chaps[_ch] as Map;
+    final ps = (c['p'] as List?) ?? [];
+    final mots = (c['w'] as List?) ?? [];
+    final couleur = _lexiHex(widget.livre['color']);
+    final fond = p.s ? const Color(0xFF181430) : const Color(0xFFFFFCF5);
+    return Scaffold(
+      backgroundColor: fond,
+      appBar: AppBar(
+        backgroundColor: fond,
+        elevation: 0,
+        foregroundColor: p.texte,
+        titleSpacing: 0,
+        title: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Text(widget.livre['title'] ?? '',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                  color: p.texte, fontSize: 15, fontWeight: FontWeight.w800)),
+          Text(
+              'Chapitre ' +
+                  (_ch + 1).toString() +
+                  ' / ' +
+                  _chaps.length.toString(),
+              style: TextStyle(color: p.gris, fontSize: 12)),
+        ]),
+        actions: [
+          IconButton(
+              onPressed: () => _changerTaille(-2),
+              icon: Icon(Icons.text_decrease_rounded, color: p.gris)),
+          IconButton(
+              onPressed: () => _changerTaille(2),
+              icon: Icon(Icons.text_increase_rounded, color: p.gris)),
+          IconButton(
+            onPressed: _lireChapitre,
+            icon: Icon(
+                _lecture
+                    ? Icons.stop_circle_rounded
+                    : Icons.play_circle_fill_rounded,
+                color: _LexiCouleurs.orange,
+                size: 30),
+          ),
+          const SizedBox(width: 6),
+        ],
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(3),
+          child: LinearProgressIndicator(
+            value: _chaps.isEmpty ? 0 : (_ch + 1) / _chaps.length,
+            minHeight: 3,
+            backgroundColor: p.bord,
+            valueColor: AlwaysStoppedAnimation(couleur),
+          ),
+        ),
+      ),
+      body: ListView(
+        controller: _defil,
+        padding: const EdgeInsets.fromLTRB(22, 18, 22, 30),
+        children: [
+          Text('CHAPITRE ' + (_ch + 1).toString(),
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  color: couleur,
+                  fontSize: 12,
+                  letterSpacing: 2,
+                  fontWeight: FontWeight.w800)),
+          const SizedBox(height: 6),
+          Text(c['t'] ?? '',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  color: p.texte,
+                  fontSize: 24,
+                  height: 1.15,
+                  fontWeight: FontWeight.w900)),
+          const SizedBox(height: 8),
+          Text('Touche un mot pour le traduire 👆',
+              textAlign: TextAlign.center,
+              style: TextStyle(color: p.gris, fontSize: 12)),
+          const SizedBox(height: 18),
+          for (var i = 0; i < ps.length; i++)
+            Container(
+              margin: const EdgeInsets.only(bottom: 14),
+              padding: _parLu == i
+                  ? const EdgeInsets.symmetric(horizontal: 8, vertical: 4)
+                  : EdgeInsets.zero,
+              decoration: _parLu == i
+                  ? BoxDecoration(
+                      color: _LexiCouleurs.orange.withOpacity(0.12),
+                      borderRadius: BorderRadius.circular(8))
+                  : null,
+              child: RichText(
+                text: TextSpan(
+                  style: TextStyle(
+                      color: p.texte,
+                      fontSize: _taille,
+                      height: 1.55,
+                      fontFamily: 'serif'),
+                  children: _spans(ps[i].toString(), p, _parLu == i),
+                ),
+              ),
+            ),
+          if (mots.isNotEmpty) ...[
+            const SizedBox(height: 10),
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: p.carte,
+                borderRadius: BorderRadius.circular(18),
+                border: Border.all(color: p.bord),
+              ),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text('📝 Words to know',
+                        style: TextStyle(
+                            color: _LexiCouleurs.orange,
+                            fontSize: 17,
+                            fontWeight: FontWeight.w900)),
+                    const SizedBox(height: 10),
+                    for (final w in mots)
+                      InkWell(
+                        onTap: () => _parler(w[0].toString()),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 6),
+                          child: Row(children: [
+                            Icon(Icons.volume_up_rounded,
+                                size: 16, color: p.gris),
+                            const SizedBox(width: 8),
+                            Expanded(
+                              child: Text(w[0].toString(),
+                                  style: TextStyle(
+                                      color: p.texte,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w800)),
+                            ),
+                            Expanded(
+                              child: Text(w[1].toString(),
+                                  style: TextStyle(
+                                      color: p.gris, fontSize: 14.5)),
+                            ),
+                          ]),
+                        ),
+                      ),
+                  ]),
+            ),
+          ],
+          const SizedBox(height: 20),
+          Row(children: [
+            if (_ch > 0)
+              Expanded(
+                child: OutlinedButton(
+                  onPressed: () => _changerChapitre(_ch - 1),
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: p.texte,
+                    side: BorderSide(color: p.bord),
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(14)),
+                  ),
+                  child: const Text('‹ Précédent'),
+                ),
+              ),
+            if (_ch > 0) const SizedBox(width: 10),
+            Expanded(
+              flex: 2,
+              child: ElevatedButton(
+                onPressed: () => _changerChapitre(_ch + 1),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: _LexiCouleurs.orange,
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(14)),
+                ),
+                child: Text(
+                    _ch + 1 >= _chaps.length
+                        ? 'Terminer le livre 🎉'
+                        : 'Chapitre suivant ›',
+                    style: const TextStyle(
+                        fontSize: 15, fontWeight: FontWeight.w800)),
+              ),
+            ),
+          ]),
+        ],
+      ),
+    );
+  }
+}
