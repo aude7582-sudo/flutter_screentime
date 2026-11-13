@@ -1,5 +1,22 @@
 {
-"version": 1,
+"version": 2,
+"niveaux": [
+[
+"debutant",
+"Débutant",
+"🌱"
+],
+[
+"intermediaire",
+"Intermédiaire",
+"🌿"
+],
+[
+"avance",
+"Avancé",
+"🌳"
+]
+],
 "categories": [
 [
 "afrique",
@@ -56,6 +73,7 @@
 "amour"
 ],
 "level": "A2",
+"niveau": "intermediaire",
 "emoji": "📓",
 "color": "#2563EB",
 "desc": "Léa porte son sourire comme un manteau. Derrière une porte jaune, elle va trouver sa vraie voix. Le roman d'Aude.",
@@ -71,6 +89,7 @@
 "ados"
 ],
 "level": "A2",
+"niveau": "intermediaire",
 "emoji": "📱",
 "color": "#7C3AED",
 "desc": "Aya, 15 ans, perd son téléphone pendant une semaine à Yopougon… et découvre le secret de sa grand-mère.",
@@ -86,6 +105,7 @@
 "ados"
 ],
 "level": "A2",
+"niveau": "intermediaire",
 "emoji": "🚕",
 "color": "#EA580C",
 "desc": "Awa, 15 ans, aide son père chauffeur de woro-woro à Abidjan. Un jour, elle trouve cinq millions de francs sur la banquette arrière… Roman complet.",
@@ -102,6 +122,7 @@
 "contes"
 ],
 "level": "A1",
+"niveau": "debutant",
 "emoji": "🪔",
 "color": "#7C3AED",
 "desc": "Un garçon pauvre, une lampe magique, un génie… et un sorcier très méchant.",
@@ -117,6 +138,7 @@
 "classiques"
 ],
 "level": "A2",
+"niveau": "debutant",
 "emoji": "🐇",
 "color": "#0EA5E9",
 "desc": "Alice suit un lapin blanc pressé… et tombe dans un monde complètement fou.",
@@ -131,6 +153,7 @@
 "contes"
 ],
 "level": "A1",
+"niveau": "debutant",
 "emoji": "🕷️",
 "color": "#B45309",
 "desc": "Anansi l'araignée veut garder toute la sagesse du monde pour lui seul.",
@@ -146,6 +169,7 @@
 "afrique"
 ],
 "level": "A2",
+"niveau": "debutant",
 "emoji": "🍲",
 "color": "#D97706",
 "desc": "Avec 20 000 francs et la recette de sa grand-mère, Mariam ouvre son petit commerce d'attiéké.",
@@ -161,6 +185,7 @@
 "afrique"
 ],
 "level": "A2",
+"niveau": "debutant",
 "emoji": "🌊",
 "color": "#DB2777",
 "desc": "Nadia passe l'été chez sa tante à Grand-Bassam. Un garçon qui peint la mer, une lettre jamais envoyée.",
@@ -176,6 +201,7 @@
 "afrique"
 ],
 "level": "B1",
+"niveau": "intermediaire",
 "emoji": "🚌",
 "color": "#334155",
 "desc": "Un bus de nuit, onze passagers, et une valise qui disparaît. Qui ment ?",
@@ -191,6 +217,7 @@
 "classiques"
 ],
 "level": "A2",
+"niveau": "debutant",
 "emoji": "🏝️",
 "color": "#059669",
 "desc": "Seul survivant d'un naufrage, Robinson vit vingt-huit ans sur une île déserte.",
@@ -205,6 +232,7 @@
 "changer"
 ],
 "level": "A2",
+"niveau": "debutant",
 "emoji": "⏱️",
 "color": "#EA580C",
 "desc": "Grâce, 24 ans, rate un emploi parce qu'elle ne parle pas anglais. Elle décide d'apprendre dix minutes par jour.",
@@ -220,6 +248,7 @@
 "classiques"
 ],
 "level": "B1",
+"niveau": "intermediaire",
 "emoji": "🧛",
 "color": "#7F1D1D",
 "desc": "Un jeune avocat se rend dans un château des Carpates. Son client ne dort jamais la nuit.",
@@ -235,6 +264,7 @@
 "ados"
 ],
 "level": "A2",
+"niveau": "debutant",
 "emoji": "⚽",
 "color": "#0EA5E9",
 "desc": "Koffi joue au foot pieds nus dans la rue. Un recruteur arrive… le jour où il se blesse.",
@@ -250,6 +280,7 @@
 "classiques"
 ],
 "level": "B1",
+"niveau": "intermediaire",
 "emoji": "⚡",
 "color": "#3F6212",
 "desc": "Un jeune savant donne la vie à une créature… puis l'abandonne. Qui est le vrai monstre ?",
@@ -265,6 +296,7 @@
 "aventure"
 ],
 "level": "A2",
+"niveau": "debutant",
 "emoji": "🐯",
 "color": "#15803D",
 "desc": "Mowgli, le petit d'homme élevé par les loups, face au tigre Shere Khan.",
@@ -279,6 +311,7 @@
 "contes"
 ],
 "level": "A1",
+"niveau": "debutant",
 "emoji": "🐇",
 "color": "#CA8A04",
 "desc": "Le lion mange un animal chaque jour. Le petit lièvre a une idée pour le tromper.",
@@ -293,6 +326,7 @@
 "histoire"
 ],
 "level": "A2",
+"niveau": "debutant",
 "emoji": "💰",
 "color": "#CA8A04",
 "desc": "Le roi du Mali qui fit tomber le prix de l'or en Égypte pendant son voyage à La Mecque.",
@@ -308,6 +342,7 @@
 "changer"
 ],
 "level": "A2",
+"niveau": "debutant",
 "emoji": "🧺",
 "color": "#16A34A",
 "desc": "Mama Adjoua vend des tomates au marché. Sa fille Esther veut tout changer avec un téléphone.",
@@ -323,6 +358,7 @@
 "classiques"
 ],
 "level": "B1",
+"niveau": "intermediaire",
 "emoji": "💌",
 "color": "#BE185D",
 "desc": "Elizabeth déteste le fier Mr. Darcy. Mais les premières impressions sont parfois fausses.",
@@ -338,6 +374,7 @@
 "histoire"
 ],
 "level": "A2",
+"niveau": "debutant",
 "emoji": "👑",
 "color": "#7C3AED",
 "desc": "La légende de la Reine Abla Pokou, qui donna son nom au peuple baoulé.",
@@ -352,6 +389,7 @@
 "quotidien"
 ],
 "level": "A1",
+"niveau": "debutant",
 "emoji": "✈️",
 "color": "#0284C7",
 "desc": "Enregistrement, contrôle des passeports, porte d'embarquement : tout ce qu'il faut dire.",
@@ -366,6 +404,7 @@
 "quotidien"
 ],
 "level": "A2",
+"niveau": "debutant",
 "emoji": "💼",
 "color": "#4338CA",
 "desc": "Se présenter, parler de ses qualités et poser des questions en entretien.",
@@ -380,6 +419,7 @@
 "quotidien"
 ],
 "level": "A1",
+"niveau": "debutant",
 "emoji": "🍍",
 "color": "#16A34A",
 "desc": "Acheter, demander un prix et négocier en anglais.",
@@ -394,6 +434,7 @@
 "quotidien"
 ],
 "level": "A1",
+"niveau": "debutant",
 "emoji": "🩺",
 "color": "#0EA5E9",
 "desc": "Expliquer où on a mal et comprendre le médecin.",
@@ -408,6 +449,7 @@
 "quotidien"
 ],
 "level": "A1",
+"niveau": "debutant",
 "emoji": "🍽️",
 "color": "#DC2626",
 "desc": "Réserver, commander, demander l'addition — poliment.",
@@ -423,6 +465,7 @@
 "afrique"
 ],
 "level": "A2",
+"niveau": "debutant",
 "emoji": "🌊",
 "color": "#059669",
 "desc": "Fanta entend la voix du fleuve. Quand la sécheresse arrive, elle seule peut sauver son village.",
@@ -438,6 +481,7 @@
 "classiques"
 ],
 "level": "A2",
+"niveau": "debutant",
 "emoji": "🌹",
 "color": "#E11D48",
 "desc": "Deux familles ennemies. Deux jeunes qui s'aiment. Une histoire qui finit mal.",
@@ -453,6 +497,7 @@
 "classiques"
 ],
 "level": "B1",
+"niveau": "intermediaire",
 "emoji": "🔍",
 "color": "#1E3A8A",
 "desc": "Une jeune femme terrifiée, un sifflement dans la nuit, et la mort mystérieuse de sa sœur.",
@@ -467,6 +512,7 @@
 "contes"
 ],
 "level": "A1",
+"niveau": "debutant",
 "emoji": "☀️",
 "color": "#EA580C",
 "desc": "Autrefois, le Soleil et la Lune vivaient sur la terre. Puis l'Eau vint leur rendre visite…",
@@ -481,6 +527,7 @@
 "histoire"
 ],
 "level": "A2",
+"niveau": "debutant",
 "emoji": "🦁",
 "color": "#B91C1C",
 "desc": "L'enfant qui ne marchait pas devint le fondateur de l'Empire du Mali.",
@@ -495,6 +542,7 @@
 "contes"
 ],
 "level": "A1",
+"niveau": "debutant",
 "emoji": "🐢",
 "color": "#65A30D",
 "desc": "La tortue emprunte des plumes pour aller au festin du ciel… mais elle est trop gourmande.",
@@ -510,6 +558,7 @@
 "classiques"
 ],
 "level": "A2",
+"niveau": "debutant",
 "emoji": "🎈",
 "color": "#0891B2",
 "desc": "Phileas Fogg parie qu'il peut faire le tour du monde en 80 jours. Le compte à rebours commence.",
@@ -525,6 +574,7 @@
 "classiques"
 ],
 "level": "A2",
+"niveau": "debutant",
 "emoji": "🏴‍☠️",
 "color": "#B45309",
 "desc": "Jim trouve la carte d'un trésor de pirates et part en mer… avec un cuisinier à une jambe très gentil. Trop gentil ?",
@@ -539,6 +589,7 @@
 "histoire"
 ],
 "level": "A2",
+"niveau": "debutant",
 "emoji": "🛡️",
 "color": "#9F1239",
 "desc": "En 1900, une reine mère ashanti mène la guerre contre l'Empire britannique pour protéger le Tabouret d'or.",

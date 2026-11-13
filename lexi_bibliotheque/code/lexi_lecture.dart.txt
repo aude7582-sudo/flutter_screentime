@@ -49,6 +49,21 @@ Color _lexiHex(dynamic h) {
   }
 }
 
+String _lexiNiv(Map l) {
+  final n = (l['niveau'] ?? '').toString();
+  if (n.isNotEmpty) return n;
+  final lv = (l['level'] ?? '').toString();
+  if (lv == 'B2' || lv == 'C1' || lv == 'C2') return 'avance';
+  if (lv == 'B1') return 'intermediaire';
+  return 'debutant';
+}
+
+const Map<String, List<dynamic>> _lexiNiveaux = {
+  'debutant': ['Débutant', '🌱', Color(0xFF16A34A)],
+  'intermediaire': ['Intermédiaire', '🌿', Color(0xFF0EA5E9)],
+  'avance': ['Avancé', '🌳', Color(0xFF7C3AED)],
+};
+
 /// Mémoire partagée : catalogue, dictionnaire, livres déjà chargés.
 class _LexiStock {
   static Map<String, dynamic>? catalogue;
@@ -159,7 +174,7 @@ class _LexiLectureState extends State<LexiLecture> {
 
   List<Map<String, dynamic>> get _filtres => _niveau == 'Tous'
       ? _livres
-      : _livres.where((l) => l['level'] == _niveau).toList();
+      : _livres.where((l) => _lexiNiv(l) == _niveau).toList();
 
   List<Map<String, dynamic>> _deCat(String cat) =>
       _filtres.where((l) => (l['cats'] as List).contains(cat)).toList();
@@ -220,10 +235,13 @@ class _LexiLectureState extends State<LexiLecture> {
                 decoration: BoxDecoration(
                     color: Colors.black.withOpacity(0.55),
                     borderRadius: BorderRadius.circular(8)),
-                child: Text(l['level'] ?? '',
+                child: Text(
+                    (_lexiNiveaux[_lexiNiv(l)]?[1] ?? '') +
+                        ' ' +
+                        (_lexiNiveaux[_lexiNiv(l)]?[0] ?? ''),
                     style: const TextStyle(
                         color: Colors.white,
-                        fontSize: 10,
+                        fontSize: 9.5,
                         fontWeight: FontWeight.w800)),
               ),
             ),
@@ -300,7 +318,7 @@ class _LexiLectureState extends State<LexiLecture> {
   }
 
   Widget _niveaux() {
-    const n = ['Tous', 'A1', 'A2', 'B1'];
+    const n = ['Tous', 'debutant', 'intermediaire', 'avance'];
     return SizedBox(
       height: 36,
       child: ListView(
@@ -325,11 +343,9 @@ class _LexiLectureState extends State<LexiLecture> {
                   child: Text(
                       x == 'Tous'
                           ? 'Tous les niveaux'
-                          : x == 'A1'
-                              ? 'A1 · Débutant'
-                              : x == 'A2'
-                                  ? 'A2 · Facile'
-                                  : 'B1 · Moyen',
+                          : (_lexiNiveaux[x]![1] as String) +
+                              ' ' +
+                              (_lexiNiveaux[x]![0] as String),
                       style: TextStyle(
                           color: _niveau == x ? Colors.white : _p.texte,
                           fontSize: 12.5,
@@ -339,6 +355,58 @@ class _LexiLectureState extends State<LexiLecture> {
             ),
         ],
       ),
+    );
+  }
+
+  Widget _cartesNiveaux() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(18, 0, 18, 18),
+      child: Row(children: [
+        for (final e in _lexiNiveaux.entries) ...[
+          Expanded(
+            child: GestureDetector(
+              onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                  builder: (_) => _LexiRayonComplet(
+                      titre: 'Livres ' + (e.value[0] as String).toLowerCase(),
+                      livres: _livres
+                          .where((l) => _lexiNiv(l) == e.key)
+                          .toList(),
+                      ouvrir: _ouvrir))),
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 12, horizontal: 6),
+                decoration: BoxDecoration(
+                  color: e.value[2] as Color,
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: Column(children: [
+                  Text(e.value[1] as String,
+                      style: const TextStyle(fontSize: 26)),
+                  const SizedBox(height: 4),
+                  Text(e.value[0] as String,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 13,
+                          fontWeight: FontWeight.w900)),
+                  Text(
+                      _livres
+                              .where((l) => _lexiNiv(l) == e.key)
+                              .length
+                              .toString() +
+                          ' livres',
+                      style: TextStyle(
+                          color: Colors.white.withOpacity(0.85),
+                          fontSize: 11.5,
+                          fontWeight: FontWeight.w600)),
+                ]),
+              ),
+            ),
+          ),
+          if (e.key != 'avance') const SizedBox(width: 10),
+        ],
+      ]),
     );
   }
 
@@ -469,6 +537,15 @@ class _LexiLectureState extends State<LexiLecture> {
         child: ListView(
           padding: const EdgeInsets.only(top: 4, bottom: 20),
           children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(18, 0, 18, 10),
+              child: Text('Choisis ton niveau',
+                  style: TextStyle(
+                      color: _p.texte,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w800)),
+            ),
+            _cartesNiveaux(),
             _niveaux(),
             const SizedBox(height: 16),
             if (recents.isNotEmpty)
@@ -553,7 +630,10 @@ class _LexiRayonComplet extends StatelessWidget {
                       fontSize: 12,
                       height: 1.2,
                       fontWeight: FontWeight.w700)),
-              Text(l['level'] ?? '',
+              Text(
+                  (_lexiNiveaux[_lexiNiv(l)]?[1] ?? '') +
+                      ' ' +
+                      (_lexiNiveaux[_lexiNiv(l)]?[0] ?? ''),
                   style: TextStyle(color: p.gris, fontSize: 11)),
             ]),
           );
@@ -669,7 +749,14 @@ class _LexiFicheLivreState extends State<_LexiFicheLivre> {
                       fontStyle: FontStyle.italic)),
               const SizedBox(height: 12),
               Wrap(spacing: 8, runSpacing: 8, children: [
-                _puce(p, '🎯 Niveau ' + (l['level'] ?? '')),
+                _puce(
+                    p,
+                    (_lexiNiveaux[_lexiNiv(l)]?[1] ?? '🎯') +
+                        ' ' +
+                        (_lexiNiveaux[_lexiNiv(l)]?[0] ?? '') +
+                        ' (' +
+                        (l['level'] ?? '') +
+                        ')'),
                 _puce(p, '📑 ' + (l['nch'] ?? 0).toString() + ' chapitres'),
                 _puce(
                     p,
