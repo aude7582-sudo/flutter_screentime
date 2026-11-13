@@ -78,6 +78,21 @@
 "nch": 12
 },
 {
+"id": "taxi",
+"title": "The Taxi Driver's Daughter",
+"author": "Léxi",
+"cats": [
+"afrique",
+"ados"
+],
+"level": "A2",
+"emoji": "🚕",
+"color": "#EA580C",
+"desc": "Awa, 15 ans, aide son père chauffeur de woro-woro à Abidjan. Un jour, elle trouve cinq millions de francs sur la banquette arrière… Roman complet.",
+"mots": 6165,
+"nch": 10
+},
+{
 "id": "aladdin",
 "title": "Aladdin and the Magic Lamp",
 "author": "Les Mille et Une Nuits",
@@ -470,21 +485,6 @@
 "color": "#B91C1C",
 "desc": "L'enfant qui ne marchait pas devint le fondateur de l'Empire du Mali.",
 "mots": 573,
-"nch": 5
-},
-{
-"id": "taxi",
-"title": "The Taxi Driver's Daughter",
-"author": "Léxi",
-"cats": [
-"afrique",
-"ados"
-],
-"level": "A2",
-"emoji": "🚕",
-"color": "#F59E0B",
-"desc": "À Abidjan, Awa aide son père chauffeur de woro-woro… et découvre un secret dans le taxi.",
-"mots": 871,
 "nch": 5
 },
 {
