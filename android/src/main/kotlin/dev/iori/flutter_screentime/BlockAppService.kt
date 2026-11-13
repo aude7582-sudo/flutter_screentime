@@ -147,6 +147,7 @@ class BlockAppService : Service() {
         object : Runnable {
             override fun run() {
                 val ctx = this@BlockAppService
+                LexiWidget.majSiBesoin(ctx)
                 val blocage = ScreenTimePreferences.blocageActif(ctx)
                 val veille = ScreenTimePreferences.veilleActive(ctx)
                 if (!blocage && !veille) {

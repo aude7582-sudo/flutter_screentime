@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/lexi_widget_racine"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/lexi_widget_fond"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="12dp">
+
+    <ImageView
+        android:layout_width="52dp"
+        android:layout_height="52dp"
+        android:layout_marginEnd="10dp"
+        android:contentDescription="Léxi"
+        android:scaleType="fitCenter"
+        android:src="@drawable/lexi_renard_bloque" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lexi_widget_titre"
+            android:textColor="#B8B2D6"
+            android:textSize="10sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/lexi_widget_temps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="…"
+            android:textColor="#FFFFFF"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+
+        <ProgressBar
+            android:id="@+id/lexi_widget_barre"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="6dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="4dp"
+            android:max="100"
+            android:progress="0"
+            android:progressTint="#F97316"
+            android:progressBackgroundTint="#3A3460" />
+
+        <TextView
+            android:id="@+id/lexi_widget_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:text=""
+            android:textColor="#E2DBF5"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/lexi_widget_renard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:text=""
+            android:textColor="#FB923C"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+</LinearLayout>

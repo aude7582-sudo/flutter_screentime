@@ -158,7 +158,7 @@ class FlutterScreentimePlugin :
                 val ctx = applicationContext
                 Thread {
                     val donnees = try {
-                        LexiTempsEcran.calculer(ctx, jours)
+                        LexiTempsEcran.calculer(ctx, jours).also { LexiWidget.majTous(ctx) }
                     } catch (_: Exception) {
                         null
                     }

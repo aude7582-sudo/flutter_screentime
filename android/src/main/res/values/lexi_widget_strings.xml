@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="lexi_widget_description">Ton temps d\'écran du jour avec Léxi</string>
+    <string name="lexi_widget_nom">Léxi · Temps d\'écran</string>
+    <string name="lexi_widget_titre">TEMPS D\'ÉCRAN AUJOURD\'HUI</string>
+</resources>
