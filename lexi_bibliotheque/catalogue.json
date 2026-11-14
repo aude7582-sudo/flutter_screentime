@@ -366,6 +366,21 @@
 "nch": 4
 },
 {
+"id": "orpaillage",
+"title": "The Weight of Gold",
+"author": "Léxi",
+"cats": [
+"afrique"
+],
+"level": "B2",
+"niveau": "avance",
+"emoji": "📰",
+"color": "#78350F",
+"desc": "Une jeune journaliste d'Abidjan enquête sur une mine d'or clandestine. Plus elle avance, plus la vérité devient dangereuse.",
+"mots": 1256,
+"nch": 4
+},
+{
 "id": "pokou",
 "title": "Queen Pokou",
 "author": "Légende baoulé (Côte d'Ivoire)",
