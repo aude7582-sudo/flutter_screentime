@@ -518,7 +518,11 @@ class _CxConcours extends StatefulWidget {
     this.onPoints,
     this.pseudo = 'Moi',
     this.drapeau = '🌍',
+    this.onAmis,
+    this.texteAmis = '',
   });
+  final VoidCallback? onAmis;
+  final String texteAmis;
   final String mode;
   final String langue;
   final VoidCallback onRetour;
@@ -771,6 +775,24 @@ class _CxConcoursState extends State<_CxConcours> {
             ),
           ]),
         ),
+        if (widget.onAmis != null) ...[
+          const SizedBox(height: 10),
+          SizedBox(
+            height: 48,
+            child: OutlinedButton.icon(
+              onPressed: widget.onAmis,
+              icon: Icon(Icons.group_rounded, color: c),
+              label: Text(widget.texteAmis,
+                  style: TextStyle(
+                      color: c, fontSize: 15, fontWeight: FontWeight.w800)),
+              style: OutlinedButton.styleFrom(
+                side: BorderSide(color: c, width: 1.8),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16)),
+              ),
+            ),
+          ),
+        ],
         const SizedBox(height: 10),
         Text('⭐ $total / 30 étoiles',
             textAlign: TextAlign.center,
