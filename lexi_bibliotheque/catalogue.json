@@ -65,6 +65,22 @@
 ],
 "livres": [
 {
+"id": "bassam",
+"title": "A Summer in Grand-Bassam",
+"author": "Léxi",
+"cats": [
+"amour",
+"afrique"
+],
+"level": "A2",
+"niveau": "intermediaire",
+"emoji": "🌅",
+"color": "#DB2777",
+"desc": "Nadia, 16 ans, passe l'été chez sa tante dans une vieille maison jaune de Grand-Bassam. Un garçon qui peint la mer, des poèmes cachés, une boîte de lettres jamais envoyées… Roman complet.",
+"mots": 7247,
+"nch": 10
+},
+{
 "id": "riviere",
 "title": "The Girl Who Talked to the River",
 "author": "Léxi",
@@ -206,22 +222,6 @@
 "color": "#D97706",
 "desc": "Avec 20 000 francs et la recette de sa grand-mère, Mariam ouvre son petit commerce d'attiéké.",
 "mots": 533,
-"nch": 5
-},
-{
-"id": "bassam",
-"title": "A Summer in Grand-Bassam",
-"author": "Léxi",
-"cats": [
-"amour",
-"afrique"
-],
-"level": "A2",
-"niveau": "debutant",
-"emoji": "🌊",
-"color": "#DB2777",
-"desc": "Nadia passe l'été chez sa tante à Grand-Bassam. Un garçon qui peint la mer, une lettre jamais envoyée.",
-"mots": 725,
 "nch": 5
 },
 {
