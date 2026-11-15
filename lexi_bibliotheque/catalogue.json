@@ -65,6 +65,22 @@
 ],
 "livres": [
 {
+"id": "riviere",
+"title": "The Girl Who Talked to the River",
+"author": "Léxi",
+"cats": [
+"fantaisie",
+"afrique"
+],
+"level": "A2",
+"niveau": "intermediaire",
+"emoji": "🌊",
+"color": "#059669",
+"desc": "Fanta, 12 ans, entend la voix du fleuve Comoé. Quand le fleuve tombe malade, personne ne la croit… Avec sa grand-mère, elle remonte le fleuve en pirogue pour le sauver. Roman complet.",
+"mots": 6885,
+"nch": 10
+},
+{
 "id": "busnuit",
 "title": "The Night Bus to Bouaké",
 "author": "Léxi",
@@ -470,22 +486,6 @@
 "desc": "Réserver, commander, demander l'addition — poliment.",
 "mots": 244,
 "nch": 3
-},
-{
-"id": "riviere",
-"title": "The Girl Who Talked to the River",
-"author": "Léxi",
-"cats": [
-"fantaisie",
-"afrique"
-],
-"level": "A2",
-"niveau": "debutant",
-"emoji": "🌊",
-"color": "#059669",
-"desc": "Fanta entend la voix du fleuve. Quand la sécheresse arrive, elle seule peut sauver son village.",
-"mots": 673,
-"nch": 5
 },
 {
 "id": "romeo",
