@@ -65,6 +65,22 @@
 ],
 "livres": [
 {
+"id": "busnuit",
+"title": "The Night Bus to Bouaké",
+"author": "Léxi",
+"cats": [
+"mystere",
+"afrique"
+],
+"level": "B1",
+"niveau": "intermediaire",
+"emoji": "🚌",
+"color": "#334155",
+"desc": "Un car de nuit entre Abidjan et Bouaké, onze passagers, dix millions de francs qui disparaissent… L'inspectrice Mariam Touré a jusqu'au lever du soleil. Roman complet.",
+"mots": 6889,
+"nch": 10
+},
+{
 "id": "lea",
 "title": "Between Two Léas",
 "author": "Aude Lago Gbokoya",
@@ -190,22 +206,6 @@
 "color": "#DB2777",
 "desc": "Nadia passe l'été chez sa tante à Grand-Bassam. Un garçon qui peint la mer, une lettre jamais envoyée.",
 "mots": 725,
-"nch": 5
-},
-{
-"id": "busnuit",
-"title": "The Night Bus to Bouaké",
-"author": "Léxi",
-"cats": [
-"mystere",
-"afrique"
-],
-"level": "B1",
-"niveau": "intermediaire",
-"emoji": "🚌",
-"color": "#334155",
-"desc": "Un bus de nuit, onze passagers, et une valise qui disparaît. Qui ment ?",
-"mots": 712,
 "nch": 5
 },
 {
