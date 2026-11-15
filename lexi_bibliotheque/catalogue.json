@@ -241,6 +241,22 @@
 "nch": 4
 },
 {
+"id": "deuxchance",
+"title": "The Second Chance",
+"author": "Léxi",
+"cats": [
+"changer",
+"afrique"
+],
+"level": "B2",
+"niveau": "avance",
+"emoji": "🎓",
+"color": "#1D4ED8",
+"desc": "À 42 ans, Rose, vendeuse de pagnes, décide de passer le bac en candidate libre — la même année que son fils. Une histoire sur le courage de recommencer.",
+"mots": 1056,
+"nch": 5
+},
+{
 "id": "dixminutes",
 "title": "Ten Minutes a Day",
 "author": "Léxi",
@@ -304,6 +320,22 @@
 "nch": 4
 },
 {
+"id": "interprete",
+"title": "The Interpreter",
+"author": "Léxi",
+"cats": [
+"amour",
+"afrique"
+],
+"level": "B2",
+"niveau": "avance",
+"emoji": "🎧",
+"color": "#9D174D",
+"desc": "Salimata est interprète lors d'un grand sommet à Abidjan. Pendant trois jours, elle prête sa voix à un diplomate anglais. Mais que se passe-t-il quand on traduit les mots de quelqu'un… et qu'on finit par les penser ?",
+"mots": 952,
+"nch": 5
+},
+{
 "id": "jungle",
 "title": "The Jungle Book",
 "author": "d'après Rudyard Kipling",
@@ -333,6 +365,22 @@
 "desc": "Le lion mange un animal chaque jour. Le petit lièvre a une idée pour le tromper.",
 "mots": 372,
 "nch": 3
+},
+{
+"id": "magi",
+"title": "The Gift of the Magi",
+"author": "O. Henry (adaptation Léxi)",
+"cats": [
+"classiques",
+"amour"
+],
+"level": "B2",
+"niveau": "avance",
+"emoji": "🎁",
+"color": "#7F1D1D",
+"desc": "Un classique de 1905. La veille de Noël, Della n'a qu'un dollar quatre-vingt-sept pour acheter un cadeau à Jim. Elle n'a qu'une seule richesse… et lui aussi.",
+"mots": 1512,
+"nch": 5
 },
 {
 "id": "mansa",
@@ -488,6 +536,22 @@
 "nch": 3
 },
 {
+"id": "recette",
+"title": "The Last Recipe",
+"author": "Léxi",
+"cats": [
+"afrique",
+"changer"
+],
+"level": "B2",
+"niveau": "avance",
+"emoji": "🍲",
+"color": "#B45309",
+"desc": "Une jeune cheffe formée à Paris hérite du maquis de sa grand-mère à Treichville. Une grande chaîne veut le racheter. Mais il manque une recette…",
+"mots": 1033,
+"nch": 5
+},
+{
 "id": "romeo",
 "title": "Romeo and Juliet",
 "author": "d'après William Shakespeare",
@@ -518,6 +582,22 @@
 "desc": "Une jeune femme terrifiée, un sifflement dans la nuit, et la mort mystérieuse de sa sœur.",
 "mots": 531,
 "nch": 4
+},
+{
+"id": "signal",
+"title": "Signal Lost",
+"author": "Léxi",
+"cats": [
+"mystere",
+"afrique"
+],
+"level": "B2",
+"niveau": "avance",
+"emoji": "📶",
+"color": "#0F172A",
+"desc": "Kevin, jeune informaticien d'une société de mobile money à Abidjan, découvre que des milliers de petits comptes perdent quelques francs chaque nuit. Qui vole les pauvres, centime par centime ?",
+"mots": 1082,
+"nch": 5
 },
 {
 "id": "soleil",
