@@ -1,0 +1,2514 @@
+
+import 'dart:async';
+import 'dart:math' as math;
+import '/app_state.dart';
+import 'package:provider/provider.dart';
+import '/auth/firebase_auth/auth_util.dart';
+import 'package:flutter_tts/flutter_tts.dart';
+
+/// Onglet Jouer : 10 jeux, 10 niveaux chacun. Un niveau se débloque quand
+/// on gagne le précédent (1 à 3 étoiles).
+class LexiJouer extends StatefulWidget {
+  const LexiJouer({
+    super.key,
+    this.width,
+    this.height,
+  });
+
+  final double? width;
+  final double? height;
+
+  @override
+  State<LexiJouer> createState() => _LexiJouerState();
+}
+
+// ---------------------------------------------------------------------------
+// Outils communs
+
+const _lxOrange = Color(0xFFF97316);
+const _lxVert = Color(0xFF16A34A);
+const _lxRouge = Color(0xFFDC2626);
+const _lxViolet = Color(0xFF7C3AED);
+const _lxJaune = Color(0xFFFBBF24);
+const _lxVoix = {
+  'en': 'en-US',
+  'es': 'es-ES',
+  'pt': 'pt-BR',
+  'zh': 'zh-CN',
+};
+final math.Random _lxR = math.Random();
+
+class _LxP {
+  _LxP(this.s);
+  final bool s;
+  Color get fond => s ? const Color(0xFF14112B) : const Color(0xFFF6F3FF);
+  Color get carte => s ? const Color(0xFF221D3D) : Colors.white;
+  Color get texte => s ? Colors.white : const Color(0xFF1E1640);
+  Color get gris => s ? const Color(0xFFB8B2D6) : const Color(0xFF6B6490);
+  Color get bord => s ? const Color(0xFF3A3460) : const Color(0xFFE2DBF5);
+  Color get doux => s ? const Color(0xFF2E2852) : const Color(0xFFEDE9FE);
+}
+
+_LxP _lxP(BuildContext c) => _LxP(FFAppState().isDarkMode);
+
+String _lxSans(String s) {
+  const a = 'àâäáãåçéèêëíìîïñóòôöõúùûüýÿœæ';
+  const b = 'aaaaaaceeeeiiiinooooouuuuyyoa';
+  final l = s.toLowerCase();
+  final o = StringBuffer();
+  for (final ch in l.split('')) {
+    final i = a.indexOf(ch);
+    o.write(i >= 0 ? b[i] : ch);
+  }
+  return o.toString().replaceAll(RegExp(r"[^a-z0-9一-鿿]"), '');
+}
+
+List<Map<String, String>> _lxTirer(List<Map<String, String>> mots, int n,
+    {bool Function(Map<String, String>)? filtre}) {
+  final l = [...mots]..shuffle(_lxR);
+  final res = <Map<String, String>>[];
+  final ts = <String>{};
+  final ds = <String>{};
+  for (final m in l) {
+    if (filtre != null && !filtre(m)) continue;
+    if (ts.contains(m['t']) || ds.contains(m['d'])) continue;
+    ts.add(m['t']!);
+    ds.add(m['d']!);
+    res.add(m);
+    if (res.length >= n) break;
+  }
+  return res;
+}
+
+Widget _lxBouton(String t, Color c, VoidCallback? f, {Color? texte}) =>
+    SizedBox(
+      width: double.infinity,
+      child: ElevatedButton(
+        onPressed: f,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: c,
+          foregroundColor: texte ?? Colors.white,
+          elevation: 0,
+          padding: const EdgeInsets.symmetric(vertical: 15),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        ),
+        child: Text(t,
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w800)),
+      ),
+    );
+
+Widget _lxVies(int vies, int max) => Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        for (var i = 0; i < max; i++)
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 1),
+            child: Text(i < vies ? '❤️' : '🤍',
+                style: const TextStyle(fontSize: 18)),
+          ),
+      ],
+    );
+
+typedef _LxFin = void Function(int etoiles, int score);
+
+/// Images (emoji) pour « Devine l'image » : en, es, pt, zh, fr.
+const _lxImages = [
+  ['🍎', 'apple', 'manzana', 'maçã', '苹果', 'pomme'],
+  ['🍌', 'banana', 'plátano', 'banana', '香蕉', 'banane'],
+  ['🍊', 'orange', 'naranja', 'laranja', '橙子', 'orange'],
+  ['🍇', 'grapes', 'uvas', 'uvas', '葡萄', 'raisin'],
+  ['🍉', 'watermelon', 'sandía', 'melancia', '西瓜', 'pastèque'],
+  ['🥭', 'mango', 'mango', 'manga', '芒果', 'mangue'],
+  ['🍍', 'pineapple', 'piña', 'abacaxi', '菠萝', 'ananas'],
+  ['🍓', 'strawberry', 'fresa', 'morango', '草莓', 'fraise'],
+  ['🍅', 'tomato', 'tomate', 'tomate', '西红柿', 'tomate'],
+  ['🥕', 'carrot', 'zanahoria', 'cenoura', '胡萝卜', 'carotte'],
+  ['🍞', 'bread', 'pan', 'pão', '面包', 'pain'],
+  ['🧀', 'cheese', 'queso', 'queijo', '奶酪', 'fromage'],
+  ['🥚', 'egg', 'huevo', 'ovo', '鸡蛋', 'œuf'],
+  ['🍚', 'rice', 'arroz', 'arroz', '米饭', 'riz'],
+  ['🐟', 'fish', 'pez', 'peixe', '鱼', 'poisson'],
+  ['🍗', 'chicken', 'pollo', 'frango', '鸡肉', 'poulet'],
+  ['☕', 'coffee', 'café', 'café', '咖啡', 'café'],
+  ['🥛', 'milk', 'leche', 'leite', '牛奶', 'lait'],
+  ['💧', 'water', 'agua', 'água', '水', 'eau'],
+  ['🐶', 'dog', 'perro', 'cachorro', '狗', 'chien'],
+  ['🐱', 'cat', 'gato', 'gato', '猫', 'chat'],
+  ['🐦', 'bird', 'pájaro', 'pássaro', '鸟', 'oiseau'],
+  ['🐴', 'horse', 'caballo', 'cavalo', '马', 'cheval'],
+  ['🐮', 'cow', 'vaca', 'vaca', '牛', 'vache'],
+  ['🐘', 'elephant', 'elefante', 'elefante', '大象', 'éléphant'],
+  ['🦁', 'lion', 'león', 'leão', '狮子', 'lion'],
+  ['🐒', 'monkey', 'mono', 'macaco', '猴子', 'singe'],
+  ['🐍', 'snake', 'serpiente', 'cobra', '蛇', 'serpent'],
+  ['🐢', 'turtle', 'tortuga', 'tartaruga', '乌龟', 'tortue'],
+  ['🦊', 'fox', 'zorro', 'raposa', '狐狸', 'renard'],
+  ['🐭', 'mouse', 'ratón', 'rato', '老鼠', 'souris'],
+  ['🏠', 'house', 'casa', 'casa', '房子', 'maison'],
+  ['🚗', 'car', 'coche', 'carro', '汽车', 'voiture'],
+  ['🚌', 'bus', 'autobús', 'ônibus', '公共汽车', 'bus'],
+  ['✈️', 'plane', 'avión', 'avião', '飞机', 'avion'],
+  ['🚲', 'bicycle', 'bicicleta', 'bicicleta', '自行车', 'vélo'],
+  ['⛵', 'boat', 'barco', 'barco', '船', 'bateau'],
+  ['📱', 'phone', 'teléfono', 'telefone', '手机', 'téléphone'],
+  ['📖', 'book', 'libro', 'livro', '书', 'livre'],
+  ['✏️', 'pencil', 'lápiz', 'lápis', '铅笔', 'crayon'],
+  ['🪑', 'chair', 'silla', 'cadeira', '椅子', 'chaise'],
+  ['🛏️', 'bed', 'cama', 'cama', '床', 'lit'],
+  ['🚪', 'door', 'puerta', 'porta', '门', 'porte'],
+  ['🔑', 'key', 'llave', 'chave', '钥匙', 'clé'],
+  ['⌚', 'watch', 'reloj', 'relógio', '手表', 'montre'],
+  ['👟', 'shoe', 'zapato', 'sapato', '鞋', 'chaussure'],
+  ['👕', 'shirt', 'camisa', 'camisa', '衬衫', 'chemise'],
+  ['🎒', 'school bag', 'mochila', 'mochila', '书包', 'cartable'],
+  ['☀️', 'sun', 'sol', 'sol', '太阳', 'soleil'],
+  ['🌙', 'moon', 'luna', 'lua', '月亮', 'lune'],
+  ['⭐', 'star', 'estrella', 'estrela', '星星', 'étoile'],
+  ['🌧️', 'rain', 'lluvia', 'chuva', '雨', 'pluie'],
+  ['🌳', 'tree', 'árbol', 'árvore', '树', 'arbre'],
+  ['🌸', 'flower', 'flor', 'flor', '花', 'fleur'],
+  ['🔥', 'fire', 'fuego', 'fogo', '火', 'feu'],
+  ['⚽', 'ball', 'pelota', 'bola', '球', 'ballon'],
+  ['🎵', 'music', 'música', 'música', '音乐', 'musique'],
+  ['🏥', 'hospital', 'hospital', 'hospital', '医院', 'hôpital'],
+  ['🏫', 'school', 'escuela', 'escola', '学校', 'école'],
+  ['👁️', 'eye', 'ojo', 'olho', '眼睛', 'œil'],
+  ['✋', 'hand', 'mano', 'mão', '手', 'main'],
+  ['❤️', 'heart', 'corazón', 'coração', '心', 'cœur'],
+  ['😀', 'happy', 'feliz', 'feliz', '高兴', 'content'],
+  ['😢', 'sad', 'triste', 'triste', '难过', 'triste'],
+  ['😴', 'to sleep', 'dormir', 'dormir', '睡觉', 'dormir'],
+  ['🏃', 'to run', 'correr', 'correr', '跑', 'courir'],
+  ['🍽️', 'to eat', 'comer', 'comer', '吃', 'manger'],
+  ['👩‍⚕️', 'doctor', 'médico', 'médico', '医生', 'médecin'],
+  ['🧑‍🏫', 'teacher', 'profesor', 'professor', '老师', 'professeur'],
+  ['👶', 'baby', 'bebé', 'bebê', '婴儿', 'bébé'],
+];
+
+/// Mots pour « Le mot du jour » : [mot, traduction] par longueur.
+const _lxMots4 = {
+  'en': ['BOOK:livre', 'FISH:poisson', 'HAND:main', 'MILK:lait', 'RAIN:pluie', 'TREE:arbre', 'DOOR:porte', 'BIRD:oiseau', 'CAKE:gâteau', 'MOON:lune'],
+  'es': ['CASA:maison', 'LUNA:lune', 'MESA:table', 'AGUA:eau', 'GATO:chat', 'BOCA:bouche', 'PELO:cheveux', 'VIDA:vie', 'ROJO:rouge', 'MANO:main'],
+  'pt': ['CASA:maison', 'MESA:table', 'VIDA:vie', 'GATO:chat', 'BOLO:gâteau', 'AMOR:amour', 'FOGO:feu', 'OLHO:œil', 'AZUL:bleu', 'NOVE:neuf'],
+};
+const _lxMots5 = {
+  'en': ['APPLE:pomme', 'HOUSE:maison', 'WATER:eau', 'BREAD:pain', 'CHAIR:chaise', 'SMILE:sourire', 'PLANT:plante', 'BEACH:plage', 'TRAIN:train', 'MONEY:argent'],
+  'es': ['PERRO:chien', 'LIBRO:livre', 'PLAYA:plage', 'NOCHE:nuit', 'CIELO:ciel', 'FRUTA:fruit', 'LECHE:lait', 'VERDE:vert', 'AMIGO:ami', 'TARDE:après-midi'],
+  'pt': ['LIVRO:livre', 'PEIXE:poisson', 'PRAIA:plage', 'NOITE:nuit', 'VERDE:vert', 'FESTA:fête', 'CARRO:voiture', 'PORTA:porte', 'LEITE:lait', 'PEDRA:pierre'],
+};
+const _lxMots6 = {
+  'en': ['FRIEND:ami', 'SCHOOL:école', 'MARKET:marché', 'GARDEN:jardin', 'ORANGE:orange', 'FLOWER:fleur', 'MOTHER:mère', 'WINDOW:fenêtre', 'DOCTOR:médecin', 'PLAYER:joueur'],
+  'es': ['CIUDAD:ville', 'CAMINO:chemin', 'MADERA:bois', 'CABEZA:tête', 'ABUELO:grand-père', 'PLANTA:plante', 'VIENTO:vent', 'CAMISA:chemise', 'TIENDA:magasin', 'BANANA:banane'],
+  'pt': ['CIDADE:ville', 'ESCOLA:école', 'JANELA:fenêtre', 'CAMISA:chemise', 'BANANA:banane', 'TOMATE:tomate', 'SAPATO:chaussure', 'AMIGOS:amis', 'FLORES:fleurs', 'VIAGEM:voyage'],
+};
+
+// ---------------------------------------------------------------------------
+// Écran principal
+
+class _LexiJouerState extends State<LexiJouer> {
+  static const _jeux = [
+    ['paires', 'Paires', 'Relie chaque mot à sa traduction', '🧩', 0xFF16A34A],
+    ['meles', 'Mots mêlés', 'Trouve les mots cachés dans la grille', '🔤', 0xFF7C3AED],
+    ['memoire', 'Mémoire', 'Retourne les cartes et retrouve les paires', '🃏', 0xFF0EA5E9],
+    ['duel', 'Duel éclair', 'Plus rapide que le renard !', '⚡', 0xFFF97316],
+    ['lettres', 'Lettres mélangées', 'Remets les lettres dans l’ordre', '🔠', 0xFFDB2777],
+    ['vraifaux', 'Vrai ou Faux', 'La traduction est-elle juste ? Vite !', '✅', 0xFF059669],
+    ['ecoute', 'Écoute et écris', 'Écoute le mot et écris-le', '👂', 0xFF2563EB],
+    ['pluie', 'Pluie de mots', 'Touche la traduction avant que le mot tombe', '🌧️', 0xFF0891B2],
+    ['motjour', 'Le mot mystère', 'Trouve le mot en 6 essais', '🟩', 0xFF65A30D],
+    ['image', 'Devine l’image', 'Quel est le mot pour cette image ?', '🖼️', 0xFFEA580C],
+  ];
+
+  final FlutterTts _tts = FlutterTts();
+  bool _charge = false;
+  int _acces = 7;
+  String _langue = 'en';
+  List<Map<String, String>> _tous = [];
+  final List<int> _ordre = [];
+  DocumentReference? _ref;
+  Map<String, Map<String, int>> _prog = {};
+  String? _jeu;
+  int? _niveau;
+  int _cle = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _charger();
+    lexiAcces().then((v) {
+      if (mounted) setState(() => _acces = v);
+    });
+  }
+
+  @override
+  void dispose() {
+    _tts.stop();
+    super.dispose();
+  }
+
+  int _entier(dynamic v) => v is num ? v.toInt() : 0;
+
+  Future<void> _charger() async {
+    try {
+      final db = FirebaseFirestore.instance;
+      final q = await db
+          .collection('user_stats')
+          .where('uid', isEqualTo: currentUserUid)
+          .limit(1)
+          .get();
+      if (q.docs.isNotEmpty) {
+        _ref = q.docs.first.reference;
+        final d = q.docs.first.data();
+        _langue = (d['langue'] ?? 'en').toString();
+        final p = d['jeuxNiv'];
+        if (p is Map) {
+          final m = <String, Map<String, int>>{};
+          p.forEach((k, v) {
+            if (v is Map) {
+              m[k.toString()] = {
+                for (final e in v.entries) e.key.toString(): _entier(e.value)
+              };
+            }
+          });
+          _prog = m;
+        }
+      }
+      await lexiParcours(_langue);
+      final s = await db
+          .collection('parcours')
+          .where('langue', isEqualTo: _langue)
+          .limit(450)
+          .get();
+      final l = <Map<String, String>>[];
+      _ordre.clear();
+      final docs = [...s.docs]
+        ..sort((a, b) => _entier(a.data()['orderIndex'])
+            .compareTo(_entier(b.data()['orderIndex'])));
+      for (final doc in docs) {
+        final m = doc.data();
+        final t = (m['term'] ?? '').toString().trim();
+        final d = (m['definition'] ?? '').toString().trim();
+        if (t.isNotEmpty && d.isNotEmpty) {
+          l.add({'t': t, 'd': d});
+          _ordre.add(_entier(m['orderIndex']));
+        }
+      }
+      _tous = l;
+    } catch (_) {}
+    if (mounted) setState(() => _charge = true);
+  }
+
+  /// Plus le niveau monte, plus on prend de mots (et des mots plus durs).
+  List<Map<String, String>> _pool(int niveau) {
+    final lim = 20 + 10 * niveau;
+    final l = <Map<String, String>>[];
+    for (var i = 0; i < _tous.length; i++) {
+      if (_ordre[i] < lim) l.add(_tous[i]);
+    }
+    return l.length >= 14 ? l : _tous;
+  }
+
+  Future<void> _dire(String texte) async {
+    try {
+      await _tts.stop();
+      await _tts.setLanguage(_lxVoix[_langue] ?? 'en-US');
+      await _tts.setSpeechRate(0.42);
+      await _tts.speak(texte);
+    } catch (_) {}
+  }
+
+  int _etoiles(String jeu, int n) => _prog[jeu]?[n.toString()] ?? 0;
+
+  bool _ouvert(String jeu, int n) => n == 1 || _etoiles(jeu, n - 1) > 0;
+
+  int _total(String jeu) =>
+      (_prog[jeu]?.values ?? const <int>[]).fold(0, (a, b) => a + b);
+
+  int _niveauActuel(String jeu) {
+    var n = 1;
+    while (n < 10 && _etoiles(jeu, n) > 0) {
+      n++;
+    }
+    return n;
+  }
+
+  Future<void> _gagne(String jeu, int niveau, int etoiles, int score) async {
+    final avant = _etoiles(jeu, niveau);
+    if (etoiles > avant) {
+      setState(() {
+        _prog.putIfAbsent(jeu, () => {});
+        _prog[jeu]![niveau.toString()] = etoiles;
+      });
+    }
+    try {
+      final maj = <String, dynamic>{
+        'totalXp': FieldValue.increment(score),
+        'jeuxTotal': FieldValue.increment(1),
+      };
+      if (etoiles > avant) {
+        maj['jeuxNiv.' + jeu + '.' + niveau.toString()] = etoiles;
+      }
+      if (score > 0 || etoiles > avant) await _ref?.update(maj);
+    } catch (_) {}
+  }
+
+  void _ouvrirJeu(String id) {
+    if (_tous.length < 6) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Les mots se chargent… réessaie dans un instant.')));
+      return;
+    }
+    setState(() {
+      _jeu = id;
+      _niveau = null;
+    });
+  }
+
+  void _jouerNiveau(int n) {
+    setState(() {
+      _niveau = n;
+      _cle++;
+    });
+  }
+
+  // ---- Liste des jeux
+  Widget _liste(_LxP p) {
+    return ListView(
+      padding: const EdgeInsets.fromLTRB(18, 14, 18, 24),
+      children: [
+        Text('Jouer',
+            style: TextStyle(
+                color: p.texte, fontSize: 28, fontWeight: FontWeight.w900)),
+        const SizedBox(height: 4),
+        Text('10 jeux · 10 niveaux chacun. Gagne un niveau pour débloquer le suivant !',
+            style: TextStyle(color: p.gris, fontSize: 14)),
+        const SizedBox(height: 16),
+        if (!_charge)
+          const Padding(
+            padding: EdgeInsets.all(30),
+            child: Center(child: CircularProgressIndicator(color: _lxOrange)),
+          ),
+        for (final j in _jeux)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 12),
+            child: InkWell(
+              borderRadius: BorderRadius.circular(20),
+              onTap: () => _ouvrirJeu(j[0] as String),
+              child: Container(
+                padding: const EdgeInsets.all(14),
+                decoration: BoxDecoration(
+                  color: p.carte,
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(color: p.bord),
+                ),
+                child: Row(children: [
+                  Container(
+                    width: 58,
+                    height: 58,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: Color(j[4] as int),
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Text(j[3] as String,
+                        style: const TextStyle(fontSize: 30)),
+                  ),
+                  const SizedBox(width: 14),
+                  Expanded(
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(j[1] as String,
+                              style: TextStyle(
+                                  color: p.texte,
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w800)),
+                          const SizedBox(height: 2),
+                          Text(j[2] as String,
+                              style: TextStyle(color: p.gris, fontSize: 13)),
+                          const SizedBox(height: 6),
+                          Text(
+                              'Niveau ' +
+                                  _niveauActuel(j[0] as String).toString() +
+                                  '/10  ·  ★ ' +
+                                  _total(j[0] as String).toString() +
+                                  '/30',
+                              style: TextStyle(
+                                  color: Color(j[4] as int),
+                                  fontSize: 12.5,
+                                  fontWeight: FontWeight.w800)),
+                        ]),
+                  ),
+                  Icon(Icons.chevron_right_rounded, color: p.gris),
+                ]),
+              ),
+            ),
+          ),
+      ],
+    );
+  }
+
+  // ---- Carte des niveaux
+  Widget _carteNiveaux(_LxP p) {
+    final j = _jeux.firstWhere((x) => x[0] == _jeu);
+    final couleur = Color(j[4] as int);
+    return Column(children: [
+      Padding(
+        padding: const EdgeInsets.fromLTRB(6, 6, 18, 0),
+        child: Row(children: [
+          IconButton(
+            onPressed: () => setState(() => _jeu = null),
+            icon: Icon(Icons.arrow_back_rounded, color: p.texte, size: 26),
+          ),
+          Expanded(
+            child: Text(j[1] as String,
+                style: TextStyle(
+                    color: p.texte,
+                    fontSize: 21,
+                    fontWeight: FontWeight.w900)),
+          ),
+          Text('★ ' + _total(_jeu!).toString() + '/30',
+              style: const TextStyle(
+                  color: _lxJaune, fontSize: 16, fontWeight: FontWeight.w900)),
+        ]),
+      ),
+      Expanded(
+        child: ListView(
+          padding: const EdgeInsets.fromLTRB(20, 10, 20, 24),
+          children: [
+            Container(
+              padding: const EdgeInsets.all(18),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    colors: [couleur, couleur.withOpacity(0.75)]),
+                borderRadius: BorderRadius.circular(22),
+              ),
+              child: Row(children: [
+                Text(j[3] as String, style: const TextStyle(fontSize: 44)),
+                const SizedBox(width: 14),
+                Expanded(
+                  child: Text(j[2] as String,
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 15.5,
+                          fontWeight: FontWeight.w700)),
+                ),
+              ]),
+            ),
+            const SizedBox(height: 22),
+            GridView.count(
+              crossAxisCount: 3,
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              mainAxisSpacing: 16,
+              crossAxisSpacing: 16,
+              childAspectRatio: 0.92,
+              children: [
+                for (var n = 1; n <= 10; n++) _caseNiveau(p, n, couleur),
+              ],
+            ),
+          ],
+        ),
+      ),
+    ]);
+  }
+
+  Widget _caseNiveau(_LxP p, int n, Color couleur) {
+    final ouvert = _ouvert(_jeu!, n);
+    final et = _etoiles(_jeu!, n);
+    return GestureDetector(
+      onTap: () {
+        if (!ouvert) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text('🔒 Gagne le niveau ' +
+                  (n - 1).toString() +
+                  ' pour débloquer celui-ci.')));
+          return;
+        }
+        _jouerNiveau(n);
+      },
+      child: Column(mainAxisSize: MainAxisSize.min, children: [
+        Container(
+          width: 74,
+          height: 74,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: ouvert ? couleur : p.doux,
+            shape: BoxShape.circle,
+            boxShadow: ouvert
+                ? [
+                    BoxShadow(
+                        color: couleur.withOpacity(0.35),
+                        blurRadius: 10,
+                        offset: const Offset(0, 4))
+                  ]
+                : null,
+          ),
+          child: ouvert
+              ? Text(n.toString(),
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 28,
+                      fontWeight: FontWeight.w900))
+              : Icon(Icons.lock_rounded, color: p.gris, size: 28),
+        ),
+        const SizedBox(height: 6),
+        Row(mainAxisSize: MainAxisSize.min, children: [
+          for (var i = 0; i < 3; i++)
+            Icon(Icons.star_rounded,
+                size: 18, color: i < et ? _lxJaune : p.bord),
+        ]),
+      ]),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+    final p = _lxP(context);
+    Widget corps;
+    if (_acces < 0) {
+      corps = LexiPro(width: widget.width);
+    } else if (_jeu == null) {
+      corps = _liste(p);
+    } else if (_niveau == null) {
+      corps = _carteNiveaux(p);
+    } else {
+      final j = _jeux.firstWhere((x) => x[0] == _jeu);
+      final n = _niveau!;
+      corps = _LxPartie(
+        key: ValueKey(_cle),
+        jeu: _jeu!,
+        nom: j[1] as String,
+        couleur: Color(j[4] as int),
+        niveau: n,
+        langue: _langue,
+        mots: _pool(n),
+        dire: _dire,
+        onGagne: (e, s) => _gagne(_jeu!, n, e, s),
+        onQuitter: () => setState(() => _niveau = null),
+        onSuivant: n < 10 ? () => _jouerNiveau(n + 1) : null,
+        onRejouer: () => _jouerNiveau(n),
+      );
+    }
+    return Container(
+      width: widget.width ?? double.infinity,
+      height: widget.height ?? double.infinity,
+      color: p.fond,
+      child: Column(children: [
+        Expanded(child: SafeArea(bottom: false, child: corps)),
+        const LexiNav(actif: 7),
+      ]),
+    );
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Une partie : en-tête, jeu, puis écran de résultat
+
+class _LxPartie extends StatefulWidget {
+  const _LxPartie({
+    super.key,
+    required this.jeu,
+    required this.nom,
+    required this.couleur,
+    required this.niveau,
+    required this.langue,
+    required this.mots,
+    required this.dire,
+    required this.onGagne,
+    required this.onQuitter,
+    required this.onSuivant,
+    required this.onRejouer,
+  });
+  final String jeu;
+  final String nom;
+  final Color couleur;
+  final int niveau;
+  final String langue;
+  final List<Map<String, String>> mots;
+  final Future<void> Function(String) dire;
+  final _LxFin onGagne;
+  final VoidCallback onQuitter;
+  final VoidCallback? onSuivant;
+  final VoidCallback onRejouer;
+
+  @override
+  State<_LxPartie> createState() => _LxPartieState();
+}
+
+class _LxPartieState extends State<_LxPartie> {
+  int? _etoiles;
+  int _score = 0;
+
+  void _fin(int etoiles, int score) {
+    if (_etoiles != null || !mounted) return;
+    setState(() {
+      _etoiles = etoiles;
+      _score = score;
+    });
+    widget.onGagne(etoiles, score);
+  }
+
+  Widget _jeu() {
+    final a = _LxArgs(widget.mots, widget.niveau, widget.langue, widget.dire,
+        _fin, widget.couleur);
+    switch (widget.jeu) {
+      case 'paires':
+        return _JeuPaires(a: a);
+      case 'meles':
+        return _JeuMeles(a: a);
+      case 'memoire':
+        return _JeuMemoire(a: a);
+      case 'duel':
+        return _JeuDuel(a: a);
+      case 'lettres':
+        return _JeuLettres(a: a);
+      case 'vraifaux':
+        return _JeuVraiFaux(a: a);
+      case 'ecoute':
+        return _JeuEcoute(a: a);
+      case 'pluie':
+        return _JeuPluie(a: a);
+      case 'motjour':
+        return _JeuMotMystere(a: a);
+      default:
+        return _JeuImage(a: a);
+    }
+  }
+
+  Widget _resultat(_LxP p) {
+    final e = _etoiles!;
+    final gagne = e > 0;
+    return ListView(
+      padding: const EdgeInsets.fromLTRB(26, 30, 26, 30),
+      children: [
+        Center(
+          child: Text(gagne ? '🦊🎉' : '🦊💪',
+              style: const TextStyle(fontSize: 70)),
+        ),
+        const SizedBox(height: 10),
+        Text(gagne ? 'Bravo !' : 'Presque !',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                color: p.texte, fontSize: 30, fontWeight: FontWeight.w900)),
+        const SizedBox(height: 6),
+        Text(
+            gagne
+                ? 'Niveau ' + widget.niveau.toString() + ' réussi'
+                : 'Réessaie pour débloquer le niveau suivant',
+            textAlign: TextAlign.center,
+            style: TextStyle(color: p.gris, fontSize: 15.5)),
+        const SizedBox(height: 18),
+        Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+          for (var i = 0; i < 3; i++)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 4),
+              child: Icon(Icons.star_rounded,
+                  size: i == 1 ? 64 : 50,
+                  color: i < e ? _lxJaune : p.bord),
+            ),
+        ]),
+        const SizedBox(height: 12),
+        Text('+' + _score.toString() + ' ⭐',
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+                color: _lxOrange, fontSize: 22, fontWeight: FontWeight.w900)),
+        const SizedBox(height: 28),
+        if (gagne && widget.onSuivant != null) ...[
+          _lxBouton('Niveau suivant ›', _lxOrange, widget.onSuivant),
+          const SizedBox(height: 10),
+        ],
+        if (gagne && widget.onSuivant == null) ...[
+          Text('🏆 Tu as terminé les 10 niveaux de ce jeu !',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  color: p.texte, fontSize: 16, fontWeight: FontWeight.w800)),
+          const SizedBox(height: 14),
+        ],
+        _lxBouton('Rejouer', gagne ? p.doux : _lxOrange, widget.onRejouer,
+            texte: gagne ? p.texte : Colors.white),
+        const SizedBox(height: 10),
+        TextButton(
+          onPressed: widget.onQuitter,
+          child: Text('Retour aux niveaux',
+              style: TextStyle(
+                  color: p.gris, fontSize: 15, fontWeight: FontWeight.w700)),
+        ),
+      ],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final p = _lxP(context);
+    return Column(children: [
+      Padding(
+        padding: const EdgeInsets.fromLTRB(6, 6, 18, 0),
+        child: Row(children: [
+          IconButton(
+            onPressed: widget.onQuitter,
+            icon: Icon(Icons.close_rounded, color: p.texte, size: 26),
+          ),
+          Expanded(
+            child: Text(widget.nom,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                    color: p.texte,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w900)),
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+            decoration: BoxDecoration(
+                color: widget.couleur.withOpacity(0.15),
+                borderRadius: BorderRadius.circular(12)),
+            child: Text('Niveau ' + widget.niveau.toString(),
+                style: TextStyle(
+                    color: widget.couleur,
+                    fontSize: 13,
+                    fontWeight: FontWeight.w900)),
+          ),
+        ]),
+      ),
+      Expanded(child: _etoiles == null ? _jeu() : _resultat(p)),
+    ]);
+  }
+}
+
+class _LxArgs {
+  _LxArgs(this.mots, this.niveau, this.langue, this.dire, this.fin,
+      this.couleur);
+  final List<Map<String, String>> mots;
+  final int niveau;
+  final String langue;
+  final Future<void> Function(String) dire;
+  final _LxFin fin;
+  final Color couleur;
+  bool get zh => langue == 'zh';
+}
+
+/// Petit écran « Bravo ! » entre deux manches.
+Widget _lxEntreManches(_LxP p, int fait, int total, VoidCallback suite) =>
+    Center(
+      child: Padding(
+        padding: const EdgeInsets.all(30),
+        child: Column(mainAxisSize: MainAxisSize.min, children: [
+          const Text('👏', style: TextStyle(fontSize: 64)),
+          const SizedBox(height: 10),
+          Text('Bravo !',
+              style: TextStyle(
+                  color: p.texte, fontSize: 30, fontWeight: FontWeight.w900)),
+          const SizedBox(height: 6),
+          Text(
+              'Manche ' +
+                  fait.toString() +
+                  ' sur ' +
+                  total.toString() +
+                  ' réussie',
+              style: TextStyle(color: p.gris, fontSize: 16)),
+          const SizedBox(height: 26),
+          _lxBouton('Manche ' + (fait + 1).toString() + ' ›', _lxOrange, suite),
+        ]),
+      ),
+    );
+
+// ---------------------------------------------------------------------------
+// 1. Paires (manches avec « Bravo ! » entre chaque)
+
+class _JeuPaires extends StatefulWidget {
+  const _JeuPaires({required this.a});
+  final _LxArgs a;
+  @override
+  State<_JeuPaires> createState() => _JeuPairesState();
+}
+
+class _JeuPairesState extends State<_JeuPaires> {
+  late int _manches;
+  late int _n;
+  int _manche = 0;
+  int _erreurs = 0;
+  int _score = 0;
+  bool _pause = false;
+  List<Map<String, String>> _g = [];
+  List<Map<String, String>> _d = [];
+  String? _selG;
+  String? _selD;
+  String? _rouge;
+  final Set<String> _trouves = {};
+
+  int get _maxErreurs => 3 + 2 * _manches;
+
+  @override
+  void initState() {
+    super.initState();
+    final n = widget.a.niveau;
+    _manches = n <= 3 ? 2 : (n <= 7 ? 3 : 4);
+    _n = math.min(4 + (n - 1) ~/ 3, 7);
+    _nouvelle();
+  }
+
+  void _nouvelle() {
+    final l = _lxTirer(widget.a.mots, _n);
+    _g = [...l]..shuffle(_lxR);
+    _d = [...l]..shuffle(_lxR);
+    _trouves.clear();
+    _selG = null;
+    _selD = null;
+  }
+
+  void _verifier() {
+    if (_selG == null || _selD == null) return;
+    final m = _g.firstWhere((x) => x['t'] == _selG);
+    if (m['d'] == _selD) {
+      _trouves.add(_selG!);
+      _score += 2;
+      widget.a.dire(_selG!);
+      _selG = null;
+      _selD = null;
+      if (_trouves.length == _g.length) {
+        if (_manche + 1 >= _manches) {
+          final e = _erreurs <= 1 ? 3 : (_erreurs <= 4 ? 2 : 1);
+          Future.delayed(const Duration(milliseconds: 400),
+              () => widget.a.fin(e, _score + 5 * e));
+        } else {
+          Future.delayed(const Duration(milliseconds: 350), () {
+            if (mounted) setState(() => _pause = true);
+          });
+        }
+      }
+    } else {
+      _erreurs++;
+      _rouge = _selG! + '|' + _selD!;
+      _selG = null;
+      _selD = null;
+      Future.delayed(const Duration(milliseconds: 600), () {
+        if (mounted) setState(() => _rouge = null);
+      });
+      if (_erreurs >= _maxErreurs) {
+        Future.delayed(const Duration(milliseconds: 500),
+            () => widget.a.fin(0, _score));
+      }
+    }
+  }
+
+  Widget _tuile(_LxP p, String texte, bool gauche) {
+    final cle = gauche ? texte : null;
+    final trouve = gauche
+        ? _trouves.contains(texte)
+        : _g.any((m) => m['d'] == texte && _trouves.contains(m['t']));
+    final sel = gauche ? _selG == texte : _selD == texte;
+    final rouge = _rouge != null &&
+        (gauche ? _rouge!.split('|')[0] == texte : _rouge!.split('|')[1] == texte);
+    Color fond = p.carte;
+    Color bord = p.bord;
+    if (trouve) {
+      fond = _lxVert.withOpacity(0.15);
+      bord = _lxVert;
+    } else if (rouge) {
+      fond = _lxRouge.withOpacity(0.15);
+      bord = _lxRouge;
+    } else if (sel) {
+      fond = widget.a.couleur.withOpacity(0.15);
+      bord = widget.a.couleur;
+    }
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10),
+      child: GestureDetector(
+        onTap: trouve
+            ? null
+            : () => setState(() {
+                  if (gauche) {
+                    _selG = cle;
+                  } else {
+                    _selD = texte;
+                  }
+                  _verifier();
+                }),
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 150),
+          height: 58,
+          alignment: Alignment.center,
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          decoration: BoxDecoration(
+            color: fond,
+            borderRadius: BorderRadius.circular(14),
+            border: Border.all(color: bord, width: 2),
+          ),
+          child: Opacity(
+            opacity: trouve ? 0.45 : 1,
+            child: Text(texte,
+                textAlign: TextAlign.center,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                    color: p.texte,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w700)),
+          ),
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final p = _lxP(context);
+    if (_pause) {
+      return _lxEntreManches(p, _manche + 1, _manches, () {
+        setState(() {
+          _pause = false;
+          _manche++;
+          _nouvelle();
+        });
+      });
+    }
+    return ListView(
+      padding: const EdgeInsets.fromLTRB(18, 10, 18, 20),
+      children: [
+        Row(children: [
+          Text('Manche ' + (_manche + 1).toString() + '/' + _manches.toString(),
+              style: TextStyle(
+                  color: p.texte, fontSize: 15, fontWeight: FontWeight.w800)),
+          const Spacer(),
+          Text('Erreurs : ' + _erreurs.toString() + '/' + _maxErreurs.toString(),
+              style: TextStyle(color: p.gris, fontSize: 13.5)),
+        ]),
+        const SizedBox(height: 14),
+        Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Expanded(
+              child: Column(children: [
+            for (final m in _g) _tuile(p, m['t']!, true),
+          ])),
+          const SizedBox(width: 12),
+          Expanded(
+              child: Column(children: [
+            for (final m in _d) _tuile(p, m['d']!, false),
+          ])),
+        ]),
+      ],
+    );
+  }
+}
+
+// ---------------------------------------------------------------------------
+// 2. Mots mêlés
+
+class _JeuMeles extends StatefulWidget {
+  const _JeuMeles({required this.a});
+  final _LxArgs a;
+  @override
+  State<_JeuMeles> createState() => _JeuMelesState();
+}
+
+class _JeuMelesState extends State<_JeuMeles> {
+  late int _n;
+  List<String> _grille = [];
+  final List<Map<String, dynamic>> _mots = [];
+  int? _debut;
+  final Set<int> _cases = {};
+  final Stopwatch _chrono = Stopwatch()..start();
+  int _score = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _generer();
+  }
+
+  String _propre(String t) {
+    if (widget.a.zh) return t.replaceAll(' ', '');
+    return _lxSans(t).toUpperCase();
+  }
+
+  void _generer() {
+    final niv = widget.a.niveau;
+    _n = widget.a.zh ? 6 : math.min(6 + (niv - 1) ~/ 3, 9);
+    final nb = math.min(3 + (niv - 1) ~/ 2, 7);
+    final dirs = <List<int>>[
+      [0, 1],
+      [1, 0]
+    ];
+    if (niv >= 4) dirs.add([1, 1]);
+    if (niv >= 7) {
+      dirs.addAll([
+        [0, -1],
+        [-1, 0],
+        [1, -1],
+        [-1, -1]
+      ]);
+    }
+    final g = List<String>.filled(_n * _n, '');
+    final candidats = _lxTirer(widget.a.mots, 40, filtre: (m) {
+      final w = _propre(m['t']!);
+      final min = widget.a.zh ? 2 : 3;
+      if (w.length < min || w.length > _n) return false;
+      if (!widget.a.zh && !RegExp(r'^[A-Z]+$').hasMatch(w)) return false;
+      return true;
+    });
+    _mots.clear();
+    for (final m in candidats) {
+      if (_mots.length >= nb) break;
+      final w = _propre(m['t']!);
+      var place = false;
+      for (var essai = 0; essai < 200 && !place; essai++) {
+        final dir = dirs[_lxR.nextInt(dirs.length)];
+        final r = _lxR.nextInt(_n);
+        final c = _lxR.nextInt(_n);
+        final rf = r + dir[0] * (w.length - 1);
+        final cf = c + dir[1] * (w.length - 1);
+        if (rf < 0 || rf >= _n || cf < 0 || cf >= _n) continue;
+        var ok = true;
+        for (var k = 0; k < w.length; k++) {
+          final i = (r + dir[0] * k) * _n + (c + dir[1] * k);
+          if (g[i] != '' && g[i] != w[k]) {
+            ok = false;
+            break;
+          }
+        }
+        if (!ok) continue;
+        final idx = <int>[];
+        for (var k = 0; k < w.length; k++) {
+          final i = (r + dir[0] * k) * _n + (c + dir[1] * k);
+          g[i] = w[k];
+          idx.add(i);
+        }
+        _mots.add({'w': w, 't': m['t'], 'd': m['d'], 'idx': idx, 'ok': false});
+        place = true;
+      }
+    }
+    String lettres;
+    if (widget.a.zh) {
+      lettres = _mots.map((m) => m['w'] as String).join() + '的一是了我不人在他有这个上们来到时大地为子中你说生国年着就那和要';
+    } else {
+      lettres = 'ABCDEFGHIJKLMNOPRSTUVWY' + _mots.map((m) => m['w']).join();
+    }
+    for (var i = 0; i < g.length; i++) {
+      if (g[i] == '') g[i] = lettres[_lxR.nextInt(lettres.length)];
+    }
+    _grille = g;
+  }
+
+  void _toucher(int i) {
+    if (_debut == null) {
+      setState(() => _debut = i);
+      return;
+    }
+    final a = _debut!;
+    setState(() => _debut = null);
+    final r1 = a ~/ _n, c1 = a % _n, r2 = i ~/ _n, c2 = i % _n;
+    final dr = (r2 - r1).sign, dc = (c2 - c1).sign;
+    final lg = math.max((r2 - r1).abs(), (c2 - c1).abs()) + 1;
+    if (!(r1 == r2 || c1 == c2 || (r2 - r1).abs() == (c2 - c1).abs())) return;
+    final idx = <int>[];
+    for (var k = 0; k < lg; k++) {
+      idx.add((r1 + dr * k) * _n + (c1 + dc * k));
+    }
+    final mot = idx.map((x) => _grille[x]).join();
+    final inv = mot.split('').reversed.join();
+    for (final m in _mots) {
+      if (m['ok'] == true) continue;
+      if (m['w'] == mot || m['w'] == inv) {
+        setState(() {
+          m['ok'] = true;
+          _cases.addAll(idx);
+          _score += 3;
+        });
+        widget.a.dire(m['t'] as String);
+        if (_mots.every((x) => x['ok'] == true)) {
+          final s = _chrono.elapsed.inSeconds;
+          final par = 25 * _mots.length;
+          final e = s <= par ? 3 : (s <= par * 2 ? 2 : 1);
+          Future.delayed(const Duration(milliseconds: 500),
+              () => widget.a.fin(e, _score + 5 * e));
+        }
+        return;
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final p = _lxP(context);
+    final cacher = widget.a.niveau >= 6;
+    return ListView(
+      padding: const EdgeInsets.fromLTRB(16, 8, 16, 20),
+      children: [
+        Text(
+            cacher
+                ? 'Trouve en ' +
+                    (widget.a.langue == 'en' ? 'anglais' : 'langue étrangère') +
+                    ' les mots de cette liste :'
+                : 'Touche la 1re lettre, puis la dernière :',
+            style: TextStyle(color: p.gris, fontSize: 13.5)),
+        const SizedBox(height: 8),
+        Wrap(spacing: 8, runSpacing: 8, children: [
+          for (final m in _mots)
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+              decoration: BoxDecoration(
+                color: m['ok'] == true ? _lxVert.withOpacity(0.15) : p.carte,
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(
+                    color: m['ok'] == true ? _lxVert : p.bord),
+              ),
+              child: Text(
+                  m['ok'] == true
+                      ? (m['t'] as String) + ' = ' + (m['d'] as String)
+                      : (cacher ? m['d'] as String : m['t'] as String),
+                  style: TextStyle(
+                      color: p.texte,
+                      fontSize: 13.5,
+                      fontWeight: FontWeight.w700,
+                      decoration: m['ok'] == true
+                          ? TextDecoration.lineThrough
+                          : null)),
+            ),
+        ]),
+        const SizedBox(height: 14),
+        AspectRatio(
+          aspectRatio: 1,
+          child: GridView.builder(
+            physics: const NeverScrollableScrollPhysics(),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: _n, mainAxisSpacing: 4, crossAxisSpacing: 4),
+            itemCount: _grille.length,
+            itemBuilder: (_, i) {
+              final trouve = _cases.contains(i);
+              final debut = _debut == i;
+              return GestureDetector(
+                onTap: () => _toucher(i),
+                child: Container(
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: debut
+                        ? widget.a.couleur
+                        : (trouve ? _lxVert.withOpacity(0.25) : p.carte),
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: p.bord),
+                  ),
+                  child: Text(_grille[i],
+                      style: TextStyle(
+                          color: debut ? Colors.white : p.texte,
+                          fontSize: _n >= 9 ? 15 : 18,
+                          fontWeight: FontWeight.w800)),
+                ),
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+// ---------------------------------------------------------------------------
+// 3. Mémoire
+
+class _JeuMemoire extends StatefulWidget {
+  const _JeuMemoire({required this.a});
+  final _LxArgs a;
+  @override
+  State<_JeuMemoire> createState() => _JeuMemoireState();
+}
+
+class _JeuMemoireState extends State<_JeuMemoire> {
+  final List<Map<String, String>> _cartes = [];
+  final Set<int> _ouvertes = {};
+  final Set<int> _trouvees = {};
+  int _coups = 0;
+  bool _bloque = false;
+  late int _paires;
+
+  @override
+  void initState() {
+    super.initState();
+    _paires = math.min(4 + (widget.a.niveau - 1) ~/ 2, 9);
+    for (final m in _lxTirer(widget.a.mots, _paires)) {
+      _cartes.add({'id': m['t']!, 'x': m['t']!, 'lang': '1'});
+      _cartes.add({'id': m['t']!, 'x': m['d']!, 'lang': '0'});
+    }
+    _cartes.shuffle(_lxR);
+  }
+
+  void _retourner(int i) {
+    if (_bloque || _ouvertes.contains(i) || _trouvees.contains(i)) return;
+    setState(() => _ouvertes.add(i));
+    if (_cartes[i]['lang'] == '1') widget.a.dire(_cartes[i]['x']!);
+    if (_ouvertes.length == 2) {
+      _coups++;
+      final a = _ouvertes.first, b = _ouvertes.last;
+      if (_cartes[a]['id'] == _cartes[b]['id']) {
+        setState(() {
+          _trouvees.addAll([a, b]);
+          _ouvertes.clear();
+        });
+        if (_trouvees.length == _cartes.length) {
+          final e = _coups <= _paires * 1.5
+              ? 3
+              : (_coups <= _paires * 2.3 ? 2 : 1);
+          Future.delayed(const Duration(milliseconds: 500),
+              () => widget.a.fin(e, _paires * 2 + 5 * e));
+        }
+      } else {
+        _bloque = true;
+        Future.delayed(const Duration(milliseconds: 900), () {
+          if (!mounted) return;
+          setState(() {
+            _ouvertes.clear();
+            _bloque = false;
+          });
+        });
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final p = _lxP(context);
+    final col = _cartes.length > 12 ? 4 : 3;
+    return Column(children: [
+      Padding(
+        padding: const EdgeInsets.fromLTRB(18, 8, 18, 8),
+        child: Row(children: [
+          Text('Paires : ' +
+              (_trouvees.length ~/ 2).toString() +
+              '/' +
+              _paires.toString(),
+              style: TextStyle(
+                  color: p.texte, fontSize: 15, fontWeight: FontWeight.w800)),
+          const Spacer(),
+          Text('Coups : ' + _coups.toString(),
+              style: TextStyle(color: p.gris, fontSize: 14)),
+        ]),
+      ),
+      Expanded(
+        child: GridView.builder(
+          padding: const EdgeInsets.fromLTRB(16, 4, 16, 16),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: col,
+              mainAxisSpacing: 10,
+              crossAxisSpacing: 10,
+              childAspectRatio: 0.95),
+          itemCount: _cartes.length,
+          itemBuilder: (_, i) {
+            final visible = _ouvertes.contains(i) || _trouvees.contains(i);
+            final trouvee = _trouvees.contains(i);
+            return GestureDetector(
+              onTap: () => _retourner(i),
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 200),
+                alignment: Alignment.center,
+                padding: const EdgeInsets.all(6),
+                decoration: BoxDecoration(
+                  color: trouvee
+                      ? _lxVert.withOpacity(0.18)
+                      : (visible ? p.carte : widget.a.couleur),
+                  borderRadius: BorderRadius.circular(14),
+                  border: Border.all(
+                      color: trouvee ? _lxVert : p.bord, width: 2),
+                ),
+                child: visible
+                    ? Text(_cartes[i]['x']!,
+                        textAlign: TextAlign.center,
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            color: p.texte,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w800))
+                    : const Text('🦊', style: TextStyle(fontSize: 30)),
+              ),
+            );
+          },
+        ),
+      ),
+    ]);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Base commune des jeux « question + choix »
+
+Widget _lxChoix(_LxP p, String texte, Color? etat, VoidCallback? f) => Padding(
+      padding: const EdgeInsets.only(bottom: 10),
+      child: GestureDetector(
+        onTap: f,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 150),
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 14),
+          decoration: BoxDecoration(
+            color: etat == null ? p.carte : etat.withOpacity(0.18),
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: etat ?? p.bord, width: 2),
+          ),
+          child: Text(texte,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  color: p.texte, fontSize: 17, fontWeight: FontWeight.w800)),
+        ),
+      ),
+    );
+
+List<String> _lxMauvais(List<Map<String, String>> mots, String bon, String cle,
+    int n) {
+  final l = mots.map((m) => m[cle]!).where((x) => x != bon).toSet().toList()
+    ..shuffle(_lxR);
+  return l.take(n).toList();
+}
+
+// ---------------------------------------------------------------------------
+// 4. Duel éclair (contre le renard)
+
+class _JeuDuel extends StatefulWidget {
+  const _JeuDuel({required this.a});
+  final _LxArgs a;
+  @override
+  State<_JeuDuel> createState() => _JeuDuelState();
+}
+
+class _JeuDuelState extends State<_JeuDuel> {
+  late int _cible;
+  late double _total;
+  double _reste = 0;
+  int _moi = 0;
+  double _renard = 0;
+  Map<String, String>? _q;
+  List<String> _choix = [];
+  String? _clique;
+  Timer? _t;
+
+  @override
+  void initState() {
+    super.initState();
+    final n = widget.a.niveau;
+    _cible = 5 + n;
+    _total = (42 - 2 * n).toDouble();
+    _reste = _total;
+    _suivante();
+    _t = Timer.periodic(const Duration(milliseconds: 100), (_) {
+      if (!mounted) return;
+      setState(() {
+        _reste -= 0.1;
+        _renard += _cible / (_total * 0.92) * 0.1;
+      });
+      if (_renard >= _cible || _reste <= 0) {
+        _t?.cancel();
+        widget.a.fin(0, _moi);
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _t?.cancel();
+    super.dispose();
+  }
+
+  void _suivante() {
+    final m = widget.a.mots[_lxR.nextInt(widget.a.mots.length)];
+    _q = m;
+    _choix = [m['d']!, ..._lxMauvais(widget.a.mots, m['d']!, 'd', 3)]
+      ..shuffle(_lxR);
+    _clique = null;
+  }
+
+  void _repondre(String c) {
+    if (_clique != null) return;
+    final bon = c == _q!['d'];
+    setState(() => _clique = c);
+    if (bon) {
+      _moi++;
+      widget.a.dire(_q!['t']!);
+      if (_moi >= _cible) {
+        _t?.cancel();
+        final f = _reste / _total;
+        final e = f > 0.35 ? 3 : (f > 0.15 ? 2 : 1);
+        Future.delayed(const Duration(milliseconds: 300),
+            () => widget.a.fin(e, _moi + 5 * e));
+        return;
+      }
+    }
+    Future.delayed(Duration(milliseconds: bon ? 250 : 700), () {
+      if (mounted) setState(_suivante);
+    });
+  }
+
+  Widget _piste(_LxP p, String e, double v, Color c) => Row(children: [
+        Text(e, style: const TextStyle(fontSize: 22)),
+        const SizedBox(width: 8),
+        Expanded(
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(8),
+            child: LinearProgressIndicator(
+              value: (v / _cible).clamp(0.0, 1.0),
+              minHeight: 12,
+              backgroundColor: p.doux,
+              valueColor: AlwaysStoppedAnimation(c),
+            ),
+          ),
+        ),
+        const SizedBox(width: 8),
+        Text(v.floor().toString() + '/' + _cible.toString(),
+            style: TextStyle(color: p.gris, fontWeight: FontWeight.w800)),
+      ]);
+
+  @override
+  Widget build(BuildContext context) {
+    final p = _lxP(context);
+    final q = _q!;
+    return ListView(
+      padding: const EdgeInsets.fromLTRB(18, 10, 18, 20),
+      children: [
+        Row(children: [
+          Icon(Icons.timer_rounded, color: _reste < 8 ? _lxRouge : p.gris),
+          const SizedBox(width: 4),
+          Text(math.max(0, _reste).ceil().toString() + ' s',
+              style: TextStyle(
+                  color: _reste < 8 ? _lxRouge : p.texte,
+                  fontSize: 17,
+                  fontWeight: FontWeight.w900)),
+        ]),
+        const SizedBox(height: 12),
+        _piste(p, '🙋', _moi.toDouble(), _lxVert),
+        const SizedBox(height: 8),
+        _piste(p, '🦊', _renard, _lxOrange),
+        const SizedBox(height: 24),
+        Text(q['t']!,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                color: p.texte, fontSize: 32, fontWeight: FontWeight.w900)),
+        const SizedBox(height: 22),
+        for (final c in _choix)
+          _lxChoix(
+              p,
+              c,
+              _clique == null
+                  ? null
+                  : (c == q['d'] ? _lxVert : (c == _clique ? _lxRouge : null)),
+              () => _repondre(c)),
+      ],
+    );
+  }
+}
+
+// ---------------------------------------------------------------------------
+// 5. Lettres mélangées
+
+class _JeuLettres extends StatefulWidget {
+  const _JeuLettres({required this.a});
+  final _LxArgs a;
+  @override
+  State<_JeuLettres> createState() => _JeuLettresState();
+}
+
+class _JeuLettresState extends State<_JeuLettres> {
+  List<Map<String, String>> _liste = [];
+  int _i = 0;
+  List<String> _tuiles = [];
+  final List<int> _choisies = [];
+  int _erreurs = 0;
+  int _score = 0;
+  bool _rouge = false;
+  bool _indice = false;
+
+  String _mot(Map<String, String> m) =>
+      widget.a.zh ? m['t']!.replaceAll(' ', '') : m['t']!.toUpperCase();
+
+  @override
+  void initState() {
+    super.initState();
+    final n = widget.a.niveau;
+    final maxL = 4 + (n - 1) ~/ 2;
+    _liste = _lxTirer(widget.a.mots, n >= 6 ? 8 : 6, filtre: (m) {
+      final w = _mot(m);
+      if (widget.a.zh) return w.length >= 2 && w.length <= 4;
+      if (!RegExp(r"^[A-ZÀ-ÿ]+$").hasMatch(w)) return false;
+      return w.length >= 3 && w.length <= maxL + 1;
+    });
+    if (_liste.length < 4) {
+      _liste = _lxTirer(widget.a.mots, 6, filtre: (m) {
+        final w = _mot(m);
+        return widget.a.zh ? w.length >= 2 : (w.length >= 3 && w.length <= 9 && !w.contains(' '));
+      });
+    }
+    _preparer();
+  }
+
+  void _preparer() {
+    final w = _mot(_liste[_i]);
+    final l = w.split('');
+    do {
+      l.shuffle(_lxR);
+    } while (l.join() == w && w.length > 1 && l.toSet().length > 1);
+    _tuiles = l;
+    _choisies.clear();
+    _indice = false;
+  }
+
+  void _toucher(int k) {
+    if (_choisies.contains(k)) return;
+    setState(() => _choisies.add(k));
+    final w = _mot(_liste[_i]);
+    if (_choisies.length == w.length) {
+      final rep = _choisies.map((x) => _tuiles[x]).join();
+      if (rep == w) {
+        _score += 3;
+        widget.a.dire(_liste[_i]['t']!);
+        Future.delayed(const Duration(milliseconds: 500), () {
+          if (!mounted) return;
+          if (_i + 1 >= _liste.length) {
+            final e = _erreurs == 0 ? 3 : (_erreurs <= 2 ? 2 : 1);
+            widget.a.fin(e, _score + 5 * e);
+          } else {
+            setState(() {
+              _i++;
+              _preparer();
+            });
+          }
+        });
+      } else {
+        _erreurs++;
+        setState(() => _rouge = true);
+        Future.delayed(const Duration(milliseconds: 600), () {
+          if (!mounted) return;
+          setState(() {
+            _rouge = false;
+            _choisies.clear();
+          });
+          if (_erreurs >= 5) widget.a.fin(0, _score);
+        });
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final p = _lxP(context);
+    final m = _liste[_i];
+    final w = _mot(m);
+    return ListView(
+      padding: const EdgeInsets.fromLTRB(18, 10, 18, 20),
+      children: [
+        Row(children: [
+          Text('Mot ' + (_i + 1).toString() + '/' + _liste.length.toString(),
+              style: TextStyle(
+                  color: p.texte, fontSize: 15, fontWeight: FontWeight.w800)),
+          const Spacer(),
+          Text('Erreurs : ' + _erreurs.toString() + '/5',
+              style: TextStyle(color: p.gris, fontSize: 13.5)),
+        ]),
+        const SizedBox(height: 20),
+        Text('🇫🇷 ' + m['d']!,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                color: p.texte, fontSize: 22, fontWeight: FontWeight.w800)),
+        if (_indice)
+          Padding(
+            padding: const EdgeInsets.only(top: 6),
+            child: Text('Commence par « ' + w[0] + ' »',
+                textAlign: TextAlign.center,
+                style: const TextStyle(color: _lxOrange, fontSize: 14)),
+          ),
+        const SizedBox(height: 22),
+        Wrap(alignment: WrapAlignment.center, spacing: 6, runSpacing: 6, children: [
+          for (var k = 0; k < w.length; k++)
+            Container(
+              width: 38,
+              height: 46,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: _rouge ? _lxRouge.withOpacity(0.15) : p.carte,
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(
+                    color: _rouge
+                        ? _lxRouge
+                        : (k < _choisies.length ? widget.a.couleur : p.bord),
+                    width: 2),
+              ),
+              child: Text(k < _choisies.length ? _tuiles[_choisies[k]] : '',
+                  style: TextStyle(
+                      color: p.texte,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w900)),
+            ),
+        ]),
+        const SizedBox(height: 26),
+        Wrap(alignment: WrapAlignment.center, spacing: 10, runSpacing: 10, children: [
+          for (var k = 0; k < _tuiles.length; k++)
+            GestureDetector(
+              onTap: () => _toucher(k),
+              child: AnimatedOpacity(
+                duration: const Duration(milliseconds: 150),
+                opacity: _choisies.contains(k) ? 0.2 : 1,
+                child: Container(
+                  width: 50,
+                  height: 54,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: widget.a.couleur,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Text(_tuiles[k],
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 22,
+                          fontWeight: FontWeight.w900)),
+                ),
+              ),
+            ),
+        ]),
+        const SizedBox(height: 24),
+        Row(children: [
+          Expanded(
+            child: OutlinedButton.icon(
+              onPressed: _choisies.isEmpty
+                  ? null
+                  : () => setState(() => _choisies.removeLast()),
+              icon: const Icon(Icons.backspace_outlined),
+              label: const Text('Effacer'),
+              style: OutlinedButton.styleFrom(
+                  foregroundColor: p.texte,
+                  side: BorderSide(color: p.bord),
+                  padding: const EdgeInsets.symmetric(vertical: 13)),
+            ),
+          ),
+          if (widget.a.niveau <= 5) ...[
+            const SizedBox(width: 10),
+            Expanded(
+              child: OutlinedButton.icon(
+                onPressed: _indice ? null : () => setState(() => _indice = true),
+                icon: const Icon(Icons.lightbulb_outline_rounded),
+                label: const Text('Indice'),
+                style: OutlinedButton.styleFrom(
+                    foregroundColor: _lxOrange,
+                    side: const BorderSide(color: _lxOrange),
+                    padding: const EdgeInsets.symmetric(vertical: 13)),
+              ),
+            ),
+          ],
+        ]),
+      ],
+    );
+  }
+}
+
+// ---------------------------------------------------------------------------
+// 6. Vrai ou Faux éclair
+
+class _JeuVraiFaux extends StatefulWidget {
+  const _JeuVraiFaux({required this.a});
+  final _LxArgs a;
+  @override
+  State<_JeuVraiFaux> createState() => _JeuVraiFauxState();
+}
+
+class _JeuVraiFauxState extends State<_JeuVraiFaux> {
+  late int _total;
+  late double _duree;
+  int _i = 0;
+  int _vies = 3;
+  int _score = 0;
+  double _reste = 1;
+  Map<String, String>? _q;
+  String _prop = '';
+  bool _vrai = true;
+  Color? _flash;
+  Timer? _t;
+  bool _fini = false;
+
+  @override
+  void initState() {
+    super.initState();
+    final n = widget.a.niveau;
+    _total = 10 + n;
+    _duree = math.max(2.2, 6.2 - 0.4 * n);
+    _suivante();
+    _t = Timer.periodic(const Duration(milliseconds: 50), (_) {
+      if (!mounted || _flash != null || _fini) return;
+      setState(() => _reste -= 0.05 / _duree);
+      if (_reste <= 0) _repondre(null);
+    });
+  }
+
+  @override
+  void dispose() {
+    _t?.cancel();
+    super.dispose();
+  }
+
+  void _suivante() {
+    final m = widget.a.mots[_lxR.nextInt(widget.a.mots.length)];
+    _q = m;
+    _vrai = _lxR.nextBool();
+    _prop = _vrai ? m['d']! : _lxMauvais(widget.a.mots, m['d']!, 'd', 1).first;
+    _reste = 1;
+  }
+
+  void _repondre(bool? r) {
+    if (_flash != null || _fini) return;
+    final bon = r != null && r == _vrai;
+    if (bon) {
+      _score += 2;
+    } else {
+      _vies--;
+    }
+    setState(() => _flash = bon ? _lxVert : _lxRouge);
+    Future.delayed(const Duration(milliseconds: 450), () {
+      if (!mounted) return;
+      if (_vies <= 0) {
+        _fini = true;
+        widget.a.fin(0, _score);
+        return;
+      }
+      if (_i + 1 >= _total) {
+        _fini = true;
+        widget.a.fin(_vies, _score + 5 * _vies);
+        return;
+      }
+      setState(() {
+        _i++;
+        _flash = null;
+        _suivante();
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final p = _lxP(context);
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(18, 10, 18, 20),
+      child: Column(children: [
+        Row(children: [
+          Text((_i + 1).toString() + '/' + _total.toString(),
+              style: TextStyle(
+                  color: p.texte, fontSize: 15, fontWeight: FontWeight.w800)),
+          const Spacer(),
+          _lxVies(_vies, 3),
+        ]),
+        const SizedBox(height: 10),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(8),
+          child: LinearProgressIndicator(
+            value: _reste.clamp(0.0, 1.0),
+            minHeight: 10,
+            backgroundColor: p.doux,
+            valueColor: AlwaysStoppedAnimation(
+                _reste < 0.3 ? _lxRouge : widget.a.couleur),
+          ),
+        ),
+        const Spacer(),
+        AnimatedContainer(
+          duration: const Duration(milliseconds: 150),
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(vertical: 36, horizontal: 16),
+          decoration: BoxDecoration(
+            color: _flash == null ? p.carte : _flash!.withOpacity(0.18),
+            borderRadius: BorderRadius.circular(24),
+            border: Border.all(color: _flash ?? p.bord, width: 2),
+          ),
+          child: Column(children: [
+            Text(_q!['t']!,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    color: p.texte, fontSize: 32, fontWeight: FontWeight.w900)),
+            const SizedBox(height: 10),
+            Text('=', style: TextStyle(color: p.gris, fontSize: 22)),
+            const SizedBox(height: 10),
+            Text(_prop,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    color: widget.a.couleur,
+                    fontSize: 24,
+                    fontWeight: FontWeight.w800)),
+          ]),
+        ),
+        const Spacer(),
+        Row(children: [
+          Expanded(
+              child: _lxBouton('✗  Faux', _lxRouge, () => _repondre(false))),
+          const SizedBox(width: 12),
+          Expanded(
+              child: _lxBouton('✓  Vrai', _lxVert, () => _repondre(true))),
+        ]),
+        const SizedBox(height: 10),
+      ]),
+    );
+  }
+}
+
+// ---------------------------------------------------------------------------
+// 7. Écoute et écris
+
+class _JeuEcoute extends StatefulWidget {
+  const _JeuEcoute({required this.a});
+  final _LxArgs a;
+  @override
+  State<_JeuEcoute> createState() => _JeuEcouteState();
+}
+
+class _JeuEcouteState extends State<_JeuEcoute> {
+  List<Map<String, String>> _liste = [];
+  int _i = 0;
+  int _vies = 3;
+  int _score = 0;
+  int _ecoutes = 0;
+  Color? _flash;
+  List<String> _choix = [];
+  final TextEditingController _champ = TextEditingController();
+
+  int get _maxEcoutes => widget.a.niveau >= 6 ? 2 : 99;
+
+  @override
+  void initState() {
+    super.initState();
+    final n = widget.a.niveau;
+    _liste = _lxTirer(widget.a.mots, 6 + n ~/ 3, filtre: (m) {
+      if (widget.a.zh) return true;
+      final w = m['t']!;
+      return n <= 3 ? w.length <= 6 : w.length <= 14;
+    });
+    _preparer();
+  }
+
+  @override
+  void dispose() {
+    _champ.dispose();
+    super.dispose();
+  }
+
+  void _preparer() {
+    _ecoutes = 0;
+    _champ.clear();
+    final t = _liste[_i]['t']!;
+    if (widget.a.zh) {
+      _choix = [t, ..._lxMauvais(widget.a.mots, t, 't', 3)]..shuffle(_lxR);
+    }
+    Future.delayed(const Duration(milliseconds: 350), _ecouter);
+  }
+
+  void _ecouter() {
+    if (!mounted || _ecoutes >= _maxEcoutes) return;
+    setState(() => _ecoutes++);
+    widget.a.dire(_liste[_i]['t']!);
+  }
+
+  void _valider(String r) {
+    if (_flash != null) return;
+    final bon = _lxSans(r) == _lxSans(_liste[_i]['t']!);
+    if (bon) {
+      _score += 3;
+    } else {
+      _vies--;
+    }
+    setState(() => _flash = bon ? _lxVert : _lxRouge);
+    Future.delayed(Duration(milliseconds: bon ? 600 : 1500), () {
+      if (!mounted) return;
+      if (_vies <= 0) {
+        widget.a.fin(0, _score);
+        return;
+      }
+      if (_i + 1 >= _liste.length) {
+        widget.a.fin(_vies, _score + 5 * _vies);
+        return;
+      }
+      setState(() {
+        _flash = null;
+        _i++;
+      });
+      _preparer();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final p = _lxP(context);
+    final m = _liste[_i];
+    return ListView(
+      padding: const EdgeInsets.fromLTRB(18, 10, 18, 20),
+      children: [
+        Row(children: [
+          Text('Mot ' + (_i + 1).toString() + '/' + _liste.length.toString(),
+              style: TextStyle(
+                  color: p.texte, fontSize: 15, fontWeight: FontWeight.w800)),
+          const Spacer(),
+          _lxVies(_vies, 3),
+        ]),
+        const SizedBox(height: 30),
+        Center(
+          child: GestureDetector(
+            onTap: _ecoutes < _maxEcoutes ? _ecouter : null,
+            child: Container(
+              width: 120,
+              height: 120,
+              decoration: BoxDecoration(
+                color: _ecoutes < _maxEcoutes ? widget.a.couleur : p.doux,
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(Icons.volume_up_rounded,
+                  color: Colors.white, size: 56),
+            ),
+          ),
+        ),
+        const SizedBox(height: 10),
+        Text(
+            _maxEcoutes < 99
+                ? 'Écoutes restantes : ' + (_maxEcoutes - _ecoutes).toString()
+                : 'Touche pour réécouter',
+            textAlign: TextAlign.center,
+            style: TextStyle(color: p.gris, fontSize: 13.5)),
+        const SizedBox(height: 26),
+        if (_flash != null)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 14),
+            child: Text(
+                (_flash == _lxVert ? '✓ ' : '✗ La réponse était : ') +
+                    m['t']! +
+                    '  (' +
+                    m['d']! +
+                    ')',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    color: _flash,
+                    fontSize: 17,
+                    fontWeight: FontWeight.w800)),
+          ),
+        if (widget.a.zh)
+          for (final c in _choix)
+            _lxChoix(
+                p,
+                c,
+                _flash == null
+                    ? null
+                    : (c == m['t'] ? _lxVert : null),
+                () => _valider(c))
+        else ...[
+          TextField(
+            controller: _champ,
+            autofocus: true,
+            textAlign: TextAlign.center,
+            autocorrect: false,
+            enableSuggestions: false,
+            style: TextStyle(
+                color: p.texte, fontSize: 24, fontWeight: FontWeight.w800),
+            decoration: InputDecoration(
+              hintText: 'Écris ce que tu entends',
+              hintStyle: TextStyle(color: p.gris, fontSize: 16),
+              filled: true,
+              fillColor: p.carte,
+              border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide: BorderSide(color: p.bord)),
+              enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide: BorderSide(color: _flash ?? p.bord, width: 2)),
+            ),
+            onSubmitted: _valider,
+          ),
+          const SizedBox(height: 16),
+          _lxBouton('Valider', _lxOrange, () => _valider(_champ.text)),
+        ],
+      ],
+    );
+  }
+}
+
+// ---------------------------------------------------------------------------
+// 8. Pluie de mots
+
+class _JeuPluie extends StatefulWidget {
+  const _JeuPluie({required this.a});
+  final _LxArgs a;
+  @override
+  State<_JeuPluie> createState() => _JeuPluieState();
+}
+
+class _JeuPluieState extends State<_JeuPluie> {
+  late int _total;
+  late double _duree;
+  int _i = 0;
+  int _vies = 3;
+  int _score = 0;
+  double _y = 0;
+  double _x = 0.5;
+  Map<String, String>? _q;
+  List<String> _choix = [];
+  Color? _flash;
+  Timer? _t;
+  bool _fini = false;
+
+  @override
+  void initState() {
+    super.initState();
+    final n = widget.a.niveau;
+    _total = 8 + n;
+    _duree = math.max(2.4, 7.5 - 0.5 * n);
+    _suivant();
+    _t = Timer.periodic(const Duration(milliseconds: 30), (_) {
+      if (!mounted || _flash != null || _fini) return;
+      setState(() => _y += 0.03 / _duree);
+      if (_y >= 1) _repondre(null);
+    });
+  }
+
+  @override
+  void dispose() {
+    _t?.cancel();
+    super.dispose();
+  }
+
+  void _suivant() {
+    final m = widget.a.mots[_lxR.nextInt(widget.a.mots.length)];
+    _q = m;
+    final nb = widget.a.niveau >= 6 ? 3 : 2;
+    _choix = [m['d']!, ..._lxMauvais(widget.a.mots, m['d']!, 'd', nb)]
+      ..shuffle(_lxR);
+    _y = 0;
+    _x = 0.15 + _lxR.nextDouble() * 0.7;
+  }
+
+  void _repondre(String? c) {
+    if (_flash != null || _fini) return;
+    final bon = c != null && c == _q!['d'];
+    if (bon) {
+      _score += 2;
+      widget.a.dire(_q!['t']!);
+    } else {
+      _vies--;
+    }
+    setState(() => _flash = bon ? _lxVert : _lxRouge);
+    Future.delayed(const Duration(milliseconds: 500), () {
+      if (!mounted) return;
+      if (_vies <= 0) {
+        _fini = true;
+        widget.a.fin(0, _score);
+        return;
+      }
+      if (_i + 1 >= _total) {
+        _fini = true;
+        widget.a.fin(_vies, _score + 5 * _vies);
+        return;
+      }
+      setState(() {
+        _i++;
+        _flash = null;
+        _suivant();
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final p = _lxP(context);
+    return Column(children: [
+      Padding(
+        padding: const EdgeInsets.fromLTRB(18, 6, 18, 6),
+        child: Row(children: [
+          Text((_i + 1).toString() + '/' + _total.toString(),
+              style: TextStyle(
+                  color: p.texte, fontSize: 15, fontWeight: FontWeight.w800)),
+          const Spacer(),
+          _lxVies(_vies, 3),
+        ]),
+      ),
+      Expanded(
+        child: LayoutBuilder(builder: (_, c) {
+          final h = c.maxHeight;
+          final w = c.maxWidth;
+          return Container(
+            margin: const EdgeInsets.symmetric(horizontal: 14),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [widget.a.couleur.withOpacity(0.18), p.fond]),
+              borderRadius: BorderRadius.circular(22),
+            ),
+            child: Stack(children: [
+              Positioned(
+                left: 0,
+                right: 0,
+                bottom: 0,
+                child: Container(
+                    height: 6,
+                    decoration: BoxDecoration(
+                        color: _lxRouge.withOpacity(0.5),
+                        borderRadius: BorderRadius.circular(3))),
+              ),
+              Positioned(
+                top: _y.clamp(0.0, 1.0) * (h - 60),
+                left: (_x * (w - 28 - 150)).clamp(0.0, w),
+                child: Container(
+                  width: 150,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
+                  decoration: BoxDecoration(
+                    color: _flash ?? widget.a.couleur,
+                    borderRadius: BorderRadius.circular(18),
+                  ),
+                  child: Text('💧 ' + _q!['t']!,
+                      textAlign: TextAlign.center,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 17,
+                          fontWeight: FontWeight.w900)),
+                ),
+              ),
+            ]),
+          );
+        }),
+      ),
+      Padding(
+        padding: const EdgeInsets.fromLTRB(18, 12, 18, 12),
+        child: Column(children: [
+          for (final c in _choix)
+            _lxChoix(
+                p,
+                c,
+                _flash == null ? null : (c == _q!['d'] ? _lxVert : null),
+                () => _repondre(c)),
+        ]),
+      ),
+    ]);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// 9. Le mot mystère (comme Wordle)
+
+class _JeuMotMystere extends StatefulWidget {
+  const _JeuMotMystere({required this.a});
+  final _LxArgs a;
+  @override
+  State<_JeuMotMystere> createState() => _JeuMotMystereState();
+}
+
+class _JeuMotMystereState extends State<_JeuMotMystere> {
+  String _mot = '';
+  String _trad = '';
+  final List<String> _essais = [];
+  String _saisie = '';
+  bool _fini = false;
+
+  @override
+  void initState() {
+    super.initState();
+    final n = widget.a.niveau;
+    final lg = widget.a.langue;
+    final Map<String, List<String>> src =
+        n <= 3 ? _lxMots4 : (n <= 7 ? _lxMots5 : _lxMots6);
+    final liste = src[lg];
+    if (liste != null) {
+      final idx = n <= 3 ? n - 1 : (n <= 7 ? n - 4 : n - 8);
+      final x = liste[(idx + DateTime.now().weekday) % liste.length].split(':');
+      _mot = x[0];
+      _trad = x[1];
+    }
+  }
+
+  void _touche(String k) {
+    if (_fini || _mot.isEmpty) return;
+    setState(() {
+      if (k == '⌫') {
+        if (_saisie.isNotEmpty) {
+          _saisie = _saisie.substring(0, _saisie.length - 1);
+        }
+      } else if (k == 'OK') {
+        if (_saisie.length != _mot.length) return;
+        _essais.add(_saisie);
+        _saisie = '';
+        if (_essais.last == _mot) {
+          _fini = true;
+          widget.a.dire(_mot.toLowerCase());
+          final n = _essais.length;
+          final e = n <= 3 ? 3 : (n <= 5 ? 2 : 1);
+          Future.delayed(const Duration(milliseconds: 900),
+              () => widget.a.fin(e, 4 + 5 * e));
+        } else if (_essais.length >= 6) {
+          _fini = true;
+          Future.delayed(const Duration(milliseconds: 1500),
+              () => widget.a.fin(0, 0));
+        }
+      } else if (_saisie.length < _mot.length) {
+        _saisie += k;
+      }
+    });
+  }
+
+  Color _couleur(String essai, int k, _LxP p) {
+    if (essai[k] == _mot[k]) return _lxVert;
+    if (_mot.contains(essai[k])) return _lxJaune;
+    return p.gris;
+  }
+
+  Color? _couleurTouche(String l, _LxP p) {
+    Color? c;
+    for (final e in _essais) {
+      for (var k = 0; k < e.length; k++) {
+        if (e[k] != l) continue;
+        if (_mot[k] == l) return _lxVert;
+        c = _mot.contains(l) ? _lxJaune : p.gris.withOpacity(0.5);
+      }
+    }
+    return c;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final p = _lxP(context);
+    if (_mot.isEmpty) {
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.all(30),
+          child: Text(
+              'Ce jeu existe en anglais, espagnol et portugais. Change de langue pour y jouer 🦊',
+              textAlign: TextAlign.center,
+              style: TextStyle(color: p.texte, fontSize: 16)),
+        ),
+      );
+    }
+    final aide = widget.a.niveau <= 3 || _essais.length >= 3;
+    const rangs = ['QWERTYUIOP', 'ASDFGHJKL', 'ZXCVBNM'];
+    final cote = math.min(52.0, 300 / _mot.length);
+    return ListView(
+      padding: const EdgeInsets.fromLTRB(14, 6, 14, 16),
+      children: [
+        Text(
+            aide
+                ? 'Indice : 🇫🇷 ' + _trad
+                : 'Trouve le mot de ' + _mot.length.toString() + ' lettres',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                color: aide ? _lxOrange : p.gris,
+                fontSize: 15,
+                fontWeight: FontWeight.w700)),
+        const SizedBox(height: 10),
+        for (var r = 0; r < 6; r++)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 6),
+            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              for (var k = 0; k < _mot.length; k++)
+                Builder(builder: (_) {
+                  String l = '';
+                  Color fond = p.carte;
+                  Color bord = p.bord;
+                  if (r < _essais.length) {
+                    l = _essais[r][k];
+                    fond = _couleur(_essais[r], k, p);
+                    bord = fond;
+                  } else if (r == _essais.length && k < _saisie.length) {
+                    l = _saisie[k];
+                    bord = widget.a.couleur;
+                  }
+                  return Container(
+                    width: cote,
+                    height: cote,
+                    margin: const EdgeInsets.symmetric(horizontal: 3),
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: fond,
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: bord, width: 2),
+                    ),
+                    child: Text(l,
+                        style: TextStyle(
+                            color: r < _essais.length ? Colors.white : p.texte,
+                            fontSize: 22,
+                            fontWeight: FontWeight.w900)),
+                  );
+                }),
+            ]),
+          ),
+        if (_fini && _essais.last != _mot)
+          Padding(
+            padding: const EdgeInsets.only(top: 6),
+            child: Text('Le mot était : ' + _mot + ' (' + _trad + ')',
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                    color: _lxRouge, fontSize: 16, fontWeight: FontWeight.w800)),
+          ),
+        const SizedBox(height: 12),
+        for (var i = 0; i < 3; i++)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 6),
+            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              if (i == 2) _clavier(p, 'OK', 1.6),
+              for (final l in rangs[i].split('')) _clavier(p, l, 1),
+              if (i == 2) _clavier(p, '⌫', 1.6),
+            ]),
+          ),
+      ],
+    );
+  }
+
+  Widget _clavier(_LxP p, String l, double f) {
+    final c = l.length == 1 && l != '⌫' ? _couleurTouche(l, p) : null;
+    return GestureDetector(
+      onTap: () => _touche(l),
+      child: Container(
+        width: 30 * f,
+        height: 44,
+        margin: const EdgeInsets.symmetric(horizontal: 2),
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          color: c ?? (l == 'OK' ? _lxOrange : p.doux),
+          borderRadius: BorderRadius.circular(7),
+        ),
+        child: Text(l,
+            style: TextStyle(
+                color: c != null || l == 'OK' ? Colors.white : p.texte,
+                fontSize: 15,
+                fontWeight: FontWeight.w800)),
+      ),
+    );
+  }
+}
+
+// ---------------------------------------------------------------------------
+// 10. Devine l'image
+
+class _JeuImage extends StatefulWidget {
+  const _JeuImage({required this.a});
+  final _LxArgs a;
+  @override
+  State<_JeuImage> createState() => _JeuImageState();
+}
+
+class _JeuImageState extends State<_JeuImage> {
+  late int _total;
+  int _i = 0;
+  int _vies = 3;
+  int _score = 0;
+  List<List<String>> _liste = [];
+  List<String> _choix = [];
+  String? _clique;
+
+  int get _col =>
+      {'en': 1, 'es': 2, 'pt': 3, 'zh': 4}[widget.a.langue] ?? 1;
+
+  @override
+  void initState() {
+    super.initState();
+    _total = 8 + widget.a.niveau;
+    _liste = _lxImages.map((e) => e.toList()).toList()..shuffle(_lxR);
+    _preparer();
+  }
+
+  void _preparer() {
+    final bon = _liste[_i % _liste.length][_col];
+    final nb = widget.a.niveau >= 6 ? 5 : 3;
+    final autres = _lxImages
+        .map((e) => e[_col])
+        .where((x) => x != bon)
+        .toSet()
+        .toList()
+      ..shuffle(_lxR);
+    _choix = [bon, ...autres.take(nb)]..shuffle(_lxR);
+    _clique = null;
+  }
+
+  void _repondre(String c) {
+    if (_clique != null) return;
+    final img = _liste[_i % _liste.length];
+    final bon = c == img[_col];
+    setState(() => _clique = c);
+    widget.a.dire(img[_col]);
+    if (bon) {
+      _score += 2;
+    } else {
+      _vies--;
+    }
+    Future.delayed(Duration(milliseconds: bon ? 700 : 1300), () {
+      if (!mounted) return;
+      if (_vies <= 0) {
+        widget.a.fin(0, _score);
+        return;
+      }
+      if (_i + 1 >= _total) {
+        widget.a.fin(_vies, _score + 5 * _vies);
+        return;
+      }
+      setState(() {
+        _i++;
+        _preparer();
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final p = _lxP(context);
+    final img = _liste[_i % _liste.length];
+    return ListView(
+      padding: const EdgeInsets.fromLTRB(18, 10, 18, 20),
+      children: [
+        Row(children: [
+          Text((_i + 1).toString() + '/' + _total.toString(),
+              style: TextStyle(
+                  color: p.texte, fontSize: 15, fontWeight: FontWeight.w800)),
+          const Spacer(),
+          _lxVies(_vies, 3),
+        ]),
+        const SizedBox(height: 16),
+        Center(
+          child: Container(
+            width: 170,
+            height: 170,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: p.carte,
+              borderRadius: BorderRadius.circular(32),
+              border: Border.all(color: p.bord, width: 2),
+            ),
+            child: Text(img[0], style: const TextStyle(fontSize: 96)),
+          ),
+        ),
+        if (_clique != null)
+          Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: Text('🇫🇷 ' + img[5],
+                textAlign: TextAlign.center,
+                style: TextStyle(color: p.gris, fontSize: 15)),
+          ),
+        const SizedBox(height: 20),
+        if (_choix.length > 4)
+          GridView.count(
+            crossAxisCount: 2,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            crossAxisSpacing: 10,
+            childAspectRatio: 2.6,
+            children: [
+              for (final c in _choix)
+                _lxChoix(
+                    p,
+                    c,
+                    _clique == null
+                        ? null
+                        : (c == img[_col]
+                            ? _lxVert
+                            : (c == _clique ? _lxRouge : null)),
+                    () => _repondre(c)),
+            ],
+          )
+        else
+          for (final c in _choix)
+            _lxChoix(
+                p,
+                c,
+                _clique == null
+                    ? null
+                    : (c == img[_col]
+                        ? _lxVert
+                        : (c == _clique ? _lxRouge : null)),
+                () => _repondre(c)),
+      ],
+    );
+  }
+}
