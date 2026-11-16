@@ -180,6 +180,20 @@ String _cxSans(String s) {
   return o.toString().replaceAll(RegExp(r"[^a-z0-9一-鿿]"), '');
 }
 
+/// Deux mots « presque pareils » (1 lettre de différence si mot ≥ 4 lettres).
+bool _cxProche(String x, String y) {
+  if (x == y) return true;
+  if (x.length < 4 || y.length < 4 || (x.length - y.length).abs() > 1) {
+    return false;
+  }
+  var i = 0;
+  while (i < x.length && i < y.length && x[i] == y[i]) i++;
+  var j = 0;
+  while (j < x.length - i && j < y.length - i &&
+      x[x.length - 1 - j] == y[y.length - 1 - j]) j++;
+  return x.length - i - j <= 1 && y.length - i - j <= 1;
+}
+
 /// Note de prononciation en % (mots communs, dans l'ordre).
 int _cxNote(String attendu, String entendu, String langue) {
   List<String> norm(String s) => (langue == 'zh'
@@ -194,7 +208,7 @@ int _cxNote(String attendu, String entendu, String langue) {
   final dp = List.generate(a.length + 1, (_) => List.filled(b.length + 1, 0));
   for (var i = 1; i <= a.length; i++) {
     for (var j = 1; j <= b.length; j++) {
-      dp[i][j] = a[i - 1] == b[j - 1]
+      dp[i][j] = _cxProche(a[i - 1], b[j - 1])
           ? dp[i - 1][j - 1] + 1
           : math.max(dp[i - 1][j], dp[i][j - 1]);
     }
@@ -258,6 +272,22 @@ Future<String> _cxEcouter(String langue) async {
   } catch (_) {
     return '';
   }
+}
+
+/// Écoute une longue phrase : si la reconnaissance s'arrête trop tôt
+/// (petite pause), on relance l'écoute et on colle les morceaux.
+Future<String> _cxEcouterTout(String langue, String attendu) async {
+  final nbAttendu = _cxDecouper(attendu, langue).length;
+  var tout = '';
+  for (var essai = 0; essai < 4; essai++) {
+    final e = await _cxEcouter(langue);
+    if (e.startsWith('#')) return tout.isEmpty ? e : tout;
+    if (e.trim().isEmpty) break;
+    tout = tout.isEmpty ? e.trim() : '$tout ${e.trim()}';
+    final nb = _cxDecouper(tout, langue).length;
+    if (nb >= nbAttendu * 0.8 || nbAttendu <= 2) break;
+  }
+  return tout;
 }
 
 typedef _CxFin = void Function(int etoiles, int score,
@@ -1778,6 +1808,7 @@ class _CxAccentState extends State<_CxAccent> {
   int _mot = -1; // mot surligné (karaoké)
   Timer? _karaoke;
   int? _note;
+  int? _meilleure; // meilleure note sur ce texte
   String _entendu = '';
 
   @override
@@ -1856,7 +1887,7 @@ class _CxAccentState extends State<_CxAccent> {
       _entendu = '';
     });
     _demarrerKaraoke(widget.langue == 'zh' ? 450 : 620);
-    final e = await _cxEcouter(widget.langue);
+    final e = await _cxEcouterTout(widget.langue, _textes[_i][0]);
     _karaoke?.cancel();
     if (!mounted) return;
     setState(() {
@@ -1869,8 +1900,12 @@ class _CxAccentState extends State<_CxAccent> {
       } else if (e.trim().isEmpty) {
         _entendu = 'Je n\'ai rien entendu, réessaie 🎤';
       } else {
-        _entendu = 'Tu as dit : « $e »';
-        _note = _cxNote(_textes[_i][0], e, widget.langue);
+        final n = _cxNote(_textes[_i][0], e, widget.langue);
+        _meilleure = math.max(_meilleure ?? 0, n);
+        _entendu = n < _meilleure!
+            ? 'Tu as dit : « $e »\nOn garde ta meilleure note : $_meilleure %'
+            : 'Tu as dit : « $e »';
+        _note = _meilleure;
       }
     });
   }
@@ -1879,13 +1914,14 @@ class _CxAccentState extends State<_CxAccent> {
     _notes.add(_note ?? 0);
     if (_i + 1 >= _textes.length) {
       final moy = _notes.fold<int>(0, (a, b) => a + b) ~/ _notes.length;
-      final et = moy >= 95 ? 3 : (moy >= 88 ? 2 : (moy >= 80 ? 1 : 0));
+      final et = moy >= 90 ? 3 : (moy >= 75 ? 2 : (moy >= 60 ? 1 : 0));
       widget.fin(et, moy ~/ 2);
       return;
     }
     setState(() {
       _i++;
       _note = null;
+      _meilleure = null;
       _entendu = '';
       _mot = -1;
     });
@@ -1962,8 +1998,8 @@ class _CxAccentState extends State<_CxAccent> {
             const SizedBox(height: 8),
             Text(
                 _ecoute
-                    ? 'Je t\'écoute… lis en suivant le surligné'
-                    : 'Écoute le modèle 🔊 puis appuie sur 🎤',
+                    ? 'Je t\'écoute… lis TOUTE la phrase sans t\'arrêter'
+                    : 'Écoute le modèle 🔊, appuie sur 🎤, attends 1 seconde puis lis tout. Tu peux réessayer : on garde ta meilleure note.',
                 textAlign: TextAlign.center,
                 style: TextStyle(color: p.gris, fontSize: 12.5)),
           ]),
