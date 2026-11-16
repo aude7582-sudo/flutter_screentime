@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Léxi — Confidentialité</title>
+<style>
+  :root { --bg:#FFFBF5; --fg:#1E1640; --gris:#5B5478; --accent:#EA580C; --carte:#FFFFFF; --bord:#EDE5DA; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg:#14112B; --fg:#F4F1FF; --gris:#B8B2D6; --accent:#FB923C; --carte:#1F1A3A; --bord:#332C55; color-scheme: dark } }
+  :root[data-theme="dark"] { --bg:#14112B; --fg:#F4F1FF; --gris:#B8B2D6; --accent:#FB923C; --carte:#1F1A3A; --bord:#332C55; color-scheme: dark }
+  body { background:var(--bg); color:var(--fg); font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; line-height:1.6; }
+  main { max-width: 44rem; margin: 0 auto; padding-block: 40px 64px; padding-left:max(16px, env(safe-area-inset-left, 0px)); padding-right:max(16px, env(safe-area-inset-right, 0px)); }
+  .haut { display:flex; align-items:center; gap:12px; margin-bottom:8px; }
+  .logo { font-size:2rem; }
+  h1 { font-size:1.9rem; line-height:1.2; margin:0; text-wrap:balance; }
+  .date { color:var(--gris); font-size:.9rem; margin:4px 0 28px; }
+  h2 { font-size:1.15rem; margin:32px 0 8px; color:var(--accent); text-wrap:balance; }
+  p, li { font-size:1rem; }
+  ul { padding-left:1.2rem; }
+  li { margin-bottom:6px; }
+  .resume { background:var(--carte); border:1px solid var(--bord); border-radius:14px; padding:16px 18px; }
+  .resume p { margin:0; }
+  table { width:100%; border-collapse:collapse; font-size:.95rem; }
+  .tab { overflow-x:auto; }
+  th, td { text-align:left; padding:8px 10px; border-bottom:1px solid var(--bord); vertical-align:top; }
+  th { font-size:.8rem; letter-spacing:.06em; text-transform:uppercase; color:var(--gris); }
+  a { color:var(--accent); }
+  footer { margin-top:48px; color:var(--gris); font-size:.85rem; }
+</style>
+</head><body>
+<main>
+  <div class="haut"><span class="logo">🦊</span><h1>Politique de confidentialité de Léxi</h1></div>
+  <p class="date">Dernière mise à jour : 16 novembre 2026</p>
+
+  <div class="resume"><p><strong>En bref :</strong> Léxi enregistre ton e-mail, ton pseudo et ta progression pour faire fonctionner l'appli. Ton temps d'écran et la liste de tes applis restent sur ton téléphone. Tes données ne sont jamais vendues, et tu peux supprimer ton compte à tout moment.</p></div>
+
+  <h2>1. Qui sommes-nous ?</h2>
+  <p>Léxi est une application mobile éditée par Veroli, en Côte d'Ivoire. Elle aide à apprendre une langue (anglais, espagnol, portugais, mandarin) et à réduire le temps passé sur certaines applis. Pour toute question sur tes données, écris-nous à <a href="mailto:lagoaudo@gmail.com">lagoaudo@gmail.com</a>.</p>
+
+  <h2>2. Les données que nous collectons</h2>
+  <div class="tab"><table>
+    <tr><th>Donnée</th><th>Pourquoi</th></tr>
+    <tr><td>Adresse e-mail et identifiant de compte</td><td>Créer ton compte et te connecter (e-mail ou Google).</td></tr>
+    <tr><td>Pseudo, pays, avatar ou photo de profil (facultatifs)</td><td>Ton profil, tes amis et les classements.</td></tr>
+    <tr><td>Progression : mots appris, leçons, jeux, livres lus, minutes de lecture, points, badges, séries</td><td>Suivre tes progrès et faire fonctionner les niveaux, concours et classements.</td></tr>
+    <tr><td>Réglages : langue, objectif du jour, niveau, sons, vibrations</td><td>Adapter l'appli à toi.</td></tr>
+    <tr><td>Statut de l'abonnement Léxi Pro</td><td>Savoir si tu as accès à toutes les fonctions.</td></tr>
+  </table></div>
+
+  <h2>3. Ce qui reste sur ton téléphone</h2>
+  <ul>
+    <li><strong>Ton temps d'écran et la liste de tes applis</strong> servent uniquement à bloquer et débloquer les applis que tu as choisies. Ils sont traités sur ton téléphone et ne sont pas envoyés sur nos serveurs.</li>
+    <li><strong>Ta voix</strong> : dans le Concours de l'Accent, la reconnaissance vocale de ton téléphone transforme ta voix en texte pour te donner une note. Léxi n'enregistre pas et ne conserve pas ta voix.</li>
+    <li>Certaines préférences (livres en cours, taille du texte) sont gardées dans la mémoire de ton téléphone.</li>
+  </ul>
+
+  <h2>4. Ce que voient les autres joueurs</h2>
+  <p>Ton pseudo, ton pays, ton avatar et tes points de concours, de duels et de ligue sont visibles par les autres joueurs dans les classements et par tes amis. Ton e-mail n'est jamais montré aux autres joueurs.</p>
+
+  <h2>5. Où sont stockées tes données</h2>
+  <p>Tes données sont stockées de façon sécurisée chez Google Firebase (Authentication et Cloud Firestore), notre prestataire technique. Elles sont chiffrées pendant leur transfert. Les livres de la bibliothèque sont téléchargés depuis GitHub, sans aucune donnée personnelle.</p>
+
+  <h2>6. Ce que nous ne faisons jamais</h2>
+  <ul>
+    <li>Nous ne vendons pas tes données.</li>
+    <li>Nous ne montrons pas de publicité.</li>
+    <li>Nous n'utilisons pas tes données pour te suivre sur d'autres applis ou sites.</li>
+  </ul>
+
+  <h2>7. Paiements</h2>
+  <p>L'abonnement Léxi Pro est payé et géré par Google Play. Léxi ne voit jamais ta carte bancaire ni tes informations de paiement. Tu peux annuler l'abonnement à tout moment dans Google Play.</p>
+
+  <h2>8. Supprimer ton compte et tes données</h2>
+  <p>Dans l'appli : <strong>Profil → ⚙️ Paramètres → Supprimer le compte</strong>. Ton compte, ton profil et ta progression sont alors supprimés. Tu peux aussi nous le demander par e-mail à <a href="mailto:lagoaudo@gmail.com">lagoaudo@gmail.com</a> : nous le faisons sous 30 jours.</p>
+
+  <h2>9. Âge</h2>
+  <p>Léxi est destinée aux personnes de 13 ans et plus. Si tu as moins de 13 ans, demande à un parent avant de l'utiliser. Si un parent pense que son enfant de moins de 13 ans a créé un compte, il peut nous écrire pour le faire supprimer.</p>
+
+  <h2>10. Tes droits</h2>
+  <p>Tu peux à tout moment demander à voir, corriger ou supprimer tes données, ou t'opposer à leur utilisation, en écrivant à <a href="mailto:lagoaudo@gmail.com">lagoaudo@gmail.com</a>. Ces droits s'appliquent conformément à la loi ivoirienne n° 2013-450 sur la protection des données à caractère personnel.</p>
+
+  <h2>11. Changements</h2>
+  <p>Si cette politique change, nous mettrons à jour la date en haut de cette page et nous te préviendrons dans l'appli en cas de changement important.</p>
+
+  <footer>Léxi · une application Veroli · Côte d'Ivoire</footer>
+</main>
+</body></html>
