@@ -260,7 +260,17 @@ Future<String> _cxEcouter(String langue) async {
   }
 }
 
-typedef _CxFin = void Function(int etoiles, int score);
+typedef _CxFin = void Function(int etoiles, int score,
+    [Map<String, dynamic>? extra]);
+
+/// Parties enregistrées des autres joueurs (« fantômes »), stockées dans
+/// la collection duels avec type = 'partie'.
+class _CxFantome {
+  _CxFantome(this.pseudo, this.drapeau, this.data);
+  final String pseudo;
+  final String drapeau;
+  final Map<String, dynamic> data;
+}
 
 int _cxEtoiles(int bons, int total) {
   if (total <= 0) return 0;
@@ -544,6 +554,10 @@ class _CxConcoursState extends State<_CxConcours> {
   int? _niveau; // niveau en cours de jeu
   int _partie = 0; // pour relancer une partie
   List<int>? _resultat; // [niveau, étoiles, score]
+  List<_CxFantome> _fantomes = [];
+  List<List<String>> _classement = []; // [pseudo+drapeau, score, moi?]
+  int _monRang = 0;
+  bool _chargeClassement = false;
 
   int _entier(dynamic v) => v is num ? v.toInt() : 0;
 
@@ -618,8 +632,10 @@ class _CxConcoursState extends State<_CxConcours> {
   int _etoiles(int n) => _prog[n.toString()] ?? 0;
   bool _ouvert(int n) => n == 1 || _etoiles(n - 1) > 0;
 
-  Future<void> _fin(int niveau, int etoiles, int score) async {
+  Future<void> _fin(int niveau, int etoiles, int score,
+      [Map<String, dynamic>? extra]) async {
     final avant = _etoiles(niveau);
+    _enregistrerPartie(niveau, etoiles, score, extra);
     setState(() {
       if (etoiles > avant) _prog[niveau.toString()] = etoiles;
       _resultat = [niveau, etoiles, score];
@@ -653,14 +669,107 @@ class _CxConcoursState extends State<_CxConcours> {
     }
   }
 
-  void _jouer(int n) {
+  Future<List<Map<String, dynamic>>> _parties(int niveau) async {
+    final q = await FirebaseFirestore.instance
+        .collection('duels')
+        .where('type', isEqualTo: 'partie')
+        .where('mode', isEqualTo: widget.mode)
+        .where('niveau', isEqualTo: niveau)
+        .where('langue', isEqualTo: widget.langue)
+        .limit(80)
+        .get();
+    return q.docs.map((d) => d.data()).toList();
+  }
+
+  Future<void> _enregistrerPartie(int niveau, int etoiles, int score,
+      Map<String, dynamic>? extra) async {
+    if (widget.mode == 'famille') return;
+    try {
+      await FirebaseFirestore.instance.collection('duels').add({
+        'type': 'partie',
+        'mode': widget.mode,
+        'niveau': niveau,
+        'langue': widget.langue,
+        'uid': currentUserUid,
+        'pseudo': widget.pseudo,
+        'drapeau': widget.drapeau,
+        'score': score,
+        'etoiles': etoiles,
+        'cree': DateTime.now().millisecondsSinceEpoch,
+        if (extra != null) ...extra,
+      });
+    } catch (_) {}
+    await _chargerClassement(niveau);
+  }
+
+  /// Classement en ligne du niveau : meilleur score de chaque joueur.
+  Future<void> _chargerClassement(int niveau) async {
+    if (mounted) setState(() => _chargeClassement = true);
+    try {
+      final l = await _parties(niveau);
+      final best = <String, Map<String, dynamic>>{};
+      for (final d in l) {
+        final u = (d['uid'] ?? '').toString();
+        if (u.isEmpty) continue;
+        final s = (d['score'] as num?)?.toInt() ?? 0;
+        if (!best.containsKey(u) ||
+            s > ((best[u]!['score'] as num?)?.toInt() ?? 0)) {
+          best[u] = d;
+        }
+      }
+      final tri = best.values.toList()
+        ..sort((a, b) => ((b['score'] as num?) ?? 0)
+            .compareTo((a['score'] as num?) ?? 0));
+      _classement = [
+        for (final d in tri)
+          [
+            '${d['drapeau'] ?? ''} ${d['pseudo'] ?? 'Joueur'}',
+            '${(d['score'] as num?)?.toInt() ?? 0}',
+            d['uid'] == currentUserUid ? '1' : ''
+          ]
+      ];
+      _monRang = tri.indexWhere((d) => d['uid'] == currentUserUid) + 1;
+    } catch (_) {
+      _classement = [];
+    }
+    if (mounted) setState(() => _chargeClassement = false);
+  }
+
+  /// Parties d'autres joueurs pour jouer contre eux (Ligue, Course).
+  Future<void> _chargerFantomes(int niveau) async {
+    _fantomes = [];
+    if (widget.mode != 'ligue' && widget.mode != 'course') return;
+    try {
+      final l = await _parties(niveau);
+      final cle = widget.mode == 'ligue' ? 'manches' : 'ev';
+      final vus = <String>{};
+      final ok = l
+          .where((d) =>
+              d['uid'] != currentUserUid && d[cle] is List && (d[cle] as List).isNotEmpty)
+          .toList()
+        ..shuffle(_cxR);
+      for (final d in ok) {
+        final u = (d['uid'] ?? '').toString();
+        if (vus.contains(u)) continue;
+        vus.add(u);
+        _fantomes.add(_CxFantome((d['pseudo'] ?? 'Joueur').toString(),
+            (d['drapeau'] ?? '🌍').toString(), d));
+        if (_fantomes.length >= 3) break;
+      }
+    } catch (_) {}
+  }
+
+  Future<void> _jouer(int n) async {
     if (_tous.length < 6 && widget.mode != 'accent') {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text('Les mots se chargent… réessaie dans un instant.')));
       return;
     }
+    await _chargerFantomes(n);
+    if (!mounted) return;
     setState(() {
       _resultat = null;
+      _classement = [];
       _niveau = n;
       _partie++;
     });
@@ -668,13 +777,14 @@ class _CxConcoursState extends State<_CxConcours> {
 
   Widget _jeu(int n) {
     final mots = _pool(n);
-    void fin(int e, int s) => _fin(n, e, s);
+    void fin(int e, int s, [Map<String, dynamic>? x]) => _fin(n, e, s, x);
     final k = ValueKey('${widget.mode}-$n-$_partie');
     switch (widget.mode) {
       case 'ligue':
         return _CxLigue(
             key: k, mots: mots, niveau: n, langue: widget.langue, tts: _tts,
-            fin: fin, pseudo: widget.pseudo, drapeau: widget.drapeau);
+            fin: fin, pseudo: widget.pseudo, drapeau: widget.drapeau,
+            adversaire: _fantomes.isNotEmpty ? _fantomes.first : null);
       case 'accent':
         return _CxAccent(
             key: k, mots: mots, niveau: n, langue: widget.langue, tts: _tts,
@@ -682,7 +792,7 @@ class _CxConcoursState extends State<_CxConcours> {
       case 'course':
         return _CxCourse(
             key: k, mots: mots, niveau: n, langue: widget.langue, tts: _tts,
-            fin: fin);
+            fin: fin, fantomes: _fantomes);
       case 'famille':
         return _CxFamille(
             key: k, mots: mots, niveau: n, langue: widget.langue, tts: _tts,
@@ -878,6 +988,77 @@ class _CxConcoursState extends State<_CxConcours> {
             textAlign: TextAlign.center,
             style: const TextStyle(
                 color: _cxOrange, fontSize: 20, fontWeight: FontWeight.w900)),
+        if (widget.mode != 'famille') ...[
+          const SizedBox(height: 18),
+          Container(
+            padding: const EdgeInsets.all(14),
+            decoration: BoxDecoration(
+              color: p.carte,
+              borderRadius: BorderRadius.circular(18),
+              border: Border.all(color: p.bord, width: 1.5),
+            ),
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                      _monRang > 0
+                          ? '🌍 CLASSEMENT EN LIGNE · TU ES ${_monRang}E SUR ${_classement.length}'
+                          : '🌍 CLASSEMENT EN LIGNE DU NIVEAU',
+                      style: TextStyle(
+                          color: p.gris,
+                          fontSize: 11.5,
+                          letterSpacing: 1.1,
+                          fontWeight: FontWeight.w800)),
+                  const SizedBox(height: 8),
+                  if (_chargeClassement)
+                    const Center(
+                        child: Padding(
+                            padding: EdgeInsets.all(8),
+                            child: CircularProgressIndicator(
+                                color: _cxOrange, strokeWidth: 2.5)))
+                  else if (_classement.isEmpty)
+                    Text('Tu es le premier à jouer ce niveau ! 🚀',
+                        style: TextStyle(color: p.texte, fontSize: 14))
+                  else
+                    for (var i = 0; i < math.min(5, _classement.length); i++)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 4),
+                        child: Row(children: [
+                          SizedBox(
+                              width: 30,
+                              child: Text(
+                                  i == 0
+                                      ? '🥇'
+                                      : i == 1
+                                          ? '🥈'
+                                          : i == 2
+                                              ? '🥉'
+                                              : '${i + 1}.',
+                                  style: TextStyle(
+                                      color: p.texte,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w800))),
+                          Expanded(
+                              child: Text(_classement[i][0],
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                      color: _classement[i][2] == '1'
+                                          ? _cxOrange
+                                          : p.texte,
+                                      fontSize: 15,
+                                      fontWeight: _classement[i][2] == '1'
+                                          ? FontWeight.w900
+                                          : FontWeight.w600))),
+                          Text('${_classement[i][1]} pts',
+                              style: TextStyle(
+                                  color: p.gris,
+                                  fontWeight: FontWeight.w800)),
+                        ]),
+                      ),
+                ]),
+          ),
+        ],
         if (!gagne) ...[
           const SizedBox(height: 8),
           Text(
@@ -1127,6 +1308,7 @@ class _CxLigue extends StatefulWidget {
     required this.fin,
     required this.pseudo,
     required this.drapeau,
+    this.adversaire,
   });
   final List<Map<String, String>> mots;
   final int niveau;
@@ -1135,14 +1317,24 @@ class _CxLigue extends StatefulWidget {
   final _CxFin fin;
   final String pseudo;
   final String drapeau;
+  final _CxFantome? adversaire; // vrai joueur (partie enregistrée)
 
   @override
   State<_CxLigue> createState() => _CxLigueState();
 }
 
 class _CxLigueState extends State<_CxLigue> {
-  late final List<String> _rival =
-      _cxRivaux[(widget.niveau - 1) % _cxRivaux.length];
+  late final List<String> _rival = widget.adversaire != null
+      ? [widget.adversaire!.pseudo, widget.adversaire!.drapeau, '👤']
+      : _cxRivaux[(widget.niveau - 1) % _cxRivaux.length];
+  late final List<int> _sesManches = widget.adversaire == null
+      ? []
+      : [
+          for (final x in (widget.adversaire!.data['manches'] as List))
+            (x as num).toInt()
+        ];
+  final List<int> _mesManches = [];
+  bool get _vrai => widget.adversaire != null;
   int _manche = 0;
   int _i = 0;
   int _moi = 0; // bonnes réponses dans la manche
@@ -1168,9 +1360,16 @@ class _CxLigueState extends State<_CxLigue> {
         _moi++;
         _bonsTotal++;
       }
-      if (_cxR.nextDouble() < _force) _lui++;
+      if (_vrai) {
+        final cible =
+            _manche < _sesManches.length ? _sesManches[_manche] : 0;
+        if (_i < cible) _lui++;
+      } else if (_cxR.nextDouble() < _force) {
+        _lui++;
+      }
       _i++;
       if (_i >= _qs.length) {
+        _mesManches.add(_moi);
         if (_moi > _lui) {
           _gagnees++;
           _bilan = 'Manche gagnée ! $_moi – $_lui';
@@ -1189,7 +1388,8 @@ class _CxLigueState extends State<_CxLigue> {
           final etoiles = _gagnees > _perdues
               ? (_perdues == 0 ? 3 : (_gagnees - _perdues >= 2 ? 2 : 1))
               : 0;
-          widget.fin(etoiles, _bonsTotal * 5 + (etoiles > 0 ? 20 : 0));
+          widget.fin(etoiles, _bonsTotal * 5 + (etoiles > 0 ? 20 : 0),
+              {'manches': _mesManches, 'contre': _vrai ? _rival[0] : ''});
           return;
         }
         _pause = true;
@@ -1259,7 +1459,9 @@ class _CxLigueState extends State<_CxLigue> {
           const SizedBox(height: 8),
           Text(
               _manche == 0
-                  ? '${_rival[0]} te défie ! 3 questions par manche : réponds mieux que lui.'
+                  ? (_vrai
+                      ? '🌍 Match en ligne contre ${_rival[0]} ${_rival[1]}, un vrai joueur de ton niveau ! 3 questions par manche : réponds mieux que lui.'
+                      : '${_rival[0]} te défie ! 3 questions par manche : réponds mieux que lui. (Aucun joueur en ligne à ce niveau pour l\'instant.)')
                   : 'Prêt pour la manche ${_manche + 1} ?',
               textAlign: TextAlign.center,
               style: TextStyle(color: p.gris, fontSize: 14.5)),
@@ -1578,12 +1780,14 @@ class _CxCourse extends StatefulWidget {
     required this.langue,
     required this.tts,
     required this.fin,
+    this.fantomes = const [],
   });
   final List<Map<String, String>> mots;
   final int niveau;
   final String langue;
   final FlutterTts tts;
   final _CxFin fin;
+  final List<_CxFantome> fantomes; // vrais joueurs
 
   @override
   State<_CxCourse> createState() => _CxCourseState();
@@ -1598,6 +1802,30 @@ class _CxCourseState extends State<_CxCourse> {
   ];
   int _moi = 0;
   final List<double> _eux = [0, 0, 0];
+  final List<List<int>> _mesEv = []; // [ms, position]
+  DateTime _debut = DateTime.now();
+
+  List<String> _rival(int r) => r < widget.fantomes.length
+      ? ['🦊', '${widget.fantomes[r].drapeau} ${widget.fantomes[r].pseudo}']
+      : _rivaux[r];
+
+  /// Position d'un vrai joueur à l'instant t (rejoue sa partie enregistrée).
+  double _posFantome(int r, int ms) {
+    final ev = widget.fantomes[r].data['ev'] as List;
+    var pos = 0.0;
+    var dernierT = 0;
+    for (final e in ev) {
+      final t = ((e as List)[0] as num).toInt();
+      if (t > ms) return pos;
+      pos = (e[1] as num).toDouble();
+      dernierT = t;
+    }
+    // sa partie s'est arrêtée avant l'arrivée : il continue à son rythme
+    if (pos < _arrivee && dernierT > 0) {
+      pos += (ms - dernierT) * (pos / dernierT) * 0.8;
+    }
+    return pos;
+  }
   int _erreurs = 0;
   int _bons = 0;
   int _num = 0;
@@ -1633,11 +1861,17 @@ class _CxCourseState extends State<_CxCourse> {
 
   void _partir() {
     setState(() => _depart = true);
+    _debut = DateTime.now();
     _timer = Timer.periodic(const Duration(milliseconds: 250), (t) {
       if (!mounted || _fini) return;
+      final ms = DateTime.now().difference(_debut).inMilliseconds;
       setState(() {
         for (var r = 0; r < 3; r++) {
-          _eux[r] += _vitesse(r) / 4 * (0.6 + _cxR.nextDouble() * 0.8);
+          if (r < widget.fantomes.length) {
+            _eux[r] = _posFantome(r, ms);
+          } else {
+            _eux[r] += _vitesse(r) / 4 * (0.6 + _cxR.nextDouble() * 0.8);
+          }
         }
       });
       if (_eux.any((x) => x >= _arrivee)) _terminer(false);
@@ -1649,7 +1883,7 @@ class _CxCourseState extends State<_CxCourse> {
     _fini = true;
     _timer?.cancel();
     final et = !gagne ? 0 : (_erreurs <= 2 ? 3 : (_erreurs <= 5 ? 2 : 1));
-    widget.fin(et, _bons * 3 + (gagne ? 30 : 0));
+    widget.fin(et, _bons * 3 + (gagne ? 30 : 0), {'ev': _mesEv});
   }
 
   void _repondu(bool juste) {
@@ -1658,9 +1892,11 @@ class _CxCourseState extends State<_CxCourse> {
       if (juste) {
         _moi++;
         _bons++;
+        _mesEv.add([DateTime.now().difference(_debut).inMilliseconds, _moi]);
       } else {
         _erreurs++;
         _moi = math.max(0, _moi - 1);
+        _mesEv.add([DateTime.now().difference(_debut).inMilliseconds, _moi]);
       }
       _nouvelle();
     });
@@ -1720,10 +1956,22 @@ class _CxCourseState extends State<_CxCourse> {
       children: [
         _piste('🦊', 'Toi · $_moi', _moi.toDouble(), _cxOrange),
         for (var r = 0; r < 3; r++)
-          _piste(_rivaux[r][0], _rivaux[r][1], _eux[r], p.gris),
+          _piste(_rival(r)[0], _rival(r)[1], _eux[r],
+              r < widget.fantomes.length ? _cxViolet : p.gris),
         const SizedBox(height: 10),
         if (!_depart) ...[
           const SizedBox(height: 10),
+          if (widget.fantomes.isNotEmpty)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8),
+              child: Text(
+                  '🌍 Course en ligne : tu cours contre ${widget.fantomes.length} vrai${widget.fantomes.length > 1 ? 's' : ''} joueur${widget.fantomes.length > 1 ? 's' : ''} de ton niveau !',
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                      color: _cxViolet,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w800)),
+            ),
           Text('Réponds vite et juste : chaque bonne réponse = 1 case. Une erreur = 1 case en arrière.',
               textAlign: TextAlign.center,
               style: TextStyle(color: p.gris, fontSize: 14.5)),
