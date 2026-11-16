@@ -555,6 +555,7 @@ class _CxConcoursState extends State<_CxConcours> {
   int _partie = 0; // pour relancer une partie
   List<int>? _resultat; // [niveau, étoiles, score]
   List<_CxFantome> _fantomes = [];
+  List<String> _nomsJoueurs = [];
   List<List<String>> _classement = []; // [pseudo+drapeau, score, moi?]
   int _monRang = 0;
   bool _chargeClassement = false;
@@ -742,6 +743,11 @@ class _CxConcoursState extends State<_CxConcours> {
     try {
       final l = await _parties(niveau);
       final cle = widget.mode == 'ligue' ? 'manches' : 'ev';
+      _nomsJoueurs = {
+        for (final d in l)
+          if (d['uid'] != currentUserUid)
+            '${d['pseudo'] ?? 'Joueur'} ${d['drapeau'] ?? ''}'.trim()
+      }.toList();
       final vus = <String>{};
       final ok = l
           .where((d) =>
@@ -784,7 +790,8 @@ class _CxConcoursState extends State<_CxConcours> {
         return _CxLigue(
             key: k, mots: mots, niveau: n, langue: widget.langue, tts: _tts,
             fin: fin, pseudo: widget.pseudo, drapeau: widget.drapeau,
-            adversaire: _fantomes.isNotEmpty ? _fantomes.first : null);
+            adversaire: _fantomes.isNotEmpty ? _fantomes.first : null,
+            noms: _nomsJoueurs);
       case 'accent':
         return _CxAccent(
             key: k, mots: mots, niveau: n, langue: widget.langue, tts: _tts,
@@ -1309,6 +1316,7 @@ class _CxLigue extends StatefulWidget {
     required this.pseudo,
     required this.drapeau,
     this.adversaire,
+    this.noms = const [],
   });
   final List<Map<String, String>> mots;
   final int niveau;
@@ -1318,33 +1326,55 @@ class _CxLigue extends StatefulWidget {
   final String pseudo;
   final String drapeau;
   final _CxFantome? adversaire; // vrai joueur (partie enregistrée)
+  final List<String> noms; // joueurs pour le tirage au sort
 
   @override
   State<_CxLigue> createState() => _CxLigueState();
 }
 
+/// Match en direct : tirage d'un adversaire, puis chaque question est jouée
+/// en même temps par les deux joueurs. On voit l'adversaire réfléchir,
+/// répondre, et son score monter.
 class _CxLigueState extends State<_CxLigue> {
   late final List<String> _rival = widget.adversaire != null
-      ? [widget.adversaire!.pseudo, widget.adversaire!.drapeau, '👤']
-      : _cxRivaux[(widget.niveau - 1) % _cxRivaux.length];
+      ? [widget.adversaire!.pseudo, widget.adversaire!.drapeau]
+      : (() {
+          final r = _cxRivaux[(widget.niveau - 1) % _cxRivaux.length];
+          return [r[0], r[1]];
+        })();
   late final List<int> _sesManches = widget.adversaire == null
       ? []
       : [
           for (final x in (widget.adversaire!.data['manches'] as List))
             (x as num).toInt()
         ];
-  final List<int> _mesManches = [];
   bool get _vrai => widget.adversaire != null;
+
+  // phases : tirage, face, pause, jeu
+  String _phase = 'tirage';
+  String _nomTirage = '';
+  Timer? _tTirage;
+
   int _manche = 0;
   int _i = 0;
-  int _moi = 0; // bonnes réponses dans la manche
+  int _moi = 0;
   int _lui = 0;
   int _gagnees = 0;
   int _perdues = 0;
   int _bonsTotal = 0;
-  bool _pause = true;
   String _bilan = '';
   late List<_CxQ> _qs;
+  final List<int> _mesManches = [];
+
+  // question en cours
+  List<bool> _sesRep = []; // ses réponses de la manche
+  final List<int?> _mesPoints = [null, null, null]; // 1 juste, 0 faux
+  final List<int?> _sesPoints = [null, null, null];
+  bool? _moiJuste; // ma réponse à la question en cours
+  bool? _luiJuste; // sa réponse à la question en cours
+  Timer? _tLui;
+  int _reflexion = 0; // pour l'animation « réfléchit… »
+  Timer? _tPoints;
 
   double get _force => math.min(0.92, 0.42 + widget.niveau * 0.05);
 
@@ -1352,23 +1382,113 @@ class _CxLigueState extends State<_CxLigue> {
   void initState() {
     super.initState();
     _qs = _cxQuestions(widget.mots, 3, const ['qcm', 'inverse', 'vf']);
+    _lancerTirage();
+  }
+
+  @override
+  void dispose() {
+    _tTirage?.cancel();
+    _tLui?.cancel();
+    _tPoints?.cancel();
+    super.dispose();
+  }
+
+  void _lancerTirage() {
+    final noms = <String>[
+      ...widget.noms,
+      for (final r in _cxRivaux) '${r[0]} ${r[1]}',
+    ]..shuffle(_cxR);
+    var n = 0;
+    var delai = 70;
+    void tour() {
+      if (!mounted) return;
+      setState(() => _nomTirage = noms[n % noms.length]);
+      n++;
+      delai = (delai * 1.12).round();
+      if (delai > 420) {
+        _tTirage = Timer(const Duration(milliseconds: 500), () {
+          if (!mounted) return;
+          HapticFeedback.mediumImpact();
+          setState(() {
+            _nomTirage = '${_rival[0]} ${_rival[1]}';
+            _phase = 'face';
+          });
+        });
+        return;
+      }
+      _tTirage = Timer(Duration(milliseconds: delai), tour);
+    }
+
+    tour();
+  }
+
+  void _preparerManche() {
+    final cible = _vrai
+        ? (_manche < _sesManches.length ? _sesManches[_manche] : 0)
+        : [0, 1, 2, 3].where((_) => _cxR.nextDouble() < _force).length.clamp(0, 3).toInt();
+    _sesRep = List.generate(3, (k) => k < cible)..shuffle(_cxR);
+    for (var k = 0; k < 3; k++) {
+      _mesPoints[k] = null;
+      _sesPoints[k] = null;
+    }
+    _moi = 0;
+    _lui = 0;
+    _i = 0;
+  }
+
+  void _commencerQuestion() {
+    _moiJuste = null;
+    _luiJuste = null;
+    _tLui?.cancel();
+    _tPoints?.cancel();
+    // il répond entre 2 et 7 s (plus vite aux niveaux élevés)
+    final base = math.max(1500, 4500 - widget.niveau * 250);
+    final ms = base + _cxR.nextInt(2500);
+    _tLui = Timer(Duration(milliseconds: ms), _luiRepond);
+    _tPoints = Timer.periodic(const Duration(milliseconds: 400), (_) {
+      if (mounted && _luiJuste == null) setState(() => _reflexion++);
+    });
+  }
+
+  void _luiRepond() {
+    if (!mounted || _luiJuste != null) return;
+    _tPoints?.cancel();
+    final j = _i < _sesRep.length ? _sesRep[_i] : false;
+    setState(() {
+      _luiJuste = j;
+      _sesPoints[_i] = j ? 1 : 0;
+      if (j) _lui++;
+    });
+    if (_moiJuste != null) _suivante();
   }
 
   void _repondu(bool juste) {
     setState(() {
+      _moiJuste = juste;
+      _mesPoints[_i] = juste ? 1 : 0;
       if (juste) {
         _moi++;
         _bonsTotal++;
       }
-      if (_vrai) {
-        final cible =
-            _manche < _sesManches.length ? _sesManches[_manche] : 0;
-        if (_i < cible) _lui++;
-      } else if (_cxR.nextDouble() < _force) {
-        _lui++;
-      }
-      _i++;
-      if (_i >= _qs.length) {
+    });
+    if (_luiJuste != null) {
+      _suivante();
+    } else {
+      // on attend qu'il réponde (au plus 3 s de plus)
+      _tLui?.cancel();
+      _tLui = Timer(Duration(milliseconds: 600 + _cxR.nextInt(2400)), _luiRepond);
+    }
+  }
+
+  void _suivante() {
+    Future.delayed(const Duration(milliseconds: 1100), () {
+      if (!mounted) return;
+      setState(() {
+        _i++;
+        if (_i < _qs.length) {
+          _commencerQuestion();
+          return;
+        }
         _mesManches.add(_moi);
         if (_moi > _lui) {
           _gagnees++;
@@ -1389,31 +1509,65 @@ class _CxLigueState extends State<_CxLigue> {
               ? (_perdues == 0 ? 3 : (_gagnees - _perdues >= 2 ? 2 : 1))
               : 0;
           widget.fin(etoiles, _bonsTotal * 5 + (etoiles > 0 ? 20 : 0),
-              {'manches': _mesManches, 'contre': _vrai ? _rival[0] : ''});
+              {'manches': _mesManches, 'contre': _rival[0]});
           return;
         }
-        _pause = true;
-        _moi = 0;
-        _lui = 0;
-        _i = 0;
+        _phase = 'pause';
         _qs = _cxQuestions(widget.mots, 3, const ['qcm', 'inverse', 'vf']);
-      }
+      });
     });
   }
 
-  Widget _joueur(String emoji, String nom, int score, Color c) {
+  void _jouerManche() {
+    setState(() {
+      _preparerManche();
+      _phase = 'jeu';
+    });
+    _commencerQuestion();
+  }
+
+  Widget _points(List<int?> l, Color c) {
+    final p = _cxP();
+    return Row(mainAxisSize: MainAxisSize.min, children: [
+      for (final v in l)
+        Container(
+          width: 12,
+          height: 12,
+          margin: const EdgeInsets.symmetric(horizontal: 3),
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: v == null ? p.bord : (v == 1 ? _cxVert : _cxRouge),
+          ),
+        ),
+    ]);
+  }
+
+  Widget _joueur(String emoji, String nom, int manches, int pts,
+      List<int?> l, Color c, {String? etat, Color? etatC}) {
     final p = _cxP();
     return Expanded(
       child: Column(children: [
-        Text(emoji, style: const TextStyle(fontSize: 38)),
+        Text(emoji, style: const TextStyle(fontSize: 34)),
         Text(nom,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
                 color: p.texte, fontSize: 14, fontWeight: FontWeight.w800)),
-        Text('$score',
+        Text('$manches',
             style:
-                TextStyle(color: c, fontSize: 30, fontWeight: FontWeight.w900)),
+                TextStyle(color: c, fontSize: 28, fontWeight: FontWeight.w900)),
+        if (_phase == 'jeu') ...[
+          _points(l, c),
+          const SizedBox(height: 6),
+          SizedBox(
+            height: 18,
+            child: Text(etat ?? '',
+                style: TextStyle(
+                    color: etatC ?? p.gris,
+                    fontSize: 12.5,
+                    fontWeight: FontWeight.w800)),
+          ),
+        ],
       ]),
     );
   }
@@ -1421,6 +1575,84 @@ class _CxLigueState extends State<_CxLigue> {
   @override
   Widget build(BuildContext context) {
     final p = _cxP();
+    // 1. Tirage au sort de l'adversaire
+    if (_phase == 'tirage' || _phase == 'face') {
+      final trouve = _phase == 'face';
+      return ListView(
+        padding: const EdgeInsets.fromLTRB(22, 30, 22, 24),
+        children: [
+          Text(trouve ? 'Adversaire trouvé !' : 'Recherche d\'un adversaire…',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  color: trouve ? _cxVert : p.gris,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w800)),
+          const SizedBox(height: 24),
+          Row(children: [
+            Expanded(
+              child: Column(children: [
+                Text(widget.drapeau, style: const TextStyle(fontSize: 54)),
+                const SizedBox(height: 6),
+                Text(widget.pseudo,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                        color: p.texte,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w900)),
+              ]),
+            ),
+            const Text('VS',
+                style: TextStyle(
+                    color: _cxOrange,
+                    fontSize: 30,
+                    fontWeight: FontWeight.w900)),
+            Expanded(
+              child: Column(children: [
+                AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 120),
+                  child: Text(trouve ? '😎' : '❓',
+                      key: ValueKey(trouve),
+                      style: const TextStyle(fontSize: 54)),
+                ),
+                const SizedBox(height: 6),
+                AnimatedContainer(
+                  duration: const Duration(milliseconds: 200),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: trouve ? _cxViolet : p.doux,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Text(_nomTirage,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                          color: trouve ? Colors.white : p.texte,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w900)),
+                ),
+              ]),
+            ),
+          ]),
+          const SizedBox(height: 28),
+          if (trouve) ...[
+            Text(
+                _vrai
+                    ? '🌍 ${_rival[0]} est un vrai joueur de ton niveau. Il joue en même temps que toi : 5 manches de 3 questions, le meilleur gagne !'
+                    : '${_rival[0]} est un joueur Léxi. 5 manches de 3 questions, le meilleur gagne !',
+                textAlign: TextAlign.center,
+                style: TextStyle(color: p.gris, fontSize: 14.5, height: 1.35)),
+            const SizedBox(height: 24),
+            _cxBouton('Commencer le match ⚔️', _cxViolet, _jouerManche),
+          ] else
+            const Center(
+                child: CircularProgressIndicator(color: _cxViolet)),
+        ],
+      );
+    }
+
+    final reflechit = '.' * (1 + _reflexion % 3);
     final tableau = Container(
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
       decoration: BoxDecoration(
@@ -1428,61 +1660,88 @@ class _CxLigueState extends State<_CxLigue> {
         borderRadius: BorderRadius.circular(20),
         border: Border.all(color: p.bord, width: 1.5),
       ),
-      child: Row(children: [
-        _joueur(widget.drapeau, widget.pseudo, _gagnees, _cxOrange),
-        Column(children: [
-          Text('MANCHE', style: TextStyle(color: p.gris, fontSize: 11)),
-          Text('${math.min(_manche + 1, 5)} / 5',
-              style: TextStyle(
-                  color: p.texte, fontSize: 18, fontWeight: FontWeight.w900)),
-        ]),
-        _joueur(_rival[2], '${_rival[0]} ${_rival[1]}', _perdues, _cxViolet),
+      child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        _joueur(widget.drapeau, widget.pseudo, _gagnees, _moi, _mesPoints,
+            _cxOrange,
+            etat: _moiJuste == null
+                ? 'à toi !'
+                : (_moiJuste! ? 'juste ✓' : 'faux ✗'),
+            etatC: _moiJuste == null
+                ? _cxOrange
+                : (_moiJuste! ? _cxVert : _cxRouge)),
+        Padding(
+          padding: const EdgeInsets.only(top: 12),
+          child: Column(children: [
+            Text('MANCHE', style: TextStyle(color: p.gris, fontSize: 11)),
+            Text('${math.min(_manche + 1, 5)} / 5',
+                style: TextStyle(
+                    color: p.texte, fontSize: 18, fontWeight: FontWeight.w900)),
+            if (_phase == 'jeu')
+              Text('Q${_i + 1} / 3',
+                  style: TextStyle(color: p.gris, fontSize: 12)),
+          ]),
+        ),
+        _joueur(_rival[1], _rival[0], _perdues, _lui, _sesPoints, _cxViolet,
+            etat: _luiJuste == null
+                ? 'réfléchit$reflechit'
+                : (_luiJuste! ? 'a répondu ✓' : 'a répondu ✗'),
+            etatC: _luiJuste == null
+                ? p.gris
+                : (_luiJuste! ? _cxVert : _cxRouge)),
       ]),
     );
-    if (_pause) {
+
+    // 2. Entre les manches
+    if (_phase == 'pause') {
       return ListView(
         padding: const EdgeInsets.fromLTRB(18, 10, 18, 24),
         children: [
           tableau,
           const SizedBox(height: 26),
-          if (_bilan.isNotEmpty)
-            Text(_bilan,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    color: _bilan.startsWith('Manche gagnée')
-                        ? _cxVert
-                        : (_bilan.startsWith('Manche perdue')
-                            ? _cxRouge
-                            : p.texte),
-                    fontSize: 22,
-                    fontWeight: FontWeight.w900)),
+          Text(_bilan,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  color: _bilan.startsWith('Manche gagnée')
+                      ? _cxVert
+                      : (_bilan.startsWith('Manche perdue')
+                          ? _cxRouge
+                          : p.texte),
+                  fontSize: 22,
+                  fontWeight: FontWeight.w900)),
           const SizedBox(height: 8),
-          Text(
-              _manche == 0
-                  ? (_vrai
-                      ? '🌍 Match en ligne contre ${_rival[0]} ${_rival[1]}, un vrai joueur de ton niveau ! 3 questions par manche : réponds mieux que lui.'
-                      : '${_rival[0]} te défie ! 3 questions par manche : réponds mieux que lui. (Aucun joueur en ligne à ce niveau pour l\'instant.)')
-                  : 'Prêt pour la manche ${_manche + 1} ?',
+          Text('Prêt pour la manche ${_manche + 1} ?',
               textAlign: TextAlign.center,
               style: TextStyle(color: p.gris, fontSize: 14.5)),
           const SizedBox(height: 26),
-          _cxBouton(_manche == 0 ? 'Commencer le match' : 'Manche suivante',
-              _cxViolet, () => setState(() => _pause = false)),
+          _cxBouton('Manche suivante', _cxViolet, _jouerManche),
         ],
       );
     }
+
+    // 3. En jeu
     return ListView(
       padding: const EdgeInsets.fromLTRB(18, 10, 18, 24),
       children: [
         tableau,
         const SizedBox(height: 14),
-        _CxQuestionVue(
-          key: ValueKey('l$_manche-$_i'),
-          q: _qs[_i],
-          repondu: _repondu,
-          tts: widget.tts,
-          langue: widget.langue,
-          secondes: math.max(5, 12 - widget.niveau ~/ 2),
+        if (_moiJuste != null && _luiJuste == null)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 10),
+            child: Text('${_rival[0]} réfléchit encore$reflechit',
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                    color: _cxViolet, fontWeight: FontWeight.w800)),
+          ),
+        IgnorePointer(
+          ignoring: _moiJuste != null,
+          child: _CxQuestionVue(
+            key: ValueKey('l$_manche-$_i'),
+            q: _qs[_i],
+            repondu: _repondu,
+            tts: widget.tts,
+            langue: widget.langue,
+            secondes: math.max(6, 12 - widget.niveau ~/ 2),
+          ),
         ),
       ],
     );
