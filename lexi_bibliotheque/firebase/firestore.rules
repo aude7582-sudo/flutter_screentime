@@ -69,8 +69,8 @@ service cloud.firestore {
     match /joueurs/{joueurId} {
       allow read: if connecte();
       allow create: if connecte() && (joueurId == moi() || nouveauEstAMoi());
-      allow update: if connecte() && (joueurId == moi() || estAMoi())
-                    && memeProprietaire();
+      allow update: if connecte() && (joueurId == moi()
+                    || (estAMoi() && memeProprietaire()));
       allow delete: if connecte() && (joueurId == moi() || estAMoi());
     }
 
