@@ -1,0 +1,134 @@
+rules_version = '2';
+
+// Règles de sécurité Léxi (Firestore)
+// - chacun ne modifie que SES données
+// - les contenus de l'appli (mots, parcours…) ne sont pas modifiables depuis l'appli
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function connecte() {
+      return request.auth != null;
+    }
+    function moi() {
+      return request.auth.uid;
+    }
+    // le nouveau document appartient à l'utilisateur connecté
+    function nouveauEstAMoi() {
+      return request.resource.data.get('uid', '') == moi();
+    }
+    // le document existant appartient à l'utilisateur connecté
+    function estAMoi() {
+      return resource.data.get('uid', '') == moi();
+    }
+    // on ne peut pas changer le propriétaire d'un document
+    function memeProprietaire() {
+      return request.resource.data.get('uid', '') == resource.data.get('uid', '');
+    }
+
+    // ---------- Contenus de l'appli (lecture seule) ----------
+    match /parcours/{id} {
+      allow read: if connecte();
+      allow create: if connecte();
+      allow update, delete: if false;
+    }
+    match /mots_langues/{id} {
+      allow read: if connecte();
+      allow create: if connecte();
+      allow update, delete: if false;
+    }
+    match /words/{id} {
+      allow read: if connecte();
+      allow create: if connecte();
+      allow update, delete: if false;
+    }
+    match /achievements/{id} {
+      allow read: if connecte();
+      allow create: if connecte();
+      allow update, delete: if false;
+    }
+
+    // ---------- Données personnelles ----------
+    // Progression : visible et modifiable seulement par son propriétaire
+    match /user_stats/{id} {
+      allow read: if connecte() && estAMoi();
+      allow create: if connecte() && nouveauEstAMoi();
+      allow update: if connecte() && estAMoi() && memeProprietaire();
+      allow delete: if connecte() && estAMoi();
+    }
+
+    // Applis bloquées
+    match /apps/{id} {
+      allow read: if connecte();
+      allow create: if connecte() && nouveauEstAMoi();
+      allow update: if connecte() && estAMoi() && memeProprietaire();
+      allow delete: if connecte() && estAMoi();
+    }
+
+    // Profil public du joueur (pseudo, pays, avatar, code ami)
+    // Le document porte l'identifiant du joueur.
+    match /joueurs/{joueurId} {
+      allow read: if connecte();
+      allow create: if connecte() && (joueurId == moi() || nouveauEstAMoi());
+      allow update: if connecte() && (joueurId == moi() || estAMoi())
+                    && memeProprietaire();
+      allow delete: if connecte() && (joueurId == moi() || estAMoi());
+    }
+
+    // Points de la semaine (classements)
+    match /scores/{id} {
+      allow read: if connecte();
+      allow create: if connecte() && nouveauEstAMoi();
+      allow update: if connecte() && estAMoi() && nouveauEstAMoi();
+      allow delete: if false;
+    }
+
+    // ---------- Social ----------
+    // Amitiés : seulement entre les deux personnes concernées
+    match /amities/{id} {
+      allow read: if connecte();
+      allow create: if connecte() && moi() in request.resource.data.uids;
+      allow update: if connecte() && moi() in resource.data.uids
+                    && moi() in request.resource.data.uids;
+      allow delete: if connecte() && moi() in resource.data.uids;
+    }
+
+    // Duels entre amis, duels Silence et parties enregistrées (fantômes)
+    function participant(d) {
+      return d.get('uid', '') == moi()
+          || moi() in d.get('joueurs', [])
+          || moi() in d.get('membres', []);
+    }
+    match /duels/{id} {
+      allow read: if connecte();
+      allow create: if connecte() && participant(request.resource.data);
+      allow update: if connecte() && participant(resource.data)
+                    && participant(request.resource.data)
+                    && request.resource.data.get('uid', '') == resource.data.get('uid', '');
+      allow delete: if false;
+    }
+
+    // Équipes : les membres gèrent l'équipe ; un joueur peut
+    // seulement s'ajouter ou se retirer lui-même.
+    match /equipes/{id} {
+      allow read: if connecte();
+      allow create: if connecte() && moi() in request.resource.data.membres;
+      allow update: if connecte() && (
+          moi() in resource.data.membres
+          || (request.resource.data.diff(resource.data).affectedKeys().hasOnly(['membres'])
+              && request.resource.data.membres.toSet().difference(resource.data.membres.toSet()).hasOnly([moi()]))
+      );
+      allow delete: if false;
+    }
+
+    // Accès de l'éditeur FlutterFlow (visualisation des données)
+    match /{document=**} {
+      allow read, write: if request.auth != null
+                         && request.auth.token.email.matches("firebase@flutterflow.io");
+    }
+
+    // Tout le reste est interdit
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
