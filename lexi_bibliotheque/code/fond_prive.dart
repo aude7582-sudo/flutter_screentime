@@ -12,12 +12,14 @@ class _LxFond extends StatefulWidget {
     this.height,
     this.intensite = 1.0,
     this.etoiles = true,
+    this.sombre,
   });
 
   final double? width;
   final double? height;
   final double intensite;
   final bool etoiles;
+  final bool? sombre;
 
   @override
   State<_LxFond> createState() => _LxFondState();
@@ -38,7 +40,8 @@ class _LxFondState extends State<_LxFond>
 
   @override
   Widget build(BuildContext context) {
-    final sombre = Theme.of(context).brightness == Brightness.dark;
+    final sombre =
+        widget.sombre ?? Theme.of(context).brightness == Brightness.dark;
     return SizedBox(
       width: widget.width ?? double.infinity,
       height: widget.height ?? double.infinity,
@@ -126,4 +129,19 @@ class _LxFondPeintre extends CustomPainter {
   @override
   bool shouldRepaint(covariant _LxFondPeintre old) =>
       old.sombre != sombre || old.intensite != intensite || old.etoiles != etoiles;
+}
+
+/// Pose le fond animé derrière un contenu.
+class _LxAvecFond extends StatelessWidget {
+  const _LxAvecFond(
+      {required this.child, this.sombre, this.intensite = 1.0});
+  final Widget child;
+  final bool? sombre;
+  final double intensite;
+
+  @override
+  Widget build(BuildContext context) => Stack(children: [
+        Positioned.fill(child: _LxFond(sombre: sombre, intensite: intensite)),
+        child,
+      ]);
 }
