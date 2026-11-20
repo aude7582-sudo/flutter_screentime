@@ -174,6 +174,7 @@ class BlockAppService : Service() {
                 }
 
                 cacherCarte()
+                verifierBravo()
                 val shouldDisplayOverlay =
                     !isDeviceLocked() && isBlockedPackageInForeground()
 
@@ -227,6 +228,7 @@ class BlockAppService : Service() {
         handler.removeCallbacksAndMessages(null)
         removeOverlay()
         cacherCarte()
+        cacherBravo()
         super.onDestroy()
     }
 
@@ -603,6 +605,140 @@ class BlockAppService : Service() {
             cartePaquet = paquet
         } catch (_: Exception) {
         }
+    }
+
+    // ---------------------------------------------------------------
+    // Léxi : fin d'une séance Focus (sans défi). À la première appli
+    // ouverte après l'heure de fin, on affiche « Bravo ! » avec le renard.
+    private var bravoView: View? = null
+
+    private fun bravoEcheance(): Long {
+        return try {
+            val p = getSharedPreferences("FlutterSharedPreferences", Context.MODE_PRIVATE)
+            (p.all["flutter.lexi_bravo_jusqua"] as? Number)?.toLong() ?: 0L
+        } catch (_: Exception) {
+            0L
+        }
+    }
+
+    private fun bravoMinutes(): Long {
+        return try {
+            val p = getSharedPreferences("FlutterSharedPreferences", Context.MODE_PRIVATE)
+            (p.all["flutter.lexi_bravo_minutes"] as? Number)?.toLong() ?: 0L
+        } catch (_: Exception) {
+            0L
+        }
+    }
+
+    private fun verifierBravo() {
+        if (bravoView != null) return
+        val jusqua = bravoEcheance()
+        if (jusqua <= System.currentTimeMillis()) return
+        val prefs = ScreenTimePreferences.prefs(this)
+        if (prefs.getLong("lexi_bravo_vu", 0L) == jusqua) return
+        if (isDeviceLocked()) return
+        val devant = lastForegroundPackage() ?: return
+        if (devant == packageName || !isLaunchableUserApp(devant)) return
+        prefs.edit().putLong("lexi_bravo_vu", jusqua).apply()
+        montrerBravo()
+    }
+
+    private fun montrerBravo() {
+        cacherBravo()
+        val orange = Color.parseColor("#F97316")
+        val minutes = bravoMinutes()
+        val dureeTexte = when {
+            minutes <= 0 -> ""
+            minutes >= 60 && minutes % 60 == 0L -> " (${minutes / 60} h)"
+            minutes >= 60 -> " (${minutes / 60} h ${(minutes % 60).toString().padStart(2, '0')})"
+            else -> " ($minutes min)"
+        }
+        val racine = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            gravity = Gravity.CENTER
+            setPadding(dp(28), dp(40), dp(28), dp(40))
+            background = GradientDrawable(
+                GradientDrawable.Orientation.TL_BR,
+                intArrayOf(
+                    Color.parseColor("#14112B"),
+                    Color.parseColor("#2E1F5E"),
+                    Color.parseColor("#4A1D52"),
+                ),
+            )
+            isClickable = true
+        }
+        racine.addView(
+            android.widget.ImageView(this).apply {
+                setImageResource(R.drawable.lexi_renard_bravo)
+                scaleType = android.widget.ImageView.ScaleType.FIT_CENTER
+            },
+            LinearLayout.LayoutParams(dp(250), dp(250)),
+        )
+        racine.addView(
+            TextView(this).apply {
+                text = "🎉 Bravo !"
+                setTextColor(Color.WHITE)
+                textSize = 32f
+                gravity = Gravity.CENTER
+                setTypeface(typeface, Typeface.BOLD)
+                setPadding(0, dp(18), 0, dp(8))
+            },
+        )
+        racine.addView(
+            TextView(this).apply {
+                text = "Tu as terminé ton temps de concentration$dureeTexte.\n" +
+                    "Félicitations, tu peux retrouver tes applications 💪"
+                setTextColor(Color.parseColor("#E9E5FF"))
+                textSize = 17f
+                gravity = Gravity.CENTER
+                setLineSpacing(dp(3).toFloat(), 1f)
+            },
+        )
+        racine.addView(
+            TextView(this).apply {
+                text = "Retrouver mes applis"
+                setTextColor(Color.WHITE)
+                textSize = 17f
+                gravity = Gravity.CENTER
+                setTypeface(typeface, Typeface.BOLD)
+                setPadding(dp(30), dp(15), dp(30), dp(15))
+                background = GradientDrawable().apply {
+                    setColor(orange)
+                    cornerRadius = dp(30).toFloat()
+                }
+                setOnClickListener { cacherBravo() }
+            },
+            LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+            ).apply { topMargin = dp(30) },
+        )
+        val params = WindowManager.LayoutParams(
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.MATCH_PARENT,
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
+            } else {
+                WindowManager.LayoutParams.TYPE_PHONE
+            },
+            WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN or
+                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+            android.graphics.PixelFormat.TRANSLUCENT,
+        )
+        try {
+            windowManager.addView(racine, params)
+            bravoView = racine
+        } catch (_: Exception) {
+        }
+    }
+
+    private fun cacherBravo() {
+        val v = bravoView ?: return
+        try {
+            if (v.windowToken != null) windowManager.removeView(v)
+        } catch (_: Exception) {
+        }
+        bravoView = null
     }
 
     private fun cacherCarte() {
