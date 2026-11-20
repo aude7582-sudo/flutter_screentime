@@ -158,6 +158,7 @@ class LexiWidget : AppWidgetProvider() {
             if (!d.autorise) {
                 v.setTextViewText(R.id.lexi_widget_temps, "—")
                 v.setTextViewText(R.id.lexi_widget_compare, "")
+                v.setViewVisibility(R.id.lexi_widget_compare, View.GONE)
                 v.setViewVisibility(R.id.lexi_widget_barre, View.GONE)
                 if (grand) {
                     v.setTextViewText(R.id.lexi_widget_objectif, "")
@@ -176,6 +177,7 @@ class LexiWidget : AppWidgetProvider() {
             val (cmp, couleur) = texteCompare(d)
             v.setTextViewText(R.id.lexi_widget_compare, cmp)
             v.setTextColor(R.id.lexi_widget_compare, couleur)
+            v.setViewVisibility(R.id.lexi_widget_compare, if (cmp.isEmpty()) View.GONE else View.VISIBLE)
             v.setViewVisibility(R.id.lexi_widget_barre, View.VISIBLE)
             v.setProgressBar(
                 R.id.lexi_widget_barre,
@@ -211,6 +213,35 @@ class LexiWidget : AppWidgetProvider() {
             return v
         }
 
+        /** Message du renard (change toutes les 30 minutes) et image associée. */
+        private fun message(d: Donnees, serie: Long, bloque: Boolean): Pair<String, Int> {
+            if (!d.autorise) return Pair("Touche ici pour voir tes stats 🦊", R.drawable.lexi_renard_bloque)
+            if (bloque) return Pair("C'est l'heure de te concentrer 🔒", R.drawable.lexi_renard_bloque)
+            if (d.total >= OBJECTIF_SECONDES) {
+                return Pair("Objectif dépassé ! Pose le téléphone 📵", R.drawable.lexi_renard_bloque)
+            }
+            val liste = ArrayList<String>()
+            liste.add("Allez, on s'y met ? 🦊")
+            liste.add("Viens apprendre 3 mots !")
+            liste.add("Ton défi du jour t'attend 🎯")
+            if (serie > 1) liste.add("$serie jours de suite, bravo ! 🔥")
+            if (d.ouvertures > 0) liste.add("${d.ouvertures} ouvertures aujourd'hui 📱")
+            val nomTop = d.topNom
+            if (nomTop != null && d.topSec >= 300) liste.add("$nomTop : ${duree(d.topSec)} aujourd'hui")
+            liste.add("Moins d'écran, plus de progrès 💪")
+            val i = ((System.currentTimeMillis() / (30 * 60_000L)) % liste.size).toInt()
+            return Pair(liste[i], R.drawable.lexi_renard_bravo)
+        }
+
+        private fun remplirCarre(ctx: Context, d: Donnees, serie: Long, bloque: Boolean): RemoteViews {
+            val v = RemoteViews(ctx.packageName, R.layout.lexi_widget_carre)
+            v.setTextViewText(R.id.lexi_widget_temps, if (d.autorise) "⏱ ${duree(d.total)}" else "⏱ —")
+            val (texte, image) = message(d, serie, bloque)
+            v.setTextViewText(R.id.lexi_widget_message, texte)
+            v.setImageViewResource(R.id.lexi_widget_image, image)
+            return v
+        }
+
         private fun clic(ctx: Context, v: RemoteViews) {
             ctx.packageManager.getLaunchIntentForPackage(ctx.packageName)?.let { i ->
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
@@ -233,17 +264,20 @@ class LexiWidget : AppWidgetProvider() {
             val bloque = ScreenTimePreferences.blocageActif(ctx)
             val grand = remplir(ctx, R.layout.lexi_widget, d, s, bloque, true)
             clic(ctx, grand)
+            val carre = remplirCarre(ctx, d, s, bloque)
+            clic(ctx, carre)
             val vues = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                 val petit = remplir(ctx, R.layout.lexi_widget_petit, d, s, bloque, false)
                 clic(ctx, petit)
                 RemoteViews(
                     mapOf(
-                        SizeF(110f, 50f) to petit,
-                        SizeF(220f, 140f) to grand,
+                        SizeF(100f, 100f) to carre,
+                        SizeF(230f, 50f) to petit,
+                        SizeF(230f, 150f) to grand,
                     ),
                 )
             } else {
-                grand
+                carre
             }
             manager.updateAppWidget(ids, vues)
         }
