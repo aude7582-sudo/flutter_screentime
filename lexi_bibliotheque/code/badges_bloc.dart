@@ -13,7 +13,6 @@
       ['⭐', 'Points', 'Gagne des points partout dans Léxi.', _entier(_d['totalXp']), [500, 5000, 20000]],
       ['🎤', 'Concours', 'Gagne des points dans les concours.', _entier(_d['concoursPts']), [100, 1000, 5000]],
       ['🤝', 'Amis', 'Ajoute des amis avec leur code.', _nbAmis, [1, 5, 20]],
-      ['🌙', 'Nuits sans écran', 'Termine des créneaux Sommeil.', _entier(_d['nuitsTotal']), [1, 7, 30]],
     ];
   }
 
