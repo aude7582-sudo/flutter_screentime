@@ -1,6 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
-    <solid android:color="#F2221D3D" />
-    <corners android:radius="22dp" />
-    <stroke android:width="1.5dp" android:color="#66F97316" />
-</shape>
+<!-- Fond du widget Léxi : dégradé violet nuit, coins très arrondis, liseré orange doux -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:angle="315"
+                android:startColor="#F21E1640"
+                android:centerColor="#F22E1F5E"
+                android:endColor="#F24A1D52"
+                android:type="linear" />
+            <corners android:radius="30dp" />
+            <stroke android:width="1.5dp" android:color="#55F97316" />
+        </shape>
+    </item>
+    <!-- halo orange en haut à droite -->
+    <item android:gravity="top|end" android:width="140dp" android:height="140dp" android:top="-50dp" android:right="-40dp">
+        <shape android:shape="oval">
+            <gradient
+                android:type="radial"
+                android:gradientRadius="70dp"
+                android:startColor="#40F97316"
+                android:endColor="#00F97316" />
+        </shape>
+    </item>
+</layer-list>

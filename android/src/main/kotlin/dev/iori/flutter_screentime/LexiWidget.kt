@@ -6,12 +6,17 @@ import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.os.Build
+import android.os.Bundle
+import android.util.SizeF
 import android.view.View
 import android.widget.RemoteViews
 
 /**
- * Widget Léxi pour l'écran d'accueil du téléphone : temps d'écran du jour,
- * nombre d'ouvertures d'applis et appli la plus utilisée.
+ * Widget Léxi pour l'écran d'accueil du téléphone.
+ * Grand format : temps d'écran du jour, comparaison avec hier, ouvertures,
+ * appli la plus utilisée, série de jours Léxi et état du blocage.
+ * Petit format (widget réduit) : temps du jour, comparaison et barre.
  * Toucher le widget ouvre Léxi sur l'écran « Temps d'écran ».
  */
 class LexiWidget : AppWidgetProvider() {
@@ -27,6 +32,25 @@ class LexiWidget : AppWidgetProvider() {
             }
         }.start()
     }
+
+    override fun onAppWidgetOptionsChanged(
+        ctx: Context,
+        manager: AppWidgetManager,
+        id: Int,
+        options: Bundle,
+    ) {
+        // Le widget a été agrandi ou réduit : on le redessine.
+        majTous(ctx)
+    }
+
+    private class Donnees(
+        val autorise: Boolean,
+        val total: Long = 0L,
+        val hier: Long = -1L,
+        val ouvertures: Int = 0,
+        val topNom: String? = null,
+        val topSec: Long = 0L,
+    )
 
     companion object {
         private const val OBJECTIF_SECONDES = 2 * 3600L
@@ -62,54 +86,136 @@ class LexiWidget : AppWidgetProvider() {
             }
         }
 
-        private fun dessiner(ctx: Context, manager: AppWidgetManager, ids: IntArray) {
-            val vues = RemoteViews(ctx.packageName, R.layout.lexi_widget)
-            val jour = LexiTempsEcran.calculer(ctx, 1)?.lastOrNull()
-            if (jour == null) {
-                vues.setTextViewText(R.id.lexi_widget_temps, "—")
-                vues.setTextViewText(R.id.lexi_widget_detail, "Ouvre Léxi pour autoriser l'accès")
-                vues.setTextViewText(R.id.lexi_widget_renard, "Touche ici 🦊")
-                vues.setViewVisibility(R.id.lexi_widget_barre, View.GONE)
-            } else {
+        private fun lire(ctx: Context): Donnees {
+            val jours = LexiTempsEcran.calculer(ctx, 2) ?: return Donnees(autorise = false)
+            fun somme(j: Map<String, Any>?): Triple<Long, Int, Map<String, Any>?> {
                 @Suppress("UNCHECKED_CAST")
-                val apps = (jour["apps"] as? List<Map<String, Any>>) ?: emptyList()
+                val apps = (j?.get("apps") as? List<Map<String, Any>>) ?: emptyList()
                 var total = 0L
-                var ouvertures = 0
+                var ouv = 0
                 var top: Map<String, Any>? = null
                 for (a in apps) {
                     val s = (a["s"] as? Number)?.toLong() ?: 0L
                     total += s
-                    ouvertures += (a["o"] as? Number)?.toInt() ?: 0
+                    ouv += (a["o"] as? Number)?.toInt() ?: 0
                     if (top == null || s > ((top["s"] as? Number)?.toLong() ?: 0L)) top = a
                 }
-                vues.setTextViewText(R.id.lexi_widget_temps, duree(total))
-                val detail = StringBuilder("$ouvertures ouverture${if (ouvertures > 1) "s" else ""}")
-                val t = top
-                if (t != null && ((t["s"] as? Number)?.toLong() ?: 0L) >= 60) {
-                    detail.append(" · ").append(t["n"]).append(" ")
-                        .append(duree((t["s"] as Number).toLong()))
-                }
-                vues.setTextViewText(R.id.lexi_widget_detail, detail.toString())
-                vues.setTextViewText(
-                    R.id.lexi_widget_renard,
-                    when {
-                        total < OBJECTIF_SECONDES / 2 -> "Super, continue 🦊"
-                        total < OBJECTIF_SECONDES -> "Ça va, reste attentif 🦊"
-                        else -> "Pose le téléphone, révise 3 mots 🦊"
-                    },
-                )
-                vues.setViewVisibility(R.id.lexi_widget_barre, View.VISIBLE)
-                vues.setProgressBar(
-                    R.id.lexi_widget_barre,
-                    100,
-                    (total * 100 / OBJECTIF_SECONDES).coerceIn(0L, 100L).toInt(),
-                    false,
-                )
+                return Triple(total, ouv, top)
             }
+            val auj = somme(jours.lastOrNull())
+            val hier = if (jours.size >= 2) somme(jours[jours.size - 2]).first else -1L
+            val top = auj.third
+            return Donnees(
+                autorise = true,
+                total = auj.first,
+                hier = hier,
+                ouvertures = auj.second,
+                topNom = top?.get("n")?.toString(),
+                topSec = (top?.get("s") as? Number)?.toLong() ?: 0L,
+            )
+        }
+
+        /** Série de jours Léxi, enregistrée par l'appli (0 si inconnue). */
+        private fun serie(ctx: Context): Long {
+            return try {
+                val p = ctx.getSharedPreferences("FlutterSharedPreferences", Context.MODE_PRIVATE)
+                when (val v = p.all["flutter.lexi_w_serie"]) {
+                    is Number -> v.toLong()
+                    is String -> v.toLongOrNull() ?: 0L
+                    else -> 0L
+                }
+            } catch (_: Exception) {
+                0L
+            }
+        }
+
+        private fun texteCompare(d: Donnees): Pair<String, Int> {
+            if (d.hier < 0 || d.hier < 60) return Pair("", 0xFF86EFAC.toInt())
+            val diff = d.total - d.hier
+            return if (diff <= 0) {
+                Pair("▼ ${duree(-diff)} vs hier", 0xFF86EFAC.toInt())
+            } else {
+                Pair("▲ ${duree(diff)} vs hier", 0xFFFDBA74.toInt())
+            }
+        }
+
+        private fun remplir(
+            ctx: Context,
+            layout: Int,
+            d: Donnees,
+            serie: Long,
+            bloque: Boolean,
+            grand: Boolean,
+        ): RemoteViews {
+            val v = RemoteViews(ctx.packageName, layout)
+            val etat = when {
+                bloque -> "🔒 Concentration en cours"
+                serie > 0 -> "🔥 Série de $serie jour${if (serie > 1) "s" else ""}"
+                else -> "🦊 Ton coach Léxi"
+            }
+            v.setTextViewText(R.id.lexi_widget_etat, etat)
+
+            if (!d.autorise) {
+                v.setTextViewText(R.id.lexi_widget_temps, "—")
+                v.setTextViewText(R.id.lexi_widget_compare, "")
+                v.setViewVisibility(R.id.lexi_widget_barre, View.GONE)
+                if (grand) {
+                    v.setTextViewText(R.id.lexi_widget_objectif, "")
+                    v.setViewVisibility(R.id.lexi_widget_stats, View.GONE)
+                    v.setTextViewText(
+                        R.id.lexi_widget_renard,
+                        "Touche ici et autorise « Accès à l'utilisation » 🦊",
+                    )
+                } else {
+                    v.setTextViewText(R.id.lexi_widget_etat, "Touche pour autoriser 🦊")
+                }
+                return v
+            }
+
+            v.setTextViewText(R.id.lexi_widget_temps, duree(d.total))
+            val (cmp, couleur) = texteCompare(d)
+            v.setTextViewText(R.id.lexi_widget_compare, cmp)
+            v.setTextColor(R.id.lexi_widget_compare, couleur)
+            v.setViewVisibility(R.id.lexi_widget_barre, View.VISIBLE)
+            v.setProgressBar(
+                R.id.lexi_widget_barre,
+                100,
+                (d.total * 100 / OBJECTIF_SECONDES).coerceIn(0L, 100L).toInt(),
+                false,
+            )
+            if (!grand) return v
+
+            v.setTextViewText(R.id.lexi_widget_objectif, "sur ${duree(OBJECTIF_SECONDES)} max")
+            v.setViewVisibility(R.id.lexi_widget_stats, View.VISIBLE)
+            v.setTextViewText(
+                R.id.lexi_widget_stat1,
+                "📱 ${d.ouvertures}\nouverture${if (d.ouvertures > 1) "s" else ""}",
+            )
+            val nomTop = d.topNom
+            v.setTextViewText(
+                R.id.lexi_widget_stat2,
+                if (nomTop != null && d.topSec >= 60) "🏆 $nomTop\n${duree(d.topSec)}" else "🏆 —\nappli n°1",
+            )
+            v.setTextViewText(
+                R.id.lexi_widget_stat3,
+                if (serie > 0) "🔥 $serie\njour${if (serie > 1) "s" else ""} de suite" else "🎯 ${duree(OBJECTIF_SECONDES)}\nobjectif max",
+            )
+            v.setTextViewText(
+                R.id.lexi_widget_renard,
+                when {
+                    d.total < OBJECTIF_SECONDES / 2 -> "Super, continue comme ça ! 🦊"
+                    d.total < OBJECTIF_SECONDES -> "Ça va, reste attentif 🦊"
+                    else -> "Pose le téléphone et révise 3 mots 🦊"
+                },
+            )
+            return v
+        }
+
+        private fun clic(ctx: Context, v: RemoteViews) {
             ctx.packageManager.getLaunchIntentForPackage(ctx.packageName)?.let { i ->
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 i.putExtra("lexi_ouvrir", "temps")
-                vues.setOnClickPendingIntent(
+                v.setOnClickPendingIntent(
                     R.id.lexi_widget_racine,
                     PendingIntent.getActivity(
                         ctx,
@@ -118,6 +224,26 @@ class LexiWidget : AppWidgetProvider() {
                         PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
                     ),
                 )
+            }
+        }
+
+        private fun dessiner(ctx: Context, manager: AppWidgetManager, ids: IntArray) {
+            val d = lire(ctx)
+            val s = serie(ctx)
+            val bloque = ScreenTimePreferences.blocageActif(ctx)
+            val grand = remplir(ctx, R.layout.lexi_widget, d, s, bloque, true)
+            clic(ctx, grand)
+            val vues = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                val petit = remplir(ctx, R.layout.lexi_widget_petit, d, s, bloque, false)
+                clic(ctx, petit)
+                RemoteViews(
+                    mapOf(
+                        SizeF(110f, 50f) to petit,
+                        SizeF(220f, 140f) to grand,
+                    ),
+                )
+            } else {
+                grand
             }
             manager.updateAppWidget(ids, vues)
         }
