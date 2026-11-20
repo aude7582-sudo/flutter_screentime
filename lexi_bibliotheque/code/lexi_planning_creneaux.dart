@@ -12,6 +12,9 @@ import 'package:flutter/material.dart' hide RepeatMode;
 import 'package:firebase_auth/firebase_auth.dart' as fb;
 import '/app_state.dart';
 import 'package:provider/provider.dart';
+import 'dart:math' as math;
+import 'dart:typed_data';
+import 'package:installed_apps/installed_apps.dart';
 
 /// Planning Léxi : plusieurs créneaux par jour (travail, révisions, sommeil…),
 /// clair ou sombre.
@@ -117,7 +120,8 @@ class _LexiPlanningState extends State<LexiPlanning> {
   Map<String, dynamic>? _c;
   int _index = -1;
   final _nomCtrl = TextEditingController();
-  List<Map<String, String>>? _applis;
+  // Applis installées sur le téléphone : p = paquet, n = nom, i = icône.
+  List<Map<String, dynamic>>? _applis;
   bool _chargeApplis = false;
 
   String get _uid => fb.FirebaseAuth.instance.currentUser?.uid ?? '';
@@ -212,27 +216,201 @@ class _LexiPlanningState extends State<LexiPlanning> {
   Future<void> _chargerApplis() async {
     if (_applis != null || _chargeApplis) return;
     _chargeApplis = true;
+    final l = <Map<String, dynamic>>[];
+    final vus = <String>{};
     try {
-      final q = await FirebaseFirestore.instance
-          .collection('apps')
-          .where('uid', isEqualTo: _uid)
-          .get();
-      final l = <Map<String, String>>[];
-      final vus = <String>{};
-      for (final doc in q.docs) {
-        final x = doc.data();
-        final p = (x['packageId'] ?? '').toString();
-        if (p.isEmpty || !vus.add(p)) continue;
-        final n = (x['name'] ?? '').toString();
-        l.add({'p': p, 'n': n.isEmpty ? p : n});
+      final installees = await InstalledApps.getInstalledApps(
+        excludeSystemApps: false,
+        excludeNonLaunchableApps: true,
+        withIcon: true,
+        detectPlatformType: false,
+      );
+      for (final x in installees) {
+        final pk = x.packageName;
+        if (pk.isEmpty || !vus.add(pk)) continue;
+        if (pk.contains('veroli') || pk.contains('lexi')) continue;
+        l.add({'p': pk, 'n': x.name.isEmpty ? pk : x.name, 'i': x.icon});
       }
-      l.sort((a, b) => a['n']!.toLowerCase().compareTo(b['n']!.toLowerCase()));
-      _applis = l;
-    } catch (_) {
-      _applis = [];
+    } catch (_) {}
+    if (l.isEmpty) {
+      try {
+        final q = await FirebaseFirestore.instance
+            .collection('apps')
+            .where('uid', isEqualTo: _uid)
+            .get();
+        for (final doc in q.docs) {
+          final x = doc.data();
+          final pk = (x['packageId'] ?? '').toString();
+          if (pk.isEmpty || !vus.add(pk)) continue;
+          final n = (x['name'] ?? '').toString();
+          l.add({'p': pk, 'n': n.isEmpty ? pk : n, 'i': null});
+        }
+      } catch (_) {}
     }
+    l.sort((a, b) => a['n']
+        .toString()
+        .toLowerCase()
+        .compareTo(b['n'].toString().toLowerCase()));
+    _applis = l;
     _chargeApplis = false;
     if (mounted) setState(() {});
+  }
+
+  /// Liste des applis du téléphone à cocher pour ce créneau.
+  Future<void> _choisirApplis() async {
+    final c = _c;
+    if (c == null) return;
+    final choix = Set<String>.from((c['applis'] as List?) ?? const []);
+    var recherche = '';
+    _chargerApplis();
+    final p = _P(context);
+    final ok = await showModalBottomSheet<bool>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: p.fond,
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(26))),
+      builder: (ctx) => StatefulBuilder(builder: (ctx, maj) {
+        if (_applis == null) {
+          Future.delayed(const Duration(milliseconds: 400), () {
+            if (ctx.mounted) maj(() {});
+          });
+        }
+        final toutes = _applis;
+        final liste = toutes == null
+            ? <Map<String, dynamic>>[]
+            : toutes
+                .where((a) => a['n']
+                    .toString()
+                    .toLowerCase()
+                    .contains(recherche.toLowerCase()))
+                .toList();
+        return SizedBox(
+          height: MediaQuery.of(ctx).size.height * 0.88,
+          child: Column(children: [
+            const SizedBox(height: 10),
+            Container(
+                width: 40,
+                height: 5,
+                decoration: BoxDecoration(
+                    color: p.bord, borderRadius: BorderRadius.circular(3))),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 14, 20, 4),
+              child: Column(children: [
+                Text('📱 Applis à bloquer',
+                    style: TextStyle(
+                        color: p.texte,
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold)),
+                const SizedBox(height: 4),
+                Text(
+                    'Coche les applis qui seront bloquées pendant « ${_nomCtrl.text.trim().isEmpty ? 'ce créneau' : _nomCtrl.text.trim()} ».',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: p.gris, fontSize: 14)),
+                const SizedBox(height: 12),
+                TextField(
+                  onChanged: (v) => maj(() => recherche = v),
+                  style: TextStyle(color: p.texte),
+                  decoration: InputDecoration(
+                    hintText: 'Rechercher une appli (WhatsApp, TikTok…)',
+                    hintStyle: TextStyle(color: p.indice),
+                    prefixIcon: Icon(Icons.search, color: p.gris),
+                    filled: true,
+                    fillColor: p.carte,
+                    contentPadding: const EdgeInsets.symmetric(vertical: 12),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(16),
+                        borderSide: BorderSide.none),
+                  ),
+                ),
+              ]),
+            ),
+            Expanded(
+              child: toutes == null
+                  ? const Center(
+                      child: CircularProgressIndicator(color: _violet))
+                  : liste.isEmpty
+                      ? Center(
+                          child: Text('Aucune appli trouvée.',
+                              style: TextStyle(color: p.gris)))
+                      : ListView.builder(
+                          padding: const EdgeInsets.fromLTRB(16, 6, 16, 10),
+                          itemCount: liste.length,
+                          itemBuilder: (_, k) {
+                            final a = liste[k];
+                            final pk = a['p'] as String;
+                            final coche = choix.contains(pk);
+                            final ic = a['i'];
+                            return InkWell(
+                              borderRadius: BorderRadius.circular(14),
+                              onTap: () => maj(() {
+                                if (!choix.remove(pk)) choix.add(pk);
+                              }),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 7, horizontal: 6),
+                                child: Row(children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(10),
+                                    child: ic is Uint8List
+                                        ? Image.memory(ic,
+                                            width: 38,
+                                            height: 38,
+                                            gaplessPlayback: true)
+                                        : Container(
+                                            width: 38,
+                                            height: 38,
+                                            color: p.puce,
+                                            alignment: Alignment.center,
+                                            child: const Text('📱')),
+                                  ),
+                                  const SizedBox(width: 12),
+                                  Expanded(
+                                    child: Text(a['n'].toString(),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                            color: p.texte,
+                                            fontSize: 16,
+                                            fontWeight: coche
+                                                ? FontWeight.bold
+                                                : FontWeight.normal)),
+                                  ),
+                                  Icon(
+                                      coche
+                                          ? Icons.check_circle_rounded
+                                          : Icons.radio_button_unchecked,
+                                      color: coche ? _orange : p.gris,
+                                      size: 26),
+                                ]),
+                              ),
+                            );
+                          }),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 4, 20, 22),
+              child: _bouton(
+                  choix.isEmpty
+                      ? 'Choisis au moins une appli'
+                      : 'Valider (${choix.length} appli${choix.length > 1 ? 's' : ''}) ✓',
+                  choix.isEmpty ? p.gris : _orange,
+                  choix.isEmpty ? null : () => Navigator.of(ctx).pop(true)),
+            ),
+          ]),
+        );
+      }),
+    );
+    if (ok == true && mounted) {
+      setState(() => c['applis'] = choix.toList());
+    }
+  }
+
+  String _nomApp(String pk) {
+    for (final a in _applis ?? const <Map<String, dynamic>>[]) {
+      if (a['p'] == pk) return a['n'].toString();
+    }
+    final b = pk.split('.');
+    return b.isEmpty ? pk : b.last;
   }
 
   void _message(String t) {
@@ -295,6 +473,7 @@ class _LexiPlanningState extends State<LexiPlanning> {
       };
       _nomCtrl.text = '${src['nom']}';
     });
+    _chargerApplis();
   }
 
   void _appliquerModele(Map<String, Object> m) {
@@ -609,6 +788,137 @@ class _LexiPlanningState extends State<LexiPlanning> {
         ),
       );
 
+  Widget _option(_P p, bool actif, String titre, String texte) => Container(
+        width: double.infinity,
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          color: actif ? _violet.withOpacity(0.12) : Colors.transparent,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: actif ? _violet : p.bord, width: actif ? 2 : 1.5),
+        ),
+        child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Icon(actif ? Icons.radio_button_checked : Icons.radio_button_off,
+              color: actif ? _violet : p.gris),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text(titre,
+                  style: TextStyle(
+                      color: p.texte, fontSize: 15.5, fontWeight: FontWeight.bold)),
+              const SizedBox(height: 2),
+              Text(texte, style: TextStyle(color: p.gris, fontSize: 13, height: 1.3)),
+            ]),
+          ),
+        ]),
+      );
+
+  // Bandeau du haut : résumé de la journée.
+  Widget _bandeau(_P p) {
+    const noms = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];
+    final now = DateTime.now();
+    final auj = noms[now.weekday - 1];
+    final m = now.hour * 60 + now.minute;
+    final duJour = [
+      for (var i = 0; i < _crens.length && i < _limite; i++)
+        if ((_crens[i]['jours'] as List).contains(auj)) _crens[i]
+    ]..sort((a, b) => _min(a['debut']).compareTo(_min(b['debut'])));
+    Map<String, dynamic>? enCours;
+    Map<String, dynamic>? prochain;
+    for (final c in duJour) {
+      final d = _min(c['debut']);
+      final f = _min(c['fin']);
+      final dedans = f > d ? (m >= d && m < f) : (m >= d || m < f);
+      if (dedans && enCours == null) enCours = c;
+      if (d > m && prochain == null) prochain = c;
+    }
+    final titre = enCours != null
+        ? '${enCours['emoji']} ${enCours['nom']} en cours'
+        : prochain != null
+            ? 'Prochain : ${prochain['emoji']} ${prochain['nom']}'
+            : (duJour.isEmpty ? 'Pas de créneau aujourd\'hui' : 'C\'est fini pour aujourd\'hui ✓');
+    final sous = enCours != null
+        ? 'Jusqu\'à ${enCours['fin']} · Courage ! 💪'
+        : prochain != null
+            ? 'À ${prochain['debut']} · ${duJour.length} créneau${duJour.length > 1 ? 'x' : ''} aujourd\'hui'
+            : 'Profite de ton temps libre 🦊';
+    return Container(
+      margin: const EdgeInsets.only(bottom: 18),
+      padding: const EdgeInsets.fromLTRB(18, 16, 10, 16),
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+            colors: [Color(0xFF7C3AED), Color(0xFFF97316)],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight),
+        borderRadius: BorderRadius.circular(26),
+        boxShadow: [
+          BoxShadow(
+              color: _violet.withOpacity(0.35),
+              blurRadius: 18,
+              offset: const Offset(0, 8)),
+        ],
+      ),
+      child: Row(children: [
+        Expanded(
+          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Text('AUJOURD\'HUI · ${auj.toUpperCase()}',
+                style: TextStyle(
+                    color: Colors.white.withOpacity(0.85),
+                    fontSize: 12,
+                    letterSpacing: 1.2,
+                    fontWeight: FontWeight.w800)),
+            const SizedBox(height: 6),
+            Text(titre,
+                style: const TextStyle(
+                    color: Colors.white, fontSize: 19, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 4),
+            Text(sous,
+                style: TextStyle(color: Colors.white.withOpacity(0.92), fontSize: 14)),
+            const SizedBox(height: 12),
+            // Frise de la journée (0 h → 24 h).
+            LayoutBuilder(builder: (_, bc) {
+              final w = bc.maxWidth;
+              return SizedBox(
+                height: 10,
+                child: Stack(children: [
+                  Container(
+                      decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.25),
+                          borderRadius: BorderRadius.circular(6))),
+                  for (final c in duJour)
+                    for (final seg in () {
+                      final d = _min(c['debut']);
+                      final f = _min(c['fin']);
+                      return f > d ? [[d, f]] : [[d, 1440], [0, f]];
+                    }())
+                      Positioned(
+                        left: w * seg[0] / 1440,
+                        width: math.max(4.0, w * (seg[1] - seg[0]) / 1440),
+                        top: 0,
+                        bottom: 0,
+                        child: Container(
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(6))),
+                      ),
+                  Positioned(
+                    left: math.min(w - 3, w * m / 1440),
+                    width: 3,
+                    top: -2,
+                    bottom: -2,
+                    child: Container(color: const Color(0xFF1E1640)),
+                  ),
+                ]),
+              );
+            }),
+          ]),
+        ),
+        const SizedBox(width: 6),
+        Image.asset('assets/images/renard_accueil.png',
+            height: 92, fit: BoxFit.contain),
+      ]),
+    );
+  }
+
   Color _couleurMode(String m) => m == 'lexi'
       ? _orange
       : m == 'temp'
@@ -683,24 +993,21 @@ class _LexiPlanningState extends State<LexiPlanning> {
     return ListView(
       padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
       children: [
-        Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-          Expanded(
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text('Ton planning 📅',
-                  style: TextStyle(
-                      color: p.texte,
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold)),
-              const SizedBox(height: 2),
-              Text('Tes moments sans distraction, jour et nuit.',
-                  style: TextStyle(color: p.gris, fontSize: 15)),
-            ]),
-          ),
-          Image.asset('assets/images/renard_accueil.png',
-              height: 84, fit: BoxFit.contain),
-        ]),
-        const SizedBox(height: 18),
+        Text('Ton planning 📅',
+            style: TextStyle(
+                color: p.texte, fontSize: 28, fontWeight: FontWeight.bold)),
+        const SizedBox(height: 2),
+        Text('Tes moments sans distraction, jour et nuit.',
+            style: TextStyle(color: p.gris, fontSize: 15)),
+        const SizedBox(height: 14),
+        _bandeau(p),
+        Text('MES CRÉNEAUX',
+            style: TextStyle(
+                color: p.section,
+                fontSize: 13,
+                letterSpacing: 1.2,
+                fontWeight: FontWeight.w800)),
+        const SizedBox(height: 10),
         for (var i = 0; i < _crens.length; i++) _carteCreneau(p, i),
         if (_crens.length < _max)
           GestureDetector(
@@ -810,6 +1117,9 @@ class _LexiPlanningState extends State<LexiPlanning> {
         Text('Nom du créneau',
             style: TextStyle(
                 color: p.section, fontSize: 14, fontWeight: FontWeight.bold)),
+        const SizedBox(height: 2),
+        Text('Le nom que tu veux : il s\'affiche dans tes rappels et sur l\'écran de blocage.',
+            style: TextStyle(color: p.gris, fontSize: 13)),
         const SizedBox(height: 8),
         TextField(
           controller: _nomCtrl,
@@ -847,7 +1157,7 @@ class _LexiPlanningState extends State<LexiPlanning> {
             'sommeil',
             '🌙',
             'Sommeil',
-            'Tout est bloqué sauf téléphone, messages et réveil. Bilan le matin.',
+            'Tout le téléphone est bloqué, sauf les appels, les SMS et le réveil. Bilan le matin.',
             _nuit),
         const SizedBox(height: 6),
         _bloc(
@@ -887,63 +1197,76 @@ class _LexiPlanningState extends State<LexiPlanning> {
                         fontWeight: FontWeight.w600)),
               ],
             ])),
+        if (c['mode'] == 'sommeil')
+          _bloc(
+              p.carte,
+              '🌙 Ce qui est bloqué en mode Sommeil',
+              p.texte,
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Text(
+                    'Pendant ce créneau, TOUTES les applis sont bloquées (WhatsApp, TikTok, Facebook, YouTube, jeux…).',
+                    style: TextStyle(color: p.texte, fontSize: 14.5, height: 1.35)),
+                const SizedBox(height: 10),
+                Text('Restent ouverts :',
+                    style: TextStyle(
+                        color: p.gris, fontSize: 13.5, fontWeight: FontWeight.w700)),
+                const SizedBox(height: 6),
+                Wrap(spacing: 6, runSpacing: 6, children: [
+                  for (final x in ['📞 Appels', '💬 SMS', '⏰ Réveil / Horloge', '⚙️ Réglages', '🦊 Léxi'])
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                      decoration: BoxDecoration(
+                          color: _nuit.withOpacity(0.15),
+                          borderRadius: BorderRadius.circular(12)),
+                      child: Text(x,
+                          style: TextStyle(
+                              color: p.texte, fontSize: 13.5, fontWeight: FontWeight.w600)),
+                    ),
+                ]),
+                const SizedBox(height: 10),
+                Text('Le matin, Léxi t\'envoie ton bilan : « Nuit sans écran réussie ! » ☀️',
+                    style: TextStyle(color: p.gris, fontSize: 13)),
+              ]),
+              bord: p.bord),
         if (c['mode'] != 'sommeil')
           _bloc(
               p.carte,
               '📱 Quelles applis bloquer ?',
               p.texte,
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Wrap(spacing: 6, runSpacing: 6, children: [
-                  _puce('Mes applis habituelles', !perso, p.puce, p.texte,
-                      _violet, () => setState(() => c['applis'] = null)),
-                  _puce('Choisir pour ce créneau', perso, p.puce, p.texte,
-                      _violet, () {
-                    setState(() => c['applis'] = <String>[]);
-                    _chargerApplis();
-                  }),
-                ]),
-                const SizedBox(height: 8),
-                if (!perso)
-                  Text(
+                GestureDetector(
+                  onTap: () => setState(() => c['applis'] = null),
+                  child: _option(p, !perso, 'Mes applis habituelles',
                       c['mode'] == 'temp'
-                          ? 'Réseaux sociaux, jeux et vidéos.'
+                          ? 'Les réseaux sociaux, les jeux et les vidéos que Léxi a repérés dans « Mes applis ».'
                           : c['mode'] == 'lexi'
-                              ? 'Les applis cochées dans « Mes applis ».'
-                              : 'Réseaux sociaux, jeux, vidéos + tes applis cochées.',
-                      style: TextStyle(color: p.gris, fontSize: 13)),
-                if (perso && _applis == null)
-                  const Padding(
-                    padding: EdgeInsets.all(12),
-                    child: Center(
-                        child: CircularProgressIndicator(color: _violet)),
-                  ),
-                if (perso && _applis != null && _applis!.isEmpty)
-                  Text('Aucune appli trouvée. Ajoute-les dans « Mes applis ».',
-                      style: TextStyle(color: p.gris, fontSize: 13)),
-                if (perso && _applis != null)
-                  for (final a in _applis!)
-                    InkWell(
-                      onTap: () => setState(() {
-                        final l = c['applis'] as List<String>;
-                        if (!l.remove(a['p'])) l.add(a['p']!);
-                      }),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 6),
-                        child: Row(children: [
-                          Icon(
-                              (c['applis'] as List).contains(a['p'])
-                                  ? Icons.check_box
-                                  : Icons.check_box_outline_blank,
-                              color: _violet),
-                          const SizedBox(width: 10),
-                          Expanded(
-                            child: Text(a['n']!,
-                                style:
-                                    TextStyle(color: p.texte, fontSize: 15)),
-                          ),
-                        ]),
-                      ),
+                              ? 'Les applis que tu as cochées dans « Mes applis ».'
+                              : 'Réseaux sociaux, jeux, vidéos + les applis cochées dans « Mes applis ».'),
+                ),
+                const SizedBox(height: 8),
+                GestureDetector(
+                  onTap: _choisirApplis,
+                  child: _option(p, perso, 'Choisir les applis de ce créneau',
+                      perso && (c['applis'] as List).isNotEmpty
+                          ? '${(c['applis'] as List).length} appli${(c['applis'] as List).length > 1 ? 's' : ''} : ' +
+                              (c['applis'] as List).take(4).map((x) => _nomApp('$x')).join(', ') +
+                              ((c['applis'] as List).length > 4 ? '…' : '')
+                          : 'Tu choisis toi-même dans la liste des applis de ton téléphone.'),
+                ),
+                if (perso) ...[
+                  const SizedBox(height: 10),
+                  OutlinedButton.icon(
+                    onPressed: _choisirApplis,
+                    icon: const Icon(Icons.edit_rounded, size: 18),
+                    label: const Text('Modifier la liste des applis'),
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: _violet,
+                      side: const BorderSide(color: _violet, width: 1.5),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(14)),
                     ),
+                  ),
+                ],
               ]),
               bord: p.bord),
         const SizedBox(height: 4),
@@ -980,11 +1303,15 @@ class _LexiPlanningState extends State<LexiPlanning> {
       width: widget.width ?? double.infinity,
       height: widget.height ?? double.infinity,
       color: p.fond,
-      child: SafeArea(
-        bottom: false,
-        child: !_charge
-            ? const Center(child: CircularProgressIndicator(color: _violet))
-            : (_c == null ? _vueListe(p) : _vueCreneau(p)),
+      child: _LxAvecFond(
+        sombre: p.s,
+        intensite: _c == null ? 1.1 : 0.5,
+        child: SafeArea(
+          bottom: false,
+          child: !_charge
+              ? const Center(child: CircularProgressIndicator(color: _violet))
+              : (_c == null ? _vueListe(p) : _vueCreneau(p)),
+        ),
       ),
     );
   }
@@ -1005,4 +1332,152 @@ class _P {
   Color get violetMilieu =>
       s ? const Color(0xFF2A1758) : const Color(0xFFEDE4FF);
   Color get section => s ? const Color(0xFFC084FC) : const Color(0xFF7C3AED);
+}
+
+
+// ===========================================================================
+// FOND ANIMÉ LÉXI
+
+/// Fond animé Léxi : formes douces orange / violet qui flottent lentement
+/// et petites étoiles qui scintillent. Léger (un seul painter).
+/// intensite : 0.5 = très discret, 1 = normal, 1.4 = plus visible.
+class _LxFond extends StatefulWidget {
+  const _LxFond({
+    super.key,
+    this.width,
+    this.height,
+    this.intensite = 1.0,
+    this.etoiles = true,
+    this.sombre,
+  });
+
+  final double? width;
+  final double? height;
+  final double intensite;
+  final bool etoiles;
+  final bool? sombre;
+
+  @override
+  State<_LxFond> createState() => _LxFondState();
+}
+
+class _LxFondState extends State<_LxFond>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _c = AnimationController(
+    vsync: this,
+    duration: const Duration(seconds: 24),
+  )..repeat();
+
+  @override
+  void dispose() {
+    _c.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final sombre =
+        widget.sombre ?? Theme.of(context).brightness == Brightness.dark;
+    return SizedBox(
+      width: widget.width ?? double.infinity,
+      height: widget.height ?? double.infinity,
+      child: IgnorePointer(
+        child: RepaintBoundary(
+          child: CustomPaint(
+            painter: _LxFondPeintre(
+              _c,
+              sombre: sombre,
+              intensite: widget.intensite,
+              etoiles: widget.etoiles,
+            ),
+            size: Size.infinite,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _LxFondPeintre extends CustomPainter {
+  _LxFondPeintre(this.anim,
+      {required this.sombre, required this.intensite, required this.etoiles})
+      : super(repaint: anim);
+
+  final Animation<double> anim;
+  final bool sombre;
+  final double intensite;
+  final bool etoiles;
+
+  static const _orange = Color(0xFFF97316);
+  static const _violet = Color(0xFF7C3AED);
+  static const _rose = Color(0xFFEC4899);
+  static const _jaune = Color(0xFFFBBF24);
+
+  // étoiles fixes (positions pseudo-aléatoires stables)
+  static final List<List<double>> _pts = () {
+    final r = math.Random(7);
+    return List.generate(
+        16, (_) => [r.nextDouble(), r.nextDouble(), r.nextDouble(), 1 + r.nextDouble() * 1.8]);
+  }();
+
+  void _bulle(Canvas canvas, Offset c, double rayon, Color coul, double alpha) {
+    final p = Paint()
+      ..shader = RadialGradient(colors: [
+        coul.withOpacity(alpha),
+        coul.withOpacity(alpha * 0.35),
+        coul.withOpacity(0),
+      ], stops: const [0, 0.45, 1])
+          .createShader(Rect.fromCircle(center: c, radius: rayon));
+    canvas.drawCircle(c, rayon, p);
+  }
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    if (size.isEmpty) return;
+    final t = anim.value * 2 * math.pi;
+    final w = size.width, h = size.height;
+    final m = math.max(w, h);
+    final a = (sombre ? 0.30 : 0.20) * intensite;
+
+    _bulle(canvas, Offset(w * (0.15 + 0.10 * math.sin(t)), h * (0.12 + 0.06 * math.cos(t))),
+        m * 0.45, _orange, a);
+    _bulle(canvas, Offset(w * (0.90 + 0.08 * math.cos(t + 1)), h * (0.35 + 0.08 * math.sin(t + 1))),
+        m * 0.42, _violet, a);
+    _bulle(canvas, Offset(w * (0.25 + 0.12 * math.cos(t + 2.5)), h * (0.80 + 0.06 * math.sin(t + 2))),
+        m * 0.40, _rose, a * 0.75);
+    _bulle(canvas, Offset(w * (0.75 + 0.10 * math.sin(t + 4)), h * (0.95 + 0.04 * math.cos(t + 4))),
+        m * 0.35, _orange, a * 0.7);
+
+    if (!etoiles) return;
+    final pe = Paint();
+    for (final s in _pts) {
+      // chaque étoile scintille à son rythme et monte très lentement
+      final phase = s[2] * 2 * math.pi;
+      final eclat = (math.sin(t * 3 + phase) + 1) / 2; // 0..1
+      final y = ((s[1] - anim.value * 0.15) % 1.0) * h;
+      final x = s[0] * w + 6 * math.sin(t + phase);
+      final coul = s[2] > 0.5 ? _jaune : (sombre ? Colors.white : _violet);
+      pe.color = coul.withOpacity((sombre ? 0.55 : 0.35) * eclat * intensite.clamp(0, 1.4));
+      canvas.drawCircle(Offset(x, y), s[3], pe);
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant _LxFondPeintre old) =>
+      old.sombre != sombre || old.intensite != intensite || old.etoiles != etoiles;
+}
+
+/// Pose le fond animé derrière un contenu.
+class _LxAvecFond extends StatelessWidget {
+  const _LxAvecFond(
+      {required this.child, this.sombre, this.intensite = 1.0});
+  final Widget child;
+  final bool? sombre;
+  final double intensite;
+
+  @override
+  Widget build(BuildContext context) => Stack(children: [
+        Positioned.fill(child: _LxFond(sombre: sombre, intensite: intensite)),
+        child,
+      ]);
 }
