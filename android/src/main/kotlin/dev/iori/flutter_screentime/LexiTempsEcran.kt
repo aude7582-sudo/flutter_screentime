@@ -135,6 +135,62 @@ internal object LexiTempsEcran {
         return total
     }
 
+    private val RESEAUX = setOf(
+        "com.facebook.katana", "com.facebook.lite", "com.instagram.android",
+        "com.zhiliaoapp.musically", "com.ss.android.ugc.trill", "com.snapchat.android",
+        "com.twitter.android", "com.instagram.barcelona", "com.facebook.orca",
+        "com.google.android.youtube", "com.whatsapp", "com.whatsapp.w4b",
+        "org.telegram.messenger", "com.zhiliaoapp.musically.go", "com.ss.android.ugc.aweme.lite",
+    )
+
+    /**
+     * Duels du Silence : secondes passées sur les applis entre [debut] et [fin].
+     * type "temps" = toutes les applis ; "reseaux" = réseaux sociaux seulement.
+     */
+    fun mesure(ctx: Context, debut: Long, fin: Long, type: String): Int {
+        if (!autorise(ctx)) return -1
+        val usm = ctx.getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
+        val pm = ctx.packageManager
+        val accueil = pm.resolveActivity(
+            Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME),
+            PackageManager.MATCH_DEFAULT_ONLY,
+        )?.activityInfo?.packageName
+        val ouvrables = HashMap<String, Boolean>()
+        val limite = minOf(fin, System.currentTimeMillis())
+        var total = 0L
+        var actuel: String? = null
+        var depuis = 0L
+        fun compte(p: String): Boolean {
+            if (p == ctx.packageName || p == accueil || p == "com.android.systemui") return false
+            if (type == "reseaux") return RESEAUX.contains(p)
+            return ouvrables.getOrPut(p) { pm.getLaunchIntentForPackage(p) != null }
+        }
+        fun fermer(t: Long) {
+            val a = actuel ?: return
+            if (t > depuis && compte(a)) total += (t - depuis)
+            actuel = null
+        }
+        val events = usm.queryEvents(debut, limite)
+        val e = UsageEvents.Event()
+        while (events.hasNextEvent()) {
+            events.getNextEvent(e)
+            when (e.eventType) {
+                UsageEvents.Event.MOVE_TO_FOREGROUND -> {
+                    if (e.packageName != actuel) {
+                        fermer(e.timeStamp)
+                        actuel = e.packageName
+                        depuis = e.timeStamp
+                    }
+                }
+                UsageEvents.Event.MOVE_TO_BACKGROUND ->
+                    if (e.packageName == actuel) fermer(e.timeStamp)
+                ECRAN_ETEINT -> fermer(e.timeStamp)
+            }
+        }
+        fermer(limite)
+        return (total / 1000L).toInt()
+    }
+
     private fun autorise(ctx: Context): Boolean {
         val ops = ctx.getSystemService(Context.APP_OPS_SERVICE) as AppOpsManager
         @Suppress("DEPRECATION")

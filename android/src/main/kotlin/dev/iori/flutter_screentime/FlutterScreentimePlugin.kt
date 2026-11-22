@@ -181,6 +181,21 @@ class FlutterScreentimePlugin :
                     android.os.Handler(android.os.Looper.getMainLooper()).post { result.success(n) }
                 }.start()
             }
+            "lexiMesure" -> {
+                val args = call.arguments as? Map<*, *>
+                val debut = (args?.get("debut") as? Number)?.toLong() ?: 0L
+                val fin = (args?.get("fin") as? Number)?.toLong() ?: System.currentTimeMillis()
+                val type = (args?.get("type") as? String) ?: "temps"
+                val ctx = applicationContext
+                Thread {
+                    val n = try {
+                        LexiTempsEcran.mesure(ctx, debut, fin, type)
+                    } catch (_: Exception) {
+                        -1
+                    }
+                    android.os.Handler(android.os.Looper.getMainLooper()).post { result.success(n) }
+                }.start()
+            }
             "lexiOuverture" -> result.success(
                 ScreenTimePreferences.lireOuverture(applicationContext),
             )

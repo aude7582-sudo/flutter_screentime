@@ -178,4 +178,12 @@ class FlutterScreentime {
             'lexiOuvertures', {'debut': debut, 'fin': fin}) ??
         -1;
   }
+
+  /// Léxi (Duels du Silence) : secondes passées sur les applis entre deux
+  /// instants. type 'temps' = toutes les applis, 'reseaux' = réseaux sociaux.
+  Future<int> lexiMesure(int debut, int fin, String type) async {
+    return await _channel.invokeMethod<int>(
+            'lexiMesure', {'debut': debut, 'fin': fin, 'type': type}) ??
+        -1;
+  }
 }
