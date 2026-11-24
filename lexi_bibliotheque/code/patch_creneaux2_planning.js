@@ -249,9 +249,11 @@
 `);
   // Bandeau : bouton pause pendant un créneau.
   rep(`            Text(sous,
-                style: TextStyle(color: Colors.white.withOpacity(0.92), fontSize: 14)),
+                style: TextStyle(
+                    color: Colors.white.withOpacity(0.92), fontSize: 14)),
 `,`            Text(sous,
-                style: TextStyle(color: Colors.white.withOpacity(0.92), fontSize: 14)),
+                style: TextStyle(
+                    color: Colors.white.withOpacity(0.92), fontSize: 14)),
             if (enCours != null) ...[
               const SizedBox(height: 10),
               _boutonPause(enCours!),
