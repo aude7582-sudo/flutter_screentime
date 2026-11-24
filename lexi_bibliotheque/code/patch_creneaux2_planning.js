@@ -1,7 +1,7 @@
 // Créneaux phase 2 (LexiPlanning) : récompenses, stats par créneau, pause de 5 min, code parent.
 (function(c){
   const R=[];
-  function rep(a,b){const n=c.split(a).length-1; R.push(n); if(n===1) c=c.replace(a,b);}
+  function rep(a,b){const n=c.split(a).length-1; R.push(n); if(n===1) c=c.replace(a,()=>b);}
   // Imports.
   let imp='';
   if(!c.includes("package:shared_preferences/shared_preferences.dart")) imp+="import 'package:shared_preferences/shared_preferences.dart';\n";

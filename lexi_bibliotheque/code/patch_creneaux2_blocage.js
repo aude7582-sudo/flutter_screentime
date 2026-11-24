@@ -1,7 +1,7 @@
 // Créneaux phase 2 (lexiBlocage) : pause de 5 min, stats par créneau, XP à gagner.
 (function(c){
   const R=[];
-  function rep(a,b){const n=c.split(a).length-1; R.push(n); if(n===1) c=c.replace(a,b);}
+  function rep(a,b){const n=c.split(a).length-1; R.push(n); if(n===1) c=c.replace(a,()=>b);}
   rep(`  final urgence = prefs.getString('lexi_urgence');
 `,`  final urgence = prefs.getString('lexi_urgence');
   // Pause de 5 min : « nom du créneau|fin de la pause (ms) ».
