@@ -321,7 +321,8 @@
           ),
 `);
   rep(`        const SizedBox(height: 4),
-        _bouton('Enregistrer mon planning ✓', _orange,`,`        Container(
+        _bouton(
+            'Enregistrer mon planning ✓',`,`        Container(
           margin: const EdgeInsets.only(bottom: 12),
           padding: const EdgeInsets.all(14),
           decoration: BoxDecoration(
@@ -372,6 +373,7 @@
           ),
         ),
         const SizedBox(height: 4),
-        _bouton('Enregistrer mon planning ✓', _orange,`);
+        _bouton(
+            'Enregistrer mon planning ✓',`);
   window._c2pR=R; return c;
 })
