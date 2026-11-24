@@ -144,6 +144,10 @@ class FlutterScreentimePlugin :
                 result.success(currentAuthorizationStatus() == "approved")
             }
             // Léxi : notifications de rappel (leçon, début du blocage…).
+            "lexiSon" -> {
+                val type = (call.arguments as? Map<*, *>)?.get("type") as? String ?: "clic"
+                result.success(LexiSons.jouer(type))
+            }
             "lexiNotifier" -> {
                 val args = call.arguments as? Map<*, *>
                 val ok = lexiNotifier(

@@ -123,6 +123,12 @@ class FlutterScreentime {
     return ok ?? false;
   }
 
+  /// Léxi : joue un petit son ("bon", "faux", "victoire", "niveau", "clic", "defaite").
+  Future<bool> lexiSon(String type) async {
+    return await _channel.invokeMethod<bool>('lexiSon', {'type': type}) ??
+        false;
+  }
+
   /// Léxi : les notifications sont-elles autorisées ?
   Future<bool> lexiNotificationsOk() async {
     return await _channel.invokeMethod<bool>('lexiNotificationsOk') ?? false;
