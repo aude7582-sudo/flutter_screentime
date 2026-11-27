@@ -1,0 +1,291 @@
+{
+ "titre": "Programme d'anglais de Côte d'Ivoire (collège et lycée)",
+ "source": "MENA / DPFC — Progressions annuelles 2023-2024 (dpfc-ci.net)",
+ "note": "Les thèmes et leçons viennent du document officiel. La colonne grammaire est une proposition de Léxi (le document officiel ne la détaille pas).",
+ "types_exercices": [
+  "Compréhension de texte (reading comprehension)",
+  "Exercices de langue (grammaire, vocabulaire)",
+  "Expression écrite (lettre, rédaction, dialogue)",
+  "Dictée et orthographe",
+  "Expression orale"
+ ],
+ "classes": {
+  "6e": {
+   "grammaire_proposee": [
+    "be / have got",
+    "présent simple",
+    "there is / there are",
+    "possessifs",
+    "pluriel des noms",
+    "can",
+    "impératif"
+   ],
+   "themes": {
+    "At school": [
+     "Greetings",
+     "In the classroom",
+     "Numbers and school things"
+    ],
+    "At home": [
+     "My family",
+     "My house",
+     "In the kitchen"
+    ],
+    "Time and date": [
+     "The date",
+     "The time",
+     "The timetable"
+    ],
+    "Jobs and occupations": [
+     "Jobs and occupations",
+     "Tools",
+     "Workplaces"
+    ],
+    "Clothes and colours": [
+     "Clothes",
+     "Clothes and colours",
+     "Buying clothes"
+    ],
+    "Food and drinks": [
+     "Meals and drinks",
+     "Fruit and vegetables",
+     "Recipes"
+    ],
+    "Health and environment": [
+     "Parts of the body and hygiene",
+     "Insalubrity and common diseases",
+     "Water and health"
+    ],
+    "Sports and games": [
+     "The importance of sport",
+     "La CAN",
+     "Traditional games"
+    ]
+   }
+  },
+  "5e": {
+   "grammaire_proposee": [
+    "présent continu",
+    "prétérit (be, verbes réguliers)",
+    "some / any, much / many",
+    "comparatifs",
+    "like / love + -ing",
+    "adverbes de fréquence"
+   ],
+   "themes": {
+    "At school": [
+     "Discover my school",
+     "Life at collège Kassere",
+     "What do you learn at school?"
+    ],
+    "At home": [
+     "My family tree",
+     "A Sunday with my family",
+     "The \"Tchonron\" soup"
+    ],
+    "Time and date": [
+     "What's the weather like in December?",
+     "Time is money!",
+     "Adon's schedule"
+    ],
+    "Jobs and occupations": [
+     "What's your mother's job?",
+     "What do you use a map for?",
+     "Where does Aunt Enoh work?"
+    ],
+    "Clothes and colours": [
+     "At the market place",
+     "My favourite clothes",
+     "Can I help you?"
+    ],
+    "Food and drinks": [
+     "What's on the menu today?",
+     "Keep fit with your diet",
+     "What's your favourite meal?"
+    ],
+    "Health and environment": [
+     "I take care of my body",
+     "Keep your environment safe",
+     "Health and water"
+    ],
+    "Sports and games": [
+     "What do you know about basketball?",
+     "A football star",
+     "Be an active learner!"
+    ]
+   }
+  },
+  "4e": {
+   "grammaire_proposee": [
+    "prétérit des verbes irréguliers",
+    "used to",
+    "would like",
+    "must / have to / should",
+    "futur (will, going to)",
+    "superlatifs"
+   ],
+   "themes": {
+    "Life at school": [
+     "My last holidays",
+     "We used to sing the national anthem",
+     "Work at school"
+    ],
+    "Women at work": [
+     "Rural women",
+     "Women's rights and duties",
+     "Girls must go to school"
+    ],
+    "Travelling": [
+     "Means of transport",
+     "At the airport",
+     "Tourism"
+    ],
+    "Fashion": [
+     "What would you like to wear?",
+     "At a fashion show",
+     "Keep your natural skin colour"
+    ],
+    "City or village?": [
+     "City life",
+     "Is village life better?",
+     "Zoko moves to the city"
+    ],
+    "Human rights": [
+     "I know my rights",
+     "What are your duties?",
+     "Let's promote tolerance"
+    ],
+    "Hygiene and health": [
+     "Endemic diseases",
+     "Hygiene at school",
+     "HIV/AIDS"
+    ],
+    "ICTs": [
+     "Can you use a computer?",
+     "Look at my new smart phone",
+     "The Internet"
+    ]
+   }
+  },
+  "3e": {
+   "grammaire_proposee": [
+    "present perfect (since / for)",
+    "prétérit continu",
+    "passif simple",
+    "conditionnel type 1",
+    "pronoms relatifs",
+    "discours rapporté simple"
+   ],
+   "examen": "BEPC",
+   "themes": {
+    "Life at school": [
+     "My first holidays in my village",
+     "Memories of school",
+     "School work"
+    ],
+    "Women at work": [
+     "Village women's activities",
+     "What are women's rights and duties?",
+     "Girls at school"
+    ],
+    "Travelling": [
+     "Different means of transport",
+     "Travelling by plane",
+     "Visiting the USA"
+    ],
+    "Fashion": [
+     "Modern and traditional clothes",
+     "Fashion show",
+     "Cosmetics"
+    ],
+    "City or village?": [
+     "City life",
+     "Is village life better?",
+     "Zoko moves to the city"
+    ],
+    "Human rights": [
+     "My rights",
+     "My duties",
+     "Tolerance"
+    ],
+    "Hygiene and health": [
+     "Endemic diseases",
+     "Hygiene at school",
+     "HIV/AIDS"
+    ],
+    "ICTs": [
+     "The computer revolution",
+     "The cellphone",
+     "The magic of the Internet"
+    ]
+   }
+  },
+  "2nde": {
+   "grammaire_proposee": [
+    "past perfect",
+    "conditionnel type 2",
+    "passif (tous temps)",
+    "modaux de déduction",
+    "connecteurs (although, however)",
+    "gérondif / infinitif"
+   ],
+   "unites": [
+    "People",
+    "Health and lifestyle",
+    "Technology",
+    "Looking forward",
+    "Gender and education",
+    "Citizenship",
+    "Sports",
+    "Science",
+    "Wildlife",
+    "Culture and civilization"
+   ]
+  },
+  "1ère": {
+   "grammaire_proposee": [
+    "discours rapporté (questions, ordres)",
+    "conditionnel type 3",
+    "wish / if only",
+    "causatif have something done",
+    "relatives non déterminatives"
+   ],
+   "unites": [
+    "Travel and world tourism",
+    "Natural resources",
+    "Deadly viruses and diseases",
+    "Crime and violence",
+    "Human rights",
+    "Technology and our lives",
+    "Political change",
+    "African cultural heritage",
+    "Our consumer society",
+    "Friends, dating and entertainment"
+   ],
+   "note": "1ère C et D : les 6 premières unités."
+  },
+  "Tle": {
+   "grammaire_proposee": [
+    "conditionnels mixtes",
+    "inversion",
+    "modaux au passé",
+    "phrases clivées",
+    "révision générale"
+   ],
+   "examen": "BAC",
+   "unites": [
+    "Lifestyles: moving with the times",
+    "Freedom and civil rights",
+    "Development issues",
+    "What the future holds",
+    "Managing resources",
+    "Contemporary Africa",
+    "International issues",
+    "Cultural differences",
+    "Justice",
+    "Demography"
+   ],
+   "note": "Tle C et D : les 6 premières unités."
+  }
+ }
+}
