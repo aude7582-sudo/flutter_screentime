@@ -13,7 +13,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
-import android.speech.RecognizerIntent
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
@@ -27,18 +26,6 @@ class FlutterScreentimePlugin :
     private lateinit var channel: MethodChannel
     private lateinit var applicationContext: Context
     private var activity: Activity? = null
-    // Léxi : réponse en attente de la reconnaissance vocale (Shadowing).
-    private var ecouteEnAttente: MethodChannel.Result? = null
-    private val codeEcoute = 7420
-    private val ecouteListener = io.flutter.plugin.common.PluginRegistry.ActivityResultListener { code, resultat, data ->
-        if (code != codeEcoute) return@ActivityResultListener false
-        val r = ecouteEnAttente
-        ecouteEnAttente = null
-        val phrases = if (resultat == Activity.RESULT_OK)
-            data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS) else null
-        try { r?.success(phrases?.toList()) } catch (e: Exception) {}
-        true
-    }
 
     override fun onAttachedToEngine(binding: FlutterPlugin.FlutterPluginBinding) {
         applicationContext = binding.applicationContext
@@ -52,7 +39,6 @@ class FlutterScreentimePlugin :
 
     override fun onAttachedToActivity(binding: ActivityPluginBinding) {
         activity = binding.activity
-        binding.addActivityResultListener(ecouteListener)
         lireIntention(binding.activity.intent)
         binding.addOnNewIntentListener { intent ->
             lireIntention(intent)
@@ -75,7 +61,6 @@ class FlutterScreentimePlugin :
 
     override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {
         activity = binding.activity
-        binding.addActivityResultListener(ecouteListener)
     }
 
     override fun onDetachedFromActivity() {
@@ -159,29 +144,6 @@ class FlutterScreentimePlugin :
                 result.success(currentAuthorizationStatus() == "approved")
             }
             // Léxi : notifications de rappel (leçon, début du blocage…).
-            // Léxi : écoute ce que l'élève dit (fenêtre Google de dictée).
-            "lexiEcouter" -> {
-                val a = activity
-                if (a == null) {
-                    result.success(null)
-                    return
-                }
-                val langue = (call.arguments as? Map<*, *>)?.get("langue") as? String ?: "en-US"
-                val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
-                    putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
-                    putExtra(RecognizerIntent.EXTRA_LANGUAGE, langue)
-                    putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 5)
-                    putExtra(RecognizerIntent.EXTRA_PROMPT, "Répète la phrase 🦊")
-                }
-                try {
-                    try { ecouteEnAttente?.success(null) } catch (e: Exception) {}
-                    ecouteEnAttente = result
-                    a.startActivityForResult(intent, codeEcoute)
-                } catch (e: Exception) {
-                    ecouteEnAttente = null
-                    result.success(null)
-                }
-            }
             "lexiSon" -> {
                 val type = (call.arguments as? Map<*, *>)?.get("type") as? String ?: "clic"
                 result.success(LexiSons.jouer(type))

@@ -1,7 +1,7 @@
 
 // ===========================================================================
 // SHADOWING LÉXI : écoute une phrase, répète-la en même temps que la voix,
-// puis dis-la au micro : Léxi vérifie mot par mot. 4 niveaux de 30 phrases
+// puis dis-la au micro (speech_to_text) : Léxi vérifie mot par mot. 4 niveaux de 30 phrases
 // (lus sur GitHub : lexi_bibliotheque/<langue>/shadowing/shadowing.json).
 // Progression gardée sur le téléphone, séparée par langue.
 
@@ -15,6 +15,8 @@ class _LxShadowing extends StatefulWidget {
 
 class _LxShadowingState extends State<_LxShadowing> {
   final FlutterTts _tts = FlutterTts();
+  final stt.SpeechToText _stt = stt.SpeechToText();
+  bool _sttPret = false;
   bool _charge = false;
   bool _absent = false;
   List<dynamic> _niveaux = [];
@@ -39,6 +41,9 @@ class _LxShadowingState extends State<_LxShadowing> {
   @override
   void dispose() {
     _tts.stop();
+    try {
+      _stt.cancel();
+    } catch (_) {}
     super.dispose();
   }
 
@@ -119,17 +124,50 @@ class _LxShadowingState extends State<_LxShadowing> {
     ];
   }
 
+  // Écoute le micro (même moteur que le reste de Léxi) et renvoie les
+  // propositions entendues, ou null.
+  Future<List<String>?> _ecouter() async {
+    try {
+      if (!_sttPret) {
+        _sttPret = await _stt.initialize();
+      }
+      if (!_sttPret) return null;
+      final fin = Completer<List<String>?>();
+      List<String> dernier = [];
+      void finir() {
+        if (!fin.isCompleted) fin.complete(dernier.isEmpty ? null : dernier);
+      }
+      _stt.statusListener = (s) {
+        if (s == 'done' || s == 'notListening') {
+          Future.delayed(const Duration(milliseconds: 400), finir);
+        }
+      };
+      _stt.errorListener = (_) => finir();
+      await _stt.listen(
+        onResult: (r) {
+          final l = <String>[r.recognizedWords];
+          for (final a in r.alternates) {
+            if (!l.contains(a.recognizedWords)) l.add(a.recognizedWords);
+          }
+          dernier = l.where((t) => t.trim().isNotEmpty).toList();
+          if (r.finalResult) finir();
+        },
+        localeId: (_lxtVoix[widget.langue] ?? 'en-US').replaceAll('-', '_'),
+        listenFor: const Duration(seconds: 15),
+        pauseFor: const Duration(seconds: 3),
+      );
+      return await fin.future.timeout(const Duration(seconds: 20),
+          onTimeout: () => dernier.isEmpty ? null : dernier);
+    } catch (_) {
+      return null;
+    }
+  }
+
   Future<void> _parler() async {
     if (_ecoute) return;
     await _tts.stop();
     setState(() => _ecoute = true);
-    List<String>? props;
-    try {
-      props = await const FlutterScreentime()
-          .lexiEcouter(_lxtVoix[widget.langue] ?? 'en-US');
-    } catch (_) {
-      props = null;
-    }
+    final props = await _ecouter();
     if (!mounted) return;
     if (props == null || props.isEmpty) {
       setState(() => _ecoute = false);
