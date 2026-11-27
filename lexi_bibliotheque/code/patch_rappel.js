@@ -9,7 +9,7 @@
     for (final cr in crens) {
       if ((cr['paquets'] as List).isEmpty) continue;
       final deb = cr['debut'] as int;
-      final jours = cr['jours'] as List<String>;
+      final jours = cr['jours'] as List;
       for (var j = 0; j < 8; j++) {
         final minuit = DateTime(now.year, now.month, now.day).add(Duration(days: j));
         final rappel = minuit.add(Duration(minutes: deb - 10));
