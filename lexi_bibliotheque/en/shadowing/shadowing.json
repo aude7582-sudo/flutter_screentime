@@ -1,0 +1,509 @@
+{
+ "langue": "en",
+ "niveaux": [
+  {
+   "id": "facile",
+   "nom": "Facile",
+   "phrases": [
+    {
+     "en": "Hello, how are you?",
+     "fr": "Bonjour, comment vas-tu ?"
+    },
+    {
+     "en": "My name is Awa.",
+     "fr": "Je m'appelle Awa."
+    },
+    {
+     "en": "I am from Abidjan.",
+     "fr": "Je viens d'Abidjan."
+    },
+    {
+     "en": "Nice to meet you.",
+     "fr": "Enchanté."
+    },
+    {
+     "en": "Thank you very much.",
+     "fr": "Merci beaucoup."
+    },
+    {
+     "en": "See you tomorrow.",
+     "fr": "À demain."
+    },
+    {
+     "en": "I like rice and fish.",
+     "fr": "J'aime le riz et le poisson."
+    },
+    {
+     "en": "Where is the market?",
+     "fr": "Où est le marché ?"
+    },
+    {
+     "en": "How much is it?",
+     "fr": "Combien ça coûte ?"
+    },
+    {
+     "en": "I am very happy today.",
+     "fr": "Je suis très content aujourd'hui."
+    },
+    {
+     "en": "Can you help me, please?",
+     "fr": "Peux-tu m'aider, s'il te plaît ?"
+    },
+    {
+     "en": "What time is it?",
+     "fr": "Quelle heure est-il ?"
+    },
+    {
+     "en": "It is hot today.",
+     "fr": "Il fait chaud aujourd'hui."
+    },
+    {
+     "en": "I have two sisters.",
+     "fr": "J'ai deux sœurs."
+    },
+    {
+     "en": "I go to school every day.",
+     "fr": "Je vais à l'école tous les jours."
+    },
+    {
+     "en": "Open the door, please.",
+     "fr": "Ouvre la porte, s'il te plaît."
+    },
+    {
+     "en": "I am hungry.",
+     "fr": "J'ai faim."
+    },
+    {
+     "en": "Good morning, teacher!",
+     "fr": "Bonjour, professeur !"
+    },
+    {
+     "en": "This is my phone.",
+     "fr": "C'est mon téléphone."
+    },
+    {
+     "en": "I love my family.",
+     "fr": "J'aime ma famille."
+    },
+    {
+     "en": "Let's go!",
+     "fr": "Allons-y !"
+    },
+    {
+     "en": "I don't understand.",
+     "fr": "Je ne comprends pas."
+    },
+    {
+     "en": "Please speak slowly.",
+     "fr": "Parle lentement, s'il te plaît."
+    },
+    {
+     "en": "See you soon!",
+     "fr": "À bientôt !"
+    },
+    {
+     "en": "My favourite colour is blue.",
+     "fr": "Ma couleur préférée est le bleu."
+    },
+    {
+     "en": "I can swim.",
+     "fr": "Je sais nager."
+    },
+    {
+     "en": "Have a nice day!",
+     "fr": "Bonne journée !"
+    },
+    {
+     "en": "The bus is late.",
+     "fr": "Le bus est en retard."
+    },
+    {
+     "en": "I need some water.",
+     "fr": "J'ai besoin d'eau."
+    },
+    {
+     "en": "Good night!",
+     "fr": "Bonne nuit !"
+    }
+   ]
+  },
+  {
+   "id": "intermediaire",
+   "nom": "Intermédiaire",
+   "phrases": [
+    {
+     "en": "Last weekend, I visited my grandmother.",
+     "fr": "Le week-end dernier, j'ai rendu visite à ma grand-mère."
+    },
+    {
+     "en": "I'm going to travel next month.",
+     "fr": "Je vais voyager le mois prochain."
+    },
+    {
+     "en": "Could you tell me the way to the station?",
+     "fr": "Pourriez-vous m'indiquer le chemin de la gare ?"
+    },
+    {
+     "en": "I'd like a glass of orange juice, please.",
+     "fr": "Je voudrais un verre de jus d'orange, s'il vous plaît."
+    },
+    {
+     "en": "Have you ever been to Ghana?",
+     "fr": "Es-tu déjà allé au Ghana ?"
+    },
+    {
+     "en": "If it rains, we will stay at home.",
+     "fr": "S'il pleut, nous resterons à la maison."
+    },
+    {
+     "en": "You should drink more water.",
+     "fr": "Tu devrais boire plus d'eau."
+    },
+    {
+     "en": "My brother is taller than me.",
+     "fr": "Mon frère est plus grand que moi."
+    },
+    {
+     "en": "What do you usually do on Sundays?",
+     "fr": "Que fais-tu d'habitude le dimanche ?"
+    },
+    {
+     "en": "I was cooking when you called me.",
+     "fr": "Je cuisinais quand tu m'as appelé."
+    },
+    {
+     "en": "The film was really exciting.",
+     "fr": "Le film était vraiment passionnant."
+    },
+    {
+     "en": "I'm sorry, I didn't hear you.",
+     "fr": "Désolé, je ne t'ai pas entendu."
+    },
+    {
+     "en": "Can I leave a message?",
+     "fr": "Puis-je laisser un message ?"
+    },
+    {
+     "en": "She works in a big hospital.",
+     "fr": "Elle travaille dans un grand hôpital."
+    },
+    {
+     "en": "We have to finish this today.",
+     "fr": "Nous devons finir ça aujourd'hui."
+    },
+    {
+     "en": "How long does it take to get there?",
+     "fr": "Combien de temps faut-il pour y aller ?"
+    },
+    {
+     "en": "I think it's a good idea.",
+     "fr": "Je pense que c'est une bonne idée."
+    },
+    {
+     "en": "The woman who lives next door is a doctor.",
+     "fr": "La femme qui habite à côté est médecin."
+    },
+    {
+     "en": "I've already finished my homework.",
+     "fr": "J'ai déjà fini mes devoirs."
+    },
+    {
+     "en": "Don't worry, everything will be fine.",
+     "fr": "Ne t'inquiète pas, tout ira bien."
+    },
+    {
+     "en": "What a beautiful day!",
+     "fr": "Quelle belle journée !"
+    },
+    {
+     "en": "I'm looking for a new job.",
+     "fr": "Je cherche un nouveau travail."
+    },
+    {
+     "en": "It's too expensive for me.",
+     "fr": "C'est trop cher pour moi."
+    },
+    {
+     "en": "Let me check my phone.",
+     "fr": "Laisse-moi vérifier mon téléphone."
+    },
+    {
+     "en": "We met at the university.",
+     "fr": "Nous nous sommes rencontrés à l'université."
+    },
+    {
+     "en": "Turn left at the roundabout.",
+     "fr": "Tournez à gauche au rond-point."
+    },
+    {
+     "en": "I usually go to bed at ten.",
+     "fr": "Je me couche d'habitude à dix heures."
+    },
+    {
+     "en": "Would you like to come with us?",
+     "fr": "Veux-tu venir avec nous ?"
+    },
+    {
+     "en": "The meeting starts at nine.",
+     "fr": "La réunion commence à neuf heures."
+    },
+    {
+     "en": "I'll call you back later.",
+     "fr": "Je te rappellerai plus tard."
+    }
+   ]
+  },
+  {
+   "id": "difficile",
+   "nom": "Difficile",
+   "phrases": [
+    {
+     "en": "I've been learning English for three months.",
+     "fr": "J'apprends l'anglais depuis trois mois."
+    },
+    {
+     "en": "When I was a child, I used to climb mango trees.",
+     "fr": "Quand j'étais enfant, je grimpais aux manguiers."
+    },
+    {
+     "en": "By the time I arrived, the bus had already left.",
+     "fr": "Quand je suis arrivé, le bus était déjà parti."
+    },
+    {
+     "en": "If I had more money, I would start a business.",
+     "fr": "Si j'avais plus d'argent, je créerais une entreprise."
+    },
+    {
+     "en": "The bridge was built more than fifty years ago.",
+     "fr": "Le pont a été construit il y a plus de cinquante ans."
+    },
+    {
+     "en": "She told me that she was very tired.",
+     "fr": "Elle m'a dit qu'elle était très fatiguée."
+    },
+    {
+     "en": "Although it was raining, we went to the beach.",
+     "fr": "Bien qu'il pleuvait, nous sommes allés à la plage."
+    },
+    {
+     "en": "In my opinion, social media can be useful.",
+     "fr": "À mon avis, les réseaux sociaux peuvent être utiles."
+    },
+    {
+     "en": "I see your point, but I don't completely agree.",
+     "fr": "Je comprends ton point de vue, mais je ne suis pas tout à fait d'accord."
+    },
+    {
+     "en": "Our flight has been delayed by two hours.",
+     "fr": "Notre vol a été retardé de deux heures."
+    },
+    {
+     "en": "I'm writing to apply for the position of assistant.",
+     "fr": "Je vous écris pour postuler au poste d'assistant."
+    },
+    {
+     "en": "He asked me whether I could start on Monday.",
+     "fr": "Il m'a demandé si je pouvais commencer lundi."
+    },
+    {
+     "en": "I'm not used to waking up so early.",
+     "fr": "Je n'ai pas l'habitude de me lever si tôt."
+    },
+    {
+     "en": "What would you do if you won the lottery?",
+     "fr": "Que ferais-tu si tu gagnais à la loterie ?"
+    },
+    {
+     "en": "The car broke down on the way to Yamoussoukro.",
+     "fr": "La voiture est tombée en panne sur la route de Yamoussoukro."
+    },
+    {
+     "en": "Cocoa is grown in many regions of the country.",
+     "fr": "Le cacao est cultivé dans de nombreuses régions du pays."
+    },
+    {
+     "en": "I'd rather stay at home tonight.",
+     "fr": "Je préfère rester à la maison ce soir."
+    },
+    {
+     "en": "Could you possibly change my room?",
+     "fr": "Pourriez-vous changer ma chambre ?"
+    },
+    {
+     "en": "Please find attached my curriculum vitae.",
+     "fr": "Veuillez trouver ci-joint mon curriculum vitae."
+    },
+    {
+     "en": "I look forward to hearing from you.",
+     "fr": "Dans l'attente de votre réponse."
+    },
+    {
+     "en": "It was the best decision I've ever made.",
+     "fr": "C'était la meilleure décision de ma vie."
+    },
+    {
+     "en": "She hasn't replied to my message yet.",
+     "fr": "Elle n'a pas encore répondu à mon message."
+    },
+    {
+     "en": "They were watching the match when the lights went off.",
+     "fr": "Ils regardaient le match quand le courant a coupé."
+    },
+    {
+     "en": "Since I moved here, my life has changed a lot.",
+     "fr": "Depuis que j'ai déménagé ici, ma vie a beaucoup changé."
+    },
+    {
+     "en": "He is said to be the best tailor in town.",
+     "fr": "On dit qu'il est le meilleur couturier de la ville."
+    },
+    {
+     "en": "Unless you hurry, you'll miss the bus.",
+     "fr": "Si tu ne te dépêches pas, tu vas rater le bus."
+    },
+    {
+     "en": "I wish I had more time to read.",
+     "fr": "J'aimerais avoir plus de temps pour lire."
+    },
+    {
+     "en": "Let's discuss this tomorrow morning.",
+     "fr": "Discutons-en demain matin."
+    },
+    {
+     "en": "It turned out to be a great surprise.",
+     "fr": "Ça s'est avéré être une belle surprise."
+    },
+    {
+     "en": "Thank you for your patience.",
+     "fr": "Merci pour votre patience."
+    }
+   ]
+  },
+  {
+   "id": "expert",
+   "nom": "Expert",
+   "phrases": [
+    {
+     "en": "Never have I seen such a passionate audience.",
+     "fr": "Jamais je n'ai vu un public aussi passionné."
+    },
+    {
+     "en": "What really matters is how you treat other people.",
+     "fr": "Ce qui compte vraiment, c'est la façon dont tu traites les autres."
+    },
+    {
+     "en": "Had I known about the traffic, I would have left earlier.",
+     "fr": "Si j'avais su pour les embouteillages, je serais parti plus tôt."
+    },
+    {
+     "en": "Should you require any further information, do not hesitate to contact us.",
+     "fr": "Si vous avez besoin d'informations supplémentaires, n'hésitez pas à nous contacter."
+    },
+    {
+     "en": "She must have forgotten about our appointment.",
+     "fr": "Elle a dû oublier notre rendez-vous."
+    },
+    {
+     "en": "Not only did he win the race, but he also broke the record.",
+     "fr": "Non seulement il a gagné la course, mais il a aussi battu le record."
+    },
+    {
+     "en": "The findings suggest that young people tend to read less.",
+     "fr": "Les résultats suggèrent que les jeunes ont tendance à lire moins."
+    },
+    {
+     "en": "Granted, the project is expensive; however, it is a long-term investment.",
+     "fr": "Certes, le projet est cher ; cependant, c'est un investissement à long terme."
+    },
+    {
+     "en": "It was only then that I realised how lucky I had been.",
+     "fr": "Ce n'est qu'alors que j'ai réalisé la chance que j'avais eue."
+    },
+    {
+     "en": "Little did they know that the company was about to close.",
+     "fr": "Ils étaient loin de se douter que l'entreprise allait fermer."
+    },
+    {
+     "en": "With all due respect, I see things a little differently.",
+     "fr": "Avec tout le respect que je vous dois, je vois les choses un peu autrement."
+    },
+    {
+     "en": "By the end of the year, we will have trained over a thousand teachers.",
+     "fr": "D'ici la fin de l'année, nous aurons formé plus de mille enseignants."
+    },
+    {
+     "en": "The more you practise, the more confident you become.",
+     "fr": "Plus tu pratiques, plus tu prends confiance."
+    },
+    {
+     "en": "He can't have finished the report already.",
+     "fr": "Il ne peut pas avoir déjà fini le rapport."
+    },
+    {
+     "en": "Ladies and gentlemen, thank you for being here tonight.",
+     "fr": "Mesdames et messieurs, merci d'être là ce soir."
+    },
+    {
+     "en": "Let me wrap up with one final thought.",
+     "fr": "Permettez-moi de conclure avec une dernière pensée."
+    },
+    {
+     "en": "To a certain extent, the government is responsible for this situation.",
+     "fr": "Dans une certaine mesure, le gouvernement est responsable de cette situation."
+    },
+    {
+     "en": "We need to come up with a more sustainable solution.",
+     "fr": "Nous devons trouver une solution plus durable."
+    },
+    {
+     "en": "I can no longer put up with such behaviour.",
+     "fr": "Je ne peux plus supporter un tel comportement."
+    },
+    {
+     "en": "Rarely do we get an opportunity like this.",
+     "fr": "Il est rare d'avoir une telle opportunité."
+    },
+    {
+     "en": "All things considered, it was a remarkable achievement.",
+     "fr": "Tout bien considéré, c'était une réussite remarquable."
+    },
+    {
+     "en": "That said, we cannot ignore the risks involved.",
+     "fr": "Cela dit, nous ne pouvons pas ignorer les risques."
+    },
+    {
+     "en": "It appears that the economy is gradually recovering.",
+     "fr": "Il semble que l'économie se redresse progressivement."
+    },
+    {
+     "en": "Imagine a world where every child can read.",
+     "fr": "Imaginez un monde où chaque enfant sait lire."
+    },
+    {
+     "en": "Under no circumstances should you share your password.",
+     "fr": "En aucun cas vous ne devez partager votre mot de passe."
+    },
+    {
+     "en": "The reason why I'm late is that the road was flooded.",
+     "fr": "Si je suis en retard, c'est parce que la route était inondée."
+    },
+    {
+     "en": "By and large, the results were better than expected.",
+     "fr": "Dans l'ensemble, les résultats étaient meilleurs que prévu."
+    },
+    {
+     "en": "I'll look into it and get back to you as soon as possible.",
+     "fr": "Je vais examiner ça et je reviens vers vous dès que possible."
+    },
+    {
+     "en": "Learning a language opens doors you never knew existed.",
+     "fr": "Apprendre une langue ouvre des portes dont tu ignorais l'existence."
+    },
+    {
+     "en": "In a nutshell, practice makes perfect.",
+     "fr": "En résumé, c'est en forgeant qu'on devient forgeron."
+    }
+   ]
+  }
+ ]
+}
