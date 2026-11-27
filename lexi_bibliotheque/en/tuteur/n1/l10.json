@@ -1,0 +1,185 @@
+{
+ "id": "en-n1-l10",
+ "langue": "en",
+ "niveau": 1,
+ "lecon": 10,
+ "cecrl": "A1",
+ "titre": "Yesterday",
+ "objectifs": [
+  "Parler du passé",
+  "was / were",
+  "Les verbes réguliers en -ed"
+ ],
+ "etapes": [
+  {
+   "type": "explication",
+   "fr": "Le passé de « be » : I/he/she/it → was ; you/we/they → were.",
+   "en": "I was tired. We were at home.",
+   "exemples": [
+    {
+     "en": "I was at the market.",
+     "fr": "J'étais au marché."
+    },
+    {
+     "en": "They were happy.",
+     "fr": "Ils étaient contents."
+    },
+    {
+     "en": "Was it good?",
+     "fr": "C'était bien ?"
+    }
+   ]
+  },
+  {
+   "type": "explication",
+   "fr": "Pour les verbes réguliers, on ajoute -ed : work → worked, play → played, watch → watched. La même forme pour toutes les personnes !",
+   "en": "I worked yesterday.",
+   "exemples": [
+    {
+     "en": "I watched a film.",
+     "fr": "J'ai regardé un film."
+    },
+    {
+     "en": "She cooked attiéké.",
+     "fr": "Elle a cuisiné de l'attiéké."
+    },
+    {
+     "en": "We visited our grandmother.",
+     "fr": "Nous avons rendu visite à notre grand-mère."
+    }
+   ]
+  },
+  {
+   "type": "explication",
+   "fr": "Négation et question au passé : « didn't » + verbe simple, « Did you…? ». Le -ed disparaît avec did !",
+   "en": "",
+   "exemples": [
+    {
+     "en": "I didn't work.",
+     "fr": "Je n'ai pas travaillé."
+    },
+    {
+     "en": "Did you watch the match?",
+     "fr": "Tu as regardé le match ?"
+    }
+   ]
+  },
+  {
+   "type": "vocabulaire",
+   "mots": [
+    {
+     "en": "yesterday",
+     "fr": "hier",
+     "pron": "yès-teur-dé"
+    },
+    {
+     "en": "last night",
+     "fr": "hier soir",
+     "pron": "last naït"
+    },
+    {
+     "en": "last week",
+     "fr": "la semaine dernière",
+     "pron": "last wik"
+    },
+    {
+     "en": "ago",
+     "fr": "il y a (temps)",
+     "pron": "e-go"
+    },
+    {
+     "en": "visit",
+     "fr": "rendre visite / visiter",
+     "pron": "vi-zit"
+    },
+    {
+     "en": "stay",
+     "fr": "rester",
+     "pron": "stèï"
+    }
+   ]
+  },
+  {
+   "type": "explication",
+   "fr": "Prononciation du -ed : parfois « t » (worked = workt), parfois « d » (played = plèïd), et « id » après t ou d (visited = vi-zi-tid).",
+   "en": ""
+  },
+  {
+   "type": "dialogue",
+   "lignes": [
+    {
+     "qui": "prof",
+     "en": "Hi! How was your weekend?",
+     "fr": "Salut ! Comment était ton week-end ?"
+    },
+    {
+     "qui": "eleve",
+     "en": "It was great! I visited my aunt in Grand-Bassam.",
+     "fr": "C'était super ! J'ai rendu visite à ma tante à Grand-Bassam."
+    },
+    {
+     "qui": "prof",
+     "en": "Nice! Did you go to the beach?",
+     "fr": "Sympa ! Tu es allé(e) à la plage ?"
+    },
+    {
+     "qui": "eleve",
+     "en": "No, I didn't. We stayed at home and cooked.",
+     "fr": "Non. Nous sommes resté(e)s à la maison et nous avons cuisiné."
+    }
+   ]
+  },
+  {
+   "type": "qcm",
+   "question": "« We ___ at the party last night. »",
+   "choix": [
+    "was",
+    "were",
+    "are"
+   ],
+   "bonne": 1,
+   "explication": "we → were."
+  },
+  {
+   "type": "qcm",
+   "question": "« Did you ___ the film? »",
+   "choix": [
+    "watched",
+    "watch",
+    "watching"
+   ],
+   "bonne": 1,
+   "explication": "Après did : verbe simple."
+  },
+  {
+   "type": "ordre",
+   "en": "I visited my grandmother last week",
+   "fr": "J'ai rendu visite à ma grand-mère la semaine dernière"
+  },
+  {
+   "type": "traduire",
+   "fr": "Je n'ai pas travaillé hier.",
+   "reponses": [
+    "I didn't work yesterday.",
+    "I did not work yesterday."
+   ]
+  },
+  {
+   "type": "ecoute",
+   "en": "It was a long day.",
+   "choix": [
+    "C'était une longue journée.",
+    "C'est une longue journée.",
+    "C'était une belle journée."
+   ],
+   "bonne": 0
+  },
+  {
+   "type": "repeter",
+   "en": "Yesterday I worked, I cooked and I watched TV.",
+   "fr": "Hier j'ai travaillé, j'ai cuisiné et j'ai regardé la télé."
+  }
+ ],
+ "resume": "was (I/he/she/it) / were (you/we/they). Verbes réguliers + -ed. didn't + verbe ; Did you + verbe ? yesterday, last week, two days ago.",
+ "devoir": "Raconte ta journée d'hier en 5 phrases au passé."
+}

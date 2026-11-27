@@ -1,0 +1,192 @@
+{
+ "id": "en-n1-l04",
+ "langue": "en",
+ "niveau": 1,
+ "lecon": 4,
+ "cecrl": "A1",
+ "titre": "Numbers, time and days",
+ "objectifs": [
+  "Compter jusqu'à 100",
+  "Dire l'heure",
+  "Les jours et les mois"
+ ],
+ "etapes": [
+  {
+   "type": "vocabulaire",
+   "mots": [
+    {
+     "en": "one, two, three",
+     "fr": "1, 2, 3",
+     "pron": "wann, tou, sri"
+    },
+    {
+     "en": "ten, eleven, twelve",
+     "fr": "10, 11, 12",
+     "pron": "tèn, i-lè-veun, twèlv"
+    },
+    {
+     "en": "thirteen",
+     "fr": "13",
+     "pron": "seur-tine"
+    },
+    {
+     "en": "thirty",
+     "fr": "30",
+     "pron": "seur-ti"
+    },
+    {
+     "en": "fifteen / fifty",
+     "fr": "15 / 50",
+     "pron": "fif-tine / fif-ti"
+    },
+    {
+     "en": "a hundred",
+     "fr": "100",
+     "pron": "e hann-dred"
+    }
+   ]
+  },
+  {
+   "type": "explication",
+   "fr": "Piège classique : -teen (13 à 19) et -ty (20, 30… 90). Dans « thirteen » on appuie sur la FIN (thir-TEEN). Dans « thirty » on appuie sur le DÉBUT (THIR-ty).",
+   "en": "thirTEEN (13) / THIRty (30)",
+   "exemples": [
+    {
+     "en": "fourteen",
+     "fr": "14"
+    },
+    {
+     "en": "forty",
+     "fr": "40"
+    }
+   ]
+  },
+  {
+   "type": "explication",
+   "fr": "Pour l'heure : « What time is it? ». On répond « It's … o'clock » pour les heures pile. « half past » = et demie, « quarter past » = et quart, « quarter to » = moins le quart.",
+   "en": "It's seven o'clock.",
+   "exemples": [
+    {
+     "en": "It's 7 o'clock.",
+     "fr": "Il est 7 h."
+    },
+    {
+     "en": "It's half past seven.",
+     "fr": "Il est 7 h 30."
+    },
+    {
+     "en": "It's quarter to eight.",
+     "fr": "Il est 8 h moins le quart."
+    }
+   ]
+  },
+  {
+   "type": "vocabulaire",
+   "mots": [
+    {
+     "en": "Monday",
+     "fr": "lundi",
+     "pron": "mann-dé"
+    },
+    {
+     "en": "Tuesday",
+     "fr": "mardi",
+     "pron": "tiouz-dé"
+    },
+    {
+     "en": "Wednesday",
+     "fr": "mercredi",
+     "pron": "wènz-dé"
+    },
+    {
+     "en": "Thursday",
+     "fr": "jeudi",
+     "pron": "seurz-dé"
+    },
+    {
+     "en": "Friday",
+     "fr": "vendredi",
+     "pron": "fraï-dé"
+    },
+    {
+     "en": "Saturday",
+     "fr": "samedi",
+     "pron": "sa-teur-dé"
+    },
+    {
+     "en": "Sunday",
+     "fr": "dimanche",
+     "pron": "sann-dé"
+    }
+   ]
+  },
+  {
+   "type": "explication",
+   "fr": "Les jours et les mois prennent une majuscule. Et on dit « on Monday » (le lundi), « in January » (en janvier).",
+   "en": "",
+   "exemples": [
+    {
+     "en": "on Friday",
+     "fr": "vendredi"
+    },
+    {
+     "en": "in December",
+     "fr": "en décembre"
+    }
+   ]
+  },
+  {
+   "type": "qcm",
+   "question": "Comment dit-on 15 ?",
+   "choix": [
+    "fifty",
+    "fifteen",
+    "five-ten"
+   ],
+   "bonne": 1,
+   "explication": "fifteen = 15 ; fifty = 50."
+  },
+  {
+   "type": "qcm",
+   "question": "« It's half past six » =",
+   "choix": [
+    "6 h 30",
+    "5 h 30",
+    "6 h 15"
+   ],
+   "bonne": 0,
+   "explication": "half past six = 6 heures et demie."
+  },
+  {
+   "type": "ordre",
+   "en": "What time is it",
+   "fr": "Quelle heure est-il"
+  },
+  {
+   "type": "traduire",
+   "fr": "Il est 9 heures.",
+   "reponses": [
+    "It's nine o'clock.",
+    "It is nine o'clock.",
+    "It's 9 o'clock."
+   ]
+  },
+  {
+   "type": "ecoute",
+   "en": "See you on Wednesday!",
+   "choix": [
+    "À mercredi !",
+    "À mardi !",
+    "À jeudi !"
+   ],
+   "bonne": 0
+  },
+  {
+   "type": "repeter",
+   "en": "Today is Monday. It's half past eight.",
+   "fr": "Aujourd'hui c'est lundi. Il est 8 h 30."
+  }
+ ],
+ "resume": "-teen (13-19) accent à la fin, -ty (20-90) accent au début. What time is it? It's … o'clock / half past / quarter past / quarter to. on Monday, in January.",
+ "devoir": "Dis l'heure en anglais 3 fois aujourd'hui, chaque fois que tu regardes ton téléphone."
+}

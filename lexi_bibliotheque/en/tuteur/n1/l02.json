@@ -1,0 +1,206 @@
+{
+ "id": "en-n1-l02",
+ "langue": "en",
+ "niveau": 1,
+ "lecon": 2,
+ "cecrl": "A1",
+ "titre": "Where are you from?",
+ "objectifs": [
+  "Dire d'où l'on vient",
+  "Le verbe « be » (être) au présent",
+  "Poser des questions simples"
+ ],
+ "etapes": [
+  {
+   "type": "explication",
+   "fr": "Le verbe le plus important en anglais, c'est « to be » : être. Il change avec chaque personne.",
+   "en": "I am, you are, he is, she is.",
+   "exemples": [
+    {
+     "en": "I am (I'm)",
+     "fr": "je suis"
+    },
+    {
+     "en": "you are (you're)",
+     "fr": "tu es / vous êtes"
+    },
+    {
+     "en": "he is (he's)",
+     "fr": "il est"
+    },
+    {
+     "en": "she is (she's)",
+     "fr": "elle est"
+    },
+    {
+     "en": "we are (we're)",
+     "fr": "nous sommes"
+    },
+    {
+     "en": "they are (they're)",
+     "fr": "ils / elles sont"
+    }
+   ]
+  },
+  {
+   "type": "explication",
+   "fr": "Pour dire d'où tu viens : « I'm from … ». Pour la nationalité : « I'm Ivorian ». Les nationalités prennent toujours une majuscule en anglais.",
+   "en": "I'm from Abidjan. I'm Ivorian.",
+   "exemples": [
+    {
+     "en": "I'm from Côte d'Ivoire.",
+     "fr": "Je viens de Côte d'Ivoire."
+    },
+    {
+     "en": "She's Senegalese.",
+     "fr": "Elle est sénégalaise."
+    },
+    {
+     "en": "He's French.",
+     "fr": "Il est français."
+    }
+   ]
+  },
+  {
+   "type": "vocabulaire",
+   "mots": [
+    {
+     "en": "Ivorian",
+     "fr": "ivoirien(ne)",
+     "pron": "aï-vo-rian"
+    },
+    {
+     "en": "Senegalese",
+     "fr": "sénégalais(e)",
+     "pron": "sé-né-ga-liz"
+    },
+    {
+     "en": "Ghanaian",
+     "fr": "ghanéen(ne)",
+     "pron": "ga-né-yan"
+    },
+    {
+     "en": "Nigerian",
+     "fr": "nigérian(e)",
+     "pron": "naï-dji-rian"
+    },
+    {
+     "en": "French",
+     "fr": "français(e)",
+     "pron": "frènch"
+    },
+    {
+     "en": "American",
+     "fr": "américain(e)",
+     "pron": "a-mé-ri-kan"
+    },
+    {
+     "en": "country",
+     "fr": "pays",
+     "pron": "kan-tri"
+    },
+    {
+     "en": "city",
+     "fr": "ville",
+     "pron": "si-ti"
+    }
+   ]
+  },
+  {
+   "type": "explication",
+   "fr": "Pour poser une question avec « be », on inverse : « You are » devient « Are you…? ». Et « Where » veut dire « Où ».",
+   "en": "Where are you from? Are you Ivorian?",
+   "exemples": [
+    {
+     "en": "Where are you from?",
+     "fr": "D'où viens-tu ?"
+    },
+    {
+     "en": "Is she from Ghana?",
+     "fr": "Est-ce qu'elle vient du Ghana ?"
+    },
+    {
+     "en": "Yes, she is. / No, she isn't.",
+     "fr": "Oui. / Non."
+    }
+   ]
+  },
+  {
+   "type": "dialogue",
+   "lignes": [
+    {
+     "qui": "prof",
+     "en": "Where are you from, Awa?",
+     "fr": "D'où viens-tu, Awa ?"
+    },
+    {
+     "qui": "eleve",
+     "en": "I'm from Bouaké. I'm Ivorian.",
+     "fr": "Je viens de Bouaké. Je suis ivoirienne."
+    },
+    {
+     "qui": "prof",
+     "en": "Is your friend Ivorian too?",
+     "fr": "Ton amie est ivoirienne aussi ?"
+    },
+    {
+     "qui": "eleve",
+     "en": "No, she isn't. She's from Dakar.",
+     "fr": "Non. Elle vient de Dakar."
+    }
+   ]
+  },
+  {
+   "type": "qcm",
+   "question": "Complète : « They ___ from Ghana. »",
+   "choix": [
+    "is",
+    "am",
+    "are"
+   ],
+   "bonne": 2,
+   "explication": "« They » (ils) va avec « are »."
+  },
+  {
+   "type": "qcm",
+   "question": "Comment dit-on « Elle est ivoirienne » ?",
+   "choix": [
+    "She is ivorian.",
+    "She is Ivorian.",
+    "She are Ivorian."
+   ],
+   "bonne": 1,
+   "explication": "She + is, et une majuscule à Ivorian."
+  },
+  {
+   "type": "ordre",
+   "en": "Where are you from",
+   "fr": "D'où viens-tu"
+  },
+  {
+   "type": "traduire",
+   "fr": "Je viens d'Abidjan.",
+   "reponses": [
+    "I'm from Abidjan.",
+    "I am from Abidjan."
+   ]
+  },
+  {
+   "type": "ecoute",
+   "en": "He isn't French.",
+   "choix": [
+    "Il n'est pas français.",
+    "Il est français.",
+    "Elle n'est pas française."
+   ],
+   "bonne": 0
+  },
+  {
+   "type": "repeter",
+   "en": "I'm from Côte d'Ivoire. I'm Ivorian.",
+   "fr": "Je viens de Côte d'Ivoire. Je suis ivoirien(ne)."
+  }
+ ],
+ "resume": "I am, you are, he/she is, we are, they are. Question : Are you…? Where are you from? → I'm from… Nationalités avec majuscule.",
+ "devoir": "Écris 3 phrases sur 3 personnes que tu connais : d'où elles viennent et leur nationalité."
+}

@@ -1,0 +1,190 @@
+{
+ "id": "en-n1-l06",
+ "langue": "en",
+ "niveau": 1,
+ "lecon": 6,
+ "cecrl": "A1",
+ "titre": "He works, she studies",
+ "objectifs": [
+  "Parler du travail des autres",
+  "Le -s de la 3e personne",
+  "does / doesn't"
+ ],
+ "etapes": [
+  {
+   "type": "explication",
+   "fr": "LA règle que tout le monde oublie : avec he, she, it, on ajoute un -s au verbe au présent simple.",
+   "en": "He works. She lives in Yamoussoukro.",
+   "exemples": [
+    {
+     "en": "I work → he works",
+     "fr": "je travaille → il travaille"
+    },
+    {
+     "en": "I live → she lives",
+     "fr": "je vis → elle vit"
+    },
+    {
+     "en": "I study → she studies",
+     "fr": "j'étudie → elle étudie"
+    },
+    {
+     "en": "I go → he goes",
+     "fr": "je vais → il va"
+    }
+   ]
+  },
+  {
+   "type": "explication",
+   "fr": "Questions et négations avec he/she : on utilise « does » et « doesn't », et le -s disparaît du verbe !",
+   "en": "Does she work? She doesn't work.",
+   "exemples": [
+    {
+     "en": "Does he speak English?",
+     "fr": "Est-ce qu'il parle anglais ?"
+    },
+    {
+     "en": "She doesn't like rice.",
+     "fr": "Elle n'aime pas le riz."
+    }
+   ]
+  },
+  {
+   "type": "vocabulaire",
+   "mots": [
+    {
+     "en": "teacher",
+     "fr": "enseignant(e)",
+     "pron": "ti-tcheur"
+    },
+    {
+     "en": "nurse",
+     "fr": "infirmier / infirmière",
+     "pron": "neurs"
+    },
+    {
+     "en": "doctor",
+     "fr": "médecin",
+     "pron": "dok-teur"
+    },
+    {
+     "en": "driver",
+     "fr": "chauffeur",
+     "pron": "draï-veur"
+    },
+    {
+     "en": "seller",
+     "fr": "vendeur / vendeuse",
+     "pron": "sè-leur"
+    },
+    {
+     "en": "student",
+     "fr": "étudiant(e)",
+     "pron": "stiou-deunt"
+    },
+    {
+     "en": "engineer",
+     "fr": "ingénieur",
+     "pron": "èn-dji-nir"
+    },
+    {
+     "en": "tailor",
+     "fr": "couturier / tailleur",
+     "pron": "tèï-leur"
+    }
+   ]
+  },
+  {
+   "type": "explication",
+   "fr": "Pour le métier, on met « a » ou « an » devant : « She's a nurse », « He's an engineer » (an devant un son de voyelle).",
+   "en": "",
+   "exemples": [
+    {
+     "en": "She's a doctor.",
+     "fr": "Elle est médecin."
+    },
+    {
+     "en": "He's an engineer.",
+     "fr": "Il est ingénieur."
+    }
+   ]
+  },
+  {
+   "type": "dialogue",
+   "lignes": [
+    {
+     "qui": "prof",
+     "en": "What does your mother do?",
+     "fr": "Que fait ta mère ?"
+    },
+    {
+     "qui": "eleve",
+     "en": "She's a nurse. She works in a hospital.",
+     "fr": "Elle est infirmière. Elle travaille dans un hôpital."
+    },
+    {
+     "qui": "prof",
+     "en": "Does she work at night?",
+     "fr": "Elle travaille la nuit ?"
+    },
+    {
+     "qui": "eleve",
+     "en": "Yes, she sometimes works at night.",
+     "fr": "Oui, elle travaille parfois la nuit."
+    }
+   ]
+  },
+  {
+   "type": "qcm",
+   "question": "Choisis la bonne phrase.",
+   "choix": [
+    "She work in a bank.",
+    "She works in a bank.",
+    "She working in a bank."
+   ],
+   "bonne": 1,
+   "explication": "she → works (avec -s)."
+  },
+  {
+   "type": "qcm",
+   "question": "« Does he ___ English? »",
+   "choix": [
+    "speaks",
+    "speak",
+    "speaking"
+   ],
+   "bonne": 1,
+   "explication": "Après does, pas de -s : does he speak."
+  },
+  {
+   "type": "ordre",
+   "en": "My brother is a taxi driver",
+   "fr": "Mon frère est chauffeur de taxi"
+  },
+  {
+   "type": "traduire",
+   "fr": "Elle étudie à l'université.",
+   "reponses": [
+    "She studies at university.",
+    "She studies at the university."
+   ]
+  },
+  {
+   "type": "ecoute",
+   "en": "He doesn't live in Abidjan.",
+   "choix": [
+    "Il ne vit pas à Abidjan.",
+    "Il vit à Abidjan.",
+    "Elle ne vit pas à Abidjan."
+   ],
+   "bonne": 0
+  },
+  {
+   "type": "repeter",
+   "en": "My father is a teacher. He works in a big school.",
+   "fr": "Mon père est enseignant. Il travaille dans une grande école."
+  }
+ ],
+ "resume": "he/she/it + verbe-s (works, lives, studies, goes). Does he…? / He doesn't… (sans -s). a nurse, an engineer.",
+ "devoir": "Écris le métier de 4 personnes de ton entourage avec une phrase chacune (He works… / She studies…)."
+}

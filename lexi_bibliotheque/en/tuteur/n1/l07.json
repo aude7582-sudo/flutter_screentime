@@ -1,0 +1,200 @@
+{
+ "id": "en-n1-l07",
+ "langue": "en",
+ "niveau": 1,
+ "lecon": 7,
+ "cecrl": "A1",
+ "titre": "At the market",
+ "objectifs": [
+  "Acheter au marché",
+  "there is / there are",
+  "Demander un prix"
+ ],
+ "etapes": [
+  {
+   "type": "vocabulaire",
+   "mots": [
+    {
+     "en": "rice",
+     "fr": "riz",
+     "pron": "raïss"
+    },
+    {
+     "en": "fish",
+     "fr": "poisson",
+     "pron": "fich"
+    },
+    {
+     "en": "tomatoes",
+     "fr": "tomates",
+     "pron": "to-ma-toz"
+    },
+    {
+     "en": "onions",
+     "fr": "oignons",
+     "pron": "eun-yeunz"
+    },
+    {
+     "en": "plantain",
+     "fr": "banane plantain",
+     "pron": "plann-tinn"
+    },
+    {
+     "en": "bread",
+     "fr": "pain",
+     "pron": "brèd"
+    },
+    {
+     "en": "oil",
+     "fr": "huile",
+     "pron": "oïl"
+    },
+    {
+     "en": "cheap / expensive",
+     "fr": "pas cher / cher",
+     "pron": "tchip / iks-pèn-siv"
+    }
+   ]
+  },
+  {
+   "type": "explication",
+   "fr": "« There is » = il y a (pour une chose), « there are » = il y a (pour plusieurs).",
+   "en": "There is a big market. There are many sellers.",
+   "exemples": [
+    {
+     "en": "There is some rice.",
+     "fr": "Il y a du riz."
+    },
+    {
+     "en": "There are three fish.",
+     "fr": "Il y a trois poissons."
+    },
+    {
+     "en": "Is there any bread?",
+     "fr": "Est-ce qu'il y a du pain ?"
+    }
+   ]
+  },
+  {
+   "type": "explication",
+   "fr": "« some » dans les phrases affirmatives, « any » dans les questions et les négations.",
+   "en": "",
+   "exemples": [
+    {
+     "en": "I want some tomatoes.",
+     "fr": "Je veux des tomates."
+    },
+    {
+     "en": "There aren't any onions.",
+     "fr": "Il n'y a pas d'oignons."
+    }
+   ]
+  },
+  {
+   "type": "explication",
+   "fr": "Pour le prix : « How much is it? » (une chose) ou « How much are they? » (plusieurs). Pour demander poliment : « Can I have …, please? »",
+   "en": "",
+   "exemples": [
+    {
+     "en": "How much is the fish?",
+     "fr": "Combien coûte le poisson ?"
+    },
+    {
+     "en": "It's two thousand francs.",
+     "fr": "C'est 2 000 francs."
+    },
+    {
+     "en": "Can I have one kilo, please?",
+     "fr": "Je peux avoir un kilo, s'il vous plaît ?"
+    }
+   ]
+  },
+  {
+   "type": "dialogue",
+   "lignes": [
+    {
+     "qui": "autre",
+     "en": "Good morning! Can I help you?",
+     "fr": "Bonjour ! Je peux vous aider ?"
+    },
+    {
+     "qui": "eleve",
+     "en": "Yes, please. How much are the tomatoes?",
+     "fr": "Oui, s'il vous plaît. Combien coûtent les tomates ?"
+    },
+    {
+     "qui": "autre",
+     "en": "Five hundred francs a kilo.",
+     "fr": "500 francs le kilo."
+    },
+    {
+     "qui": "eleve",
+     "en": "That's expensive! Four hundred?",
+     "fr": "C'est cher ! 400 ?"
+    },
+    {
+     "qui": "autre",
+     "en": "OK, four hundred for you.",
+     "fr": "D'accord, 400 pour toi."
+    },
+    {
+     "qui": "eleve",
+     "en": "Great, thank you!",
+     "fr": "Super, merci !"
+    }
+   ]
+  },
+  {
+   "type": "qcm",
+   "question": "« ___ are many people at the market. »",
+   "choix": [
+    "There is",
+    "There are",
+    "It is"
+   ],
+   "bonne": 1,
+   "explication": "many people = plusieurs → There are."
+  },
+  {
+   "type": "qcm",
+   "question": "« Is there ___ oil? »",
+   "choix": [
+    "some",
+    "any",
+    "a"
+   ],
+   "bonne": 1,
+   "explication": "Dans une question : any."
+  },
+  {
+   "type": "ordre",
+   "en": "How much is the bread",
+   "fr": "Combien coûte le pain"
+  },
+  {
+   "type": "traduire",
+   "fr": "Je peux avoir du riz, s'il vous plaît ?",
+   "reponses": [
+    "Can I have some rice, please?",
+    "Can I have rice, please?"
+   ]
+  },
+  {
+   "type": "ecoute",
+   "en": "It's too expensive!",
+   "choix": [
+    "C'est trop cher !",
+    "C'est pas cher !",
+    "C'est trop loin !"
+   ],
+   "bonne": 0
+  },
+  {
+   "type": "repeter",
+   "en": "Good morning! How much are the onions, please?",
+   "fr": "Bonjour ! Combien coûtent les oignons, s'il vous plaît ?"
+  }
+ ],
+ "resume": "There is (1) / There are (plusieurs). some (affirmation) / any (question, négation). How much is it? Can I have…, please?",
+ "devoir": "La prochaine fois que tu fais des courses, dis dans ta tête le nom de 5 produits en anglais."
+}

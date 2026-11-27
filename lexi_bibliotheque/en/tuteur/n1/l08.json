@@ -1,0 +1,176 @@
+{
+ "id": "en-n1-l08",
+ "langue": "en",
+ "niveau": 1,
+ "lecon": 8,
+ "cecrl": "A1",
+ "titre": "I can swim!",
+ "objectifs": [
+  "Dire ce qu'on sait faire",
+  "can / can't",
+  "Parler de ses loisirs"
+ ],
+ "etapes": [
+  {
+   "type": "explication",
+   "fr": "« can » = pouvoir / savoir faire. Il ne change jamais (pas de -s, même avec he/she), et le verbe après ne prend pas « to ».",
+   "en": "I can dance. She can sing.",
+   "exemples": [
+    {
+     "en": "I can swim.",
+     "fr": "Je sais nager."
+    },
+    {
+     "en": "He can drive.",
+     "fr": "Il sait conduire."
+    },
+    {
+     "en": "I can't cook.",
+     "fr": "Je ne sais pas cuisiner."
+    }
+   ]
+  },
+  {
+   "type": "explication",
+   "fr": "Pour la question, on inverse : « Can you…? ». Réponse courte : « Yes, I can. / No, I can't. »",
+   "en": "Can you play football?",
+   "exemples": [
+    {
+     "en": "Can you speak English?",
+     "fr": "Tu sais parler anglais ?"
+    },
+    {
+     "en": "Yes, a little.",
+     "fr": "Oui, un peu."
+    }
+   ]
+  },
+  {
+   "type": "vocabulaire",
+   "mots": [
+    {
+     "en": "swim",
+     "fr": "nager",
+     "pron": "swim"
+    },
+    {
+     "en": "dance",
+     "fr": "danser",
+     "pron": "dannss"
+    },
+    {
+     "en": "sing",
+     "fr": "chanter",
+     "pron": "sing"
+    },
+    {
+     "en": "drive",
+     "fr": "conduire",
+     "pron": "draïv"
+    },
+    {
+     "en": "play football",
+     "fr": "jouer au foot",
+     "pron": "plé fout-bol"
+    },
+    {
+     "en": "draw",
+     "fr": "dessiner",
+     "pron": "dro"
+    },
+    {
+     "en": "ride a bike",
+     "fr": "faire du vélo",
+     "pron": "raïd e baïk"
+    },
+    {
+     "en": "play the guitar",
+     "fr": "jouer de la guitare",
+     "pron": "plé ze gui-tar"
+    }
+   ]
+  },
+  {
+   "type": "explication",
+   "fr": "Prononciation : « can » est court (kn), « can't » est long et appuyé (kânt). C'est comme ça qu'on entend la différence !",
+   "en": "I can swim. I CAN'T swim."
+  },
+  {
+   "type": "dialogue",
+   "lignes": [
+    {
+     "qui": "prof",
+     "en": "Can you dance, Kevin?",
+     "fr": "Tu sais danser, Kevin ?"
+    },
+    {
+     "qui": "autre",
+     "en": "Yes, I can! I love coupé-décalé!",
+     "fr": "Oui ! J'adore le coupé-décalé !"
+    },
+    {
+     "qui": "prof",
+     "en": "And can you sing?",
+     "fr": "Et tu sais chanter ?"
+    },
+    {
+     "qui": "autre",
+     "en": "No, I can't. But I can play the guitar.",
+     "fr": "Non. Mais je sais jouer de la guitare."
+    }
+   ]
+  },
+  {
+   "type": "qcm",
+   "question": "Choisis la bonne phrase.",
+   "choix": [
+    "She cans swim.",
+    "She can swims.",
+    "She can swim."
+   ],
+   "bonne": 2,
+   "explication": "can ne change pas, et le verbe reste simple."
+  },
+  {
+   "type": "qcm",
+   "question": "« Can you drive? » — Non.",
+   "choix": [
+    "No, I can't.",
+    "No, I don't.",
+    "No, I not can."
+   ],
+   "bonne": 0,
+   "explication": "Réponse courte : No, I can't."
+  },
+  {
+   "type": "ordre",
+   "en": "Can you ride a bike",
+   "fr": "Tu sais faire du vélo"
+  },
+  {
+   "type": "traduire",
+   "fr": "Je ne sais pas nager.",
+   "reponses": [
+    "I can't swim.",
+    "I cannot swim."
+   ]
+  },
+  {
+   "type": "ecoute",
+   "en": "My sister can draw very well.",
+   "choix": [
+    "Ma sœur dessine très bien.",
+    "Ma sœur danse très bien.",
+    "Ma sœur conduit très bien."
+   ],
+   "bonne": 0
+  },
+  {
+   "type": "repeter",
+   "en": "I can dance but I can't sing.",
+   "fr": "Je sais danser mais je ne sais pas chanter."
+  }
+ ],
+ "resume": "can + verbe (jamais de -s, jamais de to). can't = ne pas pouvoir/savoir. Can you…? Yes, I can. / No, I can't.",
+ "devoir": "Fais une liste de 3 choses que tu sais faire et 2 que tu ne sais pas faire, en anglais."
+}

@@ -1,0 +1,189 @@
+{
+ "id": "en-n1-l01",
+ "langue": "en",
+ "niveau": 1,
+ "lecon": 1,
+ "cecrl": "A1",
+ "titre": "Hello! Se présenter",
+ "objectifs": [
+  "Dire bonjour et au revoir",
+  "Dire son prénom et son âge",
+  "Demander « Comment vas-tu ? »"
+ ],
+ "etapes": [
+  {
+   "type": "explication",
+   "fr": "Bienvenue dans ton premier cours ! Aujourd'hui, on apprend à se présenter. En anglais, pour dire bonjour, on dit « Hello ». Entre amis, on dit aussi « Hi ».",
+   "en": "Hello! Hi!",
+   "exemples": [
+    {
+     "en": "Hello!",
+     "fr": "Bonjour !"
+    },
+    {
+     "en": "Hi!",
+     "fr": "Salut !"
+    },
+    {
+     "en": "Goodbye! / Bye!",
+     "fr": "Au revoir ! / Salut !"
+    }
+   ]
+  },
+  {
+   "type": "vocabulaire",
+   "mots": [
+    {
+     "en": "hello",
+     "fr": "bonjour",
+     "pron": "hè-lo"
+    },
+    {
+     "en": "hi",
+     "fr": "salut",
+     "pron": "haï"
+    },
+    {
+     "en": "goodbye",
+     "fr": "au revoir",
+     "pron": "goud-baï"
+    },
+    {
+     "en": "good morning",
+     "fr": "bonjour (le matin)",
+     "pron": "goud mor-ning"
+    },
+    {
+     "en": "good evening",
+     "fr": "bonsoir",
+     "pron": "goud iv-ning"
+    },
+    {
+     "en": "my name",
+     "fr": "mon nom",
+     "pron": "maï nèïm"
+    },
+    {
+     "en": "years old",
+     "fr": "ans (âge)",
+     "pron": "yirz old"
+    }
+   ]
+  },
+  {
+   "type": "explication",
+   "fr": "Pour dire ton nom : « My name is … » ou plus court « I'm … ». « I'm » veut dire « je suis ». Attention : en anglais, « je » s'écrit toujours avec une majuscule : I.",
+   "en": "My name is Kenza. I'm Kenza.",
+   "exemples": [
+    {
+     "en": "My name is Kevin.",
+     "fr": "Je m'appelle Kevin."
+    },
+    {
+     "en": "I'm Kevin.",
+     "fr": "Je suis Kevin."
+    }
+   ]
+  },
+  {
+   "type": "explication",
+   "fr": "Pour l'âge, on utilise aussi « I am », jamais « I have » ! En français on « a » 20 ans, en anglais on « est » 20 ans.",
+   "en": "I'm twenty years old.",
+   "exemples": [
+    {
+     "en": "I'm 20.",
+     "fr": "J'ai 20 ans."
+    },
+    {
+     "en": "I'm 20 years old.",
+     "fr": "J'ai 20 ans."
+    }
+   ]
+  },
+  {
+   "type": "dialogue",
+   "lignes": [
+    {
+     "qui": "prof",
+     "en": "Hello! My name is Kenza. What's your name?",
+     "fr": "Bonjour ! Je m'appelle Kenza. Comment tu t'appelles ?"
+    },
+    {
+     "qui": "eleve",
+     "en": "Hi! I'm Awa.",
+     "fr": "Salut ! Je suis Awa."
+    },
+    {
+     "qui": "prof",
+     "en": "Nice to meet you, Awa! How are you?",
+     "fr": "Enchantée, Awa ! Comment vas-tu ?"
+    },
+    {
+     "qui": "eleve",
+     "en": "I'm fine, thank you. And you?",
+     "fr": "Je vais bien, merci. Et toi ?"
+    },
+    {
+     "qui": "prof",
+     "en": "Very well, thanks!",
+     "fr": "Très bien, merci !"
+    }
+   ]
+  },
+  {
+   "type": "qcm",
+   "question": "Comment dit-on « J'ai 18 ans » ?",
+   "choix": [
+    "I have 18 years.",
+    "I'm 18 years old.",
+    "I am 18 years."
+   ],
+   "bonne": 1,
+   "explication": "On utilise « I am » (je suis) + l'âge + « years old ». « I have 18 years » est une faute très fréquente."
+  },
+  {
+   "type": "qcm",
+   "question": "Ton ami te dit « How are you? ». Que réponds-tu ?",
+   "choix": [
+    "I'm fine, thank you.",
+    "My name is Paul.",
+    "Goodbye!"
+   ],
+   "bonne": 0,
+   "explication": "« How are you? » = « Comment vas-tu ? »."
+  },
+  {
+   "type": "ordre",
+   "en": "My name is Kevin",
+   "fr": "Je m'appelle Kevin"
+  },
+  {
+   "type": "traduire",
+   "fr": "Bonjour, je suis Malik.",
+   "reponses": [
+    "Hello, I'm Malik.",
+    "Hello, I am Malik.",
+    "Hi, I'm Malik.",
+    "Hi, I am Malik.",
+    "Hello, my name is Malik."
+   ]
+  },
+  {
+   "type": "ecoute",
+   "en": "Nice to meet you!",
+   "choix": [
+    "Enchanté !",
+    "Au revoir !",
+    "Merci !"
+   ],
+   "bonne": 0
+  },
+  {
+   "type": "repeter",
+   "en": "Hello! My name is … and I'm … years old.",
+   "fr": "Bonjour ! Je m'appelle … et j'ai … ans."
+  }
+ ],
+ "resume": "Hello / Hi = bonjour, salut. My name is … / I'm … = je m'appelle / je suis. I'm 20 (years old) = j'ai 20 ans. How are you? → I'm fine, thank you.",
+ "devoir": "Ce soir, présente-toi à voix haute en anglais : ton prénom, ton âge, et « Nice to meet you! »."
+}

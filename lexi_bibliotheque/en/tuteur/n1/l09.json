@@ -1,0 +1,177 @@
+{
+ "id": "en-n1-l09",
+ "langue": "en",
+ "niveau": 1,
+ "lecon": 9,
+ "cecrl": "A1",
+ "titre": "Right now",
+ "objectifs": [
+  "Dire ce qu'on est en train de faire",
+  "Le présent continu",
+  "Différence avec le présent simple"
+ ],
+ "etapes": [
+  {
+   "type": "explication",
+   "fr": "Pour une action en train de se passer MAINTENANT, on utilise « be + verbe-ing ». C'est le présent continu.",
+   "en": "I am eating. She is sleeping.",
+   "exemples": [
+    {
+     "en": "I'm eating.",
+     "fr": "Je suis en train de manger."
+    },
+    {
+     "en": "She's talking on the phone.",
+     "fr": "Elle est au téléphone."
+    },
+    {
+     "en": "They're watching TV.",
+     "fr": "Ils regardent la télé."
+    }
+   ]
+  },
+  {
+   "type": "explication",
+   "fr": "Orthographe : make → making (on enlève le e), swim → swimming (on double la consonne), study → studying.",
+   "en": "",
+   "exemples": [
+    {
+     "en": "write → writing",
+     "fr": "écrire"
+    },
+    {
+     "en": "run → running",
+     "fr": "courir"
+    }
+   ]
+  },
+  {
+   "type": "explication",
+   "fr": "Présent simple = habitude (tous les jours). Présent continu = maintenant. Les mots « now », « right now », « at the moment » appellent le présent continu.",
+   "en": "",
+   "exemples": [
+    {
+     "en": "I usually walk to work.",
+     "fr": "D'habitude, je marche jusqu'au travail."
+    },
+    {
+     "en": "Today I'm taking a taxi.",
+     "fr": "Aujourd'hui, je prends un taxi."
+    }
+   ]
+  },
+  {
+   "type": "vocabulaire",
+   "mots": [
+    {
+     "en": "now",
+     "fr": "maintenant",
+     "pron": "naou"
+    },
+    {
+     "en": "at the moment",
+     "fr": "en ce moment",
+     "pron": "at ze mo-meunt"
+    },
+    {
+     "en": "wait",
+     "fr": "attendre",
+     "pron": "wèït"
+    },
+    {
+     "en": "rain",
+     "fr": "pleuvoir",
+     "pron": "rèïn"
+    },
+    {
+     "en": "listen",
+     "fr": "écouter",
+     "pron": "li-seunn"
+    },
+    {
+     "en": "look for",
+     "fr": "chercher",
+     "pron": "louk for"
+    }
+   ]
+  },
+  {
+   "type": "dialogue",
+   "lignes": [
+    {
+     "qui": "autre",
+     "en": "Hi! What are you doing?",
+     "fr": "Salut ! Qu'est-ce que tu fais ?"
+    },
+    {
+     "qui": "eleve",
+     "en": "I'm waiting for the bus. It's raining!",
+     "fr": "J'attends le bus. Il pleut !"
+    },
+    {
+     "qui": "autre",
+     "en": "Oh no! Are you going to work?",
+     "fr": "Oh non ! Tu vas au travail ?"
+    },
+    {
+     "qui": "eleve",
+     "en": "Yes, I am. I'm late!",
+     "fr": "Oui. Je suis en retard !"
+    }
+   ]
+  },
+  {
+   "type": "qcm",
+   "question": "« Look! The children ___ football. »",
+   "choix": [
+    "play",
+    "are playing",
+    "plays"
+   ],
+   "bonne": 1,
+   "explication": "« Look! » = maintenant → présent continu."
+  },
+  {
+   "type": "qcm",
+   "question": "« I ___ to church every Sunday. »",
+   "choix": [
+    "go",
+    "am going",
+    "goes"
+   ],
+   "bonne": 0,
+   "explication": "« every Sunday » = habitude → présent simple."
+  },
+  {
+   "type": "ordre",
+   "en": "What are you doing now",
+   "fr": "Qu'est-ce que tu fais maintenant"
+  },
+  {
+   "type": "traduire",
+   "fr": "Il pleut en ce moment.",
+   "reponses": [
+    "It's raining at the moment.",
+    "It is raining at the moment.",
+    "It's raining now."
+   ]
+  },
+  {
+   "type": "ecoute",
+   "en": "She's cooking dinner.",
+   "choix": [
+    "Elle prépare le dîner.",
+    "Elle mange le dîner.",
+    "Elle achète le dîner."
+   ],
+   "bonne": 0
+  },
+  {
+   "type": "repeter",
+   "en": "Right now, I'm learning English with Léxi!",
+   "fr": "En ce moment, j'apprends l'anglais avec Léxi !"
+  }
+ ],
+ "resume": "be + verbe-ing = maintenant (I'm eating). Présent simple = habitude. now, right now, at the moment → -ing.",
+ "devoir": "Ce soir, décris en anglais 3 choses que font les gens autour de toi (« My brother is… »)."
+}

@@ -1,0 +1,132 @@
+{
+ "id": "en-n1-examen",
+ "langue": "en",
+ "niveau": 1,
+ "reussite": 9,
+ "etapes": [
+  {
+   "type": "qcm",
+   "question": "« J'ai 25 ans » =",
+   "choix": [
+    "I have 25 years.",
+    "I'm 25.",
+    "I am 25 year."
+   ],
+   "bonne": 1,
+   "explication": "I'm 25 (years old)."
+  },
+  {
+   "type": "qcm",
+   "question": "« They ___ from Senegal. »",
+   "choix": [
+    "is",
+    "are",
+    "am"
+   ],
+   "bonne": 1,
+   "explication": "They are."
+  },
+  {
+   "type": "qcm",
+   "question": "Kevin et ___ sœur.",
+   "choix": [
+    "her",
+    "his",
+    "its"
+   ],
+   "bonne": 1,
+   "explication": "Kevin est un garçon → his."
+  },
+  {
+   "type": "qcm",
+   "question": "« It's quarter to nine » =",
+   "choix": [
+    "9 h 15",
+    "8 h 45",
+    "9 h 45"
+   ],
+   "bonne": 1,
+   "explication": "quarter to nine = 9 h moins le quart."
+  },
+  {
+   "type": "qcm",
+   "question": "« She ___ in a hospital. »",
+   "choix": [
+    "work",
+    "works",
+    "working"
+   ],
+   "bonne": 1,
+   "explication": "she → works."
+  },
+  {
+   "type": "qcm",
+   "question": "« Is there ___ bread? »",
+   "choix": [
+    "some",
+    "any",
+    "many"
+   ],
+   "bonne": 1,
+   "explication": "question → any."
+  },
+  {
+   "type": "qcm",
+   "question": "« He ___ drive. »",
+   "choix": [
+    "cans",
+    "can",
+    "can to"
+   ],
+   "bonne": 1,
+   "explication": "can ne change pas."
+  },
+  {
+   "type": "qcm",
+   "question": "« Look! It ___. »",
+   "choix": [
+    "rains",
+    "is raining",
+    "rain"
+   ],
+   "bonne": 1,
+   "explication": "Look! = maintenant."
+  },
+  {
+   "type": "qcm",
+   "question": "« We ___ tired yesterday. »",
+   "choix": [
+    "was",
+    "were",
+    "are"
+   ],
+   "bonne": 1,
+   "explication": "we → were."
+  },
+  {
+   "type": "qcm",
+   "question": "« Did you ___ him? »",
+   "choix": [
+    "called",
+    "call",
+    "calls"
+   ],
+   "bonne": 1,
+   "explication": "did + verbe simple."
+  },
+  {
+   "type": "traduire",
+   "fr": "Elle ne travaille pas le dimanche.",
+   "reponses": [
+    "She doesn't work on Sunday.",
+    "She does not work on Sunday.",
+    "She doesn't work on Sundays."
+   ]
+  },
+  {
+   "type": "ordre",
+   "en": "What does your father do",
+   "fr": "Que fait ton père"
+  }
+ ]
+}

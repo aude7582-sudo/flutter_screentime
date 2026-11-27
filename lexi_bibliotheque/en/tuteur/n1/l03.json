@@ -1,0 +1,181 @@
+{
+ "id": "en-n1-l03",
+ "langue": "en",
+ "niveau": 1,
+ "lecon": 3,
+ "cecrl": "A1",
+ "titre": "My family",
+ "objectifs": [
+  "Présenter sa famille",
+  "Les possessifs my, your, his, her",
+  "have got (avoir)"
+ ],
+ "etapes": [
+  {
+   "type": "vocabulaire",
+   "mots": [
+    {
+     "en": "mother / mum",
+     "fr": "mère / maman",
+     "pron": "ma-zeur / meum"
+    },
+    {
+     "en": "father / dad",
+     "fr": "père / papa",
+     "pron": "fa-zeur / dad"
+    },
+    {
+     "en": "sister",
+     "fr": "sœur",
+     "pron": "sis-teur"
+    },
+    {
+     "en": "brother",
+     "fr": "frère",
+     "pron": "bra-zeur"
+    },
+    {
+     "en": "son",
+     "fr": "fils",
+     "pron": "sann"
+    },
+    {
+     "en": "daughter",
+     "fr": "fille (enfant)",
+     "pron": "do-teur"
+    },
+    {
+     "en": "grandmother",
+     "fr": "grand-mère",
+     "pron": "grann-ma-zeur"
+    },
+    {
+     "en": "uncle",
+     "fr": "oncle",
+     "pron": "eun-keul"
+    },
+    {
+     "en": "aunt",
+     "fr": "tante",
+     "pron": "ant"
+    },
+    {
+     "en": "cousin",
+     "fr": "cousin(e)",
+     "pron": "ka-zinn"
+    }
+   ]
+  },
+  {
+   "type": "explication",
+   "fr": "Les possessifs : my (mon/ma/mes), your (ton/ta/tes), his (son/sa — pour un homme), her (son/sa — pour une femme). Différence avec le français : on choisit his ou her selon le PROPRIÉTAIRE, pas selon l'objet.",
+   "en": "his mother = la mère de lui ; her mother = la mère d'elle",
+   "exemples": [
+    {
+     "en": "Kevin and his sister",
+     "fr": "Kevin et sa sœur"
+    },
+    {
+     "en": "Kenza and her brother",
+     "fr": "Kenza et son frère"
+    }
+   ]
+  },
+  {
+   "type": "explication",
+   "fr": "Pour dire « j'ai » (une sœur, deux frères), on utilise « I have got » ou simplement « I have ». À la 3e personne : « she has got ».",
+   "en": "I've got two brothers.",
+   "exemples": [
+    {
+     "en": "I've got one sister.",
+     "fr": "J'ai une sœur."
+    },
+    {
+     "en": "She has got three children.",
+     "fr": "Elle a trois enfants."
+    },
+    {
+     "en": "Have you got a brother?",
+     "fr": "As-tu un frère ?"
+    }
+   ]
+  },
+  {
+   "type": "dialogue",
+   "lignes": [
+    {
+     "qui": "prof",
+     "en": "Have you got brothers and sisters?",
+     "fr": "As-tu des frères et sœurs ?"
+    },
+    {
+     "qui": "eleve",
+     "en": "Yes, I've got one brother and two sisters.",
+     "fr": "Oui, j'ai un frère et deux sœurs."
+    },
+    {
+     "qui": "prof",
+     "en": "What's your brother's name?",
+     "fr": "Comment s'appelle ton frère ?"
+    },
+    {
+     "qui": "eleve",
+     "en": "His name is Yao.",
+     "fr": "Il s'appelle Yao."
+    }
+   ]
+  },
+  {
+   "type": "qcm",
+   "question": "Kenza parle de son père. Elle dit : « ___ father is a teacher. »",
+   "choix": [
+    "His",
+    "Her",
+    "My"
+   ],
+   "bonne": 2,
+   "explication": "Kenza parle de SON propre père : « My father »."
+  },
+  {
+   "type": "qcm",
+   "question": "Tu parles du frère d'Awa : « Awa and ___ brother ».",
+   "choix": [
+    "his",
+    "her",
+    "your"
+   ],
+   "bonne": 1,
+   "explication": "Awa est une fille → her."
+  },
+  {
+   "type": "ordre",
+   "en": "I have got two sisters",
+   "fr": "J'ai deux sœurs"
+  },
+  {
+   "type": "traduire",
+   "fr": "Mon oncle s'appelle Koffi.",
+   "reponses": [
+    "My uncle's name is Koffi.",
+    "My uncle is called Koffi."
+   ]
+  },
+  {
+   "type": "ecoute",
+   "en": "Her daughter is ten.",
+   "choix": [
+    "Sa fille a dix ans.",
+    "Son fils a dix ans.",
+    "Sa sœur a dix ans."
+   ],
+   "bonne": 0
+  },
+  {
+   "type": "repeter",
+   "en": "This is my family. I've got one brother and two sisters.",
+   "fr": "Voici ma famille. J'ai un frère et deux sœurs."
+  }
+ ],
+ "resume": "my / your / his (à lui) / her (à elle). I've got = j'ai ; she has got = elle a. Vocabulaire : mother, father, sister, brother…",
+ "devoir": "Montre une photo de ta famille à quelqu'un et présente-la en anglais."
+}

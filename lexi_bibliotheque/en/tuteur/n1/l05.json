@@ -1,0 +1,192 @@
+{
+ "id": "en-n1-l05",
+ "langue": "en",
+ "niveau": 1,
+ "lecon": 5,
+ "cecrl": "A1",
+ "titre": "My day",
+ "objectifs": [
+  "Raconter sa journée",
+  "Le présent simple (I, you, we, they)",
+  "Les mots de fréquence"
+ ],
+ "etapes": [
+  {
+   "type": "explication",
+   "fr": "Le présent simple sert pour les habitudes : ce que tu fais tous les jours. Avec I, you, we, they, le verbe ne change pas.",
+   "en": "I wake up at six.",
+   "exemples": [
+    {
+     "en": "I wake up at 6.",
+     "fr": "Je me réveille à 6 h."
+    },
+    {
+     "en": "We eat at noon.",
+     "fr": "Nous mangeons à midi."
+    },
+    {
+     "en": "They go to school.",
+     "fr": "Ils vont à l'école."
+    }
+   ]
+  },
+  {
+   "type": "vocabulaire",
+   "mots": [
+    {
+     "en": "wake up",
+     "fr": "se réveiller",
+     "pron": "wèïk eup"
+    },
+    {
+     "en": "get up",
+     "fr": "se lever",
+     "pron": "guèt eup"
+    },
+    {
+     "en": "have a shower",
+     "fr": "prendre une douche",
+     "pron": "hav e chaou-eur"
+    },
+    {
+     "en": "have breakfast",
+     "fr": "prendre le petit-déjeuner",
+     "pron": "hav brèk-feust"
+    },
+    {
+     "en": "go to work",
+     "fr": "aller au travail",
+     "pron": "go tou weurk"
+    },
+    {
+     "en": "come back home",
+     "fr": "rentrer à la maison",
+     "pron": "kam bak hom"
+    },
+    {
+     "en": "cook",
+     "fr": "cuisiner",
+     "pron": "kouk"
+    },
+    {
+     "en": "go to bed",
+     "fr": "aller se coucher",
+     "pron": "go tou bèd"
+    }
+   ]
+  },
+  {
+   "type": "explication",
+   "fr": "Pour dire « souvent, toujours, jamais », on met le mot AVANT le verbe : always (toujours), usually (d'habitude), often (souvent), sometimes (parfois), never (jamais).",
+   "en": "I always drink tea.",
+   "exemples": [
+    {
+     "en": "I always get up early.",
+     "fr": "Je me lève toujours tôt."
+    },
+    {
+     "en": "We never eat late.",
+     "fr": "Nous ne mangeons jamais tard."
+    }
+   ]
+  },
+  {
+   "type": "explication",
+   "fr": "La négation : « don't » + verbe. La question : « Do you … ? ».",
+   "en": "I don't work on Sunday. Do you work on Sunday?",
+   "exemples": [
+    {
+     "en": "I don't like coffee.",
+     "fr": "Je n'aime pas le café."
+    },
+    {
+     "en": "Do you cook?",
+     "fr": "Est-ce que tu cuisines ?"
+    },
+    {
+     "en": "Yes, I do. / No, I don't.",
+     "fr": "Oui. / Non."
+    }
+   ]
+  },
+  {
+   "type": "dialogue",
+   "lignes": [
+    {
+     "qui": "prof",
+     "en": "What time do you get up?",
+     "fr": "À quelle heure tu te lèves ?"
+    },
+    {
+     "qui": "eleve",
+     "en": "I usually get up at half past five.",
+     "fr": "Je me lève d'habitude à 5 h 30."
+    },
+    {
+     "qui": "prof",
+     "en": "Wow, early! Do you have breakfast?",
+     "fr": "Waouh, tôt ! Tu prends un petit-déjeuner ?"
+    },
+    {
+     "qui": "eleve",
+     "en": "Yes, I always have bread and tea.",
+     "fr": "Oui, je prends toujours du pain et du thé."
+    }
+   ]
+  },
+  {
+   "type": "qcm",
+   "question": "Où mettre « often » ? « I ___ go ___ to the market ___. »",
+   "choix": [
+    "I often go to the market.",
+    "I go often to the market.",
+    "I go to the market often always."
+   ],
+   "bonne": 0,
+   "explication": "Le mot de fréquence se place avant le verbe."
+  },
+  {
+   "type": "qcm",
+   "question": "Négation de « I work on Sunday »",
+   "choix": [
+    "I not work on Sunday.",
+    "I don't work on Sunday.",
+    "I doesn't work on Sunday."
+   ],
+   "bonne": 1,
+   "explication": "don't + verbe."
+  },
+  {
+   "type": "ordre",
+   "en": "I never go to bed late",
+   "fr": "Je ne me couche jamais tard"
+  },
+  {
+   "type": "traduire",
+   "fr": "Nous prenons le petit-déjeuner à 7 h.",
+   "reponses": [
+    "We have breakfast at 7.",
+    "We have breakfast at seven.",
+    "We have breakfast at 7 o'clock.",
+    "We have breakfast at seven o'clock."
+   ]
+  },
+  {
+   "type": "ecoute",
+   "en": "Do you cook every day?",
+   "choix": [
+    "Tu cuisines tous les jours ?",
+    "Tu manges tous les jours ?",
+    "Tu travailles tous les jours ?"
+   ],
+   "bonne": 0
+  },
+  {
+   "type": "repeter",
+   "en": "I usually wake up at six and I go to work at seven.",
+   "fr": "Je me réveille d'habitude à 6 h et je vais au travail à 7 h."
+  }
+ ],
+ "resume": "Présent simple = habitudes. I/you/we/they + verbe. Négation : don't. Question : Do you…? always, usually, often, sometimes, never AVANT le verbe.",
+ "devoir": "Raconte ta journée de demain en 5 phrases avec always, usually ou never."
+}
