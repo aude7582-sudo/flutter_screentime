@@ -1,0 +1,132 @@
+{
+ "id": "en-n3-examen",
+ "langue": "en",
+ "niveau": 3,
+ "reussite": 9,
+ "etapes": [
+  {
+   "type": "qcm",
+   "question": "« I have known her ___ 2015. »",
+   "choix": [
+    "for",
+    "since",
+    "from"
+   ],
+   "bonne": 1,
+   "explication": "since + point de départ."
+  },
+  {
+   "type": "qcm",
+   "question": "« We ___ to play outside every evening. » (avant)",
+   "choix": [
+    "use",
+    "used",
+    "were used"
+   ],
+   "bonne": 1,
+   "explication": "used to."
+  },
+  {
+   "type": "qcm",
+   "question": "« When I arrived, they ___ dinner. » (déjà fini)",
+   "choix": [
+    "finished",
+    "had finished",
+    "have finished"
+   ],
+   "bonne": 1,
+   "explication": "past perfect."
+  },
+  {
+   "type": "qcm",
+   "question": "« If I ___ you, I would apologise. »",
+   "choix": [
+    "am",
+    "were",
+    "will be"
+   ],
+   "bonne": 1,
+   "explication": "If I were you."
+  },
+  {
+   "type": "qcm",
+   "question": "« The house ___ in 1990. »",
+   "choix": [
+    "built",
+    "was built",
+    "is build"
+   ],
+   "bonne": 1,
+   "explication": "Passif passé."
+  },
+  {
+   "type": "qcm",
+   "question": "« Are you hungry? » → He asked ___.",
+   "choix": [
+    "if I was hungry",
+    "was I hungry",
+    "if was I hungry"
+   ],
+   "bonne": 0,
+   "explication": "if + ordre normal."
+  },
+  {
+   "type": "qcm",
+   "question": "« Bien qu'il soit jeune » =",
+   "choix": [
+    "Because he is young",
+    "Although he is young",
+    "So he is young"
+   ],
+   "bonne": 1,
+   "explication": "although."
+  },
+  {
+   "type": "qcm",
+   "question": "Polite disagreement:",
+   "choix": [
+    "That's stupid.",
+    "I see your point, but…",
+    "No way."
+   ],
+   "bonne": 1,
+   "explication": "I see your point, but…"
+  },
+  {
+   "type": "qcm",
+   "question": "« The car ___ on the way. » (tomber en panne)",
+   "choix": [
+    "broke down",
+    "broke up",
+    "broke out"
+   ],
+   "bonne": 0,
+   "explication": "break down."
+  },
+  {
+   "type": "qcm",
+   "question": "Formal email opening:",
+   "choix": [
+    "Hi buddy,",
+    "Dear Mrs Koné,",
+    "Yo!"
+   ],
+   "bonne": 1,
+   "explication": "Dear Mrs…"
+  },
+  {
+   "type": "traduire",
+   "fr": "Si j'avais de l'argent, je voyagerais.",
+   "reponses": [
+    "If I had money, I would travel.",
+    "If I had money, I'd travel.",
+    "If I had some money, I would travel."
+   ]
+  },
+  {
+   "type": "ordre",
+   "en": "She told me that she was tired",
+   "fr": "Elle m'a dit qu'elle était fatiguée"
+  }
+ ]
+}

@@ -1,0 +1,168 @@
+{
+ "id": "en-n3-l04",
+ "langue": "en",
+ "niveau": 3,
+ "lecon": 4,
+ "cecrl": "B1",
+ "titre": "If I were rich",
+ "objectifs": [
+  "Imagine unreal situations",
+  "Second conditional",
+  "Give advice: If I were you"
+ ],
+ "etapes": [
+  {
+   "type": "explication",
+   "fr": "Conditionnel de type 2 (situation imaginaire) : If + passé, … would + verbe.",
+   "en": "If + past simple, would + verb: for imaginary situations.",
+   "exemples": [
+    {
+     "en": "If I had a lot of money, I would build a school.",
+     "fr": "Si j'avais beaucoup d'argent, je construirais une école."
+    },
+    {
+     "en": "If she lived closer, we'd see her more.",
+     "fr": "Si elle habitait plus près, on la verrait plus."
+    }
+   ]
+  },
+  {
+   "type": "explication",
+   "fr": "Avec « be », on dit « were » pour toutes les personnes dans ce cas. Et « If I were you… » sert à donner un conseil.",
+   "en": "« If I were you, I would… » is a polite way to give advice.",
+   "exemples": [
+    {
+     "en": "If I were you, I'd accept the job.",
+     "fr": "À ta place, j'accepterais le poste."
+    },
+    {
+     "en": "If he were taller, he'd play basketball.",
+     "fr": "S'il était plus grand, il jouerait au basket."
+    }
+   ]
+  },
+  {
+   "type": "vocabulaire",
+   "mots": [
+    {
+     "en": "would",
+     "fr": "conditionnel (-rais)",
+     "pron": "woud"
+    },
+    {
+     "en": "win the lottery",
+     "fr": "gagner à la loterie",
+     "pron": "winn ze lo-teu-ri"
+    },
+    {
+     "en": "dream",
+     "fr": "rêve",
+     "pron": "drim"
+    },
+    {
+     "en": "afford",
+     "fr": "avoir les moyens",
+     "pron": "a-ford"
+    },
+    {
+     "en": "abroad",
+     "fr": "à l'étranger",
+     "pron": "a-brod"
+    },
+    {
+     "en": "charity",
+     "fr": "association caritative",
+     "pron": "tcha-ri-ti"
+    }
+   ]
+  },
+  {
+   "type": "dialogue",
+   "lignes": [
+    {
+     "qui": "prof",
+     "en": "What would you do if you won the lottery?",
+     "fr": "Que ferais-tu si tu gagnais à la loterie ?"
+    },
+    {
+     "qui": "eleve",
+     "en": "I would buy a house for my mother and start a business.",
+     "fr": "J'achèterais une maison pour ma mère et je lancerais une entreprise."
+    },
+    {
+     "qui": "prof",
+     "en": "Would you stop working?",
+     "fr": "Tu arrêterais de travailler ?"
+    },
+    {
+     "qui": "eleve",
+     "en": "No way! If I stopped, I'd be bored.",
+     "fr": "Pas question ! Si j'arrêtais, je m'ennuierais."
+    }
+   ]
+  },
+  {
+   "type": "qcm",
+   "question": "« If I ___ more time, I would learn Chinese. »",
+   "choix": [
+    "have",
+    "had",
+    "would have"
+   ],
+   "bonne": 1,
+   "explication": "If + passé."
+  },
+  {
+   "type": "qcm",
+   "question": "« If I were you, I ___ him. »",
+   "choix": [
+    "will call",
+    "would call",
+    "called"
+   ],
+   "bonne": 1,
+   "explication": "would + verbe."
+  },
+  {
+   "type": "qcm",
+   "question": "Type 1 or type 2? « If it rains tomorrow… » (c'est possible)",
+   "choix": [
+    "Type 1 (will)",
+    "Type 2 (would)"
+   ],
+   "bonne": 0,
+   "explication": "Situation réellement possible → type 1."
+  },
+  {
+   "type": "ordre",
+   "en": "If I were rich I would travel around the world",
+   "fr": "Si j'étais riche je ferais le tour du monde"
+  },
+  {
+   "type": "traduire",
+   "fr": "À ta place, je ne dirais rien.",
+   "reponses": [
+    "If I were you, I wouldn't say anything.",
+    "If I were you, I would not say anything.",
+    "If I were you, I'd say nothing."
+   ]
+  },
+  {
+   "type": "ecoute",
+   "en": "What would you do in my place?",
+   "choix": [
+    "Que ferais-tu à ma place ?",
+    "Qu'as-tu fait à ma place ?",
+    "Que fais-tu à ma place ?"
+   ],
+   "bonne": 0
+  },
+  {
+   "type": "repeter",
+   "en": "If I could live anywhere, I would live by the sea.",
+   "fr": "Si je pouvais vivre n'importe où, je vivrais au bord de la mer."
+  }
+ ],
+ "resume": "If + past, would + verb = imaginary. « were » for all persons. If I were you, I'd… = advice.",
+ "devoir": "Answer: What would you do if you were the president for one day? (6 sentences)"
+}

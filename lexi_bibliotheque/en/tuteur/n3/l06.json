@@ -1,0 +1,149 @@
+{
+ "id": "en-n3-l06",
+ "langue": "en",
+ "niveau": 3,
+ "lecon": 6,
+ "cecrl": "B1",
+ "titre": "She said that…",
+ "objectifs": [
+  "Report what people said",
+  "Reported speech: tense changes",
+  "Reported questions"
+ ],
+ "etapes": [
+  {
+   "type": "explication",
+   "fr": "Au discours rapporté, on « recule » d'un temps : present → past, will → would, can → could.",
+   "en": "In reported speech, tenses go one step back.",
+   "exemples": [
+    {
+     "en": "« I am tired. » → She said (that) she was tired.",
+     "fr": "« Je suis fatiguée. » → Elle a dit qu'elle était fatiguée."
+    },
+    {
+     "en": "« I will come. » → He said he would come.",
+     "fr": "Il a dit qu'il viendrait."
+    }
+   ]
+  },
+  {
+   "type": "explication",
+   "fr": "« say » ou « tell » ? tell + personne : He told me… ; say sans personne : He said…",
+   "en": "Tell somebody, say something.",
+   "exemples": [
+    {
+     "en": "She told me that she was busy.",
+     "fr": "Elle m'a dit qu'elle était occupée."
+    },
+    {
+     "en": "She said that she was busy.",
+     "fr": "Elle a dit qu'elle était occupée."
+    }
+   ]
+  },
+  {
+   "type": "explication",
+   "fr": "Questions rapportées : pas d'inversion ! « Where do you live? » → He asked me where I lived. Question oui/non → if.",
+   "en": "Reported questions: no inversion. Use « if » for yes/no questions.",
+   "exemples": [
+    {
+     "en": "He asked me if I was married.",
+     "fr": "Il m'a demandé si j'étais marié(e)."
+    },
+    {
+     "en": "She asked where the station was.",
+     "fr": "Elle a demandé où était la gare."
+    }
+   ]
+  },
+  {
+   "type": "dialogue",
+   "lignes": [
+    {
+     "qui": "autre",
+     "en": "What did the manager say?",
+     "fr": "Qu'a dit le responsable ?"
+    },
+    {
+     "qui": "eleve",
+     "en": "He told me that I had done a good job.",
+     "fr": "Il m'a dit que j'avais fait du bon travail."
+    },
+    {
+     "qui": "autre",
+     "en": "Did he say anything about the salary?",
+     "fr": "Il a parlé du salaire ?"
+    },
+    {
+     "qui": "eleve",
+     "en": "He asked me if I could start on Monday and said he would call me.",
+     "fr": "Il m'a demandé si je pouvais commencer lundi et a dit qu'il m'appellerait."
+    }
+   ]
+  },
+  {
+   "type": "qcm",
+   "question": "« I can swim. » → She said she ___ swim.",
+   "choix": [
+    "can",
+    "could",
+    "could to"
+   ],
+   "bonne": 1,
+   "explication": "can → could."
+  },
+  {
+   "type": "qcm",
+   "question": "« He ___ me he was sorry. »",
+   "choix": [
+    "said",
+    "told",
+    "asked"
+   ],
+   "bonne": 1,
+   "explication": "tell + personne."
+  },
+  {
+   "type": "qcm",
+   "question": "« Are you ready? » → She asked me ___.",
+   "choix": [
+    "are I ready",
+    "if I was ready",
+    "was I ready"
+   ],
+   "bonne": 1,
+   "explication": "if + ordre normal."
+  },
+  {
+   "type": "ordre",
+   "en": "He asked me where I lived",
+   "fr": "Il m'a demandé où j'habitais"
+  },
+  {
+   "type": "traduire",
+   "fr": "Elle a dit qu'elle viendrait demain.",
+   "reponses": [
+    "She said she would come tomorrow.",
+    "She said that she would come tomorrow.",
+    "She said she would come the next day."
+   ]
+  },
+  {
+   "type": "ecoute",
+   "en": "They told us they were lost.",
+   "choix": [
+    "Ils nous ont dit qu'ils étaient perdus.",
+    "Ils nous ont dit qu'on était perdus.",
+    "Ils ont dit qu'ils étaient en retard."
+   ],
+   "bonne": 0
+  },
+  {
+   "type": "repeter",
+   "en": "My teacher told me that my English was getting better.",
+   "fr": "Mon professeur m'a dit que mon anglais s'améliorait."
+  }
+ ],
+ "resume": "Reported speech: one tense back. tell someone / say something. asked if… / asked where… (no inversion).",
+ "devoir": "Report a real conversation you had today in 5 sentences."
+}

@@ -1,0 +1,153 @@
+{
+ "id": "en-n3-l09",
+ "langue": "en",
+ "niveau": 3,
+ "lecon": 9,
+ "cecrl": "B1",
+ "titre": "Travel problems",
+ "objectifs": [
+  "Deal with problems at the airport and hotel",
+  "Travel phrasal verbs",
+  "Complain politely"
+ ],
+ "etapes": [
+  {
+   "type": "vocabulaire",
+   "mots": [
+    {
+     "en": "check in",
+     "fr": "s'enregistrer",
+     "pron": "tchèk inn"
+    },
+    {
+     "en": "check out",
+     "fr": "quitter l'hôtel",
+     "pron": "tchèk aout"
+    },
+    {
+     "en": "set off",
+     "fr": "partir (en voyage)",
+     "pron": "sèt of"
+    },
+    {
+     "en": "break down",
+     "fr": "tomber en panne",
+     "pron": "brèïk daoun"
+    },
+    {
+     "en": "get on / get off",
+     "fr": "monter / descendre (bus, avion)",
+     "pron": "guèt onn / of"
+    },
+    {
+     "en": "delayed",
+     "fr": "retardé",
+     "pron": "di-lèïd"
+    },
+    {
+     "en": "luggage",
+     "fr": "bagages",
+     "pron": "la-guidj"
+    },
+    {
+     "en": "boarding pass",
+     "fr": "carte d'embarquement",
+     "pron": "bor-ding pass"
+    }
+   ]
+  },
+  {
+   "type": "explication",
+   "fr": "Pour se plaindre poliment : « I'm afraid there's a problem with… », « Could you possibly…? », « I'd be grateful if… ».",
+   "en": "Stay polite: you will get help faster.",
+   "exemples": [
+    {
+     "en": "I'm afraid my room is too noisy.",
+     "fr": "J'ai bien peur que ma chambre soit trop bruyante."
+    },
+    {
+     "en": "Could you possibly change my room?",
+     "fr": "Pourriez-vous changer ma chambre ?"
+    }
+   ]
+  },
+  {
+   "type": "dialogue",
+   "lignes": [
+    {
+     "qui": "eleve",
+     "en": "Excuse me, my flight to Lagos has been cancelled. What should I do?",
+     "fr": "Excusez-moi, mon vol pour Lagos a été annulé. Que dois-je faire ?"
+    },
+    {
+     "qui": "autre",
+     "en": "I'm sorry. We can put you on the next flight, which sets off at 8 pm.",
+     "fr": "Désolé. Nous pouvons vous mettre sur le prochain vol, qui part à 20 h."
+    },
+    {
+     "qui": "eleve",
+     "en": "And what about my luggage?",
+     "fr": "Et mes bagages ?"
+    },
+    {
+     "qui": "autre",
+     "en": "It will be transferred automatically. Here is a meal voucher.",
+     "fr": "Ils seront transférés automatiquement. Voici un bon repas."
+    }
+   ]
+  },
+  {
+   "type": "qcm",
+   "question": "« Le car est tombé en panne » =",
+   "choix": [
+    "The bus broke down.",
+    "The bus broke off.",
+    "The bus fell down."
+   ],
+   "bonne": 0,
+   "explication": "break down = tomber en panne."
+  },
+  {
+   "type": "qcm",
+   "question": "« Quitter l'hôtel » =",
+   "choix": [
+    "check in",
+    "check out",
+    "get off"
+   ],
+   "bonne": 1,
+   "explication": "check out."
+  },
+  {
+   "type": "ordre",
+   "en": "Our flight has been delayed by two hours",
+   "fr": "Notre vol a été retardé de deux heures"
+  },
+  {
+   "type": "traduire",
+   "fr": "À quelle heure dois-je quitter la chambre ?",
+   "reponses": [
+    "What time do I have to check out?",
+    "What time should I check out?",
+    "What time must I check out?"
+   ]
+  },
+  {
+   "type": "ecoute",
+   "en": "Please get off at the next stop.",
+   "choix": [
+    "Descendez au prochain arrêt, s'il vous plaît.",
+    "Montez au prochain arrêt, s'il vous plaît.",
+    "Attendez au prochain arrêt."
+   ],
+   "bonne": 0
+  },
+  {
+   "type": "repeter",
+   "en": "I'm afraid there's a problem with my booking.",
+   "fr": "J'ai bien peur qu'il y ait un problème avec ma réservation."
+  }
+ ],
+ "resume": "check in/out, set off, break down, get on/off, delayed, cancelled. Complain politely: I'm afraid… / Could you possibly…?",
+ "devoir": "Write a polite complaint to a hotel about a broken air conditioner (5 sentences)."
+}

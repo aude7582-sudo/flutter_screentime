@@ -1,0 +1,143 @@
+{
+ "id": "en-n3-l08",
+ "langue": "en",
+ "niveau": 3,
+ "lecon": 8,
+ "cecrl": "B1",
+ "titre": "Giving your opinion",
+ "objectifs": [
+  "Give and justify opinions",
+  "Agree and disagree politely",
+  "Debate a simple topic"
+ ],
+ "etapes": [
+  {
+   "type": "explication",
+   "fr": "Pour donner son avis : I think… / In my opinion… / I believe… / Personally, I feel… ",
+   "en": "Always give a reason after your opinion.",
+   "exemples": [
+    {
+     "en": "In my opinion, social media is useful because…",
+     "fr": "À mon avis, les réseaux sociaux sont utiles parce que…"
+    }
+   ]
+  },
+  {
+   "type": "explication",
+   "fr": "Pour être d'accord ou pas, poliment : I agree. / I totally agree. / I see your point, but… / I'm not sure about that. / I'm afraid I disagree.",
+   "en": "Disagree politely: « I see your point, but… »"
+  },
+  {
+   "type": "vocabulaire",
+   "mots": [
+    {
+     "en": "advantage",
+     "fr": "avantage",
+     "pron": "ad-vann-tidj"
+    },
+    {
+     "en": "disadvantage",
+     "fr": "inconvénient",
+     "pron": "dis-ad-vann-tidj"
+    },
+    {
+     "en": "on the other hand",
+     "fr": "d'un autre côté",
+     "pron": "onn zi a-zeur hand"
+    },
+    {
+     "en": "for example",
+     "fr": "par exemple",
+     "pron": "for ig-zam-peul"
+    },
+    {
+     "en": "to be honest",
+     "fr": "pour être honnête",
+     "pron": "tou bi o-nèst"
+    },
+    {
+     "en": "point of view",
+     "fr": "point de vue",
+     "pron": "poïnt ov viou"
+    }
+   ]
+  },
+  {
+   "type": "dialogue",
+   "lignes": [
+    {
+     "qui": "prof",
+     "en": "Do you think students should use phones at school?",
+     "fr": "Penses-tu que les élèves devraient utiliser leur téléphone à l'école ?"
+    },
+    {
+     "qui": "eleve",
+     "en": "In my opinion, yes, because they can look things up quickly.",
+     "fr": "À mon avis oui, parce qu'ils peuvent chercher des informations rapidement."
+    },
+    {
+     "qui": "prof",
+     "en": "I see your point, but don't you think they get distracted?",
+     "fr": "Je comprends, mais tu ne penses pas qu'ils sont distraits ?"
+    },
+    {
+     "qui": "eleve",
+     "en": "That's true. On the other hand, a good teacher can set rules.",
+     "fr": "C'est vrai. D'un autre côté, un bon prof peut fixer des règles."
+    }
+   ]
+  },
+  {
+   "type": "qcm",
+   "question": "Le plus poli pour ne pas être d'accord :",
+   "choix": [
+    "You're wrong!",
+    "I see your point, but…",
+    "No!"
+   ],
+   "bonne": 1,
+   "explication": "I see your point, but…"
+  },
+  {
+   "type": "qcm",
+   "question": "« d'un autre côté » =",
+   "choix": [
+    "on the other hand",
+    "by the way",
+    "at the end"
+   ],
+   "bonne": 0,
+   "explication": "on the other hand."
+  },
+  {
+   "type": "ordre",
+   "en": "In my opinion learning English is very important",
+   "fr": "À mon avis apprendre l'anglais est très important"
+  },
+  {
+   "type": "traduire",
+   "fr": "Pour être honnête, je ne suis pas d'accord.",
+   "reponses": [
+    "To be honest, I don't agree.",
+    "To be honest, I disagree."
+   ]
+  },
+  {
+   "type": "ecoute",
+   "en": "I totally agree with you.",
+   "choix": [
+    "Je suis tout à fait d'accord avec toi.",
+    "Je ne suis pas du tout d'accord.",
+    "Je suis presque d'accord."
+   ],
+   "bonne": 0
+  },
+  {
+   "type": "repeter",
+   "en": "I think working from home has advantages and disadvantages.",
+   "fr": "Je pense que le télétravail a des avantages et des inconvénients."
+  }
+ ],
+ "resume": "I think / In my opinion + reason. I agree / I see your point, but… / I'm afraid I disagree. on the other hand, for example.",
+ "devoir": "Give your opinion on « Should school uniforms be compulsory? » with 2 reasons."
+}

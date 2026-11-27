@@ -1,0 +1,161 @@
+{
+ "id": "en-n3-l05",
+ "langue": "en",
+ "niveau": 3,
+ "lecon": 5,
+ "cecrl": "B1",
+ "titre": "It was built in 1960",
+ "objectifs": [
+  "Use the passive voice",
+  "Talk about places and inventions",
+  "by + agent"
+ ],
+ "etapes": [
+  {
+   "type": "explication",
+   "fr": "Le passif : be + participe passé. On l'utilise quand l'action est plus importante que la personne qui la fait.",
+   "en": "Passive = be + past participle. The action matters more than who does it.",
+   "exemples": [
+    {
+     "en": "Cocoa is grown in Côte d'Ivoire.",
+     "fr": "Le cacao est cultivé en Côte d'Ivoire."
+    },
+    {
+     "en": "The bridge was built in 1958.",
+     "fr": "Le pont a été construit en 1958."
+    },
+    {
+     "en": "The results have been published.",
+     "fr": "Les résultats ont été publiés."
+    }
+   ]
+  },
+  {
+   "type": "explication",
+   "fr": "Pour dire qui a fait l'action : « by ».",
+   "en": "Use « by » to say who did it.",
+   "exemples": [
+    {
+     "en": "The song was written by a famous singer.",
+     "fr": "La chanson a été écrite par un chanteur célèbre."
+    }
+   ]
+  },
+  {
+   "type": "vocabulaire",
+   "mots": [
+    {
+     "en": "grow – grew – grown",
+     "fr": "cultiver",
+     "pron": "gro"
+    },
+    {
+     "en": "build – built – built",
+     "fr": "construire",
+     "pron": "bild"
+    },
+    {
+     "en": "invent",
+     "fr": "inventer",
+     "pron": "inn-vènt"
+    },
+    {
+     "en": "export",
+     "fr": "exporter",
+     "pron": "iks-port"
+    },
+    {
+     "en": "produce",
+     "fr": "produire",
+     "pron": "pro-diouss"
+    },
+    {
+     "en": "found",
+     "fr": "fonder",
+     "pron": "faound"
+    },
+    {
+     "en": "destroy",
+     "fr": "détruire",
+     "pron": "dis-troï"
+    }
+   ]
+  },
+  {
+   "type": "dialogue",
+   "lignes": [
+    {
+     "qui": "autre",
+     "en": "This basilica is amazing! When was it built?",
+     "fr": "Cette basilique est incroyable ! Quand a-t-elle été construite ?"
+    },
+    {
+     "qui": "prof",
+     "en": "It was finished in 1989. It's visited by thousands of people every year.",
+     "fr": "Elle a été terminée en 1989. Elle est visitée par des milliers de personnes chaque année."
+    },
+    {
+     "qui": "autre",
+     "en": "Is it the biggest church in the world?",
+     "fr": "C'est la plus grande église du monde ?"
+    },
+    {
+     "qui": "prof",
+     "en": "It's considered one of the largest, yes.",
+     "fr": "Elle est considérée comme l'une des plus grandes, oui."
+    }
+   ]
+  },
+  {
+   "type": "qcm",
+   "question": "« Cocoa ___ in many African countries. »",
+   "choix": [
+    "grows",
+    "is grown",
+    "is growing by"
+   ],
+   "bonne": 1,
+   "explication": "Passif présent : is grown."
+  },
+  {
+   "type": "qcm",
+   "question": "« The phone ___ by Bell. »",
+   "choix": [
+    "invented",
+    "was invented",
+    "has invent"
+   ],
+   "bonne": 1,
+   "explication": "Passif passé : was invented."
+  },
+  {
+   "type": "ordre",
+   "en": "This school was founded in 1975",
+   "fr": "Cette école a été fondée en 1975"
+  },
+  {
+   "type": "traduire",
+   "fr": "Le café est exporté vers l'Europe.",
+   "reponses": [
+    "Coffee is exported to Europe."
+   ]
+  },
+  {
+   "type": "ecoute",
+   "en": "The match has been cancelled.",
+   "choix": [
+    "Le match a été annulé.",
+    "Le match va être annulé.",
+    "Le match a été gagné."
+   ],
+   "bonne": 0
+  },
+  {
+   "type": "repeter",
+   "en": "Attiéké is made from cassava.",
+   "fr": "L'attiéké est fait à partir de manioc."
+  }
+ ],
+ "resume": "Passive: be + past participle (is made, was built, has been cancelled). by = by whom.",
+ "devoir": "Write 5 passive sentences about your country (what is grown, made, built, exported…)."
+}

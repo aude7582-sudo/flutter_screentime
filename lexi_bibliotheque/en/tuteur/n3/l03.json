@@ -1,0 +1,148 @@
+{
+ "id": "en-n3-l03",
+ "langue": "en",
+ "niveau": 3,
+ "lecon": 3,
+ "cecrl": "B1",
+ "titre": "Before I had arrived",
+ "objectifs": [
+  "Tell a story in order",
+  "Past perfect",
+  "Story connectors"
+ ],
+ "etapes": [
+  {
+   "type": "explication",
+   "fr": "Le past perfect (had + participe) = l'action qui s'est passée AVANT une autre action passée.",
+   "en": "Use had + past participle for the earlier of two past actions.",
+   "exemples": [
+    {
+     "en": "When I arrived, the bus had left.",
+     "fr": "Quand je suis arrivé, le bus était (déjà) parti."
+    },
+    {
+     "en": "She was tired because she hadn't slept.",
+     "fr": "Elle était fatiguée parce qu'elle n'avait pas dormi."
+    }
+   ]
+  },
+  {
+   "type": "vocabulaire",
+   "mots": [
+    {
+     "en": "by the time",
+     "fr": "au moment où",
+     "pron": "baï ze taïm"
+    },
+    {
+     "en": "as soon as",
+     "fr": "dès que",
+     "pron": "az soun az"
+    },
+    {
+     "en": "eventually",
+     "fr": "finalement",
+     "pron": "i-vèn-tchoua-li"
+    },
+    {
+     "en": "realise",
+     "fr": "se rendre compte",
+     "pron": "ri-a-laïz"
+    },
+    {
+     "en": "forget – forgot – forgotten",
+     "fr": "oublier",
+     "pron": "for-guèt"
+    },
+    {
+     "en": "lose – lost – lost",
+     "fr": "perdre",
+     "pron": "louz"
+    }
+   ]
+  },
+  {
+   "type": "dialogue",
+   "lignes": [
+    {
+     "qui": "eleve",
+     "en": "You won't believe what happened yesterday!",
+     "fr": "Tu ne vas pas croire ce qui s'est passé hier !"
+    },
+    {
+     "qui": "prof",
+     "en": "Tell me!",
+     "fr": "Raconte !"
+    },
+    {
+     "qui": "eleve",
+     "en": "I got to the exam room and realised I had forgotten my ID card!",
+     "fr": "Je suis arrivé(e) à la salle d'examen et j'ai réalisé que j'avais oublié ma carte d'identité !"
+    },
+    {
+     "qui": "prof",
+     "en": "Oh no! What did you do?",
+     "fr": "Oh non ! Qu'as-tu fait ?"
+    },
+    {
+     "qui": "eleve",
+     "en": "By the time my brother brought it, the exam had already started.",
+     "fr": "Au moment où mon frère l'a apportée, l'examen avait déjà commencé."
+    }
+   ]
+  },
+  {
+   "type": "qcm",
+   "question": "« When we got to the station, the train ___. »",
+   "choix": [
+    "left",
+    "had left",
+    "has left"
+   ],
+   "bonne": 1,
+   "explication": "Action antérieure → had left."
+  },
+  {
+   "type": "qcm",
+   "question": "« She ___ never ___ the sea before that trip. »",
+   "choix": [
+    "has / seen",
+    "had / seen",
+    "did / see"
+   ],
+   "bonne": 1,
+   "explication": "Avant un moment passé → had seen."
+  },
+  {
+   "type": "ordre",
+   "en": "I realised I had lost my keys",
+   "fr": "J'ai réalisé que j'avais perdu mes clés"
+  },
+  {
+   "type": "traduire",
+   "fr": "Il avait déjà mangé quand je suis arrivé.",
+   "reponses": [
+    "He had already eaten when I arrived.",
+    "He'd already eaten when I arrived.",
+    "He had already eaten when I came."
+   ]
+  },
+  {
+   "type": "ecoute",
+   "en": "As soon as I had finished, I called you.",
+   "choix": [
+    "Dès que j'ai eu fini, je t'ai appelé.",
+    "Avant de finir, je t'ai appelé.",
+    "Quand tu as fini, tu m'as appelé."
+   ],
+   "bonne": 0
+  },
+  {
+   "type": "repeter",
+   "en": "By the time I arrived, everybody had gone home.",
+   "fr": "Au moment où je suis arrivé(e), tout le monde était rentré."
+  }
+ ],
+ "resume": "had + past participle = the earlier past action. by the time, as soon as, before, after, eventually.",
+ "devoir": "Tell a short funny story (8 sentences) using at least 2 past perfect verbs."
+}

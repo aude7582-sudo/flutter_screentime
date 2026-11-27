@@ -1,0 +1,168 @@
+{
+ "id": "en-n3-l07",
+ "langue": "en",
+ "niveau": 3,
+ "lecon": 7,
+ "cecrl": "B1",
+ "titre": "Job interview",
+ "objectifs": [
+  "Answer interview questions",
+  "Talk about strengths and experience",
+  "because, so, although"
+ ],
+ "etapes": [
+  {
+   "type": "vocabulaire",
+   "mots": [
+    {
+     "en": "strength",
+     "fr": "point fort",
+     "pron": "strènks"
+    },
+    {
+     "en": "weakness",
+     "fr": "point faible",
+     "pron": "wik-niss"
+    },
+    {
+     "en": "skills",
+     "fr": "compétences",
+     "pron": "skilz"
+    },
+    {
+     "en": "experience",
+     "fr": "expérience",
+     "pron": "iks-pi-rieuns"
+    },
+    {
+     "en": "apply for",
+     "fr": "postuler à",
+     "pron": "a-plaï for"
+    },
+    {
+     "en": "salary",
+     "fr": "salaire",
+     "pron": "sa-la-ri"
+    },
+    {
+     "en": "reliable",
+     "fr": "fiable",
+     "pron": "ri-laï-a-beul"
+    },
+    {
+     "en": "team",
+     "fr": "équipe",
+     "pron": "tim"
+    }
+   ]
+  },
+  {
+   "type": "explication",
+   "fr": "Les connecteurs donnent de la logique : because (parce que), so (donc), although (bien que), however (cependant).",
+   "en": "Connectors make your answers clear and professional.",
+   "exemples": [
+    {
+     "en": "I'm organised, so I never miss deadlines.",
+     "fr": "Je suis organisé, donc je ne rate jamais les délais."
+    },
+    {
+     "en": "Although I'm young, I have three years of experience.",
+     "fr": "Bien que je sois jeune, j'ai trois ans d'expérience."
+    }
+   ]
+  },
+  {
+   "type": "explication",
+   "fr": "Questions classiques : Tell me about yourself. / Why do you want this job? / What are your strengths? / Where do you see yourself in five years?",
+   "en": "Prepare these four questions before every interview!"
+  },
+  {
+   "type": "dialogue",
+   "lignes": [
+    {
+     "qui": "autre",
+     "en": "So, tell me about yourself.",
+     "fr": "Parlez-moi de vous."
+    },
+    {
+     "qui": "eleve",
+     "en": "I'm 24 and I have a degree in accounting. I've been working in a bank for two years.",
+     "fr": "J'ai 24 ans et un diplôme de comptabilité. Je travaille dans une banque depuis deux ans."
+    },
+    {
+     "qui": "autre",
+     "en": "Why do you want to work with us?",
+     "fr": "Pourquoi voulez-vous travailler chez nous ?"
+    },
+    {
+     "qui": "eleve",
+     "en": "Because your company is growing fast, and I want to learn and take more responsibility.",
+     "fr": "Parce que votre entreprise grandit vite, et je veux apprendre et prendre plus de responsabilités."
+    },
+    {
+     "qui": "autre",
+     "en": "What is your main weakness?",
+     "fr": "Quel est votre principal point faible ?"
+    },
+    {
+     "qui": "eleve",
+     "en": "I sometimes work too long, so I'm learning to organise my time better.",
+     "fr": "Je travaille parfois trop longtemps, donc j'apprends à mieux organiser mon temps."
+    }
+   ]
+  },
+  {
+   "type": "qcm",
+   "question": "« Bien que » =",
+   "choix": [
+    "because",
+    "although",
+    "so"
+   ],
+   "bonne": 1,
+   "explication": "although = bien que."
+  },
+  {
+   "type": "qcm",
+   "question": "Best answer to « What are your strengths? »",
+   "choix": [
+    "I don't know.",
+    "I'm reliable and I work well in a team.",
+    "I want money."
+   ],
+   "bonne": 1,
+   "explication": "Réponse positive et précise."
+  },
+  {
+   "type": "ordre",
+   "en": "I am applying for the position of assistant",
+   "fr": "Je postule au poste d'assistant"
+  },
+  {
+   "type": "traduire",
+   "fr": "Je suis fiable et j'apprends vite.",
+   "reponses": [
+    "I'm reliable and I learn quickly.",
+    "I am reliable and I learn fast.",
+    "I'm reliable and I learn fast."
+   ]
+  },
+  {
+   "type": "ecoute",
+   "en": "Where do you see yourself in five years?",
+   "choix": [
+    "Où vous voyez-vous dans cinq ans ?",
+    "Où étiez-vous il y a cinq ans ?",
+    "Où travaillez-vous depuis cinq ans ?"
+   ],
+   "bonne": 0
+  },
+  {
+   "type": "repeter",
+   "en": "I'm a hard worker and I really enjoy working in a team.",
+   "fr": "Je suis travailleur et j'aime vraiment travailler en équipe."
+  }
+ ],
+ "resume": "Prepare: Tell me about yourself / Why this job / Strengths & weaknesses / In five years. Use because, so, although, however.",
+ "devoir": "Write your answer to « Tell me about yourself » (6 sentences)."
+}

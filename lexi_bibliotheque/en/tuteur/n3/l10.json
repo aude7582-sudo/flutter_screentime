@@ -1,0 +1,133 @@
+{
+ "id": "en-n3-l10",
+ "langue": "en",
+ "niveau": 3,
+ "lecon": 10,
+ "cecrl": "B1",
+ "titre": "Writing an email",
+ "objectifs": [
+  "Write formal and informal emails",
+  "Useful openings and closings",
+  "Organise a short text"
+ ],
+ "etapes": [
+  {
+   "type": "explication",
+   "fr": "E-mail formel : Dear Mr Koné, / Dear Sir or Madam, … Yours sincerely / Best regards. E-mail informel : Hi Awa, … See you soon / Love.",
+   "en": "Choose the right register: formal for work, informal for friends."
+  },
+  {
+   "type": "explication",
+   "fr": "Phrases utiles (formel) : I am writing to… / Please find attached… / I look forward to hearing from you.",
+   "en": "These phrases make you sound professional.",
+   "exemples": [
+    {
+     "en": "I am writing to apply for the position of…",
+     "fr": "Je vous écris pour postuler au poste de…"
+    },
+    {
+     "en": "Please find attached my CV.",
+     "fr": "Veuillez trouver ci-joint mon CV."
+    },
+    {
+     "en": "I look forward to hearing from you.",
+     "fr": "Dans l'attente de votre réponse."
+    }
+   ]
+  },
+  {
+   "type": "vocabulaire",
+   "mots": [
+    {
+     "en": "attached",
+     "fr": "ci-joint",
+     "pron": "a-tatcht"
+    },
+    {
+     "en": "regarding",
+     "fr": "concernant",
+     "pron": "ri-gar-ding"
+    },
+    {
+     "en": "request",
+     "fr": "demande",
+     "pron": "ri-kwèst"
+    },
+    {
+     "en": "available",
+     "fr": "disponible",
+     "pron": "a-vèï-la-beul"
+    },
+    {
+     "en": "confirm",
+     "fr": "confirmer",
+     "pron": "konn-feurm"
+    },
+    {
+     "en": "reply",
+     "fr": "répondre",
+     "pron": "ri-plaï"
+    }
+   ]
+  },
+  {
+   "type": "explication",
+   "fr": "Exemple complet :",
+   "en": "Dear Mrs Bamba,\nI am writing to confirm my appointment on Monday at 10 am. Please find attached the documents you requested.\nI look forward to meeting you.\nBest regards,\nAwa Traoré"
+  },
+  {
+   "type": "qcm",
+   "question": "Formal ending:",
+   "choix": [
+    "Love,",
+    "See ya!",
+    "Yours sincerely,"
+   ],
+   "bonne": 2,
+   "explication": "Yours sincerely = formel."
+  },
+  {
+   "type": "qcm",
+   "question": "« Veuillez trouver ci-joint » =",
+   "choix": [
+    "Please find attached",
+    "Please look at the join",
+    "Here is the joined"
+   ],
+   "bonne": 0,
+   "explication": "Please find attached."
+  },
+  {
+   "type": "ordre",
+   "en": "I look forward to hearing from you",
+   "fr": "Dans l'attente de votre réponse"
+  },
+  {
+   "type": "traduire",
+   "fr": "Je vous écris concernant votre annonce.",
+   "reponses": [
+    "I am writing regarding your advertisement.",
+    "I'm writing regarding your advertisement.",
+    "I am writing about your advertisement.",
+    "I am writing regarding your ad."
+   ]
+  },
+  {
+   "type": "ecoute",
+   "en": "Could you confirm that you are available?",
+   "choix": [
+    "Pourriez-vous confirmer que vous êtes disponible ?",
+    "Pourriez-vous dire si vous êtes intéressé ?",
+    "Pourriez-vous répondre rapidement ?"
+   ],
+   "bonne": 0
+  },
+  {
+   "type": "repeter",
+   "en": "Dear Sir or Madam, I am writing to ask for information about your courses.",
+   "fr": "Madame, Monsieur, je vous écris pour demander des informations sur vos cours."
+  }
+ ],
+ "resume": "Formal: Dear Mr…, I am writing to…, Please find attached…, I look forward to hearing from you, Yours sincerely / Best regards.",
+ "devoir": "Write a formal email to ask for an internship (8 lines)."
+}

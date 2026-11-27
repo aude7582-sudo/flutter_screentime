@@ -1,0 +1,166 @@
+{
+ "id": "en-n3-l02",
+ "langue": "en",
+ "niveau": 3,
+ "lecon": 2,
+ "cecrl": "B1",
+ "titre": "When I was a child",
+ "objectifs": [
+  "Talk about past habits",
+  "used to",
+  "Past continuous for background"
+ ],
+ "etapes": [
+  {
+   "type": "explication",
+   "fr": "« used to » + verbe = une habitude passée qui n'existe plus.",
+   "en": "« Used to » describes past habits that are finished now.",
+   "exemples": [
+    {
+     "en": "I used to play football every day.",
+     "fr": "Avant, je jouais au foot tous les jours."
+    },
+    {
+     "en": "She didn't use to like fish.",
+     "fr": "Avant, elle n'aimait pas le poisson."
+    },
+    {
+     "en": "Did you use to live in the village?",
+     "fr": "Tu habitais au village avant ?"
+    }
+   ]
+  },
+  {
+   "type": "explication",
+   "fr": "Le passé continu (was/were + -ing) décrit le décor, une action en cours, interrompue par une action courte au passé simple.",
+   "en": "Use the past continuous for the background and the past simple for the short action.",
+   "exemples": [
+    {
+     "en": "I was walking home when it started to rain.",
+     "fr": "Je rentrais à pied quand il a commencé à pleuvoir."
+    },
+    {
+     "en": "While we were eating, the lights went off.",
+     "fr": "Pendant qu'on mangeait, le courant a coupé."
+    }
+   ]
+  },
+  {
+   "type": "vocabulaire",
+   "mots": [
+    {
+     "en": "childhood",
+     "fr": "enfance",
+     "pron": "tchaïld-houd"
+    },
+    {
+     "en": "village",
+     "fr": "village",
+     "pron": "vi-lidj"
+    },
+    {
+     "en": "grow up",
+     "fr": "grandir",
+     "pron": "gro eup"
+    },
+    {
+     "en": "climb",
+     "fr": "grimper",
+     "pron": "klaïm"
+    },
+    {
+     "en": "memories",
+     "fr": "souvenirs",
+     "pron": "mè-mo-riz"
+    },
+    {
+     "en": "while",
+     "fr": "pendant que",
+     "pron": "waïl"
+    },
+    {
+     "en": "suddenly",
+     "fr": "soudain",
+     "pron": "sa-deunn-li"
+    }
+   ]
+  },
+  {
+   "type": "dialogue",
+   "lignes": [
+    {
+     "qui": "prof",
+     "en": "Where did you grow up?",
+     "fr": "Où as-tu grandi ?"
+    },
+    {
+     "qui": "eleve",
+     "en": "In a village near Man. I used to climb mango trees with my cousins.",
+     "fr": "Dans un village près de Man. Je grimpais aux manguiers avec mes cousins."
+    },
+    {
+     "qui": "prof",
+     "en": "That sounds fun! Any funny memory?",
+     "fr": "Ça a l'air amusant ! Un souvenir drôle ?"
+    },
+    {
+     "qui": "eleve",
+     "en": "Once, I was climbing a tree when a goat started eating my sandals!",
+     "fr": "Une fois, je grimpais à un arbre quand une chèvre a commencé à manger mes sandales !"
+    }
+   ]
+  },
+  {
+   "type": "qcm",
+   "question": "« I ___ to go to school on foot. » (avant, plus maintenant)",
+   "choix": [
+    "use",
+    "used",
+    "was used"
+   ],
+   "bonne": 1,
+   "explication": "used to + verbe."
+  },
+  {
+   "type": "qcm",
+   "question": "« She was cooking when the phone ___. »",
+   "choix": [
+    "was ringing",
+    "rang",
+    "rings"
+   ],
+   "bonne": 1,
+   "explication": "Action courte qui interrompt → passé simple."
+  },
+  {
+   "type": "ordre",
+   "en": "We used to visit our grandparents every holiday",
+   "fr": "Nous rendions visite à nos grands-parents à chaque vacances"
+  },
+  {
+   "type": "traduire",
+   "fr": "Je dormais quand tu as appelé.",
+   "reponses": [
+    "I was sleeping when you called.",
+    "I was asleep when you called."
+   ]
+  },
+  {
+   "type": "ecoute",
+   "en": "Did you use to have long hair?",
+   "choix": [
+    "Tu avais les cheveux longs avant ?",
+    "Tu as les cheveux longs ?",
+    "Tu veux avoir les cheveux longs ?"
+   ],
+   "bonne": 0
+  },
+  {
+   "type": "repeter",
+   "en": "When I was a child, I used to listen to my grandmother's stories.",
+   "fr": "Quand j'étais enfant, j'écoutais les histoires de ma grand-mère."
+  }
+ ],
+ "resume": "used to + verb = finished past habit. was/were + -ing = background action; past simple = short action that interrupts.",
+ "devoir": "Write 5 things you used to do as a child that you don't do now."
+}

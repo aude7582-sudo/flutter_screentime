@@ -1,0 +1,174 @@
+{
+ "id": "en-n3-l01",
+ "langue": "en",
+ "niveau": 3,
+ "lecon": 1,
+ "cecrl": "B1",
+ "titre": "Since and for",
+ "objectifs": [
+  "Talk about how long",
+  "Present perfect continuous",
+  "since vs for"
+ ],
+ "etapes": [
+  {
+   "type": "explication",
+   "fr": "« for » = une durée (depuis 3 ans), « since » = un point de départ (depuis 2020). Avec ces mots, l'anglais utilise le present perfect, pas le présent !",
+   "en": "Use « for » with a period of time and « since » with a starting point. And use the present perfect, not the present!",
+   "exemples": [
+    {
+     "en": "I have lived here for ten years.",
+     "fr": "J'habite ici depuis dix ans."
+    },
+    {
+     "en": "She has worked here since 2019.",
+     "fr": "Elle travaille ici depuis 2019."
+    }
+   ]
+  },
+  {
+   "type": "explication",
+   "fr": "Pour une activité qui dure encore : have/has been + -ing.",
+   "en": "Use have been + -ing for an activity that started in the past and is still going on.",
+   "exemples": [
+    {
+     "en": "I've been waiting for an hour!",
+     "fr": "J'attends depuis une heure !"
+    },
+    {
+     "en": "How long have you been learning English?",
+     "fr": "Depuis combien de temps apprends-tu l'anglais ?"
+    }
+   ]
+  },
+  {
+   "type": "vocabulaire",
+   "mots": [
+    {
+     "en": "how long",
+     "fr": "depuis combien de temps",
+     "pron": "haou long"
+    },
+    {
+     "en": "lately",
+     "fr": "ces derniers temps",
+     "pron": "lèït-li"
+    },
+    {
+     "en": "recently",
+     "fr": "récemment",
+     "pron": "ri-seunt-li"
+    },
+    {
+     "en": "so far",
+     "fr": "jusqu'à présent",
+     "pron": "so far"
+    },
+    {
+     "en": "already",
+     "fr": "déjà",
+     "pron": "ol-rè-di"
+    },
+    {
+     "en": "yet",
+     "fr": "encore / déjà (question)",
+     "pron": "yèt"
+    },
+    {
+     "en": "just",
+     "fr": "venir de",
+     "pron": "djeust"
+    }
+   ]
+  },
+  {
+   "type": "dialogue",
+   "lignes": [
+    {
+     "qui": "prof",
+     "en": "How long have you been working at the bank?",
+     "fr": "Depuis combien de temps travailles-tu à la banque ?"
+    },
+    {
+     "qui": "eleve",
+     "en": "I've been working there since January.",
+     "fr": "J'y travaille depuis janvier."
+    },
+    {
+     "qui": "prof",
+     "en": "And have you finished your training yet?",
+     "fr": "Et as-tu déjà fini ta formation ?"
+    },
+    {
+     "qui": "eleve",
+     "en": "Not yet, but I've just passed the first exam.",
+     "fr": "Pas encore, mais je viens de réussir le premier examen."
+    }
+   ]
+  },
+  {
+   "type": "qcm",
+   "question": "« J'habite à Abidjan depuis 5 ans » =",
+   "choix": [
+    "I live in Abidjan since 5 years.",
+    "I have lived in Abidjan for 5 years.",
+    "I am living in Abidjan for 5 years."
+   ],
+   "bonne": 1,
+   "explication": "Present perfect + for."
+  },
+  {
+   "type": "qcm",
+   "question": "« She has been sleeping ___ 10 o'clock. »",
+   "choix": [
+    "for",
+    "since",
+    "during"
+   ],
+   "bonne": 1,
+   "explication": "Point de départ → since."
+  },
+  {
+   "type": "qcm",
+   "question": "« Je viens de manger » =",
+   "choix": [
+    "I've just eaten.",
+    "I come to eat.",
+    "I just eat."
+   ],
+   "bonne": 0,
+   "explication": "just + present perfect."
+  },
+  {
+   "type": "ordre",
+   "en": "How long have you been studying English",
+   "fr": "Depuis combien de temps étudies-tu l'anglais"
+  },
+  {
+   "type": "traduire",
+   "fr": "Je t'attends depuis vingt minutes.",
+   "reponses": [
+    "I've been waiting for you for twenty minutes.",
+    "I have been waiting for you for twenty minutes.",
+    "I've been waiting for you for 20 minutes."
+   ]
+  },
+  {
+   "type": "ecoute",
+   "en": "Have you sent the email yet?",
+   "choix": [
+    "As-tu déjà envoyé l'e-mail ?",
+    "Vas-tu envoyer l'e-mail ?",
+    "As-tu lu l'e-mail ?"
+   ],
+   "bonne": 0
+  },
+  {
+   "type": "repeter",
+   "en": "I've been learning English for three months and I love it!",
+   "fr": "J'apprends l'anglais depuis trois mois et j'adore ça !"
+  }
+ ],
+ "resume": "for + period / since + starting point → present perfect (simple or continuous). just, already, yet.",
+ "devoir": "Write 5 sentences about yourself with « for » or « since »."
+}
