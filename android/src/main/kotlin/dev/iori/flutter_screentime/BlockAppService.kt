@@ -314,9 +314,63 @@ class BlockAppService : Service() {
         return keyguardManager.isKeyguardLocked
     }
 
+    // Léxi : pendant un appel (téléphone ou WhatsApp…), rien n'est bloqué.
+    private fun appelEnCours(): Boolean = try {
+        val am = getSystemService(Context.AUDIO_SERVICE) as AudioManager
+        am.mode == AudioManager.MODE_RINGTONE ||
+            am.mode == AudioManager.MODE_IN_CALL ||
+            am.mode == AudioManager.MODE_IN_COMMUNICATION
+    } catch (e: Exception) {
+        false
+    }
+
+    // Léxi : appels, messages et réveil ne sont jamais bloqués.
+    private var essentiels: Set<String>? = null
+
+    private fun paquetsEssentiels(): Set<String> {
+        essentiels?.let { return it }
+        val r = mutableSetOf<String>()
+        try {
+            if (Build.VERSION.SDK_INT >= 23) {
+                val tm = getSystemService(Context.TELECOM_SERVICE) as android.telecom.TelecomManager
+                tm.defaultDialerPackage?.let { r.add(it) }
+            }
+        } catch (e: Exception) {
+        }
+        try {
+            android.provider.Telephony.Sms.getDefaultSmsPackage(this)?.let { r.add(it) }
+        } catch (e: Exception) {
+        }
+        val intents = listOf(
+            Intent(Intent.ACTION_DIAL),
+            Intent(android.provider.AlarmClock.ACTION_SHOW_ALARMS),
+            Intent(android.provider.AlarmClock.ACTION_SET_ALARM),
+        )
+        for (i in intents) {
+            try {
+                for (ri in packageManager.queryIntentActivities(i, 0)) {
+                    r.add(ri.activityInfo.packageName)
+                }
+            } catch (e: Exception) {
+            }
+        }
+        essentiels = r
+        return r
+    }
+
+    private fun estEssentiel(p: String): Boolean {
+        if (paquetsEssentiels().contains(p)) return true
+        val x = p.lowercase()
+        return listOf("incallui", "telecom", "dialer", "phone", "deskclock", "alarm", "clock")
+            .any { x.contains(it) }
+    }
+
     private fun isBlockedPackageInForeground(): Boolean {
         val packageName = lastForegroundPackage() ?: return false
         if (packageName == this.packageName) {
+            return false
+        }
+        if (appelEnCours() || estEssentiel(packageName)) {
             return false
         }
 
