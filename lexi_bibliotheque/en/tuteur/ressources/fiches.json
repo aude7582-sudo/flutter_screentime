@@ -1,0 +1,908 @@
+{
+ "langue": "en",
+ "fiches": [
+  {
+   "id": "be",
+   "categorie": "grammaire",
+   "niveau": 1,
+   "emoji": "🟢",
+   "titre": "Le verbe « to be » (être)",
+   "resume": "Le verbe le plus important : il sert à dire qui on est, comment on va, où on est, et l'âge.",
+   "regles": [
+    "I am → I'm",
+    "You / We / They are → you're, we're, they're",
+    "He / She / It is → he's, she's, it's",
+    "Négation : ajoute « not » → I'm not, he isn't, they aren't",
+    "Question : on inverse → Are you ready? Is she at home?"
+   ],
+   "exemples": [
+    {
+     "en": "I am Awa.",
+     "fr": "Je suis Awa."
+    },
+    {
+     "en": "She is 18 years old.",
+     "fr": "Elle a 18 ans."
+    },
+    {
+     "en": "We are from Abidjan.",
+     "fr": "Nous venons d'Abidjan."
+    },
+    {
+     "en": "Are you hungry?",
+     "fr": "As-tu faim ?"
+    }
+   ],
+   "pieges": [
+    "L'âge se dit avec « be » : I am 20 (et pas « I have 20 »).",
+    "Avoir faim / soif / froid / peur = be hungry / thirsty / cold / scared."
+   ]
+  },
+  {
+   "id": "have",
+   "categorie": "grammaire",
+   "niveau": 1,
+   "emoji": "🟢",
+   "titre": "Avoir : « have » et « have got »",
+   "resume": "Pour la possession, la famille, les maladies et les repas.",
+   "regles": [
+    "I / you / we / they have",
+    "He / she / it has",
+    "Négation : I don't have, she doesn't have",
+    "En anglais britannique on dit aussi : I've got, she's got"
+   ],
+   "exemples": [
+    {
+     "en": "I have two brothers.",
+     "fr": "J'ai deux frères."
+    },
+    {
+     "en": "She has a new phone.",
+     "fr": "Elle a un nouveau téléphone."
+    },
+    {
+     "en": "We have breakfast at 7.",
+     "fr": "Nous prenons le petit-déjeuner à 7 h."
+    },
+    {
+     "en": "He doesn't have a car.",
+     "fr": "Il n'a pas de voiture."
+    }
+   ],
+   "pieges": [
+    "Après « doesn't », le verbe revient à « have » : she doesn't have (pas « doesn't has »)."
+   ]
+  },
+  {
+   "id": "articles",
+   "categorie": "grammaire",
+   "niveau": 1,
+   "emoji": "🟢",
+   "titre": "Les articles : a, an, the",
+   "resume": "« a / an » = un, une. « the » = le, la, les.",
+   "regles": [
+    "« a » devant un son de consonne : a book, a university (on entend « you »)",
+    "« an » devant un son de voyelle : an apple, an hour (le h ne se prononce pas)",
+    "« the » pour une chose précise ou déjà connue",
+    "Pas d'article pour parler en général : I like music. Dogs are friendly."
+   ],
+   "exemples": [
+    {
+     "en": "I have a cat and an orange.",
+     "fr": "J'ai un chat et une orange."
+    },
+    {
+     "en": "The cat is black.",
+     "fr": "Le chat est noir."
+    },
+    {
+     "en": "She is a teacher.",
+     "fr": "Elle est professeure."
+    },
+    {
+     "en": "I love football.",
+     "fr": "J'adore le football."
+    }
+   ],
+   "pieges": [
+    "Les métiers prennent « a / an » : He is a doctor (pas « He is doctor »).",
+    "Le français dit « j'aime LE football », l'anglais dit « I love football » sans article."
+   ]
+  },
+  {
+   "id": "pluriel",
+   "categorie": "grammaire",
+   "niveau": 1,
+   "emoji": "🟢",
+   "titre": "Le pluriel des noms",
+   "resume": "En général on ajoute -s, mais il y a des cas particuliers.",
+   "regles": [
+    "+ s : a book → books",
+    "+ es après s, x, ch, sh, o : bus → buses, box → boxes, potato → potatoes",
+    "consonne + y → ies : city → cities (mais boy → boys)",
+    "f / fe → ves : knife → knives, wife → wives",
+    "Irréguliers : man → men, woman → women, child → children, foot → feet, tooth → teeth, person → people"
+   ],
+   "exemples": [
+    {
+     "en": "Two children are playing.",
+     "fr": "Deux enfants jouent."
+    },
+    {
+     "en": "I have three boxes.",
+     "fr": "J'ai trois boîtes."
+    },
+    {
+     "en": "These people are kind.",
+     "fr": "Ces gens sont gentils."
+    }
+   ],
+   "pieges": [
+    "« people » est déjà un pluriel : people ARE (pas « people is »).",
+    "Certains noms n'ont pas de pluriel : information, advice, money, furniture."
+   ]
+  },
+  {
+   "id": "pronoms",
+   "categorie": "grammaire",
+   "niveau": 1,
+   "emoji": "🟢",
+   "titre": "Pronoms et possessifs",
+   "resume": "Qui fait l'action, à qui c'est.",
+   "regles": [
+    "Sujet : I, you, he, she, it, we, they",
+    "Complément : me, you, him, her, it, us, them",
+    "Possessif + nom : my, your, his, her, its, our, their",
+    "Possessif seul : mine, yours, his, hers, ours, theirs"
+   ],
+   "exemples": [
+    {
+     "en": "This is my bag.",
+     "fr": "C'est mon sac."
+    },
+    {
+     "en": "Call me tomorrow.",
+     "fr": "Appelle-moi demain."
+    },
+    {
+     "en": "Is this pen yours?",
+     "fr": "Ce stylo est à toi ?"
+    },
+    {
+     "en": "Their house is big.",
+     "fr": "Leur maison est grande."
+    }
+   ],
+   "pieges": [
+    "« his » = son / sa d'un homme, « her » = son / sa d'une femme : Awa and her brother.",
+    "« I » s'écrit TOUJOURS avec une majuscule, même au milieu de la phrase."
+   ]
+  },
+  {
+   "id": "present_simple",
+   "categorie": "grammaire",
+   "niveau": 1,
+   "emoji": "🔵",
+   "titre": "Le présent simple",
+   "resume": "Pour les habitudes, les vérités générales et les horaires.",
+   "regles": [
+    "I / you / we / they work",
+    "He / she / it works (+ s !)",
+    "Négation : I don't work, she doesn't work",
+    "Question : Do you work? Does she work?",
+    "Mots clés : always, usually, often, sometimes, never, every day"
+   ],
+   "exemples": [
+    {
+     "en": "I go to school every day.",
+     "fr": "Je vais à l'école tous les jours."
+    },
+    {
+     "en": "She works in a bank.",
+     "fr": "Elle travaille dans une banque."
+    },
+    {
+     "en": "Does he speak English?",
+     "fr": "Est-ce qu'il parle anglais ?"
+    },
+    {
+     "en": "Water boils at 100 °C.",
+     "fr": "L'eau bout à 100 °C."
+    }
+   ],
+   "pieges": [
+    "N'oublie pas le -s à la 3e personne : he plays, she watches, it goes.",
+    "Avec does / doesn't, le verbe perd son -s : Does she play? She doesn't play."
+   ]
+  },
+  {
+   "id": "present_continu",
+   "categorie": "grammaire",
+   "niveau": 1,
+   "emoji": "🔵",
+   "titre": "Le présent continu (be + -ing)",
+   "resume": "Pour une action en train de se passer maintenant, ou un projet proche.",
+   "regles": [
+    "am / is / are + verbe en -ing",
+    "Négation : I'm not eating, he isn't sleeping",
+    "Question : Are you listening?",
+    "Mots clés : now, right now, at the moment, today, look!"
+   ],
+   "exemples": [
+    {
+     "en": "I am eating now.",
+     "fr": "Je suis en train de manger."
+    },
+    {
+     "en": "They are playing football.",
+     "fr": "Ils jouent au foot."
+    },
+    {
+     "en": "What are you doing?",
+     "fr": "Qu'est-ce que tu fais ?"
+    },
+    {
+     "en": "We are travelling tomorrow.",
+     "fr": "Nous voyageons demain."
+    }
+   ],
+   "pieges": [
+    "Certains verbes ne se mettent presque jamais en -ing : know, like, want, need, understand (I know, pas « I'm knowing »)."
+   ]
+  },
+  {
+   "id": "passe_simple",
+   "categorie": "grammaire",
+   "niveau": 2,
+   "emoji": "🟠",
+   "titre": "Le prétérit (passé simple anglais)",
+   "resume": "Pour une action terminée dans le passé, souvent avec un moment précis.",
+   "regles": [
+    "Verbes réguliers : + ed → worked, played, visited",
+    "Verbes irréguliers à apprendre : go → went, see → saw, eat → ate",
+    "Négation : didn't + verbe de base → I didn't go",
+    "Question : Did you see the match?",
+    "Mots clés : yesterday, last week, ago, in 2020"
+   ],
+   "exemples": [
+    {
+     "en": "I visited my grandmother yesterday.",
+     "fr": "J'ai rendu visite à ma grand-mère hier."
+    },
+    {
+     "en": "We went to the beach last Sunday.",
+     "fr": "Nous sommes allés à la plage dimanche dernier."
+    },
+    {
+     "en": "Did you eat?",
+     "fr": "As-tu mangé ?"
+    },
+    {
+     "en": "She didn't call me.",
+     "fr": "Elle ne m'a pas appelé."
+    }
+   ],
+   "pieges": [
+    "Après « did / didn't », le verbe revient à la forme de base : Did you go? (pas « Did you went? »).",
+    "Le « passé composé » français se traduit souvent par le prétérit : J'ai mangé hier = I ate yesterday."
+   ]
+  },
+  {
+   "id": "futur",
+   "categorie": "grammaire",
+   "niveau": 2,
+   "emoji": "🟠",
+   "titre": "Le futur : will et be going to",
+   "resume": "Deux façons courantes de parler de l'avenir.",
+   "regles": [
+    "will + verbe : décision sur le moment, promesse, prédiction → I'll help you.",
+    "be going to + verbe : projet déjà décidé, ou signe visible → I'm going to study medicine.",
+    "Négation : won't (= will not), I'm not going to"
+   ],
+   "exemples": [
+    {
+     "en": "I will call you later.",
+     "fr": "Je t'appellerai plus tard."
+    },
+    {
+     "en": "We are going to travel in August.",
+     "fr": "Nous allons voyager en août."
+    },
+    {
+     "en": "Look at the clouds! It's going to rain.",
+     "fr": "Regarde les nuages ! Il va pleuvoir."
+    }
+   ],
+   "pieges": [
+    "Pas de « will » après « when / if » quand on parle du futur : When I arrive, I'll call you."
+   ]
+  },
+  {
+   "id": "comparatifs",
+   "categorie": "grammaire",
+   "niveau": 2,
+   "emoji": "🟠",
+   "titre": "Comparatifs et superlatifs",
+   "resume": "Pour comparer : plus … que, le plus …",
+   "regles": [
+    "Adjectif court : + er / the + est → tall, taller, the tallest",
+    "Adjectif long : more / the most → expensive, more expensive, the most expensive",
+    "Irréguliers : good → better → the best ; bad → worse → the worst ; far → further → the furthest",
+    "Égalité : as … as → She is as tall as her mother."
+   ],
+   "exemples": [
+    {
+     "en": "Abidjan is bigger than Bouaké.",
+     "fr": "Abidjan est plus grande que Bouaké."
+    },
+    {
+     "en": "This phone is more expensive.",
+     "fr": "Ce téléphone est plus cher."
+    },
+    {
+     "en": "She is the best student in the class.",
+     "fr": "C'est la meilleure élève de la classe."
+    }
+   ],
+   "pieges": [
+    "On dit « than » (que) et pas « that » : taller THAN me.",
+    "Consonne doublée : big → bigger, hot → hotter. Y → ier : easy → easier."
+   ]
+  },
+  {
+   "id": "modaux",
+   "categorie": "grammaire",
+   "niveau": 2,
+   "emoji": "🟠",
+   "titre": "Les modaux : can, must, should, may",
+   "resume": "Petits verbes pour la capacité, l'obligation, le conseil, la permission.",
+   "regles": [
+    "can / can't : capacité, permission → I can swim.",
+    "must / mustn't : obligation forte / interdiction",
+    "have to : obligation venant de l'extérieur → I have to wear a uniform.",
+    "should / shouldn't : conseil → You should rest.",
+    "may / might : possibilité → It might rain.",
+    "Après un modal : verbe de base, sans « to », sans -s"
+   ],
+   "exemples": [
+    {
+     "en": "Can you help me?",
+     "fr": "Tu peux m'aider ?"
+    },
+    {
+     "en": "You must stop at the red light.",
+     "fr": "Tu dois t'arrêter au feu rouge."
+    },
+    {
+     "en": "You should drink more water.",
+     "fr": "Tu devrais boire plus d'eau."
+    },
+    {
+     "en": "She can't come today.",
+     "fr": "Elle ne peut pas venir aujourd'hui."
+    }
+   ],
+   "pieges": [
+    "« He can swims » est faux : He can swim.",
+    "« mustn't » = interdit ; « don't have to » = pas obligé."
+   ]
+  },
+  {
+   "id": "present_perfect",
+   "categorie": "grammaire",
+   "niveau": 3,
+   "emoji": "🟣",
+   "titre": "Le present perfect (have + participe passé)",
+   "resume": "Pour une expérience de vie, ou une action passée qui a un lien avec maintenant.",
+   "regles": [
+    "have / has + participe passé → I have seen, she has finished",
+    "Expérience : Have you ever been to Ghana?",
+    "Durée jusqu'à maintenant : for (pendant) / since (depuis)",
+    "Mots clés : ever, never, already, yet, just, for, since"
+   ],
+   "exemples": [
+    {
+     "en": "I have never seen snow.",
+     "fr": "Je n'ai jamais vu la neige."
+    },
+    {
+     "en": "She has already eaten.",
+     "fr": "Elle a déjà mangé."
+    },
+    {
+     "en": "We have lived here for five years.",
+     "fr": "Nous habitons ici depuis cinq ans."
+    },
+    {
+     "en": "He has worked here since 2020.",
+     "fr": "Il travaille ici depuis 2020."
+    }
+   ],
+   "pieges": [
+    "Avec un moment précis passé, on utilise le prétérit : I saw him YESTERDAY (pas « I have seen him yesterday »).",
+    "« Depuis » + durée = for (for 3 years) ; « depuis » + point de départ = since (since Monday)."
+   ]
+  },
+  {
+   "id": "conditionnels",
+   "categorie": "grammaire",
+   "niveau": 3,
+   "emoji": "🟣",
+   "titre": "Les phrases avec « if » (conditionnels)",
+   "resume": "Pour les conditions, les hypothèses et les regrets.",
+   "regles": [
+    "Type 0 (vérité) : if + présent, présent → If you heat ice, it melts.",
+    "Type 1 (possible) : if + présent, will → If it rains, I'll stay home.",
+    "Type 2 (imaginaire) : if + prétérit, would → If I were rich, I would travel.",
+    "Type 3 (regret) : if + had + participe, would have → If I had studied, I would have passed."
+   ],
+   "exemples": [
+    {
+     "en": "If you study, you will pass.",
+     "fr": "Si tu étudies, tu réussiras."
+    },
+    {
+     "en": "If I had a car, I would drive to Yamoussoukro.",
+     "fr": "Si j'avais une voiture, j'irais à Yamoussoukro."
+    }
+   ],
+   "pieges": [
+    "Jamais de « will » ou « would » juste après « if ».",
+    "On dit « If I were » (même avec I / he / she) dans les hypothèses."
+   ]
+  },
+  {
+   "id": "passif",
+   "categorie": "grammaire",
+   "niveau": 3,
+   "emoji": "🟣",
+   "titre": "La voix passive",
+   "resume": "Quand l'important est l'action ou l'objet, pas qui fait l'action.",
+   "regles": [
+    "be + participe passé",
+    "Présent : English is spoken here.",
+    "Passé : The bridge was built in 1960.",
+    "Pour dire qui : by → The book was written by Ahmadou Kourouma."
+   ],
+   "exemples": [
+    {
+     "en": "Cocoa is grown in Côte d'Ivoire.",
+     "fr": "Le cacao est cultivé en Côte d'Ivoire."
+    },
+    {
+     "en": "My phone was stolen.",
+     "fr": "On m'a volé mon téléphone."
+    },
+    {
+     "en": "The results will be announced tomorrow.",
+     "fr": "Les résultats seront annoncés demain."
+    }
+   ],
+   "pieges": [
+    "« On » se traduit souvent par un passif : On parle anglais ici = English is spoken here."
+   ]
+  },
+  {
+   "id": "discours_rapporte",
+   "categorie": "grammaire",
+   "niveau": 4,
+   "emoji": "🔴",
+   "titre": "Le discours rapporté",
+   "resume": "Pour rapporter ce que quelqu'un a dit.",
+   "regles": [
+    "say / tell : He said (that)… ; He told me (that)…",
+    "On recule souvent le temps : « I am tired » → She said she was tired.",
+    "will → would, can → could, présent → prétérit",
+    "Questions : He asked me where I lived. / She asked if I was ready."
+   ],
+   "exemples": [
+    {
+     "en": "He said that he was busy.",
+     "fr": "Il a dit qu'il était occupé."
+    },
+    {
+     "en": "She told me she would come.",
+     "fr": "Elle m'a dit qu'elle viendrait."
+    },
+    {
+     "en": "They asked if we were hungry.",
+     "fr": "Ils ont demandé si nous avions faim."
+    }
+   ],
+   "pieges": [
+    "« tell » a toujours un complément : tell ME, tell HIM. « say » n'en a pas : He said that…",
+    "Dans une question rapportée, pas d'inversion : He asked where I lived (pas « where did I live »)."
+   ]
+  },
+  {
+   "id": "relatives",
+   "categorie": "grammaire",
+   "niveau": 3,
+   "emoji": "🟣",
+   "titre": "Les pronoms relatifs : who, which, that, where, whose",
+   "resume": "Pour donner une information sur une personne, une chose ou un lieu.",
+   "regles": [
+    "who : personnes → the girl who sings",
+    "which : choses → the phone which I bought",
+    "that : personnes ou choses (langue courante)",
+    "where : lieux → the city where I was born",
+    "whose : possession → the man whose car is red"
+   ],
+   "exemples": [
+    {
+     "en": "The woman who lives next door is a nurse.",
+     "fr": "La femme qui habite à côté est infirmière."
+    },
+    {
+     "en": "This is the book that I told you about.",
+     "fr": "Voici le livre dont je t'ai parlé."
+    }
+   ],
+   "pieges": [
+    "On ne répète pas le pronom : the book which I read (pas « which I read it »)."
+   ]
+  },
+  {
+   "id": "gerondif",
+   "categorie": "grammaire",
+   "niveau": 4,
+   "emoji": "🔴",
+   "titre": "Verbe + -ing ou verbe + to",
+   "resume": "Après certains verbes on met -ing, après d'autres « to ».",
+   "regles": [
+    "+ -ing : enjoy, finish, avoid, stop, mind, can't stand → I enjoy reading.",
+    "+ to : want, decide, hope, need, promise, plan → I want to learn.",
+    "Après une préposition : toujours -ing → I'm good at singing.",
+    "Sens différent : stop smoking (arrêter de fumer) / stop to smoke (s'arrêter pour fumer)"
+   ],
+   "exemples": [
+    {
+     "en": "She finished cooking.",
+     "fr": "Elle a fini de cuisiner."
+    },
+    {
+     "en": "We decided to leave.",
+     "fr": "Nous avons décidé de partir."
+    },
+    {
+     "en": "Thank you for helping me.",
+     "fr": "Merci de m'avoir aidé."
+    }
+   ],
+   "pieges": [
+    "« I look forward to seeing you » : ici « to » est une préposition, donc -ing."
+   ]
+  },
+  {
+   "id": "quantifieurs",
+   "categorie": "grammaire",
+   "niveau": 2,
+   "emoji": "🟠",
+   "titre": "Some, any, much, many, a lot of",
+   "resume": "Pour parler des quantités.",
+   "regles": [
+    "some : phrases affirmatives et offres → I have some money. Would you like some tea?",
+    "any : négations et questions → I don't have any money. Do you have any questions?",
+    "many : choses qu'on compte → many books",
+    "much : choses qu'on ne compte pas → much water",
+    "a lot of : les deux, surtout à l'affirmatif"
+   ],
+   "exemples": [
+    {
+     "en": "There are many people here.",
+     "fr": "Il y a beaucoup de monde ici."
+    },
+    {
+     "en": "I don't have much time.",
+     "fr": "Je n'ai pas beaucoup de temps."
+    },
+    {
+     "en": "Is there any bread?",
+     "fr": "Est-ce qu'il y a du pain ?"
+    }
+   ],
+   "pieges": [
+    "« money, water, rice, information, advice » ne se comptent pas : much money, a piece of advice."
+   ]
+  },
+  {
+   "id": "prepositions_temps",
+   "categorie": "grammaire",
+   "niveau": 2,
+   "emoji": "🟠",
+   "titre": "Prépositions de temps : in, on, at",
+   "resume": "Trois petits mots pour dire quand.",
+   "regles": [
+    "at + heure / moments précis → at 7 o'clock, at night, at the weekend",
+    "on + jour / date → on Monday, on 7 August, on my birthday",
+    "in + mois / année / saison / partie de la journée → in July, in 2026, in the morning"
+   ],
+   "exemples": [
+    {
+     "en": "The meeting is at 9 a.m.",
+     "fr": "La réunion est à 9 h."
+    },
+    {
+     "en": "I was born on 12 May.",
+     "fr": "Je suis né le 12 mai."
+    },
+    {
+     "en": "We travel in August.",
+     "fr": "Nous voyageons en août."
+    }
+   ],
+   "pieges": [
+    "« in the morning » mais « at night ».",
+    "Pas de préposition avec next / last / every / this : next week, every day."
+   ]
+  },
+  {
+   "id": "ordre_mots",
+   "categorie": "grammaire",
+   "niveau": 1,
+   "emoji": "🟢",
+   "titre": "L'ordre des mots dans la phrase",
+   "resume": "En anglais l'ordre est fixe : sujet + verbe + complément.",
+   "regles": [
+    "Sujet + verbe + complément → She speaks English well.",
+    "L'adjectif se met AVANT le nom → a red car (une voiture rouge)",
+    "Les adverbes de fréquence avant le verbe → I always eat breakfast (mais après « be » : I am always late)",
+    "Lieu avant temps → I go to school every day."
+   ],
+   "exemples": [
+    {
+     "en": "He has a beautiful house.",
+     "fr": "Il a une belle maison."
+    },
+    {
+     "en": "They often play football.",
+     "fr": "Ils jouent souvent au foot."
+    },
+    {
+     "en": "I met her at the market yesterday.",
+     "fr": "Je l'ai rencontrée au marché hier."
+    }
+   ],
+   "pieges": [
+    "Les adjectifs ne prennent jamais de -s : two big houses (pas « bigs »)."
+   ]
+  },
+  {
+   "id": "majuscules",
+   "categorie": "orthographe",
+   "niveau": 1,
+   "emoji": "✏️",
+   "titre": "Les majuscules en anglais",
+   "resume": "L'anglais met plus de majuscules que le français.",
+   "regles": [
+    "« I » (je) toujours en majuscule",
+    "Jours et mois : Monday, January",
+    "Langues et nationalités : English, French, Ivorian",
+    "Noms propres et villes : Abidjan, Ghana",
+    "Titres : Mr Koné, Dr Traoré"
+   ],
+   "exemples": [
+    {
+     "en": "I speak English and French.",
+     "fr": "Je parle anglais et français."
+    },
+    {
+     "en": "My birthday is on Friday, 3 March.",
+     "fr": "Mon anniversaire est le vendredi 3 mars."
+    }
+   ],
+   "pieges": [
+    "En français : lundi, janvier, anglais (minuscules). En anglais : Monday, January, English."
+   ]
+  },
+  {
+   "id": "s_3e_personne",
+   "categorie": "orthographe",
+   "niveau": 1,
+   "emoji": "✏️",
+   "titre": "Le -s du présent : -s, -es ou -ies ?",
+   "resume": "Comment écrire le verbe avec he / she / it.",
+   "regles": [
+    "En général + s : play → plays, work → works",
+    "Après s, sh, ch, x, o : + es → watch → watches, go → goes, do → does",
+    "Consonne + y : y → ies → study → studies, cry → cries",
+    "Voyelle + y : + s → play → plays, buy → buys",
+    "have → has"
+   ],
+   "exemples": [
+    {
+     "en": "She watches TV.",
+     "fr": "Elle regarde la télé."
+    },
+    {
+     "en": "He studies every evening.",
+     "fr": "Il étudie tous les soirs."
+    },
+    {
+     "en": "My father goes to work by bus.",
+     "fr": "Mon père va au travail en bus."
+    }
+   ],
+   "pieges": [
+    "Même règle pour le pluriel des noms : boxes, cities, boys."
+   ]
+  },
+  {
+   "id": "ing",
+   "categorie": "orthographe",
+   "niveau": 1,
+   "emoji": "✏️",
+   "titre": "Écrire les verbes en -ing",
+   "resume": "Petites règles pour ajouter -ing.",
+   "regles": [
+    "En général + ing : read → reading",
+    "e muet tombe : write → writing, come → coming (mais see → seeing)",
+    "Verbe court consonne-voyelle-consonne : on double → swim → swimming, run → running, sit → sitting",
+    "ie → ying : lie → lying, die → dying"
+   ],
+   "exemples": [
+    {
+     "en": "I am writing a letter.",
+     "fr": "J'écris une lettre."
+    },
+    {
+     "en": "They are swimming.",
+     "fr": "Ils nagent."
+    },
+    {
+     "en": "She is making tea.",
+     "fr": "Elle prépare du thé."
+    }
+   ],
+   "pieges": [
+    "« open → opening » : pas de doublement car l'accent n'est pas à la fin."
+   ]
+  },
+  {
+   "id": "ed",
+   "categorie": "orthographe",
+   "niveau": 2,
+   "emoji": "✏️",
+   "titre": "Écrire les verbes en -ed",
+   "resume": "Le prétérit et le participe des verbes réguliers.",
+   "regles": [
+    "En général + ed : work → worked",
+    "Finit par e : + d → live → lived",
+    "Consonne + y : ied → study → studied (mais play → played)",
+    "Court consonne-voyelle-consonne : on double → stop → stopped, plan → planned"
+   ],
+   "exemples": [
+    {
+     "en": "We stopped at the station.",
+     "fr": "Nous nous sommes arrêtés à la gare."
+    },
+    {
+     "en": "She studied all night.",
+     "fr": "Elle a étudié toute la nuit."
+    }
+   ],
+   "pieges": [
+    "Prononciation : « -ed » se dit /t/ (worked), /d/ (played) ou /id/ (wanted, needed)."
+   ]
+  },
+  {
+   "id": "homophones",
+   "categorie": "orthographe",
+   "niveau": 2,
+   "emoji": "✏️",
+   "titre": "Les mots qui se prononcent pareil",
+   "resume": "Ils sonnent pareil mais s'écrivent différemment.",
+   "regles": [
+    "their (leur) / there (là) / they're (= they are)",
+    "your (ton) / you're (= you are)",
+    "its (son, à une chose) / it's (= it is)",
+    "to (à, vers) / too (aussi, trop) / two (deux)",
+    "here (ici) / hear (entendre)",
+    "know (savoir) / no (non)",
+    "write (écrire) / right (droit, juste)"
+   ],
+   "exemples": [
+    {
+     "en": "They're happy with their new house over there.",
+     "fr": "Ils sont contents de leur nouvelle maison là-bas."
+    },
+    {
+     "en": "It's a nice dog. Its name is Max.",
+     "fr": "C'est un gentil chien. Il s'appelle Max."
+    },
+    {
+     "en": "I want two tickets too.",
+     "fr": "Je veux deux billets aussi."
+    }
+   ],
+   "pieges": [
+    "Astuce : si tu peux remplacer par « it is / you are / they are », mets l'apostrophe."
+   ]
+  },
+  {
+   "id": "lettres_muettes",
+   "categorie": "orthographe",
+   "niveau": 2,
+   "emoji": "✏️",
+   "titre": "Les lettres muettes",
+   "resume": "Des lettres qu'on écrit mais qu'on ne prononce pas.",
+   "regles": [
+    "k muet devant n : know, knife, knee",
+    "w muet devant r : write, wrong, wrist",
+    "b muet après m : climb, comb, thumb",
+    "gh muet : night, light, daughter, through",
+    "h muet : hour, honest, (et l'article devient « an » : an hour)"
+   ],
+   "exemples": [
+    {
+     "en": "I know the right answer.",
+     "fr": "Je connais la bonne réponse."
+    },
+    {
+     "en": "My daughter climbs trees.",
+     "fr": "Ma fille grimpe aux arbres."
+    }
+   ],
+   "pieges": [
+    "Écoute le mot avec 🔊 puis regarde-le écrit : c'est la meilleure façon de les retenir."
+   ]
+  },
+  {
+   "id": "faux_amis",
+   "categorie": "orthographe",
+   "niveau": 3,
+   "emoji": "✏️",
+   "titre": "Les faux amis",
+   "resume": "Ils ressemblent à des mots français, mais n'ont pas le même sens.",
+   "regles": [
+    "actually = en fait (pas « actuellement » = currently)",
+    "library = bibliothèque (pas « librairie » = bookshop)",
+    "sensible = raisonnable (pas « sensible » = sensitive)",
+    "eventually = finalement (pas « éventuellement » = possibly)",
+    "to attend = assister à (pas « attendre » = to wait)",
+    "a journey = un voyage (pas « une journée » = a day)"
+   ],
+   "exemples": [
+    {
+     "en": "Actually, I'm from Bouaké.",
+     "fr": "En fait, je viens de Bouaké."
+    },
+    {
+     "en": "I attended the meeting.",
+     "fr": "J'ai assisté à la réunion."
+    }
+   ],
+   "pieges": [
+    "« I am agree » est faux : on dit « I agree » (je suis d'accord)."
+   ]
+  },
+  {
+   "id": "contractions",
+   "categorie": "orthographe",
+   "niveau": 1,
+   "emoji": "✏️",
+   "titre": "Les contractions (l'apostrophe)",
+   "resume": "À l'oral et dans les messages, on raccourcit souvent.",
+   "regles": [
+    "I am → I'm ; you are → you're ; he is → he's",
+    "do not → don't ; does not → doesn't ; did not → didn't",
+    "cannot → can't ; will not → won't",
+    "I have → I've ; I would / I had → I'd ; I will → I'll"
+   ],
+   "exemples": [
+    {
+     "en": "I'm tired, I can't go out.",
+     "fr": "Je suis fatigué, je ne peux pas sortir."
+    },
+    {
+     "en": "She won't come.",
+     "fr": "Elle ne viendra pas."
+    }
+   ],
+   "pieges": [
+    "Dans un devoir ou une lettre officielle, écris plutôt la forme complète : I am, do not.",
+    "« it's » = it is. Le possessif « its » n'a pas d'apostrophe."
+   ]
+  }
+ ]
+}

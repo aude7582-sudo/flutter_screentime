@@ -1194,6 +1194,15 @@ class _LxTuteurState extends State<_LxTuteur> {
             ),
             const Spacer(),
             TextButton(
+              onPressed: () {
+                _tts.stop();
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (_) => _LxtFiches(langue: widget.langue)));
+              },
+              child: Text('📚 Fiches',
+                  style: TextStyle(color: c.texte, fontWeight: FontWeight.w700)),
+            ),
+            TextButton(
               onPressed: () => _revoir(c, lecons),
               child: Text('Revoir',
                   style: TextStyle(color: c.texte, fontWeight: FontWeight.w700)),
@@ -2072,5 +2081,260 @@ class _LxtEtapeState extends State<_LxtEtape> {
         ),
       ),
     ]);
+  }
+}
+
+/// Fiches de grammaire et d'orthographe (lexi_bibliotheque/<langue>/tuteur/
+/// ressources/fiches.json), ouvertes depuis l'écran du prof.
+class _LxtFiches extends StatefulWidget {
+  const _LxtFiches({required this.langue});
+  final String langue;
+
+  @override
+  State<_LxtFiches> createState() => _LxtFichesState();
+}
+
+class _LxtFichesState extends State<_LxtFiches> {
+  final FlutterTts _tts = FlutterTts();
+  List<dynamic>? _fiches;
+  bool _erreur = false;
+  String _cat = 'grammaire';
+  Map<String, dynamic>? _ouverte;
+
+  @override
+  void initState() {
+    super.initState();
+    _charger();
+  }
+
+  @override
+  void dispose() {
+    _tts.stop();
+    super.dispose();
+  }
+
+  Future<void> _charger() async {
+    try {
+      final r = await http.get(Uri.parse(
+          _lxtBase + widget.langue + '/tuteur/ressources/fiches.json'));
+      if (r.statusCode == 200) {
+        _fiches = (jsonDecode(utf8.decode(r.bodyBytes)) as Map)['fiches']
+            as List<dynamic>;
+      } else {
+        _erreur = true;
+      }
+    } catch (_) {
+      _erreur = true;
+    }
+    if (mounted) setState(() {});
+  }
+
+  Future<void> _dire(String t) async {
+    try {
+      await _tts.stop();
+      await _tts.setLanguage(_lxtVoix[widget.langue] ?? 'en-US');
+      await _tts.setSpeechRate(0.42);
+      await _tts.speak(t);
+    } catch (_) {}
+  }
+
+  Widget _liste(_LxtCouleurs c) {
+    final l = (_fiches ?? []).where((x) => (x as Map)['categorie'] == _cat).toList();
+    return Column(children: [
+      Padding(
+        padding: const EdgeInsets.fromLTRB(16, 4, 16, 10),
+        child: Row(children: [
+          for (final k in const [
+            ['grammaire', '📘 Grammaire'],
+            ['orthographe', '✏️ Orthographe']
+          ])
+            Padding(
+              padding: const EdgeInsets.only(right: 8),
+              child: ChoiceChip(
+                label: Text(k[1]),
+                selected: _cat == k[0],
+                selectedColor: _LxtCouleurs.violet.withOpacity(0.25),
+                backgroundColor: c.carte,
+                labelStyle:
+                    TextStyle(color: c.texte, fontWeight: FontWeight.w800),
+                onSelected: (_) => setState(() => _cat = k[0]),
+              ),
+            ),
+        ]),
+      ),
+      Expanded(
+        child: GridView.count(
+          padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
+          crossAxisCount: 2,
+          mainAxisSpacing: 12,
+          crossAxisSpacing: 12,
+          childAspectRatio: 1,
+          children: [
+            for (final x in l)
+              GestureDetector(
+                onTap: () =>
+                    setState(() => _ouverte = Map<String, dynamic>.from(x as Map)),
+                child: Container(
+                  padding: const EdgeInsets.all(14),
+                  decoration: BoxDecoration(
+                    color: c.carte,
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(color: c.bord),
+                  ),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text((x as Map)['emoji'].toString(),
+                            style: const TextStyle(fontSize: 26)),
+                        const SizedBox(height: 8),
+                        Expanded(
+                          child: Text(x['titre'].toString(),
+                              style: TextStyle(
+                                  color: c.texte,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w800,
+                                  height: 1.25)),
+                        ),
+                        Text(
+                            _lxtNiveaux[((x['niveau'] as num).toInt() - 1)
+                                .clamp(0, 4)],
+                            style: TextStyle(
+                                color: _LxtCouleurs.violet,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w800)),
+                      ]),
+                ),
+              ),
+          ],
+        ),
+      ),
+    ]);
+  }
+
+  Widget _detail(_LxtCouleurs c) {
+    final x = _ouverte!;
+    Widget titre(String t) => Padding(
+          padding: const EdgeInsets.only(top: 18, bottom: 8),
+          child: Text(t,
+              style: TextStyle(
+                  color: c.texte, fontSize: 17, fontWeight: FontWeight.w900)),
+        );
+    return ListView(
+      padding: const EdgeInsets.fromLTRB(18, 4, 18, 30),
+      children: [
+        Text(x['emoji'].toString() + '  ' + x['titre'].toString(),
+            style: TextStyle(
+                color: c.texte, fontSize: 21, fontWeight: FontWeight.w900)),
+        const SizedBox(height: 8),
+        Text(x['resume'].toString(),
+            style: TextStyle(color: c.gris, fontSize: 15, height: 1.4)),
+        titre('📌 La règle'),
+        for (final r in (x['regles'] as List? ?? []))
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8),
+            child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              const Text('•  ',
+                  style: TextStyle(
+                      color: _LxtCouleurs.orange,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w900)),
+              Expanded(
+                child: Text(r.toString(),
+                    style:
+                        TextStyle(color: c.texte, fontSize: 15, height: 1.35)),
+              ),
+            ]),
+          ),
+        titre('🔊 Exemples'),
+        for (final e in (x['exemples'] as List? ?? []))
+          GestureDetector(
+            onTap: () => _dire((e as Map)['en'].toString()),
+            child: Container(
+              margin: const EdgeInsets.only(bottom: 8),
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: c.carte,
+                borderRadius: BorderRadius.circular(14),
+                border: Border.all(color: c.bord),
+              ),
+              child: Row(children: [
+                const Icon(Icons.volume_up_rounded,
+                    color: _LxtCouleurs.orange, size: 22),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text((e as Map)['en'].toString(),
+                            style: TextStyle(
+                                color: c.texte,
+                                fontSize: 15.5,
+                                fontWeight: FontWeight.w700)),
+                        Text(e['fr'].toString(),
+                            style: TextStyle(color: c.gris, fontSize: 14)),
+                      ]),
+                ),
+              ]),
+            ),
+          ),
+        if ((x['pieges'] as List? ?? []).isNotEmpty) ...[
+          titre('⚠️ Attention aux pièges'),
+          for (final p in (x['pieges'] as List))
+            Container(
+              margin: const EdgeInsets.only(bottom: 8),
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: _LxtCouleurs.orange.withOpacity(0.12),
+                borderRadius: BorderRadius.circular(14),
+              ),
+              child: Text(p.toString(),
+                  style: TextStyle(color: c.texte, fontSize: 14.5, height: 1.35)),
+            ),
+        ],
+      ],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final c = _LxtCouleurs();
+    return Scaffold(
+      backgroundColor: c.fond,
+      body: SafeArea(
+        child: Column(children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(4, 4, 16, 4),
+            child: Row(children: [
+              IconButton(
+                icon: Icon(Icons.arrow_back_rounded, color: c.texte),
+                onPressed: () {
+                  _tts.stop();
+                  if (_ouverte != null) {
+                    setState(() => _ouverte = null);
+                  } else {
+                    Navigator.of(context).pop();
+                  }
+                },
+              ),
+              Text('📚 Fiches',
+                  style: TextStyle(
+                      color: c.texte,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w900)),
+            ]),
+          ),
+          Expanded(
+            child: _fiches == null
+                ? Center(
+                    child: _erreur
+                        ? Text('Pas de connexion internet. Réessaie plus tard.',
+                            style: TextStyle(color: c.gris))
+                        : const CircularProgressIndicator(
+                            color: _LxtCouleurs.orange))
+                : (_ouverte == null ? _liste(c) : _detail(c)),
+          ),
+        ]),
+      ),
+    );
   }
 }
