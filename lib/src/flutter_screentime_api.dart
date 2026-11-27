@@ -129,6 +129,14 @@ class FlutterScreentime {
         false;
   }
 
+  /// Léxi : ouvre la dictée vocale et renvoie ce que l'élève a dit
+  /// (plusieurs propositions), ou null s'il a annulé.
+  Future<List<String>?> lexiEcouter(String langue) async {
+    final r = await _channel
+        .invokeMethod<List<dynamic>>('lexiEcouter', {'langue': langue});
+    return r?.map((e) => e.toString()).toList();
+  }
+
   /// Léxi : les notifications sont-elles autorisées ?
   Future<bool> lexiNotificationsOk() async {
     return await _channel.invokeMethod<bool>('lexiNotificationsOk') ?? false;
