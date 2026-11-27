@@ -62,7 +62,7 @@ class _LxtCouleurs {
 }
 
 class _LxTuteur extends StatefulWidget {
-  const _LxTuteur({required this.langue, this.prenom = ''});
+  const _LxTuteur({super.key, required this.langue, this.prenom = ''});
   final String langue;
   final String prenom;
 
