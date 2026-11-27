@@ -462,8 +462,11 @@ class _LxTuteurState extends State<_LxTuteur> {
         width: taille,
         height: taille,
         child: ClipOval(
-          child: Image.network(url,
+          child: Container(
+            color: _LxtCouleurs.orange.withOpacity(0.16),
+            child: Image.network(url,
               fit: BoxFit.cover,
+              alignment: Alignment.topCenter,
               gaplessPlayback: true,
               errorBuilder: (c, e, s) => Container(
                     color: _LxtCouleurs.orange.withOpacity(0.15),
@@ -471,6 +474,7 @@ class _LxTuteurState extends State<_LxTuteur> {
                     child: Text(p[3].toString(),
                         style: TextStyle(fontSize: taille * 0.55)),
                   )),
+          ),
         ),
       ),
     );
