@@ -1,0 +1,534 @@
+{
+ "langue": "en",
+ "niveau": 2,
+ "themes": [
+  {
+   "theme": "En ville",
+   "emoji": "🏙️",
+   "mots": [
+    {
+     "en": "street",
+     "fr": "rue"
+    },
+    {
+     "en": "square",
+     "fr": "place"
+    },
+    {
+     "en": "bank",
+     "fr": "banque"
+    },
+    {
+     "en": "hospital",
+     "fr": "hôpital"
+    },
+    {
+     "en": "pharmacy",
+     "fr": "pharmacie"
+    },
+    {
+     "en": "post office",
+     "fr": "poste"
+    },
+    {
+     "en": "market",
+     "fr": "marché"
+    },
+    {
+     "en": "supermarket",
+     "fr": "supermarché"
+    },
+    {
+     "en": "church",
+     "fr": "église"
+    },
+    {
+     "en": "mosque",
+     "fr": "mosquée"
+    },
+    {
+     "en": "police station",
+     "fr": "commissariat"
+    },
+    {
+     "en": "town hall",
+     "fr": "mairie"
+    },
+    {
+     "en": "bridge",
+     "fr": "pont"
+    },
+    {
+     "en": "traffic jam",
+     "fr": "embouteillage"
+    },
+    {
+     "en": "pavement",
+     "fr": "trottoir"
+    }
+   ]
+  },
+  {
+   "theme": "La santé",
+   "emoji": "🩺",
+   "mots": [
+    {
+     "en": "doctor",
+     "fr": "médecin"
+    },
+    {
+     "en": "nurse",
+     "fr": "infirmier"
+    },
+    {
+     "en": "patient",
+     "fr": "patient"
+    },
+    {
+     "en": "appointment",
+     "fr": "rendez-vous"
+    },
+    {
+     "en": "prescription",
+     "fr": "ordonnance"
+    },
+    {
+     "en": "pill",
+     "fr": "comprimé"
+    },
+    {
+     "en": "injection",
+     "fr": "piqûre"
+    },
+    {
+     "en": "malaria",
+     "fr": "paludisme"
+    },
+    {
+     "en": "fever",
+     "fr": "fièvre"
+    },
+    {
+     "en": "cough",
+     "fr": "toux"
+    },
+    {
+     "en": "cold",
+     "fr": "rhume"
+    },
+    {
+     "en": "wound",
+     "fr": "blessure"
+    },
+    {
+     "en": "pain",
+     "fr": "douleur"
+    },
+    {
+     "en": "recover",
+     "fr": "guérir"
+    },
+    {
+     "en": "health insurance",
+     "fr": "assurance maladie"
+    }
+   ]
+  },
+  {
+   "theme": "Le travail",
+   "emoji": "💼",
+   "mots": [
+    {
+     "en": "job",
+     "fr": "emploi"
+    },
+    {
+     "en": "boss",
+     "fr": "patron"
+    },
+    {
+     "en": "colleague",
+     "fr": "collègue"
+    },
+    {
+     "en": "office",
+     "fr": "bureau"
+    },
+    {
+     "en": "salary",
+     "fr": "salaire"
+    },
+    {
+     "en": "meeting",
+     "fr": "réunion"
+    },
+    {
+     "en": "contract",
+     "fr": "contrat"
+    },
+    {
+     "en": "interview",
+     "fr": "entretien"
+    },
+    {
+     "en": "skills",
+     "fr": "compétences"
+    },
+    {
+     "en": "unemployed",
+     "fr": "au chômage"
+    },
+    {
+     "en": "retire",
+     "fr": "prendre sa retraite"
+    },
+    {
+     "en": "shift",
+     "fr": "service (horaires)"
+    },
+    {
+     "en": "overtime",
+     "fr": "heures sup"
+    },
+    {
+     "en": "promotion",
+     "fr": "promotion"
+    },
+    {
+     "en": "training",
+     "fr": "formation"
+    }
+   ]
+  },
+  {
+   "theme": "Les voyages",
+   "emoji": "✈️",
+   "mots": [
+    {
+     "en": "trip",
+     "fr": "voyage"
+    },
+    {
+     "en": "passport",
+     "fr": "passeport"
+    },
+    {
+     "en": "visa",
+     "fr": "visa"
+    },
+    {
+     "en": "luggage",
+     "fr": "bagages"
+    },
+    {
+     "en": "suitcase",
+     "fr": "valise"
+    },
+    {
+     "en": "flight",
+     "fr": "vol"
+    },
+    {
+     "en": "booking",
+     "fr": "réservation"
+    },
+    {
+     "en": "hotel",
+     "fr": "hôtel"
+    },
+    {
+     "en": "tourist",
+     "fr": "touriste"
+    },
+    {
+     "en": "map",
+     "fr": "carte"
+    },
+    {
+     "en": "border",
+     "fr": "frontière"
+    },
+    {
+     "en": "currency",
+     "fr": "devise"
+    },
+    {
+     "en": "souvenir",
+     "fr": "souvenir"
+    },
+    {
+     "en": "beach",
+     "fr": "plage"
+    },
+    {
+     "en": "abroad",
+     "fr": "à l'étranger"
+    }
+   ]
+  },
+  {
+   "theme": "La technologie",
+   "emoji": "📱",
+   "mots": [
+    {
+     "en": "phone",
+     "fr": "téléphone"
+    },
+    {
+     "en": "charger",
+     "fr": "chargeur"
+    },
+    {
+     "en": "screen",
+     "fr": "écran"
+    },
+    {
+     "en": "app",
+     "fr": "application"
+    },
+    {
+     "en": "password",
+     "fr": "mot de passe"
+    },
+    {
+     "en": "download",
+     "fr": "télécharger"
+    },
+    {
+     "en": "upload",
+     "fr": "mettre en ligne"
+    },
+    {
+     "en": "message",
+     "fr": "message"
+    },
+    {
+     "en": "network",
+     "fr": "réseau"
+    },
+    {
+     "en": "data",
+     "fr": "données"
+    },
+    {
+     "en": "computer",
+     "fr": "ordinateur"
+    },
+    {
+     "en": "keyboard",
+     "fr": "clavier"
+    },
+    {
+     "en": "website",
+     "fr": "site web"
+    },
+    {
+     "en": "account",
+     "fr": "compte"
+    },
+    {
+     "en": "update",
+     "fr": "mise à jour"
+    }
+   ]
+  },
+  {
+   "theme": "Le sport",
+   "emoji": "⚽",
+   "mots": [
+    {
+     "en": "football",
+     "fr": "football"
+    },
+    {
+     "en": "basketball",
+     "fr": "basket"
+    },
+    {
+     "en": "match",
+     "fr": "match"
+    },
+    {
+     "en": "team",
+     "fr": "équipe"
+    },
+    {
+     "en": "player",
+     "fr": "joueur"
+    },
+    {
+     "en": "coach",
+     "fr": "entraîneur"
+    },
+    {
+     "en": "goal",
+     "fr": "but"
+    },
+    {
+     "en": "score",
+     "fr": "score"
+    },
+    {
+     "en": "win",
+     "fr": "gagner"
+    },
+    {
+     "en": "lose",
+     "fr": "perdre"
+    },
+    {
+     "en": "draw",
+     "fr": "match nul"
+    },
+    {
+     "en": "referee",
+     "fr": "arbitre"
+    },
+    {
+     "en": "stadium",
+     "fr": "stade"
+    },
+    {
+     "en": "fan",
+     "fr": "supporter"
+    },
+    {
+     "en": "training",
+     "fr": "entraînement"
+    }
+   ]
+  },
+  {
+   "theme": "L'argent",
+   "emoji": "💰",
+   "mots": [
+    {
+     "en": "money",
+     "fr": "argent"
+    },
+    {
+     "en": "cash",
+     "fr": "liquide"
+    },
+    {
+     "en": "coin",
+     "fr": "pièce"
+    },
+    {
+     "en": "note",
+     "fr": "billet"
+    },
+    {
+     "en": "price",
+     "fr": "prix"
+    },
+    {
+     "en": "change",
+     "fr": "monnaie"
+    },
+    {
+     "en": "discount",
+     "fr": "réduction"
+    },
+    {
+     "en": "receipt",
+     "fr": "reçu"
+    },
+    {
+     "en": "debt",
+     "fr": "dette"
+    },
+    {
+     "en": "save",
+     "fr": "économiser"
+    },
+    {
+     "en": "borrow",
+     "fr": "emprunter"
+    },
+    {
+     "en": "lend",
+     "fr": "prêter"
+    },
+    {
+     "en": "mobile money",
+     "fr": "mobile money"
+    },
+    {
+     "en": "fee",
+     "fr": "frais"
+    },
+    {
+     "en": "budget",
+     "fr": "budget"
+    }
+   ]
+  },
+  {
+   "theme": "La nature",
+   "emoji": "🌳",
+   "mots": [
+    {
+     "en": "tree",
+     "fr": "arbre"
+    },
+    {
+     "en": "forest",
+     "fr": "forêt"
+    },
+    {
+     "en": "river",
+     "fr": "fleuve, rivière"
+    },
+    {
+     "en": "lake",
+     "fr": "lac"
+    },
+    {
+     "en": "sea",
+     "fr": "mer"
+    },
+    {
+     "en": "mountain",
+     "fr": "montagne"
+    },
+    {
+     "en": "hill",
+     "fr": "colline"
+    },
+    {
+     "en": "sky",
+     "fr": "ciel"
+    },
+    {
+     "en": "sun",
+     "fr": "soleil"
+    },
+    {
+     "en": "moon",
+     "fr": "lune"
+    },
+    {
+     "en": "star",
+     "fr": "étoile"
+    },
+    {
+     "en": "rain",
+     "fr": "pluie"
+    },
+    {
+     "en": "wind",
+     "fr": "vent"
+    },
+    {
+     "en": "field",
+     "fr": "champ"
+    },
+    {
+     "en": "lagoon",
+     "fr": "lagune"
+    }
+   ]
+  }
+ ]
+}

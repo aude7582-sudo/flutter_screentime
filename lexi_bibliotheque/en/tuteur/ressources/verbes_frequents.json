@@ -1,0 +1,505 @@
+{
+ "titre": "Les 100 verbes les plus utilisés",
+ "verbes": [
+  {
+   "en": "be",
+   "fr": "être",
+   "rang": 1
+  },
+  {
+   "en": "have",
+   "fr": "avoir",
+   "rang": 2
+  },
+  {
+   "en": "do",
+   "fr": "faire",
+   "rang": 3
+  },
+  {
+   "en": "say",
+   "fr": "dire",
+   "rang": 4
+  },
+  {
+   "en": "go",
+   "fr": "aller",
+   "rang": 5
+  },
+  {
+   "en": "get",
+   "fr": "obtenir",
+   "rang": 6
+  },
+  {
+   "en": "make",
+   "fr": "faire",
+   "rang": 7
+  },
+  {
+   "en": "know",
+   "fr": "savoir",
+   "rang": 8
+  },
+  {
+   "en": "think",
+   "fr": "penser",
+   "rang": 9
+  },
+  {
+   "en": "take",
+   "fr": "prendre",
+   "rang": 10
+  },
+  {
+   "en": "see",
+   "fr": "voir",
+   "rang": 11
+  },
+  {
+   "en": "come",
+   "fr": "venir",
+   "rang": 12
+  },
+  {
+   "en": "want",
+   "fr": "vouloir",
+   "rang": 13
+  },
+  {
+   "en": "look",
+   "fr": "regarder",
+   "rang": 14
+  },
+  {
+   "en": "use",
+   "fr": "utiliser",
+   "rang": 15
+  },
+  {
+   "en": "find",
+   "fr": "trouver",
+   "rang": 16
+  },
+  {
+   "en": "give",
+   "fr": "donner",
+   "rang": 17
+  },
+  {
+   "en": "tell",
+   "fr": "dire",
+   "rang": 18
+  },
+  {
+   "en": "work",
+   "fr": "travailler",
+   "rang": 19
+  },
+  {
+   "en": "call",
+   "fr": "appeler",
+   "rang": 20
+  },
+  {
+   "en": "try",
+   "fr": "essayer",
+   "rang": 21
+  },
+  {
+   "en": "ask",
+   "fr": "demander",
+   "rang": 22
+  },
+  {
+   "en": "need",
+   "fr": "avoir besoin",
+   "rang": 23
+  },
+  {
+   "en": "feel",
+   "fr": "ressentir",
+   "rang": 24
+  },
+  {
+   "en": "become",
+   "fr": "devenir",
+   "rang": 25
+  },
+  {
+   "en": "leave",
+   "fr": "partir",
+   "rang": 26
+  },
+  {
+   "en": "put",
+   "fr": "mettre",
+   "rang": 27
+  },
+  {
+   "en": "mean",
+   "fr": "signifier",
+   "rang": 28
+  },
+  {
+   "en": "keep",
+   "fr": "garder",
+   "rang": 29
+  },
+  {
+   "en": "let",
+   "fr": "laisser",
+   "rang": 30
+  },
+  {
+   "en": "begin",
+   "fr": "commencer",
+   "rang": 31
+  },
+  {
+   "en": "seem",
+   "fr": "sembler",
+   "rang": 32
+  },
+  {
+   "en": "help",
+   "fr": "aider",
+   "rang": 33
+  },
+  {
+   "en": "talk",
+   "fr": "parler",
+   "rang": 34
+  },
+  {
+   "en": "turn",
+   "fr": "tourner",
+   "rang": 35
+  },
+  {
+   "en": "start",
+   "fr": "commencer",
+   "rang": 36
+  },
+  {
+   "en": "show",
+   "fr": "montrer",
+   "rang": 37
+  },
+  {
+   "en": "hear",
+   "fr": "entendre",
+   "rang": 38
+  },
+  {
+   "en": "play",
+   "fr": "jouer",
+   "rang": 39
+  },
+  {
+   "en": "run",
+   "fr": "courir",
+   "rang": 40
+  },
+  {
+   "en": "move",
+   "fr": "bouger",
+   "rang": 41
+  },
+  {
+   "en": "like",
+   "fr": "aimer",
+   "rang": 42
+  },
+  {
+   "en": "live",
+   "fr": "vivre",
+   "rang": 43
+  },
+  {
+   "en": "believe",
+   "fr": "croire",
+   "rang": 44
+  },
+  {
+   "en": "hold",
+   "fr": "tenir",
+   "rang": 45
+  },
+  {
+   "en": "bring",
+   "fr": "apporter",
+   "rang": 46
+  },
+  {
+   "en": "happen",
+   "fr": "arriver (se passer)",
+   "rang": 47
+  },
+  {
+   "en": "write",
+   "fr": "écrire",
+   "rang": 48
+  },
+  {
+   "en": "sit",
+   "fr": "s'asseoir",
+   "rang": 49
+  },
+  {
+   "en": "stand",
+   "fr": "être debout",
+   "rang": 50
+  },
+  {
+   "en": "lose",
+   "fr": "perdre",
+   "rang": 51
+  },
+  {
+   "en": "pay",
+   "fr": "payer",
+   "rang": 52
+  },
+  {
+   "en": "meet",
+   "fr": "rencontrer",
+   "rang": 53
+  },
+  {
+   "en": "include",
+   "fr": "inclure",
+   "rang": 54
+  },
+  {
+   "en": "continue",
+   "fr": "continuer",
+   "rang": 55
+  },
+  {
+   "en": "set",
+   "fr": "fixer",
+   "rang": 56
+  },
+  {
+   "en": "learn",
+   "fr": "apprendre",
+   "rang": 57
+  },
+  {
+   "en": "change",
+   "fr": "changer",
+   "rang": 58
+  },
+  {
+   "en": "lead",
+   "fr": "mener",
+   "rang": 59
+  },
+  {
+   "en": "understand",
+   "fr": "comprendre",
+   "rang": 60
+  },
+  {
+   "en": "watch",
+   "fr": "regarder",
+   "rang": 61
+  },
+  {
+   "en": "follow",
+   "fr": "suivre",
+   "rang": 62
+  },
+  {
+   "en": "stop",
+   "fr": "arrêter",
+   "rang": 63
+  },
+  {
+   "en": "create",
+   "fr": "créer",
+   "rang": 64
+  },
+  {
+   "en": "speak",
+   "fr": "parler",
+   "rang": 65
+  },
+  {
+   "en": "read",
+   "fr": "lire",
+   "rang": 66
+  },
+  {
+   "en": "spend",
+   "fr": "dépenser",
+   "rang": 67
+  },
+  {
+   "en": "grow",
+   "fr": "grandir",
+   "rang": 68
+  },
+  {
+   "en": "open",
+   "fr": "ouvrir",
+   "rang": 69
+  },
+  {
+   "en": "walk",
+   "fr": "marcher",
+   "rang": 70
+  },
+  {
+   "en": "win",
+   "fr": "gagner",
+   "rang": 71
+  },
+  {
+   "en": "teach",
+   "fr": "enseigner",
+   "rang": 72
+  },
+  {
+   "en": "offer",
+   "fr": "offrir",
+   "rang": 73
+  },
+  {
+   "en": "remember",
+   "fr": "se souvenir",
+   "rang": 74
+  },
+  {
+   "en": "love",
+   "fr": "aimer",
+   "rang": 75
+  },
+  {
+   "en": "consider",
+   "fr": "considérer",
+   "rang": 76
+  },
+  {
+   "en": "appear",
+   "fr": "apparaître",
+   "rang": 77
+  },
+  {
+   "en": "buy",
+   "fr": "acheter",
+   "rang": 78
+  },
+  {
+   "en": "wait",
+   "fr": "attendre",
+   "rang": 79
+  },
+  {
+   "en": "serve",
+   "fr": "servir",
+   "rang": 80
+  },
+  {
+   "en": "die",
+   "fr": "mourir",
+   "rang": 81
+  },
+  {
+   "en": "send",
+   "fr": "envoyer",
+   "rang": 82
+  },
+  {
+   "en": "build",
+   "fr": "construire",
+   "rang": 83
+  },
+  {
+   "en": "stay",
+   "fr": "rester",
+   "rang": 84
+  },
+  {
+   "en": "fall",
+   "fr": "tomber",
+   "rang": 85
+  },
+  {
+   "en": "cut",
+   "fr": "couper",
+   "rang": 86
+  },
+  {
+   "en": "reach",
+   "fr": "atteindre",
+   "rang": 87
+  },
+  {
+   "en": "kill",
+   "fr": "tuer",
+   "rang": 88
+  },
+  {
+   "en": "raise",
+   "fr": "lever",
+   "rang": 89
+  },
+  {
+   "en": "pass",
+   "fr": "passer",
+   "rang": 90
+  },
+  {
+   "en": "sell",
+   "fr": "vendre",
+   "rang": 91
+  },
+  {
+   "en": "decide",
+   "fr": "décider",
+   "rang": 92
+  },
+  {
+   "en": "return",
+   "fr": "revenir",
+   "rang": 93
+  },
+  {
+   "en": "explain",
+   "fr": "expliquer",
+   "rang": 94
+  },
+  {
+   "en": "hope",
+   "fr": "espérer",
+   "rang": 95
+  },
+  {
+   "en": "develop",
+   "fr": "développer",
+   "rang": 96
+  },
+  {
+   "en": "carry",
+   "fr": "porter",
+   "rang": 97
+  },
+  {
+   "en": "break",
+   "fr": "casser",
+   "rang": 98
+  },
+  {
+   "en": "receive",
+   "fr": "recevoir",
+   "rang": 99
+  },
+  {
+   "en": "agree",
+   "fr": "être d'accord",
+   "rang": 100
+  }
+ ]
+}

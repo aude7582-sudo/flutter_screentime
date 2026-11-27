@@ -1,0 +1,402 @@
+{
+ "langue": "en",
+ "niveau": 3,
+ "themes": [
+  {
+   "theme": "Les médias",
+   "emoji": "📰",
+   "mots": [
+    {
+     "en": "news",
+     "fr": "informations"
+    },
+    {
+     "en": "newspaper",
+     "fr": "journal"
+    },
+    {
+     "en": "journalist",
+     "fr": "journaliste"
+    },
+    {
+     "en": "article",
+     "fr": "article"
+    },
+    {
+     "en": "headline",
+     "fr": "gros titre"
+    },
+    {
+     "en": "interview",
+     "fr": "interview"
+    },
+    {
+     "en": "broadcast",
+     "fr": "diffuser"
+    },
+    {
+     "en": "channel",
+     "fr": "chaîne"
+    },
+    {
+     "en": "audience",
+     "fr": "public"
+    },
+    {
+     "en": "advertisement",
+     "fr": "publicité"
+    },
+    {
+     "en": "social media",
+     "fr": "réseaux sociaux"
+    },
+    {
+     "en": "influencer",
+     "fr": "influenceur"
+    },
+    {
+     "en": "fake news",
+     "fr": "fausse information"
+    },
+    {
+     "en": "source",
+     "fr": "source"
+    },
+    {
+     "en": "podcast",
+     "fr": "podcast"
+    }
+   ]
+  },
+  {
+   "theme": "L'environnement",
+   "emoji": "🌍",
+   "mots": [
+    {
+     "en": "pollution",
+     "fr": "pollution"
+    },
+    {
+     "en": "waste",
+     "fr": "déchets"
+    },
+    {
+     "en": "recycle",
+     "fr": "recycler"
+    },
+    {
+     "en": "climate change",
+     "fr": "changement climatique"
+    },
+    {
+     "en": "global warming",
+     "fr": "réchauffement"
+    },
+    {
+     "en": "drought",
+     "fr": "sécheresse"
+    },
+    {
+     "en": "flood",
+     "fr": "inondation"
+    },
+    {
+     "en": "deforestation",
+     "fr": "déforestation"
+    },
+    {
+     "en": "plastic",
+     "fr": "plastique"
+    },
+    {
+     "en": "solar energy",
+     "fr": "énergie solaire"
+    },
+    {
+     "en": "protect",
+     "fr": "protéger"
+    },
+    {
+     "en": "species",
+     "fr": "espèce"
+    },
+    {
+     "en": "endangered",
+     "fr": "menacé"
+    },
+    {
+     "en": "resources",
+     "fr": "ressources"
+    },
+    {
+     "en": "sustainable",
+     "fr": "durable"
+    }
+   ]
+  },
+  {
+   "theme": "L'éducation",
+   "emoji": "🎓",
+   "mots": [
+    {
+     "en": "degree",
+     "fr": "diplôme universitaire"
+    },
+    {
+     "en": "exam",
+     "fr": "examen"
+    },
+    {
+     "en": "pass",
+     "fr": "réussir"
+    },
+    {
+     "en": "fail",
+     "fr": "échouer"
+    },
+    {
+     "en": "grade / mark",
+     "fr": "note"
+    },
+    {
+     "en": "subject",
+     "fr": "matière"
+    },
+    {
+     "en": "scholarship",
+     "fr": "bourse"
+    },
+    {
+     "en": "university",
+     "fr": "université"
+    },
+    {
+     "en": "lecture",
+     "fr": "cours magistral"
+    },
+    {
+     "en": "student",
+     "fr": "étudiant"
+    },
+    {
+     "en": "research",
+     "fr": "recherche"
+    },
+    {
+     "en": "thesis",
+     "fr": "mémoire"
+    },
+    {
+     "en": "graduate",
+     "fr": "être diplômé"
+    },
+    {
+     "en": "tuition fees",
+     "fr": "frais de scolarité"
+    },
+    {
+     "en": "apprenticeship",
+     "fr": "apprentissage"
+    }
+   ]
+  },
+  {
+   "theme": "Les relations",
+   "emoji": "🤝",
+   "mots": [
+    {
+     "en": "friendship",
+     "fr": "amitié"
+    },
+    {
+     "en": "relationship",
+     "fr": "relation"
+    },
+    {
+     "en": "partner",
+     "fr": "partenaire"
+    },
+    {
+     "en": "engaged",
+     "fr": "fiancé"
+    },
+    {
+     "en": "wedding",
+     "fr": "mariage"
+    },
+    {
+     "en": "divorce",
+     "fr": "divorce"
+    },
+    {
+     "en": "neighbour",
+     "fr": "voisin"
+    },
+    {
+     "en": "trust",
+     "fr": "confiance"
+    },
+    {
+     "en": "argue",
+     "fr": "se disputer"
+    },
+    {
+     "en": "get along",
+     "fr": "bien s'entendre"
+    },
+    {
+     "en": "apologise",
+     "fr": "s'excuser"
+    },
+    {
+     "en": "support",
+     "fr": "soutenir"
+    },
+    {
+     "en": "respect",
+     "fr": "respect"
+    },
+    {
+     "en": "jealous",
+     "fr": "jaloux"
+    },
+    {
+     "en": "loyal",
+     "fr": "fidèle"
+    }
+   ]
+  },
+  {
+   "theme": "Les sentiments nuancés",
+   "emoji": "💭",
+   "mots": [
+    {
+     "en": "grateful",
+     "fr": "reconnaissant"
+    },
+    {
+     "en": "disappointed",
+     "fr": "déçu"
+    },
+    {
+     "en": "embarrassed",
+     "fr": "gêné"
+    },
+    {
+     "en": "confused",
+     "fr": "perdu, confus"
+    },
+    {
+     "en": "relieved",
+     "fr": "soulagé"
+    },
+    {
+     "en": "anxious",
+     "fr": "anxieux"
+    },
+    {
+     "en": "confident",
+     "fr": "confiant"
+    },
+    {
+     "en": "frustrated",
+     "fr": "frustré"
+    },
+    {
+     "en": "lonely",
+     "fr": "seul (sentiment)"
+    },
+    {
+     "en": "curious",
+     "fr": "curieux"
+    },
+    {
+     "en": "ashamed",
+     "fr": "honteux"
+    },
+    {
+     "en": "delighted",
+     "fr": "ravi"
+    },
+    {
+     "en": "upset",
+     "fr": "contrarié"
+    },
+    {
+     "en": "hopeful",
+     "fr": "plein d'espoir"
+    },
+    {
+     "en": "overwhelmed",
+     "fr": "débordé"
+    }
+   ]
+  },
+  {
+   "theme": "Le monde des affaires",
+   "emoji": "🏢",
+   "mots": [
+    {
+     "en": "company",
+     "fr": "entreprise"
+    },
+    {
+     "en": "customer",
+     "fr": "client"
+    },
+    {
+     "en": "supplier",
+     "fr": "fournisseur"
+    },
+    {
+     "en": "profit",
+     "fr": "bénéfice"
+    },
+    {
+     "en": "loss",
+     "fr": "perte"
+    },
+    {
+     "en": "market",
+     "fr": "marché"
+    },
+    {
+     "en": "product",
+     "fr": "produit"
+    },
+    {
+     "en": "service",
+     "fr": "service"
+    },
+    {
+     "en": "invest",
+     "fr": "investir"
+    },
+    {
+     "en": "loan",
+     "fr": "prêt"
+    },
+    {
+     "en": "sales",
+     "fr": "ventes"
+    },
+    {
+     "en": "competitor",
+     "fr": "concurrent"
+    },
+    {
+     "en": "brand",
+     "fr": "marque"
+    },
+    {
+     "en": "manager",
+     "fr": "responsable"
+    },
+    {
+     "en": "entrepreneur",
+     "fr": "entrepreneur"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,270 @@
+{
+ "langue": "en",
+ "niveau": 5,
+ "themes": [
+  {
+   "theme": "Anglais académique",
+   "emoji": "📚",
+   "mots": [
+    {
+     "en": "analyse",
+     "fr": "analyser"
+    },
+    {
+     "en": "assess",
+     "fr": "évaluer"
+    },
+    {
+     "en": "approach",
+     "fr": "approche"
+    },
+    {
+     "en": "concept",
+     "fr": "concept"
+    },
+    {
+     "en": "context",
+     "fr": "contexte"
+    },
+    {
+     "en": "framework",
+     "fr": "cadre"
+    },
+    {
+     "en": "hypothesis",
+     "fr": "hypothèse"
+    },
+    {
+     "en": "interpret",
+     "fr": "interpréter"
+    },
+    {
+     "en": "methodology",
+     "fr": "méthodologie"
+    },
+    {
+     "en": "significant",
+     "fr": "significatif"
+    },
+    {
+     "en": "consistent",
+     "fr": "cohérent"
+    },
+    {
+     "en": "derive",
+     "fr": "découler"
+    },
+    {
+     "en": "imply",
+     "fr": "impliquer"
+    },
+    {
+     "en": "furthermore",
+     "fr": "en outre"
+    },
+    {
+     "en": "thereby",
+     "fr": "de ce fait"
+    }
+   ]
+  },
+  {
+   "theme": "Connecteurs formels",
+   "emoji": "🔗",
+   "mots": [
+    {
+     "en": "nevertheless",
+     "fr": "néanmoins"
+    },
+    {
+     "en": "notwithstanding",
+     "fr": "nonobstant"
+    },
+    {
+     "en": "whereas",
+     "fr": "tandis que"
+    },
+    {
+     "en": "hence",
+     "fr": "d'où"
+    },
+    {
+     "en": "thus",
+     "fr": "ainsi"
+    },
+    {
+     "en": "consequently",
+     "fr": "par conséquent"
+    },
+    {
+     "en": "moreover",
+     "fr": "de plus"
+    },
+    {
+     "en": "albeit",
+     "fr": "bien que"
+    },
+    {
+     "en": "insofar as",
+     "fr": "dans la mesure où"
+    },
+    {
+     "en": "in light of",
+     "fr": "à la lumière de"
+    },
+    {
+     "en": "with regard to",
+     "fr": "en ce qui concerne"
+    },
+    {
+     "en": "on the contrary",
+     "fr": "au contraire"
+    },
+    {
+     "en": "by contrast",
+     "fr": "en revanche"
+    },
+    {
+     "en": "to that end",
+     "fr": "à cette fin"
+    },
+    {
+     "en": "in essence",
+     "fr": "en substance"
+    }
+   ]
+  },
+  {
+   "theme": "Nuances et style",
+   "emoji": "🎭",
+   "mots": [
+    {
+     "en": "subtle",
+     "fr": "subtil"
+    },
+    {
+     "en": "blunt",
+     "fr": "direct, brutal"
+    },
+    {
+     "en": "eloquent",
+     "fr": "éloquent"
+    },
+    {
+     "en": "ambiguous",
+     "fr": "ambigu"
+    },
+    {
+     "en": "compelling",
+     "fr": "convaincant"
+    },
+    {
+     "en": "flawed",
+     "fr": "imparfait"
+    },
+    {
+     "en": "nuanced",
+     "fr": "nuancé"
+    },
+    {
+     "en": "candid",
+     "fr": "franc"
+    },
+    {
+     "en": "tentative",
+     "fr": "hésitant"
+    },
+    {
+     "en": "profound",
+     "fr": "profond"
+    },
+    {
+     "en": "trivial",
+     "fr": "insignifiant"
+    },
+    {
+     "en": "ironic",
+     "fr": "ironique"
+    },
+    {
+     "en": "understatement",
+     "fr": "euphémisme"
+    },
+    {
+     "en": "rhetorical",
+     "fr": "rhétorique"
+    },
+    {
+     "en": "persuasive",
+     "fr": "persuasif"
+    }
+   ]
+  },
+  {
+   "theme": "Verbes à particule avancés",
+   "emoji": "🧩",
+   "mots": [
+    {
+     "en": "come across",
+     "fr": "tomber sur"
+    },
+    {
+     "en": "bounce back",
+     "fr": "rebondir"
+    },
+    {
+     "en": "figure out",
+     "fr": "comprendre"
+    },
+    {
+     "en": "come up with",
+     "fr": "trouver (idée)"
+    },
+    {
+     "en": "put up with",
+     "fr": "supporter"
+    },
+    {
+     "en": "run out of",
+     "fr": "manquer de"
+    },
+    {
+     "en": "look into",
+     "fr": "examiner"
+    },
+    {
+     "en": "settle in",
+     "fr": "s'installer"
+    },
+    {
+     "en": "kick in",
+     "fr": "commencer à agir"
+    },
+    {
+     "en": "phase out",
+     "fr": "supprimer progressivement"
+    },
+    {
+     "en": "rule out",
+     "fr": "écarter"
+    },
+    {
+     "en": "set back",
+     "fr": "retarder"
+    },
+    {
+     "en": "brush up on",
+     "fr": "réviser"
+    },
+    {
+     "en": "carry out",
+     "fr": "mener à bien"
+    },
+    {
+     "en": "account for",
+     "fr": "expliquer, représenter"
+    }
+   ]
+  }
+ ]
+}

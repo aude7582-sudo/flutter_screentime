@@ -1,0 +1,336 @@
+{
+ "langue": "en",
+ "niveau": 4,
+ "themes": [
+  {
+   "theme": "Société et politique",
+   "emoji": "🏛️",
+   "mots": [
+    {
+     "en": "government",
+     "fr": "gouvernement"
+    },
+    {
+     "en": "citizen",
+     "fr": "citoyen"
+    },
+    {
+     "en": "law",
+     "fr": "loi"
+    },
+    {
+     "en": "vote",
+     "fr": "voter"
+    },
+    {
+     "en": "election",
+     "fr": "élection"
+    },
+    {
+     "en": "candidate",
+     "fr": "candidat"
+    },
+    {
+     "en": "policy",
+     "fr": "politique (mesure)"
+    },
+    {
+     "en": "rights",
+     "fr": "droits"
+    },
+    {
+     "en": "equality",
+     "fr": "égalité"
+    },
+    {
+     "en": "corruption",
+     "fr": "corruption"
+    },
+    {
+     "en": "democracy",
+     "fr": "démocratie"
+    },
+    {
+     "en": "protest",
+     "fr": "manifestation"
+    },
+    {
+     "en": "reform",
+     "fr": "réforme"
+    },
+    {
+     "en": "poverty",
+     "fr": "pauvreté"
+    },
+    {
+     "en": "welfare",
+     "fr": "aide sociale"
+    }
+   ]
+  },
+  {
+   "theme": "Économie",
+   "emoji": "📈",
+   "mots": [
+    {
+     "en": "economy",
+     "fr": "économie"
+    },
+    {
+     "en": "growth",
+     "fr": "croissance"
+    },
+    {
+     "en": "inflation",
+     "fr": "inflation"
+    },
+    {
+     "en": "tax",
+     "fr": "impôt"
+    },
+    {
+     "en": "unemployment rate",
+     "fr": "taux de chômage"
+    },
+    {
+     "en": "export",
+     "fr": "exporter"
+    },
+    {
+     "en": "import",
+     "fr": "importer"
+    },
+    {
+     "en": "trade",
+     "fr": "commerce"
+    },
+    {
+     "en": "investment",
+     "fr": "investissement"
+    },
+    {
+     "en": "income",
+     "fr": "revenu"
+    },
+    {
+     "en": "wealth",
+     "fr": "richesse"
+    },
+    {
+     "en": "debt",
+     "fr": "dette"
+    },
+    {
+     "en": "crisis",
+     "fr": "crise"
+    },
+    {
+     "en": "supply and demand",
+     "fr": "offre et demande"
+    },
+    {
+     "en": "GDP",
+     "fr": "PIB"
+    }
+   ]
+  },
+  {
+   "theme": "Sciences et santé",
+   "emoji": "🔬",
+   "mots": [
+    {
+     "en": "experiment",
+     "fr": "expérience"
+    },
+    {
+     "en": "evidence",
+     "fr": "preuve"
+    },
+    {
+     "en": "discovery",
+     "fr": "découverte"
+    },
+    {
+     "en": "vaccine",
+     "fr": "vaccin"
+    },
+    {
+     "en": "disease",
+     "fr": "maladie"
+    },
+    {
+     "en": "treatment",
+     "fr": "traitement"
+    },
+    {
+     "en": "gene",
+     "fr": "gène"
+    },
+    {
+     "en": "survey",
+     "fr": "enquête, sondage"
+    },
+    {
+     "en": "data",
+     "fr": "données"
+    },
+    {
+     "en": "theory",
+     "fr": "théorie"
+    },
+    {
+     "en": "laboratory",
+     "fr": "laboratoire"
+    },
+    {
+     "en": "outbreak",
+     "fr": "épidémie"
+    },
+    {
+     "en": "immune",
+     "fr": "immunisé"
+    },
+    {
+     "en": "side effect",
+     "fr": "effet secondaire"
+    },
+    {
+     "en": "cure",
+     "fr": "remède"
+    }
+   ]
+  },
+  {
+   "theme": "Le droit",
+   "emoji": "⚖️",
+   "mots": [
+    {
+     "en": "court",
+     "fr": "tribunal"
+    },
+    {
+     "en": "judge",
+     "fr": "juge"
+    },
+    {
+     "en": "lawyer",
+     "fr": "avocat"
+    },
+    {
+     "en": "trial",
+     "fr": "procès"
+    },
+    {
+     "en": "witness",
+     "fr": "témoin"
+    },
+    {
+     "en": "guilty",
+     "fr": "coupable"
+    },
+    {
+     "en": "innocent",
+     "fr": "innocent"
+    },
+    {
+     "en": "sentence",
+     "fr": "peine"
+    },
+    {
+     "en": "fine",
+     "fr": "amende"
+    },
+    {
+     "en": "crime",
+     "fr": "crime"
+    },
+    {
+     "en": "theft",
+     "fr": "vol"
+    },
+    {
+     "en": "evidence",
+     "fr": "preuves"
+    },
+    {
+     "en": "appeal",
+     "fr": "faire appel"
+    },
+    {
+     "en": "contract",
+     "fr": "contrat"
+    },
+    {
+     "en": "sue",
+     "fr": "poursuivre en justice"
+    }
+   ]
+  },
+  {
+   "theme": "Expressions idiomatiques",
+   "emoji": "💬",
+   "mots": [
+    {
+     "en": "a piece of cake",
+     "fr": "très facile"
+    },
+    {
+     "en": "break the ice",
+     "fr": "briser la glace"
+    },
+    {
+     "en": "under the weather",
+     "fr": "pas en forme"
+    },
+    {
+     "en": "over the moon",
+     "fr": "aux anges"
+    },
+    {
+     "en": "an arm and a leg",
+     "fr": "les yeux de la tête"
+    },
+    {
+     "en": "call it a day",
+     "fr": "s'arrêter là"
+    },
+    {
+     "en": "hit the books",
+     "fr": "se mettre à étudier"
+    },
+    {
+     "en": "once in a blue moon",
+     "fr": "très rarement"
+    },
+    {
+     "en": "get the hang of it",
+     "fr": "prendre le coup"
+    },
+    {
+     "en": "the ball is in your court",
+     "fr": "la balle est dans ton camp"
+    },
+    {
+     "en": "cost a fortune",
+     "fr": "coûter une fortune"
+    },
+    {
+     "en": "on the same page",
+     "fr": "d'accord"
+    },
+    {
+     "en": "keep an eye on",
+     "fr": "surveiller"
+    },
+    {
+     "en": "in hot water",
+     "fr": "dans le pétrin"
+    },
+    {
+     "en": "spill the beans",
+     "fr": "vendre la mèche"
+    }
+   ]
+  }
+ ]
+}

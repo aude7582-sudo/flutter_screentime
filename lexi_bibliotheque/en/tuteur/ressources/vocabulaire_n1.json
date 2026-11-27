@@ -1,0 +1,666 @@
+{
+ "langue": "en",
+ "niveau": 1,
+ "themes": [
+  {
+   "theme": "Le corps",
+   "emoji": "🧍",
+   "mots": [
+    {
+     "en": "head",
+     "fr": "tête"
+    },
+    {
+     "en": "hair",
+     "fr": "cheveux"
+    },
+    {
+     "en": "eye",
+     "fr": "œil"
+    },
+    {
+     "en": "ear",
+     "fr": "oreille"
+    },
+    {
+     "en": "nose",
+     "fr": "nez"
+    },
+    {
+     "en": "mouth",
+     "fr": "bouche"
+    },
+    {
+     "en": "tooth / teeth",
+     "fr": "dent / dents"
+    },
+    {
+     "en": "neck",
+     "fr": "cou"
+    },
+    {
+     "en": "arm",
+     "fr": "bras"
+    },
+    {
+     "en": "hand",
+     "fr": "main"
+    },
+    {
+     "en": "finger",
+     "fr": "doigt"
+    },
+    {
+     "en": "leg",
+     "fr": "jambe"
+    },
+    {
+     "en": "foot / feet",
+     "fr": "pied / pieds"
+    },
+    {
+     "en": "back",
+     "fr": "dos"
+    },
+    {
+     "en": "stomach",
+     "fr": "ventre"
+    }
+   ]
+  },
+  {
+   "theme": "La maison",
+   "emoji": "🏠",
+   "mots": [
+    {
+     "en": "house",
+     "fr": "maison"
+    },
+    {
+     "en": "room",
+     "fr": "pièce"
+    },
+    {
+     "en": "bedroom",
+     "fr": "chambre"
+    },
+    {
+     "en": "kitchen",
+     "fr": "cuisine"
+    },
+    {
+     "en": "bathroom",
+     "fr": "salle de bain"
+    },
+    {
+     "en": "living room",
+     "fr": "salon"
+    },
+    {
+     "en": "door",
+     "fr": "porte"
+    },
+    {
+     "en": "window",
+     "fr": "fenêtre"
+    },
+    {
+     "en": "bed",
+     "fr": "lit"
+    },
+    {
+     "en": "table",
+     "fr": "table"
+    },
+    {
+     "en": "chair",
+     "fr": "chaise"
+    },
+    {
+     "en": "fridge",
+     "fr": "réfrigérateur"
+    },
+    {
+     "en": "fan",
+     "fr": "ventilateur"
+    },
+    {
+     "en": "yard",
+     "fr": "cour"
+    },
+    {
+     "en": "roof",
+     "fr": "toit"
+    }
+   ]
+  },
+  {
+   "theme": "L'école",
+   "emoji": "🏫",
+   "mots": [
+    {
+     "en": "school",
+     "fr": "école"
+    },
+    {
+     "en": "classroom",
+     "fr": "salle de classe"
+    },
+    {
+     "en": "teacher",
+     "fr": "enseignant"
+    },
+    {
+     "en": "pupil",
+     "fr": "élève"
+    },
+    {
+     "en": "book",
+     "fr": "livre"
+    },
+    {
+     "en": "notebook",
+     "fr": "cahier"
+    },
+    {
+     "en": "pen",
+     "fr": "stylo"
+    },
+    {
+     "en": "pencil",
+     "fr": "crayon"
+    },
+    {
+     "en": "ruler",
+     "fr": "règle"
+    },
+    {
+     "en": "bag",
+     "fr": "sac"
+    },
+    {
+     "en": "board",
+     "fr": "tableau"
+    },
+    {
+     "en": "homework",
+     "fr": "devoirs"
+    },
+    {
+     "en": "lesson",
+     "fr": "leçon"
+    },
+    {
+     "en": "test",
+     "fr": "contrôle"
+    },
+    {
+     "en": "break",
+     "fr": "récréation"
+    }
+   ]
+  },
+  {
+   "theme": "Les vêtements",
+   "emoji": "👕",
+   "mots": [
+    {
+     "en": "shirt",
+     "fr": "chemise"
+    },
+    {
+     "en": "T-shirt",
+     "fr": "t-shirt"
+    },
+    {
+     "en": "trousers",
+     "fr": "pantalon"
+    },
+    {
+     "en": "skirt",
+     "fr": "jupe"
+    },
+    {
+     "en": "dress",
+     "fr": "robe"
+    },
+    {
+     "en": "shoes",
+     "fr": "chaussures"
+    },
+    {
+     "en": "sandals",
+     "fr": "sandales"
+    },
+    {
+     "en": "hat",
+     "fr": "chapeau"
+    },
+    {
+     "en": "cap",
+     "fr": "casquette"
+    },
+    {
+     "en": "jacket",
+     "fr": "veste"
+    },
+    {
+     "en": "socks",
+     "fr": "chaussettes"
+    },
+    {
+     "en": "loincloth / wax fabric",
+     "fr": "pagne"
+    },
+    {
+     "en": "headscarf",
+     "fr": "foulard"
+    },
+    {
+     "en": "belt",
+     "fr": "ceinture"
+    },
+    {
+     "en": "uniform",
+     "fr": "uniforme"
+    }
+   ]
+  },
+  {
+   "theme": "Les couleurs",
+   "emoji": "🎨",
+   "mots": [
+    {
+     "en": "red",
+     "fr": "rouge"
+    },
+    {
+     "en": "blue",
+     "fr": "bleu"
+    },
+    {
+     "en": "green",
+     "fr": "vert"
+    },
+    {
+     "en": "yellow",
+     "fr": "jaune"
+    },
+    {
+     "en": "orange",
+     "fr": "orange"
+    },
+    {
+     "en": "purple",
+     "fr": "violet"
+    },
+    {
+     "en": "pink",
+     "fr": "rose"
+    },
+    {
+     "en": "black",
+     "fr": "noir"
+    },
+    {
+     "en": "white",
+     "fr": "blanc"
+    },
+    {
+     "en": "grey",
+     "fr": "gris"
+    },
+    {
+     "en": "brown",
+     "fr": "marron"
+    },
+    {
+     "en": "light",
+     "fr": "clair"
+    },
+    {
+     "en": "dark",
+     "fr": "foncé"
+    },
+    {
+     "en": "gold",
+     "fr": "doré"
+    },
+    {
+     "en": "silver",
+     "fr": "argenté"
+    }
+   ]
+  },
+  {
+   "theme": "La nourriture",
+   "emoji": "🍲",
+   "mots": [
+    {
+     "en": "rice",
+     "fr": "riz"
+    },
+    {
+     "en": "cassava",
+     "fr": "manioc"
+    },
+    {
+     "en": "yam",
+     "fr": "igname"
+    },
+    {
+     "en": "plantain",
+     "fr": "banane plantain"
+    },
+    {
+     "en": "chicken",
+     "fr": "poulet"
+    },
+    {
+     "en": "fish",
+     "fr": "poisson"
+    },
+    {
+     "en": "meat",
+     "fr": "viande"
+    },
+    {
+     "en": "egg",
+     "fr": "œuf"
+    },
+    {
+     "en": "beans",
+     "fr": "haricots"
+    },
+    {
+     "en": "sauce",
+     "fr": "sauce"
+    },
+    {
+     "en": "pepper",
+     "fr": "piment"
+    },
+    {
+     "en": "salt",
+     "fr": "sel"
+    },
+    {
+     "en": "sugar",
+     "fr": "sucre"
+    },
+    {
+     "en": "fruit",
+     "fr": "fruit"
+    },
+    {
+     "en": "vegetables",
+     "fr": "légumes"
+    }
+   ]
+  },
+  {
+   "theme": "Les animaux",
+   "emoji": "🐘",
+   "mots": [
+    {
+     "en": "dog",
+     "fr": "chien"
+    },
+    {
+     "en": "cat",
+     "fr": "chat"
+    },
+    {
+     "en": "chicken / hen",
+     "fr": "poule"
+    },
+    {
+     "en": "goat",
+     "fr": "chèvre"
+    },
+    {
+     "en": "sheep",
+     "fr": "mouton"
+    },
+    {
+     "en": "cow",
+     "fr": "vache"
+    },
+    {
+     "en": "horse",
+     "fr": "cheval"
+    },
+    {
+     "en": "elephant",
+     "fr": "éléphant"
+    },
+    {
+     "en": "lion",
+     "fr": "lion"
+    },
+    {
+     "en": "monkey",
+     "fr": "singe"
+    },
+    {
+     "en": "snake",
+     "fr": "serpent"
+    },
+    {
+     "en": "bird",
+     "fr": "oiseau"
+    },
+    {
+     "en": "fish",
+     "fr": "poisson"
+    },
+    {
+     "en": "mosquito",
+     "fr": "moustique"
+    },
+    {
+     "en": "turtle",
+     "fr": "tortue"
+    }
+   ]
+  },
+  {
+   "theme": "Les transports",
+   "emoji": "🚌",
+   "mots": [
+    {
+     "en": "car",
+     "fr": "voiture"
+    },
+    {
+     "en": "bus",
+     "fr": "bus"
+    },
+    {
+     "en": "taxi",
+     "fr": "taxi"
+    },
+    {
+     "en": "motorbike",
+     "fr": "moto"
+    },
+    {
+     "en": "bike",
+     "fr": "vélo"
+    },
+    {
+     "en": "train",
+     "fr": "train"
+    },
+    {
+     "en": "plane",
+     "fr": "avion"
+    },
+    {
+     "en": "boat",
+     "fr": "bateau"
+    },
+    {
+     "en": "canoe",
+     "fr": "pirogue"
+    },
+    {
+     "en": "road",
+     "fr": "route"
+    },
+    {
+     "en": "bus stop",
+     "fr": "arrêt de bus"
+    },
+    {
+     "en": "station",
+     "fr": "gare"
+    },
+    {
+     "en": "airport",
+     "fr": "aéroport"
+    },
+    {
+     "en": "ticket",
+     "fr": "ticket"
+    },
+    {
+     "en": "driver",
+     "fr": "chauffeur"
+    }
+   ]
+  },
+  {
+   "theme": "Les émotions",
+   "emoji": "😊",
+   "mots": [
+    {
+     "en": "happy",
+     "fr": "heureux"
+    },
+    {
+     "en": "sad",
+     "fr": "triste"
+    },
+    {
+     "en": "angry",
+     "fr": "en colère"
+    },
+    {
+     "en": "tired",
+     "fr": "fatigué"
+    },
+    {
+     "en": "hungry",
+     "fr": "affamé"
+    },
+    {
+     "en": "thirsty",
+     "fr": "assoiffé"
+    },
+    {
+     "en": "scared",
+     "fr": "effrayé"
+    },
+    {
+     "en": "bored",
+     "fr": "ennuyé"
+    },
+    {
+     "en": "excited",
+     "fr": "excité"
+    },
+    {
+     "en": "surprised",
+     "fr": "surpris"
+    },
+    {
+     "en": "worried",
+     "fr": "inquiet"
+    },
+    {
+     "en": "proud",
+     "fr": "fier"
+    },
+    {
+     "en": "calm",
+     "fr": "calme"
+    },
+    {
+     "en": "nervous",
+     "fr": "nerveux"
+    },
+    {
+     "en": "sick",
+     "fr": "malade"
+    }
+   ]
+  },
+  {
+   "theme": "Les verbes de tous les jours",
+   "emoji": "🔁",
+   "mots": [
+    {
+     "en": "wake up",
+     "fr": "se réveiller"
+    },
+    {
+     "en": "wash",
+     "fr": "laver"
+    },
+    {
+     "en": "eat",
+     "fr": "manger"
+    },
+    {
+     "en": "drink",
+     "fr": "boire"
+    },
+    {
+     "en": "go",
+     "fr": "aller"
+    },
+    {
+     "en": "come",
+     "fr": "venir"
+    },
+    {
+     "en": "work",
+     "fr": "travailler"
+    },
+    {
+     "en": "study",
+     "fr": "étudier"
+    },
+    {
+     "en": "play",
+     "fr": "jouer"
+    },
+    {
+     "en": "cook",
+     "fr": "cuisiner"
+    },
+    {
+     "en": "clean",
+     "fr": "nettoyer"
+    },
+    {
+     "en": "buy",
+     "fr": "acheter"
+    },
+    {
+     "en": "sell",
+     "fr": "vendre"
+    },
+    {
+     "en": "sleep",
+     "fr": "dormir"
+    },
+    {
+     "en": "pray",
+     "fr": "prier"
+    }
+   ]
+  }
+ ]
+}
