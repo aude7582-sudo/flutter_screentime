@@ -1,0 +1,183 @@
+{
+ "id": "en-n4-l06",
+ "langue": "en",
+ "niveau": 4,
+ "lecon": 6,
+ "cecrl": "B2",
+ "titre": "To do or doing?",
+ "objectifs": [
+  "Gerund vs infinitive",
+  "Verbs that change meaning",
+  "Common patterns"
+ ],
+ "etapes": [
+  {
+   "type": "explication",
+   "fr": "Après certains verbes : -ing (enjoy, avoid, finish, mind, suggest) ; après d'autres : to + verbe (want, decide, hope, promise, refuse).",
+   "en": "Some verbs take -ing, others take to + infinitive.",
+   "exemples": [
+    {
+     "en": "I enjoy cooking.",
+     "fr": "J'aime cuisiner."
+    },
+    {
+     "en": "She decided to leave.",
+     "fr": "Elle a décidé de partir."
+    },
+    {
+     "en": "Would you mind waiting?",
+     "fr": "Ça vous dérange d'attendre ?"
+    }
+   ]
+  },
+  {
+   "type": "explication",
+   "fr": "Le sens change avec : stop, remember, try, forget.",
+   "en": "Some verbs change meaning!",
+   "exemples": [
+    {
+     "en": "I stopped smoking.",
+     "fr": "J'ai arrêté de fumer."
+    },
+    {
+     "en": "I stopped to smoke.",
+     "fr": "Je me suis arrêté pour fumer."
+    },
+    {
+     "en": "Remember to lock the door.",
+     "fr": "Pense à fermer la porte."
+    },
+    {
+     "en": "I remember locking the door.",
+     "fr": "Je me souviens d'avoir fermé la porte."
+    },
+    {
+     "en": "Try to sleep.",
+     "fr": "Essaie de dormir (effort)."
+    },
+    {
+     "en": "Try drinking tea.",
+     "fr": "Essaie de boire du thé (pour voir)."
+    }
+   ]
+  },
+  {
+   "type": "vocabulaire",
+   "mots": [
+    {
+     "en": "avoid",
+     "fr": "éviter",
+     "pron": "a-voïd"
+    },
+    {
+     "en": "mind",
+     "fr": "déranger (would you mind)",
+     "pron": "maïnd"
+    },
+    {
+     "en": "suggest",
+     "fr": "suggérer",
+     "pron": "seu-djèst"
+    },
+    {
+     "en": "refuse",
+     "fr": "refuser",
+     "pron": "ri-fiouz"
+    },
+    {
+     "en": "look forward to + -ing",
+     "fr": "avoir hâte de",
+     "pron": "louk for-weurd tou"
+    },
+    {
+     "en": "be used to + -ing",
+     "fr": "être habitué à",
+     "pron": "bi youzd tou"
+    }
+   ]
+  },
+  {
+   "type": "dialogue",
+   "lignes": [
+    {
+     "qui": "prof",
+     "en": "Did you remember to send the report?",
+     "fr": "Tu as pensé à envoyer le rapport ?"
+    },
+    {
+     "qui": "eleve",
+     "en": "Yes, I remember sending it this morning.",
+     "fr": "Oui, je me souviens de l'avoir envoyé ce matin."
+    },
+    {
+     "qui": "prof",
+     "en": "Great. I'm looking forward to reading it.",
+     "fr": "Super. J'ai hâte de le lire."
+    }
+   ]
+  },
+  {
+   "type": "qcm",
+   "question": "« I look forward to ___ you. »",
+   "choix": [
+    "see",
+    "seeing",
+    "to see"
+   ],
+   "bonne": 1,
+   "explication": "look forward to + -ing."
+  },
+  {
+   "type": "qcm",
+   "question": "« J'ai arrêté de boire du soda » =",
+   "choix": [
+    "I stopped to drink soda.",
+    "I stopped drinking soda."
+   ],
+   "bonne": 1,
+   "explication": "stop + -ing = arrêter de."
+  },
+  {
+   "type": "qcm",
+   "question": "« She refused ___ the contract. »",
+   "choix": [
+    "signing",
+    "to sign",
+    "sign"
+   ],
+   "bonne": 1,
+   "explication": "refuse + to."
+  },
+  {
+   "type": "ordre",
+   "en": "Would you mind closing the window",
+   "fr": "Ça vous dérangerait de fermer la fenêtre"
+  },
+  {
+   "type": "traduire",
+   "fr": "Je suis habitué à me lever tôt.",
+   "reponses": [
+    "I'm used to getting up early.",
+    "I am used to getting up early.",
+    "I'm used to waking up early."
+   ]
+  },
+  {
+   "type": "ecoute",
+   "en": "Don't forget to call your mum.",
+   "choix": [
+    "N'oublie pas d'appeler ta mère.",
+    "Tu as oublié d'appeler ta mère.",
+    "Je n'oublie pas ta mère."
+   ],
+   "bonne": 0
+  },
+  {
+   "type": "repeter",
+   "en": "I really enjoy learning new words every day.",
+   "fr": "J'aime vraiment apprendre de nouveaux mots chaque jour."
+  }
+ ],
+ "resume": "-ing after enjoy, avoid, finish, mind, suggest, look forward to, be used to. to + verb after want, decide, hope, refuse. stop/remember/try/forget change meaning.",
+ "devoir": "Write 6 sentences using stop, remember and try with both forms."
+}

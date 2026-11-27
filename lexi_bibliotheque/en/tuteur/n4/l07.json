@@ -1,0 +1,169 @@
+{
+ "id": "en-n4-l07",
+ "langue": "en",
+ "niveau": 4,
+ "lecon": 7,
+ "cecrl": "B2",
+ "titre": "Idioms everyone uses",
+ "objectifs": [
+  "Understand common idioms",
+  "Use them naturally",
+  "Avoid literal translation"
+ ],
+ "etapes": [
+  {
+   "type": "explication",
+   "fr": "Une expression idiomatique ne se traduit pas mot à mot. Voici celles qu'on entend tous les jours.",
+   "en": "Idioms don't mean what the words say. Here are the most common ones.",
+   "exemples": [
+    {
+     "en": "It's a piece of cake.",
+     "fr": "C'est du gâteau / très facile."
+    },
+    {
+     "en": "Break a leg!",
+     "fr": "Bonne chance ! (avant un spectacle)"
+    },
+    {
+     "en": "I'm over the moon.",
+     "fr": "Je suis aux anges."
+    },
+    {
+     "en": "Let's call it a day.",
+     "fr": "Arrêtons-nous là pour aujourd'hui."
+    },
+    {
+     "en": "It costs an arm and a leg.",
+     "fr": "Ça coûte les yeux de la tête."
+    },
+    {
+     "en": "Break the ice",
+     "fr": "Briser la glace"
+    }
+   ]
+  },
+  {
+   "type": "vocabulaire",
+   "mots": [
+    {
+     "en": "hit the books",
+     "fr": "se mettre à étudier",
+     "pron": "hit ze bouks"
+    },
+    {
+     "en": "under the weather",
+     "fr": "pas en forme",
+     "pron": "eun-deur ze wè-zeur"
+    },
+    {
+     "en": "once in a blue moon",
+     "fr": "tous les 36 du mois",
+     "pron": "wanss inn e blou moun"
+    },
+    {
+     "en": "on the same page",
+     "fr": "sur la même longueur d'onde",
+     "pron": "onn ze sèïm pèïdj"
+    },
+    {
+     "en": "the ball is in your court",
+     "fr": "la balle est dans ton camp",
+     "pron": "ze bol iz inn yor kort"
+    },
+    {
+     "en": "get the hang of it",
+     "fr": "prendre le coup de main",
+     "pron": "guèt ze hang ov it"
+    }
+   ]
+  },
+  {
+   "type": "dialogue",
+   "lignes": [
+    {
+     "qui": "autre",
+     "en": "How was the exam?",
+     "fr": "Comment était l'examen ?"
+    },
+    {
+     "qui": "eleve",
+     "en": "A piece of cake! I hit the books all week.",
+     "fr": "Du gâteau ! J'ai bossé toute la semaine."
+    },
+    {
+     "qui": "autre",
+     "en": "I'm over the moon for you! Let's celebrate tonight.",
+     "fr": "Je suis trop content pour toi ! On fête ça ce soir."
+    },
+    {
+     "qui": "eleve",
+     "en": "Sorry, I'm a bit under the weather. Let's call it a day.",
+     "fr": "Désolé, je ne suis pas en forme. On s'arrête là pour aujourd'hui."
+    }
+   ]
+  },
+  {
+   "type": "qcm",
+   "question": "« It costs an arm and a leg » means…",
+   "choix": [
+    "It's dangerous.",
+    "It's very expensive.",
+    "It's broken."
+   ],
+   "bonne": 1,
+   "explication": "Très cher."
+  },
+  {
+   "type": "qcm",
+   "question": "« I'm under the weather » means…",
+   "choix": [
+    "I'm sick / not well.",
+    "I'm outside.",
+    "I'm happy."
+   ],
+   "bonne": 0,
+   "explication": "Pas en forme."
+  },
+  {
+   "type": "qcm",
+   "question": "Avant un concert, tu dis à ton ami :",
+   "choix": [
+    "Break a leg!",
+    "Hit the books!",
+    "Call it a day!"
+   ],
+   "bonne": 0,
+   "explication": "Break a leg = bonne chance."
+  },
+  {
+   "type": "ordre",
+   "en": "Now the ball is in your court",
+   "fr": "Maintenant la balle est dans ton camp"
+  },
+  {
+   "type": "traduire",
+   "fr": "Ce n'est pas facile au début, mais tu vas prendre le coup de main.",
+   "reponses": [
+    "It's not easy at first, but you'll get the hang of it.",
+    "It isn't easy at first, but you will get the hang of it."
+   ]
+  },
+  {
+   "type": "ecoute",
+   "en": "We're on the same page.",
+   "choix": [
+    "Nous sommes sur la même longueur d'onde.",
+    "Nous lisons la même page.",
+    "Nous avons le même livre."
+   ],
+   "bonne": 0
+  },
+  {
+   "type": "repeter",
+   "en": "Learning idioms is not a piece of cake, but I'm getting the hang of it!",
+   "fr": "Apprendre les expressions n'est pas facile, mais je prends le coup de main !"
+  }
+ ],
+ "resume": "a piece of cake, break a leg, over the moon, call it a day, an arm and a leg, break the ice, under the weather, get the hang of it.",
+ "devoir": "Use 4 idioms from today in a short dialogue."
+}

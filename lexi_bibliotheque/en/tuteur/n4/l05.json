@@ -1,0 +1,153 @@
+{
+ "id": "en-n4-l05",
+ "langue": "en",
+ "niveau": 4,
+ "lecon": 5,
+ "cecrl": "B2",
+ "titre": "Pros and cons",
+ "objectifs": [
+  "Build an argument",
+  "Contrast connectors",
+  "Formal linking words"
+ ],
+ "etapes": [
+  {
+   "type": "explication",
+   "fr": "however (cependant), whereas (alors que), despite / in spite of + nom ou -ing (malgré), on the one hand… on the other hand…",
+   "en": "Use contrast connectors to build a balanced argument.",
+   "exemples": [
+    {
+     "en": "City life is exciting; however, it is expensive.",
+     "fr": "La vie en ville est excitante ; cependant, elle coûte cher."
+    },
+    {
+     "en": "Despite the rain, we went out.",
+     "fr": "Malgré la pluie, nous sommes sortis."
+    },
+    {
+     "en": "Abidjan is busy, whereas Man is calm.",
+     "fr": "Abidjan est animée, alors que Man est calme."
+    }
+   ]
+  },
+  {
+   "type": "explication",
+   "fr": "Piège : « despite » n'est jamais suivi de « of ». On dit « despite the rain » ou « in spite of the rain ».",
+   "en": "Never say « despite of »!"
+  },
+  {
+   "type": "vocabulaire",
+   "mots": [
+    {
+     "en": "moreover / furthermore",
+     "fr": "de plus",
+     "pron": "mor-o-veur / feur-zeur-mor"
+    },
+    {
+     "en": "therefore",
+     "fr": "par conséquent",
+     "pron": "zèr-for"
+    },
+    {
+     "en": "nevertheless",
+     "fr": "néanmoins",
+     "pron": "nè-veur-zeu-lèss"
+    },
+    {
+     "en": "to sum up",
+     "fr": "pour résumer",
+     "pron": "tou sam eup"
+    },
+    {
+     "en": "drawback",
+     "fr": "inconvénient",
+     "pron": "dro-bak"
+    },
+    {
+     "en": "benefit",
+     "fr": "bénéfice",
+     "pron": "bè-né-fit"
+    }
+   ]
+  },
+  {
+   "type": "dialogue",
+   "lignes": [
+    {
+     "qui": "prof",
+     "en": "Should young people move abroad to work?",
+     "fr": "Les jeunes devraient-ils partir travailler à l'étranger ?"
+    },
+    {
+     "qui": "eleve",
+     "en": "On the one hand, they can earn more and gain experience. On the other hand, the country loses talent.",
+     "fr": "D'un côté, ils gagnent plus et prennent de l'expérience. De l'autre, le pays perd des talents."
+    },
+    {
+     "qui": "prof",
+     "en": "Good. And your conclusion?",
+     "fr": "Bien. Et ta conclusion ?"
+    },
+    {
+     "qui": "eleve",
+     "en": "To sum up, going abroad is positive, provided that they come back to share what they learned.",
+     "fr": "Pour résumer, partir est positif, à condition qu'ils reviennent partager ce qu'ils ont appris."
+    }
+   ]
+  },
+  {
+   "type": "qcm",
+   "question": "« ___ the traffic, we arrived on time. »",
+   "choix": [
+    "Despite of",
+    "Despite",
+    "Although"
+   ],
+   "bonne": 1,
+   "explication": "Despite + nom."
+  },
+  {
+   "type": "qcm",
+   "question": "« par conséquent » =",
+   "choix": [
+    "however",
+    "therefore",
+    "whereas"
+   ],
+   "bonne": 1,
+   "explication": "therefore."
+  },
+  {
+   "type": "ordre",
+   "en": "However it is too expensive for most people",
+   "fr": "Cependant c'est trop cher pour la plupart des gens"
+  },
+  {
+   "type": "traduire",
+   "fr": "Malgré la fatigue, elle a continué à travailler.",
+   "reponses": [
+    "Despite being tired, she kept working.",
+    "Despite her tiredness, she kept working.",
+    "In spite of being tired, she continued working.",
+    "Despite being tired, she continued to work."
+   ]
+  },
+  {
+   "type": "ecoute",
+   "en": "Nevertheless, the results were good.",
+   "choix": [
+    "Néanmoins, les résultats étaient bons.",
+    "Par conséquent, les résultats étaient bons.",
+    "De plus, les résultats étaient bons."
+   ],
+   "bonne": 0
+  },
+  {
+   "type": "repeter",
+   "en": "On the one hand it's cheaper; on the other hand, it takes longer.",
+   "fr": "D'un côté c'est moins cher ; de l'autre, ça prend plus de temps."
+  }
+ ],
+ "resume": "however, whereas, despite / in spite of (+ noun/-ing), moreover, therefore, nevertheless, to sum up.",
+ "devoir": "Write a short essay (10 lines): « Social media: more pros or cons? »"
+}

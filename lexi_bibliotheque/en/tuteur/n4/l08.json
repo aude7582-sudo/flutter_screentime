@@ -1,0 +1,152 @@
+{
+ "id": "en-n4-l08",
+ "langue": "en",
+ "niveau": 4,
+ "lecon": 8,
+ "cecrl": "B2",
+ "titre": "Meetings and negotiation",
+ "objectifs": [
+  "Take part in a meeting",
+  "Suggest, accept and refuse",
+  "Negotiate politely"
+ ],
+ "etapes": [
+  {
+   "type": "explication",
+   "fr": "Suggérer : How about…? / What if we…? / I suggest that we… / Shall we…?",
+   "en": "Use soft language to make suggestions.",
+   "exemples": [
+    {
+     "en": "How about meeting on Friday?",
+     "fr": "Et si on se réunissait vendredi ?"
+    },
+    {
+     "en": "What if we reduced the price?",
+     "fr": "Et si on baissait le prix ?"
+    }
+   ]
+  },
+  {
+   "type": "explication",
+   "fr": "Négocier : I'd rather… (je préférerais), That's a fair point, Could you meet us halfway? (faire un compromis), That sounds reasonable, I'm afraid that's not possible.",
+   "en": "Polite negotiation keeps relationships good."
+  },
+  {
+   "type": "vocabulaire",
+   "mots": [
+    {
+     "en": "agenda",
+     "fr": "ordre du jour",
+     "pron": "a-djènn-da"
+    },
+    {
+     "en": "deadline",
+     "fr": "date limite",
+     "pron": "dèd-laïn"
+    },
+    {
+     "en": "budget",
+     "fr": "budget",
+     "pron": "ba-djit"
+    },
+    {
+     "en": "deal",
+     "fr": "accord",
+     "pron": "dil"
+    },
+    {
+     "en": "compromise",
+     "fr": "compromis",
+     "pron": "komm-pro-maïz"
+    },
+    {
+     "en": "postpone",
+     "fr": "reporter",
+     "pron": "post-pone"
+    },
+    {
+     "en": "follow up",
+     "fr": "faire le suivi",
+     "pron": "fo-lo eup"
+    }
+   ]
+  },
+  {
+   "type": "dialogue",
+   "lignes": [
+    {
+     "qui": "autre",
+     "en": "Our price is 2 million francs for the full project.",
+     "fr": "Notre prix est de 2 millions pour tout le projet."
+    },
+    {
+     "qui": "eleve",
+     "en": "That's a bit above our budget. Could you meet us halfway?",
+     "fr": "C'est un peu au-dessus de notre budget. Pouvez-vous faire un effort ?"
+    },
+    {
+     "qui": "autre",
+     "en": "What if we delivered in two phases? That would lower the first payment.",
+     "fr": "Et si nous livrions en deux phases ? Ça réduirait le premier paiement."
+    },
+    {
+     "qui": "eleve",
+     "en": "That sounds reasonable. Let's follow up by email and confirm the deadline.",
+     "fr": "Ça me semble raisonnable. On fait le suivi par e-mail et on confirme la date limite."
+    }
+   ]
+  },
+  {
+   "type": "qcm",
+   "question": "« Je préférerais » =",
+   "choix": [
+    "I'd rather",
+    "I'd better",
+    "I'd prefer to rather"
+   ],
+   "bonne": 0,
+   "explication": "I'd rather."
+  },
+  {
+   "type": "qcm",
+   "question": "« Reporter la réunion » =",
+   "choix": [
+    "postpone the meeting",
+    "post the meeting",
+    "follow the meeting"
+   ],
+   "bonne": 0,
+   "explication": "postpone."
+  },
+  {
+   "type": "ordre",
+   "en": "How about meeting again next week",
+   "fr": "Et si on se revoyait la semaine prochaine"
+  },
+  {
+   "type": "traduire",
+   "fr": "Pourriez-vous nous envoyer l'ordre du jour ?",
+   "reponses": [
+    "Could you send us the agenda?",
+    "Could you please send us the agenda?"
+   ]
+  },
+  {
+   "type": "ecoute",
+   "en": "I'm afraid that's not possible.",
+   "choix": [
+    "J'ai bien peur que ce ne soit pas possible.",
+    "J'ai peur, ce n'est pas possible.",
+    "C'est tout à fait possible."
+   ],
+   "bonne": 0
+  },
+  {
+   "type": "repeter",
+   "en": "That's a fair point. Let's find a compromise.",
+   "fr": "C'est un argument valable. Trouvons un compromis."
+  }
+ ],
+ "resume": "How about / What if / Shall we. I'd rather. Could you meet us halfway? That sounds reasonable. agenda, deadline, postpone, follow up.",
+ "devoir": "Write a short negotiation between a seller and a client (8 lines)."
+}

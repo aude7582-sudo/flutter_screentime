@@ -1,0 +1,133 @@
+{
+ "id": "en-n4-l09",
+ "langue": "en",
+ "niveau": 4,
+ "lecon": 9,
+ "cecrl": "B2",
+ "titre": "The news",
+ "objectifs": [
+  "Understand news reports",
+  "Impersonal passive: it is said that…",
+  "News vocabulary"
+ ],
+ "etapes": [
+  {
+   "type": "explication",
+   "fr": "Les journaux utilisent souvent le passif impersonnel pour rester prudents.",
+   "en": "News uses the impersonal passive to stay neutral.",
+   "exemples": [
+    {
+     "en": "It is said that the bridge will open soon.",
+     "fr": "On dit que le pont ouvrira bientôt."
+    },
+    {
+     "en": "The minister is expected to resign.",
+     "fr": "Le ministre devrait démissionner."
+    },
+    {
+     "en": "Prices are reported to have risen by 10%.",
+     "fr": "Les prix auraient augmenté de 10 %."
+    }
+   ]
+  },
+  {
+   "type": "vocabulaire",
+   "mots": [
+    {
+     "en": "headline",
+     "fr": "gros titre",
+     "pron": "hèd-laïn"
+    },
+    {
+     "en": "rise / fall",
+     "fr": "hausse / baisse",
+     "pron": "raïz / fol"
+    },
+    {
+     "en": "election",
+     "fr": "élection",
+     "pron": "i-lèk-cheunn"
+    },
+    {
+     "en": "government",
+     "fr": "gouvernement",
+     "pron": "ga-veurn-meunt"
+    },
+    {
+     "en": "reportedly",
+     "fr": "selon les informations",
+     "pron": "ri-por-tid-li"
+    },
+    {
+     "en": "breaking news",
+     "fr": "dernière minute",
+     "pron": "brèï-king niouz"
+    },
+    {
+     "en": "flood",
+     "fr": "inondation",
+     "pron": "flad"
+    }
+   ]
+  },
+  {
+   "type": "explication",
+   "fr": "Lecture : « Heavy rains have caused floods in several districts of Abidjan. Hundreds of families are reported to have lost their homes. The government is expected to announce emergency measures today. »",
+   "en": "Read the article and notice the passive forms."
+  },
+  {
+   "type": "qcm",
+   "question": "« The president is expected to speak » =",
+   "choix": [
+    "Le président a parlé.",
+    "Le président devrait parler.",
+    "Le président attend de parler."
+   ],
+   "bonne": 1,
+   "explication": "is expected to = devrait."
+  },
+  {
+   "type": "qcm",
+   "question": "« It is believed that… » =",
+   "choix": [
+    "On croit que…",
+    "Il croit que…",
+    "Je crois que…"
+   ],
+   "bonne": 0,
+   "explication": "Passif impersonnel = on."
+  },
+  {
+   "type": "ordre",
+   "en": "The company is said to be very profitable",
+   "fr": "On dit que l'entreprise est très rentable"
+  },
+  {
+   "type": "traduire",
+   "fr": "On pense que les prix vont baisser.",
+   "reponses": [
+    "It is thought that prices will fall.",
+    "It is believed that prices will fall.",
+    "Prices are thought to be falling.",
+    "It's thought that prices will fall."
+   ]
+  },
+  {
+   "type": "ecoute",
+   "en": "Breaking news: the match has been postponed.",
+   "choix": [
+    "Dernière minute : le match a été reporté.",
+    "Dernière minute : le match a été gagné.",
+    "Le match commence maintenant."
+   ],
+   "bonne": 0
+  },
+  {
+   "type": "repeter",
+   "en": "Hundreds of families are reported to have lost their homes.",
+   "fr": "Des centaines de familles auraient perdu leur maison."
+  }
+ ],
+ "resume": "It is said/thought/believed that… / X is said/expected/reported to… News words: headline, breaking news, rise, fall.",
+ "devoir": "Read a short English news article online and summarise it in 4 sentences."
+}

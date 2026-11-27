@@ -1,0 +1,124 @@
+{
+ "id": "en-n4-l10",
+ "langue": "en",
+ "niveau": 4,
+ "lecon": 10,
+ "cecrl": "B2",
+ "titre": "Telling a great story",
+ "objectifs": [
+  "Tell a captivating story",
+  "Combine narrative tenses",
+  "Add suspense"
+ ],
+ "etapes": [
+  {
+   "type": "explication",
+   "fr": "Un bon récit mélange : passé continu (décor), passé simple (actions), past perfect (ce qui s'était passé avant).",
+   "en": "Mix past continuous (background), past simple (main events) and past perfect (earlier events)."
+  },
+  {
+   "type": "vocabulaire",
+   "mots": [
+    {
+     "en": "all of a sudden",
+     "fr": "tout à coup",
+     "pron": "ol ov e sa-deunn"
+    },
+    {
+     "en": "it turned out that",
+     "fr": "il s'est avéré que",
+     "pron": "it teurnd aout zat"
+    },
+    {
+     "en": "to my surprise",
+     "fr": "à ma grande surprise",
+     "pron": "tou maï seur-praïz"
+    },
+    {
+     "en": "meanwhile",
+     "fr": "pendant ce temps",
+     "pron": "min-waïl"
+    },
+    {
+     "en": "in the end",
+     "fr": "à la fin",
+     "pron": "inn zi ènd"
+    },
+    {
+     "en": "scared to death",
+     "fr": "mort de peur",
+     "pron": "skèrd tou dès"
+    }
+   ]
+  },
+  {
+   "type": "explication",
+   "fr": "Lecture : « It was raining heavily and I was walking home alone. All of a sudden, I heard footsteps behind me. I had heard stories about thieves in that street, so I started to run. To my surprise, the footsteps ran too! In the end, I turned around… It turned out that it was my little brother, who had followed me to borrow some money! »",
+   "en": "Notice the three past tenses working together."
+  },
+  {
+   "type": "qcm",
+   "question": "In the story, why did the narrator run?",
+   "choix": [
+    "Because it was raining.",
+    "Because he had heard stories about thieves.",
+    "Because he was late."
+   ],
+   "bonne": 1,
+   "explication": "He had heard stories about thieves."
+  },
+  {
+   "type": "qcm",
+   "question": "Who was behind him?",
+   "choix": [
+    "A thief",
+    "His little brother",
+    "A dog"
+   ],
+   "bonne": 1,
+   "explication": "It turned out that it was his little brother."
+  },
+  {
+   "type": "qcm",
+   "question": "« il s'est avéré que » =",
+   "choix": [
+    "it turned out that",
+    "it turned around that",
+    "in the end that"
+   ],
+   "bonne": 0,
+   "explication": "it turned out that."
+  },
+  {
+   "type": "ordre",
+   "en": "All of a sudden the lights went out",
+   "fr": "Tout à coup la lumière s'est éteinte"
+  },
+  {
+   "type": "traduire",
+   "fr": "Pendant qu'il dormait, quelqu'un était entré dans la maison.",
+   "reponses": [
+    "While he was sleeping, someone had entered the house.",
+    "While he was asleep, someone had come into the house.",
+    "While he was sleeping, somebody had entered the house."
+   ]
+  },
+  {
+   "type": "ecoute",
+   "en": "To my surprise, everybody was waiting for me.",
+   "choix": [
+    "À ma grande surprise, tout le monde m'attendait.",
+    "Je n'étais pas surpris, personne n'était là.",
+    "Tout le monde a été surpris de me voir."
+   ],
+   "bonne": 0
+  },
+  {
+   "type": "repeter",
+   "en": "It was a dark night and I was walking home alone…",
+   "fr": "C'était une nuit sombre et je rentrais seul(e) chez moi…"
+  }
+ ],
+ "resume": "Past continuous = background, past simple = events, past perfect = before. All of a sudden, it turned out that, to my surprise, in the end.",
+ "devoir": "Write and record a 1-minute story with suspense."
+}

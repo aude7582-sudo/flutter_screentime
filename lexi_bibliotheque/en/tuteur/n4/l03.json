@@ -1,0 +1,148 @@
+{
+ "id": "en-n4-l03",
+ "langue": "en",
+ "niveau": 4,
+ "lecon": 3,
+ "cecrl": "B2",
+ "titre": "Getting things done",
+ "objectifs": [
+  "Talk about services",
+  "Causative have/get something done",
+  "Services vocabulary"
+ ],
+ "etapes": [
+  {
+   "type": "explication",
+   "fr": "have/get + objet + participe : on fait faire quelque chose par quelqu'un d'autre.",
+   "en": "Use have/get + object + past participle when someone else does the job for you.",
+   "exemples": [
+    {
+     "en": "I had my hair braided.",
+     "fr": "Je me suis fait tresser."
+    },
+    {
+     "en": "We're getting the car repaired.",
+     "fr": "On fait réparer la voiture."
+    },
+    {
+     "en": "She got her phone screen changed.",
+     "fr": "Elle a fait changer l'écran de son téléphone."
+    }
+   ]
+  },
+  {
+   "type": "vocabulaire",
+   "mots": [
+    {
+     "en": "repair",
+     "fr": "réparer",
+     "pron": "ri-pèr"
+    },
+    {
+     "en": "deliver",
+     "fr": "livrer",
+     "pron": "di-li-veur"
+    },
+    {
+     "en": "tailor-made",
+     "fr": "sur mesure",
+     "pron": "tèï-leur mèïd"
+    },
+    {
+     "en": "install",
+     "fr": "installer",
+     "pron": "inn-stol"
+    },
+    {
+     "en": "paint",
+     "fr": "peindre",
+     "pron": "pèïnt"
+    },
+    {
+     "en": "check",
+     "fr": "vérifier",
+     "pron": "tchèk"
+    }
+   ]
+  },
+  {
+   "type": "dialogue",
+   "lignes": [
+    {
+     "qui": "autre",
+     "en": "Your outfit is beautiful! Did you buy it?",
+     "fr": "Ta tenue est magnifique ! Tu l'as achetée ?"
+    },
+    {
+     "qui": "eleve",
+     "en": "No, I had it made by a tailor in Treichville.",
+     "fr": "Non, je l'ai fait faire par un couturier à Treichville."
+    },
+    {
+     "qui": "autre",
+     "en": "I need to get my wedding dress adjusted. Is he good?",
+     "fr": "Je dois faire ajuster ma robe de mariée. Il est bon ?"
+    },
+    {
+     "qui": "eleve",
+     "en": "The best! He also had my brother's suit delivered the same day.",
+     "fr": "Le meilleur ! Il a même fait livrer le costume de mon frère le jour même."
+    }
+   ]
+  },
+  {
+   "type": "qcm",
+   "question": "« Je fais réparer mon téléphone » =",
+   "choix": [
+    "I repair my phone.",
+    "I'm having my phone repaired.",
+    "I have repaired my phone."
+   ],
+   "bonne": 1,
+   "explication": "have + objet + participe."
+  },
+  {
+   "type": "qcm",
+   "question": "« She got her nails ___. »",
+   "choix": [
+    "do",
+    "did",
+    "done"
+   ],
+   "bonne": 2,
+   "explication": "Participe : done."
+  },
+  {
+   "type": "ordre",
+   "en": "We had the house painted last year",
+   "fr": "Nous avons fait peindre la maison l'an dernier"
+  },
+  {
+   "type": "traduire",
+   "fr": "Je dois faire vérifier ma voiture.",
+   "reponses": [
+    "I need to have my car checked.",
+    "I need to get my car checked.",
+    "I have to get my car checked.",
+    "I have to have my car checked."
+   ]
+  },
+  {
+   "type": "ecoute",
+   "en": "Where did you get your hair done?",
+   "choix": [
+    "Où t'es-tu fait coiffer ?",
+    "Où as-tu acheté tes cheveux ?",
+    "Où as-tu lavé tes cheveux ?"
+   ],
+   "bonne": 0
+  },
+  {
+   "type": "repeter",
+   "en": "I'm going to have my dress made for the wedding.",
+   "fr": "Je vais faire faire ma robe pour le mariage."
+  }
+ ],
+ "resume": "have/get + object + past participle = someone does it for you.",
+ "devoir": "List 5 things you have had done recently or want to get done."
+}

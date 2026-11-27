@@ -1,0 +1,142 @@
+{
+ "id": "en-n4-l02",
+ "langue": "en",
+ "niveau": 4,
+ "lecon": 2,
+ "cecrl": "B2",
+ "titre": "I wish…",
+ "objectifs": [
+  "Express wishes and regrets",
+  "wish / if only + past / past perfect",
+  "wish + would for complaints"
+ ],
+ "etapes": [
+  {
+   "type": "explication",
+   "fr": "wish + passé = souhait sur le présent ; wish + past perfect = regret sur le passé ; wish + would = agacement.",
+   "en": "wish + past (present wish), wish + past perfect (past regret), wish + would (annoyance).",
+   "exemples": [
+    {
+     "en": "I wish I had more time.",
+     "fr": "J'aimerais avoir plus de temps."
+    },
+    {
+     "en": "I wish I hadn't said that.",
+     "fr": "Je regrette d'avoir dit ça."
+    },
+    {
+     "en": "I wish you would stop shouting!",
+     "fr": "J'aimerais que tu arrêtes de crier !"
+    }
+   ]
+  },
+  {
+   "type": "explication",
+   "fr": "« If only » est plus fort, plus émotionnel.",
+   "en": "« If only » is a stronger version of « I wish ».",
+   "exemples": [
+    {
+     "en": "If only I could fly!",
+     "fr": "Si seulement je pouvais voler !"
+    }
+   ]
+  },
+  {
+   "type": "vocabulaire",
+   "mots": [
+    {
+     "en": "wish",
+     "fr": "souhaiter",
+     "pron": "wich"
+    },
+    {
+     "en": "if only",
+     "fr": "si seulement",
+     "pron": "if onn-li"
+    },
+    {
+     "en": "annoying",
+     "fr": "agaçant",
+     "pron": "a-noï-ing"
+    },
+    {
+     "en": "fluent",
+     "fr": "courant (langue)",
+     "pron": "flou-eunt"
+    }
+   ]
+  },
+  {
+   "type": "dialogue",
+   "lignes": [
+    {
+     "qui": "eleve",
+     "en": "I wish I spoke English as well as you.",
+     "fr": "J'aimerais parler anglais aussi bien que toi."
+    },
+    {
+     "qui": "prof",
+     "en": "You will! I wish I had started practising earlier, like you.",
+     "fr": "Ça viendra ! Moi, je regrette de ne pas avoir pratiqué plus tôt, comme toi."
+    },
+    {
+     "qui": "eleve",
+     "en": "And I wish my neighbours would turn their music down at night!",
+     "fr": "Et j'aimerais que mes voisins baissent leur musique la nuit !"
+    }
+   ]
+  },
+  {
+   "type": "qcm",
+   "question": "Regret about the past: « I wish I ___ harder. »",
+   "choix": [
+    "studied",
+    "had studied",
+    "would study"
+   ],
+   "bonne": 1,
+   "explication": "Passé → had studied."
+  },
+  {
+   "type": "qcm",
+   "question": "Present wish: « I wish I ___ taller. »",
+   "choix": [
+    "am",
+    "were",
+    "would be"
+   ],
+   "bonne": 1,
+   "explication": "I wish I were…"
+  },
+  {
+   "type": "ordre",
+   "en": "I wish I could speak Chinese",
+   "fr": "J'aimerais pouvoir parler chinois"
+  },
+  {
+   "type": "traduire",
+   "fr": "Je regrette de ne pas être venu.",
+   "reponses": [
+    "I wish I had come.",
+    "I wish I'd come."
+   ]
+  },
+  {
+   "type": "ecoute",
+   "en": "If only it would stop raining!",
+   "choix": [
+    "Si seulement il arrêtait de pleuvoir !",
+    "Il a enfin arrêté de pleuvoir !",
+    "S'il pleut, on reste !"
+   ],
+   "bonne": 0
+  },
+  {
+   "type": "repeter",
+   "en": "I wish I had more free time to read.",
+   "fr": "J'aimerais avoir plus de temps libre pour lire."
+  }
+ ],
+ "resume": "wish + past = now; wish + past perfect = past regret; wish + would = annoyance. If only = stronger.",
+ "devoir": "Write 3 wishes about your present, 2 regrets about the past and 1 annoyance."
+}

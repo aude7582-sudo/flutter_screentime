@@ -1,0 +1,147 @@
+{
+ "id": "en-n4-l01",
+ "langue": "en",
+ "niveau": 4,
+ "lecon": 1,
+ "cecrl": "B2",
+ "titre": "If I had known",
+ "objectifs": [
+  "Talk about past regrets",
+  "Third conditional",
+  "Mixed conditionals"
+ ],
+ "etapes": [
+  {
+   "type": "explication",
+   "fr": "Type 3 = passé imaginaire : If + past perfect, would have + participe.",
+   "en": "Third conditional: If + past perfect, would have + past participle. It talks about a past that did not happen.",
+   "exemples": [
+    {
+     "en": "If I had studied, I would have passed.",
+     "fr": "Si j'avais étudié, j'aurais réussi."
+    },
+    {
+     "en": "If we had left earlier, we wouldn't have missed the flight.",
+     "fr": "Si nous étions partis plus tôt, nous n'aurions pas raté le vol."
+    }
+   ]
+  },
+  {
+   "type": "explication",
+   "fr": "Conditionnel mixte : une condition passée avec un résultat présent.",
+   "en": "Mixed: past condition → present result.",
+   "exemples": [
+    {
+     "en": "If I had accepted that job, I would be rich now.",
+     "fr": "Si j'avais accepté ce poste, je serais riche maintenant."
+    },
+    {
+     "en": "If she weren't so shy, she would have spoken.",
+     "fr": "Si elle n'était pas si timide, elle aurait parlé."
+    }
+   ]
+  },
+  {
+   "type": "vocabulaire",
+   "mots": [
+    {
+     "en": "regret",
+     "fr": "regretter",
+     "pron": "ri-grèt"
+    },
+    {
+     "en": "miss an opportunity",
+     "fr": "rater une occasion",
+     "pron": "miss ann o-por-tiou-ni-ti"
+    },
+    {
+     "en": "turn down",
+     "fr": "refuser",
+     "pron": "teurn daoun"
+    },
+    {
+     "en": "in hindsight",
+     "fr": "avec le recul",
+     "pron": "inn haïnd-saït"
+    },
+    {
+     "en": "make a mistake",
+     "fr": "faire une erreur",
+     "pron": "mèïk e mis-tèïk"
+    }
+   ]
+  },
+  {
+   "type": "dialogue",
+   "lignes": [
+    {
+     "qui": "prof",
+     "en": "Do you have any regrets about your studies?",
+     "fr": "Tu as des regrets sur tes études ?"
+    },
+    {
+     "qui": "eleve",
+     "en": "A few. If I had chosen computer science, I would have more job offers today.",
+     "fr": "Quelques-uns. Si j'avais choisi l'informatique, j'aurais plus d'offres aujourd'hui."
+    },
+    {
+     "qui": "prof",
+     "en": "In hindsight, maybe. But if you hadn't studied law, you wouldn't have met your best friends!",
+     "fr": "Avec le recul, peut-être. Mais sans le droit, tu n'aurais pas rencontré tes meilleurs amis !"
+    }
+   ]
+  },
+  {
+   "type": "qcm",
+   "question": "« If you ___ me, I would have helped. »",
+   "choix": [
+    "told",
+    "had told",
+    "would tell"
+   ],
+   "bonne": 1,
+   "explication": "Type 3 : had told."
+  },
+  {
+   "type": "qcm",
+   "question": "« If I had saved money, I ___ a car now. » (mixte)",
+   "choix": [
+    "would have",
+    "would have had",
+    "had"
+   ],
+   "bonne": 0,
+   "explication": "Résultat présent → would have (verbe have)."
+  },
+  {
+   "type": "ordre",
+   "en": "I would have called if I had known",
+   "fr": "J'aurais appelé si j'avais su"
+  },
+  {
+   "type": "traduire",
+   "fr": "Si j'avais su, je ne serais pas venu.",
+   "reponses": [
+    "If I had known, I wouldn't have come.",
+    "If I had known, I would not have come."
+   ]
+  },
+  {
+   "type": "ecoute",
+   "en": "If only I had listened to my mother!",
+   "choix": [
+    "Si seulement j'avais écouté ma mère !",
+    "Si j'écoutais ma mère !",
+    "J'aurais dû appeler ma mère !"
+   ],
+   "bonne": 0
+  },
+  {
+   "type": "repeter",
+   "en": "If I hadn't missed the bus, I wouldn't have been late.",
+   "fr": "Si je n'avais pas raté le bus, je ne serais pas arrivé(e) en retard."
+  }
+ ],
+ "resume": "Type 3: If + had + pp, would have + pp. Mixed: If + had + pp, would + verb (now).",
+ "devoir": "Write about 3 decisions in your life and what would have happened otherwise."
+}

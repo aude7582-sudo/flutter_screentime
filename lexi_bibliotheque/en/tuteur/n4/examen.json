@@ -1,0 +1,132 @@
+{
+ "id": "en-n4-examen",
+ "langue": "en",
+ "niveau": 4,
+ "reussite": 9,
+ "etapes": [
+  {
+   "type": "qcm",
+   "question": "« If she had asked, I ___ her. »",
+   "choix": [
+    "would help",
+    "would have helped",
+    "helped"
+   ],
+   "bonne": 1,
+   "explication": "Type 3."
+  },
+  {
+   "type": "qcm",
+   "question": "« I wish I ___ that. » (regret)",
+   "choix": [
+    "didn't say",
+    "hadn't said",
+    "wouldn't say"
+   ],
+   "bonne": 1,
+   "explication": "wish + past perfect."
+  },
+  {
+   "type": "qcm",
+   "question": "« I'm having my car ___. »",
+   "choix": [
+    "repair",
+    "repaired",
+    "repairing"
+   ],
+   "bonne": 1,
+   "explication": "have + objet + participe."
+  },
+  {
+   "type": "qcm",
+   "question": "« By 2030, we ___ a new house. »",
+   "choix": [
+    "will build",
+    "will have built",
+    "build"
+   ],
+   "bonne": 1,
+   "explication": "Future perfect."
+  },
+  {
+   "type": "qcm",
+   "question": "« ___ the rain, the match continued. »",
+   "choix": [
+    "Despite",
+    "Although",
+    "Despite of"
+   ],
+   "bonne": 0,
+   "explication": "Despite + nom."
+  },
+  {
+   "type": "qcm",
+   "question": "« I remember ___ him at the party. » (souvenir)",
+   "choix": [
+    "to see",
+    "seeing",
+    "see"
+   ],
+   "bonne": 1,
+   "explication": "remember + -ing = se souvenir."
+  },
+  {
+   "type": "qcm",
+   "question": "« It costs an arm and a leg » =",
+   "choix": [
+    "very cheap",
+    "very expensive",
+    "very old"
+   ],
+   "bonne": 1,
+   "explication": "Très cher."
+  },
+  {
+   "type": "qcm",
+   "question": "« Je préférerais rester » =",
+   "choix": [
+    "I'd rather stay.",
+    "I'd better stay.",
+    "I rather to stay."
+   ],
+   "bonne": 0,
+   "explication": "I'd rather + verbe."
+  },
+  {
+   "type": "qcm",
+   "question": "« She is said ___ very rich. »",
+   "choix": [
+    "being",
+    "to be",
+    "be"
+   ],
+   "bonne": 1,
+   "explication": "is said to be."
+  },
+  {
+   "type": "qcm",
+   "question": "« il s'est avéré que » =",
+   "choix": [
+    "it turned out that",
+    "it went out that",
+    "it came out that"
+   ],
+   "bonne": 0,
+   "explication": "it turned out that."
+  },
+  {
+   "type": "traduire",
+   "fr": "Si j'avais pris le bus, je serais arrivé à l'heure.",
+   "reponses": [
+    "If I had taken the bus, I would have arrived on time.",
+    "If I'd taken the bus, I'd have arrived on time.",
+    "If I had taken the bus, I would have been on time."
+   ]
+  },
+  {
+   "type": "ordre",
+   "en": "I am looking forward to hearing from you",
+   "fr": "J'ai hâte d'avoir de vos nouvelles"
+  }
+ ]
+}
