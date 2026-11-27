@@ -145,6 +145,9 @@ class _LxTuteurState extends State<_LxTuteur> {
 
   Future<void> _charger() async {
     try {
+      _acces = await lexiAcces();
+    } catch (_) {}
+    try {
       final pr = await SharedPreferences.getInstance();
       final t = pr.getString(_cle);
       if (t != null) {
@@ -331,7 +334,19 @@ class _LxTuteurState extends State<_LxTuteur> {
   bool _ouverte(int n, int l) =>
       n < _max || (n == _max && (l == 1 || _faite(n, l - 1)));
 
+  bool get _bloque => _acces < 0;
+
   Future<void> _ouvrirLecon(int l) async {
+    if (_bloque && !(_niveau == 1 && l == 1)) {
+      _tts.stop();
+      setState(() => _ecran = 'pro');
+      _dire(
+          _niveau <= 2
+              ? 'Bravo ! Pour continuer à apprendre avec moi, passe à Léxi Pro.'
+              : 'Well done! To keep learning with me, upgrade to Léxi Pro.',
+          francais: _niveau <= 2);
+      return;
+    }
     final d = await _lire('n' + _niveau.toString() + '/l' +
         l.toString().padLeft(2, '0') +
         '.json');
@@ -350,6 +365,10 @@ class _LxTuteurState extends State<_LxTuteur> {
   }
 
   Future<void> _ouvrirExamen() async {
+    if (_bloque) {
+      setState(() => _ecran = 'pro');
+      return;
+    }
     final d = await _lire('n' + _niveau.toString() + '/examen.json');
     if (d == null) {
       _message('Vérifie ta connexion internet et réessaie.');
@@ -451,7 +470,10 @@ class _LxTuteurState extends State<_LxTuteur> {
 
   // Ce que le prof dit sur l'écran d'accueil, selon l'étape de la discussion :
   // [texte affiché, traduction, en français ?]
-  int _dialogue = 0; // 0 = « Tu es prêt(e) ? », 1 = « Tu es sûr(e) ? », 2 = plus tard
+  int _dialogue = 0;
+  // Accès Léxi : ≥ 999 = Pro, > 0 = jours d'essai, < 0 = essai fini.
+  // Sans Pro, seule la leçon 1 du niveau Débutant est gratuite.
+  int _acces = 999; // 0 = « Tu es prêt(e) ? », 1 = « Tu es sûr(e) ? », 2 = plus tard
 
   List<Object> _texteScene() {
     final p = _profActuel;
@@ -590,6 +612,35 @@ class _LxTuteurState extends State<_LxTuteur> {
       case 'lecon':
       case 'examen':
         return _ecranEtapes(c);
+      case 'pro':
+        return Column(children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(4, 4, 16, 8),
+            child: Row(children: [
+              IconButton(
+                icon: Icon(Icons.arrow_back_rounded, color: c.texte),
+                onPressed: () {
+                  _tts.stop();
+                  setState(() {
+                    _ecran = 'accueil';
+                    _dialogue = 2;
+                  });
+                },
+              ),
+              _avatar(_profActuel, 48),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Text(
+                    'Pour continuer avec moi, passe à Léxi Pro 🧡',
+                    style: TextStyle(
+                        color: c.texte,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w800)),
+              ),
+            ]),
+          ),
+          Expanded(child: LexiPro(width: MediaQuery.of(context).size.width)),
+        ]);
       case 'fin':
       case 'finTest':
       case 'finExamen':
