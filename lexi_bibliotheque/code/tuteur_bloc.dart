@@ -39,6 +39,25 @@ const Map<String, String> _lxtNomsLangues = {
   'zh': 'mandarin',
 };
 
+// Voix de chaque prof : hauteur (pitch), vitesse, et voix Google préférées
+// (homme / femme). Si le téléphone n'a pas ces voix, on garde la hauteur.
+const Map<String, List<Object>> _lxtVoixProfs = {
+  // id : [pitch, vitesse, voix anglaises préférées, voix françaises préférées]
+  'kenza': [1.15, 1.0, 'tpf,sfg,iob', 'fra,frc'],
+  'kevin': [1.1, 1.0, 'iol,iom,tpd', 'frb,frd'],
+  'lexi': [1.35, 1.05, 'iom,iol', 'frd,frb'],
+  'koko': [1.65, 1.1, 'sfg,tpf', 'frc,fra'],
+  'zeynab': [1.05, 1.0, 'sfg,iob,tpc', 'frc,fra'],
+  'abdul': [0.95, 0.97, 'iom,tpd,iol', 'frb,frd'],
+  'doudou': [0.7, 0.9, 'tpd,iom', 'frd,frb'],
+  'letty': [1.0, 1.0, 'iob,tpc,sfg', 'fra,frc'],
+  'narcisse': [0.9, 0.97, 'tpd,iol,iom', 'frd,frb'],
+  'karine': [0.97, 1.0, 'tpc,iog,iob', 'frc,fra'],
+  'sagesse': [0.82, 0.92, 'iog,tpc', 'fra,frc'],
+  'malika': [0.92, 0.97, 'iog,tpc,sfg', 'fra,frc'],
+  'malik': [0.8, 0.95, 'iol,tpd,iom', 'frb,frd'],
+};
+
 const Map<String, String> _lxtVoix = {
   'en': 'en-US',
   'es': 'es-ES',
@@ -161,7 +180,7 @@ class _LxTuteurState extends State<_LxTuteur> {
       _ecran = _prof[_niveau.toString()] == null ? 'profs' : 'accueil';
     }
     if (mounted) setState(() => _charge = true);
-    if (_ecran == 'accueil' && !_salue) _saluer();
+    if (_ecran == 'accueil') _saluer();
   }
 
   Future<void> _sauver() async {
@@ -179,13 +198,81 @@ class _LxTuteurState extends State<_LxTuteur> {
     } catch (_) {}
   }
 
+  List<Map<String, String>>? _voixDispo; // voix installées sur le téléphone
+
+  Future<List<Map<String, String>>> _voixTel() async {
+    if (_voixDispo != null) return _voixDispo!;
+    final l = <Map<String, String>>[];
+    try {
+      final v = await _tts.getVoices;
+      for (final x in (v as List? ?? [])) {
+        if (x is Map) {
+          l.add({
+            'name': (x['name'] ?? '').toString(),
+            'locale': (x['locale'] ?? '').toString(),
+          });
+        }
+      }
+    } catch (_) {}
+    _voixDispo = l;
+    return l;
+  }
+
+  // Choisit la voix du prof (homme / femme) pour la langue demandée.
+  Future<void> _voixDuProf(String langue, bool francais) async {
+    final p = _profActuel;
+    final reglage = _lxtVoixProfs[p[0].toString()] ??
+        [p[4] == 'f' ? 1.1 : 0.9, 1.0, '', ''];
+    final pitch = (reglage[0] as num).toDouble();
+    final femme = p[4] == 'f';
+    try {
+      await _tts.setPitch(pitch);
+    } catch (_) {}
+    final codes = (reglage[francais ? 3 : 2] as String)
+        .split(',')
+        .where((x) => x.isNotEmpty)
+        .toList();
+    final norme = langue.toLowerCase().replaceAll('_', '-');
+    final voix = (await _voixTel())
+        .where((v) =>
+            v['locale']!.toLowerCase().replaceAll('_', '-') == norme)
+        .toList();
+    if (voix.isEmpty) return;
+    Map<String, String>? choix;
+    for (final code in codes) {
+      for (final v in voix) {
+        final n = v['name']!.toLowerCase();
+        if (n.contains('-x-' + code) && n.contains('local')) choix ??= v;
+      }
+      for (final v in voix) {
+        if (v['name']!.toLowerCase().contains('-x-' + code)) choix ??= v;
+      }
+      if (choix != null) break;
+    }
+    // Autres téléphones : on cherche « male » / « female » dans le nom.
+    choix ??= voix.firstWhere(
+        (v) {
+          final n = v['name']!.toLowerCase();
+          return femme
+              ? n.contains('female')
+              : (n.contains('male') && !n.contains('female'));
+        },
+        orElse: () => voix[femme ? 0 : (voix.length > 1 ? 1 : 0)]);
+    try {
+      await _tts.setVoice({'name': choix['name']!, 'locale': choix['locale']!});
+    } catch (_) {}
+  }
+
   Future<void> _dire(String t, {bool francais = false}) async {
     if (t.trim().isEmpty) return;
     try {
       await _tts.stop();
-      await _tts.setLanguage(
-          francais ? 'fr-FR' : (_lxtVoix[widget.langue] ?? 'en-US'));
-      await _tts.setSpeechRate(francais ? 0.5 : 0.42);
+      final langue = francais ? 'fr-FR' : (_lxtVoix[widget.langue] ?? 'en-US');
+      await _tts.setLanguage(langue);
+      await _voixDuProf(langue, francais);
+      final reglage = _lxtVoixProfs[_profActuel[0].toString()];
+      final vitesse = reglage == null ? 1.0 : (reglage[1] as num).toDouble();
+      await _tts.setSpeechRate((francais ? 0.5 : 0.42) * vitesse);
       await _tts.speak(t);
     } catch (_) {}
   }
@@ -216,7 +303,7 @@ class _LxTuteurState extends State<_LxTuteur> {
 
   Future<void> _choisirNiveau(int n) async {
     if (n == 1) {
-      _max = 1;
+      if (_max < 1) _max = 1;
       _niveau = 1;
       await _sauver();
       setState(() => _ecran = 'profs');
@@ -297,6 +384,7 @@ class _LxTuteurState extends State<_LxTuteur> {
 
   void _suivant() {
     _tts.stop();
+    _voirTrad = false;
     if (_etape + 1 < _etapes.length) {
       setState(() => _etape++);
       _direEtape();
@@ -318,6 +406,21 @@ class _LxTuteurState extends State<_LxTuteur> {
         await const FlutterScreentime().lexiSon('victoire');
       } catch (_) {}
       setState(() => _ecran = 'fin');
+      final suite = _prochaineLecon;
+      final fr = _niveau <= 2;
+      _dire(
+          suite != null
+              ? (fr
+                  ? 'Bravo, leçon terminée ! Passons à la leçon numéro ' +
+                      suite.toString() +
+                      '. Tu es prêt ?'
+                  : 'Well done! Let\'s move on to lesson ' +
+                      suite.toString() +
+                      '. Are you ready?')
+              : (fr
+                  ? 'Bravo ! Tu as fini les dix leçons. On passe l\'examen ?'
+                  : 'Well done! You finished all ten lessons. Shall we take the exam?'),
+          francais: fr);
       return;
     }
     final reussite = (doc['reussite'] as num?)?.toInt() ?? 9;
@@ -346,27 +449,120 @@ class _LxTuteurState extends State<_LxTuteur> {
     } catch (_) {}
   }
 
-  Future<void> _saluer() async {
+  // Ce que le prof dit sur l'écran d'accueil, selon l'étape de la discussion :
+  // [texte affiché, traduction, en français ?]
+  int _dialogue = 0; // 0 = « Tu es prêt(e) ? », 1 = « Tu es sûr(e) ? », 2 = plus tard
+
+  List<Object> _texteScene() {
     final p = _profActuel;
     final nom = p[1].toString();
     final f = p[4] == 'f';
-    final langue = _lxtNomsLangues[widget.langue] ?? 'anglais';
-    final h = DateTime.now().hour;
-    final bonjourFr = h < 18 ? 'Bonjour' : 'Bonsoir';
     final prenom = widget.prenom.isEmpty ? '' : ' ' + widget.prenom;
-    await _dire(
-        bonjourFr +
+    final bonjour = DateTime.now().hour < 18 ? 'Bonjour' : 'Bonsoir';
+    final niveaux = (_programme?['niveaux'] as List?) ?? [];
+    final infos = niveaux.length >= _niveau
+        ? niveaux[_niveau - 1] as Map
+        : <String, dynamic>{};
+    final lecons = (infos['lecons'] as List?) ?? [];
+    final l = _prochaineLecon;
+    final titre = l != null && lecons.length >= l
+        ? ((lecons[l - 1] as Map)['titre'] ?? '').toString()
+        : '';
+    final premiere = l == 1;
+    String fr;
+    String en;
+    if (_dialogue == 1) {
+      fr = 'Tu es sûr(e) de ne pas vouloir continuer ?';
+      en = 'Are you sure you don\'t want to continue?';
+    } else if (_dialogue == 2) {
+      fr = 'D\'accord, à tout à l\'heure ! Reviens quand tu es prêt(e) 👋';
+      en = 'Okay, see you later! Come back when you\'re ready.';
+    } else {
+      final presente = 'Je m\'appelle ' +
+          nom +
+          ', je suis ' +
+          (f ? 'ta professeure' : 'ton professeur') +
+          ' de niveau ' +
+          _lxtNiveaux[_niveau - 1] +
+          '. ';
+      if (l != null) {
+        fr = bonjour +
             prenom +
-            ' ! Je suis ' +
+            ' ! ' +
+            presente +
+            (premiere
+                ? 'Nous allons commencer par la leçon 1'
+                : 'On continue avec la leçon ' + l.toString()) +
+            ' : « ' +
+            titre +
+            ' ». Est-ce que tu es prêt(e) ?';
+        en = 'Hi' +
+            prenom +
+            '! My name is ' +
             nom +
-            ', ' +
-            (f ? 'ta professeure' : 'ton professeur') +
-            ' de ' +
-            langue +
-            '. On va apprendre ensemble, pas à pas.',
-        francais: true);
+            ', I\'m your teacher. ' +
+            (premiere
+                ? 'Let\'s start with lesson 1'
+                : 'Let\'s continue with lesson ' + l.toString()) +
+            ': "' +
+            titre +
+            '". Are you ready?';
+      } else if (_max > _niveau) {
+        fr = 'Bravo' +
+            prenom +
+            ' ! Tu as réussi l\'examen. On passe au niveau ' +
+            _lxtNiveaux[_niveau] +
+            ' ?';
+        en = 'Well done' +
+            prenom +
+            '! You passed the exam. Shall we move to the next level?';
+      } else {
+        fr = bonjour +
+            prenom +
+            ' ! Tu as fini les 10 leçons. On passe le grand examen ? Est-ce que tu es prêt(e) ?';
+        en = 'Hi' +
+            prenom +
+            '! You finished all 10 lessons. Shall we take the final exam? Are you ready?';
+      }
+    }
+    final francais = _niveau <= 2;
+    return francais ? [fr, en, true] : [en, fr, false];
+  }
+
+  Future<void> _saluer() async {
+    final t = _texteScene();
+    await _dire(t[0] as String, francais: t[2] as bool);
     _salue = true;
     _sauver();
+  }
+
+  void _repondre(bool oui) {
+    _tts.stop();
+    if (_dialogue == 2 && oui) {
+      setState(() => _dialogue = 0);
+      _saluer();
+      return;
+    }
+    if ((_dialogue == 0 && oui) || (_dialogue == 1 && !oui)) {
+      // On y va !
+      setState(() => _dialogue = 0);
+      final l = _prochaineLecon;
+      if (l != null) {
+        _ouvrirLecon(l);
+      } else if (_max > _niveau) {
+        setState(() {
+          _niveau = _niveau + 1;
+          _ecran = _prof[_niveau.toString()] == null ? 'profs' : 'accueil';
+        });
+        _sauver();
+        if (_ecran == 'accueil') _saluer();
+      } else {
+        _ouvrirExamen();
+      }
+      return;
+    }
+    setState(() => _dialogue = _dialogue == 0 ? 1 : 2);
+    _saluer();
   }
 
   // ---------------- Interface ----------------
@@ -450,12 +646,18 @@ class _LxTuteurState extends State<_LxTuteur> {
         ),
       );
 
-  /// Avatar du prof : image bouche fermée / ouverte (alterne quand il parle),
-  /// sinon son emoji.
+  String _imageProf(List<Object> p) {
+    final ouverte =
+        _parle && (DateTime.now().millisecondsSinceEpoch ~/ 180).isEven;
+    return _lxtBase +
+        'profs/' +
+        p[0].toString() +
+        (ouverte ? '_ouvert' : '_ferme') +
+        '.png';
+  }
+
+  /// Avatar rond du prof (bouche qui bouge quand il parle).
   Widget _avatar(List<Object> p, double taille) {
-    final id = p[0].toString();
-    final ouverte = _parle && (DateTime.now().millisecondsSinceEpoch ~/ 180).isEven;
-    final url = _lxtBase + 'profs/' + id + (ouverte ? '_ouvert' : '_ferme') + '.png';
     return _LxtRespire(
       actif: _parle,
       child: SizedBox(
@@ -464,162 +666,429 @@ class _LxTuteurState extends State<_LxTuteur> {
         child: ClipOval(
           child: Container(
             color: _LxtCouleurs.orange.withOpacity(0.16),
-            child: Image.network(url,
-              fit: BoxFit.cover,
-              alignment: Alignment.topCenter,
-              gaplessPlayback: true,
-              errorBuilder: (c, e, s) => Container(
-                    color: _LxtCouleurs.orange.withOpacity(0.15),
-                    alignment: Alignment.center,
-                    child: Text(p[3].toString(),
-                        style: TextStyle(fontSize: taille * 0.55)),
-                  )),
+            child: Image.network(_imageProf(p),
+                fit: BoxFit.cover,
+                alignment: Alignment.topCenter,
+                gaplessPlayback: true,
+                errorBuilder: (c, e, s) => Container(
+                      color: _LxtCouleurs.orange.withOpacity(0.15),
+                      alignment: Alignment.center,
+                      child: Text(p[3].toString(),
+                          style: TextStyle(fontSize: taille * 0.55)),
+                    )),
           ),
         ),
       ),
     );
   }
 
-  Widget _bulle(_LxtCouleurs c, String texte, {String? sous}) => Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          _avatar(_profActuel, 64),
-          const SizedBox(width: 10),
+  /// Le prof en grand, qui flotte doucement (et bouge la bouche en parlant).
+  Widget _grandProf(List<Object> p) {
+    return _LxtRespire(
+      actif: _parle,
+      child: Image.network(_imageProf(p),
+          fit: BoxFit.contain,
+          alignment: Alignment.bottomCenter,
+          gaplessPlayback: true,
+          errorBuilder: (c, e, s) => Center(
+              child: Text(p[3].toString(),
+                  style: const TextStyle(fontSize: 120)))),
+    );
+  }
+
+  bool _voirTrad = false; // « TRADUIS » ouvert dans la bulle
+
+  /// Bulle du prof : son texte, 🔊 pour réécouter, « TRADUIS » pour la
+  /// traduction.
+  Widget _bulle(_LxtCouleurs c, String texte, {String? sous}) {
+    final francais = _niveau <= 2 && widget.langue != 'fr';
+    final aTraduire = sous != null && sous.isNotEmpty && sous != texte;
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.fromLTRB(16, 14, 10, 12),
+      decoration: BoxDecoration(
+        color: c.carte,
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(color: c.bord),
+        boxShadow: [
+          BoxShadow(
+              color: Colors.black.withOpacity(0.08),
+              blurRadius: 12,
+              offset: const Offset(0, 4)),
+        ],
+      ),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Expanded(
-            child: Container(
-              padding: const EdgeInsets.all(14),
-              decoration: BoxDecoration(
-                color: c.carte,
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(18),
-                  topRight: Radius.circular(18),
-                  bottomRight: Radius.circular(18),
-                  bottomLeft: Radius.circular(4),
-                ),
-                border: Border.all(
-                    color: _LxtCouleurs.orange.withOpacity(0.5), width: 1.5),
-              ),
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(texte,
-                        style: TextStyle(
-                            color: c.texte,
-                            fontSize: 15.5,
-                            height: 1.35,
-                            fontWeight: FontWeight.w600)),
-                    if (sous != null && sous.isNotEmpty) ...[
-                      const SizedBox(height: 6),
-                      Text(sous,
-                          style: TextStyle(
-                              color: c.gris,
-                              fontSize: 14,
-                              fontStyle: FontStyle.italic)),
-                    ],
-                  ]),
+            child: Text(texte,
+                style: TextStyle(
+                    color: c.texte,
+                    fontSize: 16,
+                    height: 1.35,
+                    fontWeight: FontWeight.w600)),
+          ),
+          InkWell(
+            borderRadius: BorderRadius.circular(20),
+            onTap: () => _dire(texte,
+                francais: francais && !_semblAnglais(texte)),
+            child: const Padding(
+              padding: EdgeInsets.all(6),
+              child: Icon(Icons.volume_up_rounded,
+                  color: _LxtCouleurs.violet, size: 24),
             ),
           ),
+        ]),
+        if (aTraduire) ...[
+          if (_voirTrad)
+            Padding(
+              padding: const EdgeInsets.only(top: 6, right: 8),
+              child: Text(sous,
+                  style: TextStyle(
+                      color: c.gris,
+                      fontSize: 14.5,
+                      fontStyle: FontStyle.italic)),
+            ),
+          const SizedBox(height: 6),
+          GestureDetector(
+            onTap: () => setState(() => _voirTrad = !_voirTrad),
+            child: Text(_voirTrad ? 'MASQUER' : 'TRADUIS',
+                style: const TextStyle(
+                    color: _LxtCouleurs.violet,
+                    fontSize: 12.5,
+                    letterSpacing: 1.2,
+                    fontWeight: FontWeight.w900)),
+          ),
         ],
-      );
+      ]),
+    );
+  }
+
+  // Une phrase sans accents et avec des mots anglais courants = anglais.
+  bool _semblAnglais(String t) {
+    if (RegExp(r'[éèêàùçôîâ]').hasMatch(t)) return false;
+    return RegExp(r"\b(the|you|i'm|hello|is|are|let's|my|your|today)\b",
+            caseSensitive: false)
+        .hasMatch(t);
+  }
+
+  // ---------------- 1. Quel est ton niveau ? ----------------
 
   Widget _ecranChoix(_LxtCouleurs c) {
     final langue = _lxtNomsLangues[widget.langue] ?? 'anglais';
     const emojis = ['🌱', '🌿', '🌳', '🏔️', '👑'];
     const cecrl = ['A1', 'A2', 'B1', 'B2', 'C1'];
+    const couleurs = [
+      Color(0xFF22C55E),
+      Color(0xFF0EA5E9),
+      Color(0xFFF97316),
+      Color(0xFF8B5CF6),
+      Color(0xFFE11D48),
+    ];
+    Widget carre(int i) {
+      final n = i + 1;
+      final ouvert = n <= _max || n == 1;
+      final enCours = _max > 0 && n == _niveau;
+      final etiquette = enCours
+          ? 'En cours'
+          : ouvert
+              ? (_max == 0 ? 'On commence' : 'Ouvert')
+              : 'Petit test 📝';
+      return GestureDetector(
+        onTap: () async {
+          if (ouvert) {
+            _niveau = n;
+            if (_max < 1) _max = 1;
+            await _sauver();
+            setState(() =>
+                _ecran = _prof[n.toString()] == null ? 'profs' : 'accueil');
+            if (_ecran == 'accueil') _saluer();
+          } else {
+            _choisirNiveau(n);
+          }
+        },
+        child: Container(
+          padding: const EdgeInsets.all(14),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(22),
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [couleurs[i], couleurs[i].withOpacity(0.72)],
+            ),
+            border: enCours ? Border.all(color: Colors.white, width: 3) : null,
+            boxShadow: [
+              BoxShadow(
+                  color: couleurs[i].withOpacity(0.35),
+                  blurRadius: 14,
+                  offset: const Offset(0, 6)),
+            ],
+          ),
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(emojis[i], style: const TextStyle(fontSize: 40)),
+                const SizedBox(height: 8),
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(_lxtNiveaux[i],
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w900)),
+                ),
+                Text(cecrl[i],
+                    style: TextStyle(
+                        color: Colors.white.withOpacity(0.85),
+                        fontSize: 13,
+                        fontWeight: FontWeight.w700)),
+                const SizedBox(height: 8),
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.22),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Text(etiquette,
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w800)),
+                ),
+              ]),
+        ),
+      );
+    }
+
     return ListView(
-      padding: const EdgeInsets.fromLTRB(18, 10, 18, 30),
+      padding: const EdgeInsets.fromLTRB(18, 14, 18, 30),
       children: [
-        Text('Ton tuteur de ' + langue + ' 🎓',
+        Text('Ton tuteur d\'' + langue + ' 🎓',
+            textAlign: TextAlign.center,
             style: TextStyle(
                 color: c.texte, fontSize: 24, fontWeight: FontWeight.w900)),
         const SizedBox(height: 6),
-        Text(
-            'Tu as quel niveau ? Si tu choisis plus haut que Débutant, je te fais passer un petit test pour vérifier.',
-            style: TextStyle(color: c.gris, fontSize: 15, height: 1.35)),
-        const SizedBox(height: 16),
-        for (var i = 0; i < 5; i++)
-          _carte(
-            c,
-            Row(children: [
-              Text(emojis[i], style: const TextStyle(fontSize: 30)),
-              const SizedBox(width: 14),
-              Expanded(
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(_lxtNiveaux[i],
-                          style: TextStyle(
-                              color: c.texte,
-                              fontSize: 17,
-                              fontWeight: FontWeight.w800)),
-                      Text(
-                          'Niveau ' +
-                              cecrl[i] +
-                              (i == 0 ? ' · on commence tout de suite' : ' · petit test'),
-                          style: TextStyle(color: c.gris, fontSize: 13)),
-                    ]),
-              ),
-              Icon(Icons.chevron_right, color: c.gris),
-            ]),
-            onTap: () => _choisirNiveau(i + 1),
+        Text('Quel est ton niveau en ' + langue + ' ?',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                color: c.gris, fontSize: 16, fontWeight: FontWeight.w600)),
+        const SizedBox(height: 18),
+        GridView.count(
+          crossAxisCount: 2,
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          mainAxisSpacing: 14,
+          crossAxisSpacing: 14,
+          childAspectRatio: 1,
+          children: [for (var i = 0; i < 4; i++) carre(i)],
+        ),
+        const SizedBox(height: 14),
+        Center(
+          child: SizedBox(
+            width: (MediaQuery.of(context).size.width - 50) / 2,
+            child: AspectRatio(aspectRatio: 1, child: carre(4)),
           ),
+        ),
+        const SizedBox(height: 14),
+        Text(
+            'Pour commencer plus haut que Débutant, je te fais passer un petit test.',
+            textAlign: TextAlign.center,
+            style: TextStyle(color: c.gris, fontSize: 13.5)),
+        if (_max > 0) ...[
+          const SizedBox(height: 16),
+          _bouton('Continuer ma leçon ▶', _LxtCouleurs.orange, () {
+            setState(() => _ecran =
+                _prof[_niveau.toString()] == null ? 'profs' : 'accueil');
+            if (_ecran == 'accueil') _saluer();
+          }),
+        ],
       ],
     );
   }
+
+  // ---------------- 2. Choisis ton prof ----------------
 
   Widget _ecranProfs(_LxtCouleurs c) {
     final profs = _lxtProfs.where((p) => p[5] == _niveau).toList();
+    final dejaUn = _prof[_niveau.toString()] != null;
     return ListView(
-      padding: const EdgeInsets.fromLTRB(18, 10, 18, 30),
+      padding: const EdgeInsets.fromLTRB(8, 6, 18, 30),
       children: [
-        Text('Choisis ton prof 👋',
-            style: TextStyle(
-                color: c.texte, fontSize: 24, fontWeight: FontWeight.w900)),
-        const SizedBox(height: 6),
-        Text('Niveau ' + _lxtNiveaux[_niveau - 1] + ' · tu pourras changer quand tu veux.',
-            style: TextStyle(color: c.gris, fontSize: 15)),
-        const SizedBox(height: 16),
-        for (final p in profs)
-          _carte(
-            c,
-            Row(children: [
-              _avatar(p, 58),
-              const SizedBox(width: 14),
-              Expanded(
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(p[1].toString(),
-                          style: TextStyle(
-                              color: c.texte,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w800)),
-                      Text(
-                          (p[2] as int) > 0
-                              ? p[2].toString() + ' ans'
-                              : 'Mascotte Léxi',
-                          style: TextStyle(color: c.gris, fontSize: 13.5)),
-                    ]),
-              ),
-              Icon(Icons.chevron_right, color: c.gris),
-            ]),
-            bord: _prof[_niveau.toString()] == p[0] ? _LxtCouleurs.orange : null,
-            onTap: () async {
-              _prof[_niveau.toString()] = p[0].toString();
-              _salue = false;
-              await _sauver();
-              setState(() => _ecran = 'accueil');
-              _saluer();
-            },
+        Row(children: [
+          IconButton(
+            icon: Icon(Icons.arrow_back_rounded, color: c.texte),
+            onPressed: () =>
+                setState(() => _ecran = dejaUn ? 'accueil' : 'choix'),
           ),
-        const SizedBox(height: 8),
-        Text('🔒 Les autres profs t\'attendent aux niveaux suivants.',
-            textAlign: TextAlign.center,
-            style: TextStyle(color: c.gris, fontSize: 13)),
+          Expanded(
+            child: Text('Choisis ton prof 👋',
+                style: TextStyle(
+                    color: c.texte, fontSize: 22, fontWeight: FontWeight.w900)),
+          ),
+        ]),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(12, 0, 0, 14),
+          child: Text(
+              'Niveau ' +
+                  _lxtNiveaux[_niveau - 1] +
+                  ' · tu pourras changer quand tu veux.',
+              style: TextStyle(color: c.gris, fontSize: 14.5)),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: GridView.count(
+            crossAxisCount: 2,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            mainAxisSpacing: 14,
+            crossAxisSpacing: 14,
+            childAspectRatio: 0.8,
+            children: [
+              for (final p in profs)
+                GestureDetector(
+                  onTap: () async {
+                    _prof[_niveau.toString()] = p[0].toString();
+                    _salue = false;
+                    await _sauver();
+                    setState(() => _ecran = 'accueil');
+                    _saluer();
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(22),
+                      border: Border.all(
+                          color: _prof[_niveau.toString()] == p[0]
+                              ? _LxtCouleurs.orange
+                              : c.bord,
+                          width: _prof[_niveau.toString()] == p[0] ? 3 : 1.5),
+                      gradient: const LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [Color(0xFF8B5CF6), Color(0xFF5B21B6)],
+                      ),
+                    ),
+                    clipBehavior: Clip.antiAlias,
+                    child: Stack(fit: StackFit.expand, children: [
+                      Image.network(
+                          _lxtBase + 'profs/' + p[0].toString() + '_ferme.png',
+                          fit: BoxFit.cover,
+                          alignment: Alignment.topCenter,
+                          errorBuilder: (c, e, s) => Center(
+                              child: Text(p[3].toString(),
+                                  style: const TextStyle(fontSize: 64)))),
+                      Positioned(
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        child: Container(
+                          padding: const EdgeInsets.fromLTRB(12, 22, 12, 10),
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                Colors.transparent,
+                                Colors.black.withOpacity(0.75)
+                              ],
+                            ),
+                          ),
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(p[1].toString(),
+                                    style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w900)),
+                                Text(
+                                    (p[2] as int) > 0
+                                        ? p[2].toString() + ' ans'
+                                        : 'Mascotte Léxi',
+                                    style: TextStyle(
+                                        color: Colors.white.withOpacity(0.85),
+                                        fontSize: 13)),
+                              ]),
+                        ),
+                      ),
+                    ]),
+                  ),
+                ),
+            ],
+          ),
+        ),
       ],
     );
   }
 
+  // ---------------- 3. Le prof + la leçon du jour ----------------
+
+  int? get _prochaineLecon {
+    for (var l = 1; l <= 10; l++) {
+      if (!_faite(_niveau, l)) return l;
+    }
+    return null; // les 10 leçons sont faites → examen
+  }
+
+  void _revoir(_LxtCouleurs c, List lecons) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: c.carte,
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(24))),
+      builder: (ctx) => SafeArea(
+        child: ListView(
+          shrinkWrap: true,
+          padding: const EdgeInsets.fromLTRB(18, 16, 18, 18),
+          children: [
+            Text('Revoir une leçon',
+                style: TextStyle(
+                    color: c.texte, fontSize: 19, fontWeight: FontWeight.w900)),
+            const SizedBox(height: 10),
+            for (var i = 0; i < lecons.length; i++)
+              if (_faite(_niveau, i + 1))
+                ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: const CircleAvatar(
+                      backgroundColor: _LxtCouleurs.vert,
+                      child: Text('✓', style: TextStyle(color: Colors.white))),
+                  title: Text(((lecons[i] as Map)['titre'] ?? '').toString(),
+                      style: TextStyle(
+                          color: c.texte, fontWeight: FontWeight.w700)),
+                  onTap: () {
+                    Navigator.pop(ctx);
+                    _ouvrirLecon(i + 1);
+                  },
+                ),
+            if (!List.generate(lecons.length, (i) => i + 1)
+                .any((l) => _faite(_niveau, l)))
+              Text('Tu n\'as pas encore terminé de leçon.',
+                  style: TextStyle(color: c.gris)),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _puce(String t, bool principal, VoidCallback f) => Padding(
+        padding: const EdgeInsets.only(left: 8),
+        child: ElevatedButton(
+          onPressed: f,
+          style: ElevatedButton.styleFrom(
+            backgroundColor: principal ? _LxtCouleurs.violet : Colors.white,
+            foregroundColor: principal ? Colors.white : _LxtCouleurs.violet,
+            elevation: 0,
+            padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 13),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(14),
+                side: const BorderSide(color: _LxtCouleurs.violet, width: 1.5)),
+          ),
+          child: Text(t,
+              style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w800)),
+        ),
+      );
+
+  /// Écran du prof : il est en grand, il parle, son texte s'écrit en bas,
+  /// et l'élève répond Oui / Non.
   Widget _ecranAccueil(_LxtCouleurs c) {
     final niveaux = (_programme?['niveaux'] as List?) ?? [];
     final infos = niveaux.length >= _niveau
@@ -627,152 +1096,89 @@ class _LxTuteurState extends State<_LxTuteur> {
         : <String, dynamic>{};
     final lecons = (infos['lecons'] as List?) ?? [];
     final p = _profActuel;
-    final f = p[4] == 'f';
-    final langue = _lxtNomsLangues[widget.langue] ?? 'anglais';
-    final toutes = List.generate(10, (i) => i + 1).every((l) => _faite(_niveau, l));
-    return ListView(
-      padding: const EdgeInsets.fromLTRB(18, 10, 18, 30),
-      children: [
-        _bulle(
-            c,
-            (DateTime.now().hour < 18 ? 'Bonjour' : 'Bonsoir') +
-                (widget.prenom.isEmpty ? '' : ' ' + widget.prenom) +
-                ' ! Je suis ' +
-                p[1].toString() +
-                ', ' +
-                (f ? 'ta professeure' : 'ton professeur') +
-                ' de ' +
-                langue +
-                '.',
-            sous: widget.langue == 'en'
-                ? 'Hello! Today, I\'m your teacher. Let\'s learn together!'
-                : null),
-        const SizedBox(height: 12),
-        Row(children: [
-          TextButton.icon(
-            onPressed: () => _dire(
-                'Hello! I\'m ' + p[1].toString() + '. I\'m your teacher today.'),
-            icon: const Icon(Icons.volume_up_rounded, color: _LxtCouleurs.orange),
-            label: const Text('Écouter',
-                style: TextStyle(color: _LxtCouleurs.orange)),
-          ),
-          const Spacer(),
-          TextButton(
-            onPressed: () => setState(() => _ecran = 'profs'),
-            child: Text('Changer de prof', style: TextStyle(color: c.gris)),
-          ),
-        ]),
-        const SizedBox(height: 6),
-        SizedBox(
-          height: 44,
-          child: ListView(scrollDirection: Axis.horizontal, children: [
-            for (var n = 1; n <= 5; n++)
-              Padding(
-                padding: const EdgeInsets.only(right: 8),
-                child: ChoiceChip(
-                  label: Text((n > _max ? '🔒 ' : '') + _lxtNiveaux[n - 1]),
-                  selected: _niveau == n,
-                  selectedColor: _LxtCouleurs.orange.withOpacity(0.3),
-                  backgroundColor: c.doux,
-                  labelStyle:
-                      TextStyle(color: c.texte, fontWeight: FontWeight.w700),
-                  onSelected: (_) {
-                    if (n > _max) {
-                      final prof = _lxtProfs.firstWhere((x) => x[5] == n);
-                      _message(prof[1].toString() +
-                          ' t\'attend au niveau ' +
-                          _lxtNiveaux[n - 1] +
-                          ' 🔒 Termine l\'examen du niveau d\'avant.');
-                      return;
-                    }
-                    setState(() {
-                      _niveau = n;
-                      _ecran = _prof[n.toString()] == null ? 'profs' : 'accueil';
-                    });
-                    _sauver();
-                  },
-                ),
-              ),
-          ]),
+    final t = _texteScene();
+    final fr = _niveau <= 2;
+    final sombre = _LxtCouleurs().s;
+    List<Widget> reponses;
+    if (_dialogue == 0) {
+      reponses = [
+        _puce(fr ? 'Non' : 'No', false, () => _repondre(false)),
+        _puce(fr ? 'Oui, on y va !' : 'Yes, let\'s go!', true,
+            () => _repondre(true)),
+      ];
+    } else if (_dialogue == 1) {
+      reponses = [
+        _puce(fr ? 'Oui, plus tard' : 'Yes, later', false,
+            () => _repondre(true)),
+        _puce(fr ? 'Non, on continue !' : 'No, let\'s continue!', true,
+            () => _repondre(false)),
+      ];
+    } else {
+      reponses = [
+        _puce(fr ? 'Je suis prêt(e) !' : 'I\'m ready!', true,
+            () => _repondre(true)),
+      ];
+    }
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: sombre
+              ? [const Color(0xFF3B1E7A), c.fond]
+              : [const Color(0xFFC4B5FD), c.fond],
         ),
-        const SizedBox(height: 14),
-        for (var i = 0; i < lecons.length; i++)
-          () {
-            final l = i + 1;
-            final x = lecons[i] as Map;
-            final ouverte = _ouverte(_niveau, l);
-            final faite = _faite(_niveau, l);
-            return _carte(
-              c,
-              Row(children: [
-                Container(
-                  width: 40,
-                  height: 40,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: faite
-                        ? _LxtCouleurs.vert
-                        : (ouverte ? _LxtCouleurs.orange : c.doux),
-                  ),
-                  child: Text(faite ? '✓' : (ouverte ? l.toString() : '🔒'),
-                      style: const TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.w900)),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text((x['titre'] ?? '').toString(),
-                            style: TextStyle(
-                                color: c.texte,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w800)),
-                        Text((x['grammaire'] ?? '').toString(),
-                            maxLines: 2,
-                            style: TextStyle(color: c.gris, fontSize: 13)),
-                      ]),
-                ),
-              ]),
-              opacite: ouverte ? 1 : 0.5,
-              bord: ouverte && !faite ? _LxtCouleurs.orange : null,
-              onTap: ouverte
-                  ? () => _ouvrirLecon(l)
-                  : () => _message('Termine la leçon ' +
-                      (l - 1).toString() +
-                      ' pour débloquer celle-ci 🔒'),
-            );
-          }(),
-        _carte(
-          c,
-          Row(children: [
-            const Text('🏆', style: TextStyle(fontSize: 30)),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Examen du niveau ' + _lxtNiveaux[_niveau - 1],
-                        style: TextStyle(
-                            color: c.texte,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w800)),
-                    Text(
-                        toutes
-                            ? 'Réussis-le pour débloquer le niveau suivant.'
-                            : '🔒 Termine les 10 leçons d\'abord.',
-                        style: TextStyle(color: c.gris, fontSize: 13)),
-                  ]),
+      ),
+      child: Column(children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(4, 4, 8, 0),
+          child: Row(children: [
+            IconButton(
+              tooltip: 'Niveaux',
+              icon: Icon(Icons.arrow_back_rounded, color: c.texte),
+              onPressed: () {
+                _tts.stop();
+                setState(() => _ecran = 'choix');
+              },
+            ),
+            const Spacer(),
+            TextButton(
+              onPressed: () => _revoir(c, lecons),
+              child: Text('Revoir',
+                  style: TextStyle(color: c.texte, fontWeight: FontWeight.w700)),
+            ),
+            TextButton.icon(
+              onPressed: () {
+                _tts.stop();
+                setState(() => _ecran = 'profs');
+              },
+              icon: Icon(Icons.swap_horiz_rounded, color: c.texte, size: 20),
+              label: Text('Prof',
+                  style: TextStyle(color: c.texte, fontWeight: FontWeight.w700)),
             ),
           ]),
-          opacite: toutes ? 1 : 0.5,
-          bord: toutes ? _LxtCouleurs.violet : null,
-          onTap: toutes
-              ? _ouvrirExamen
-              : () => _message('Termine les 10 leçons pour passer l\'examen 🔒'),
         ),
-      ],
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: GestureDetector(onTap: _saluer, child: _grandProf(p)),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(16, 0, 16, 18),
+          child: Column(children: [
+            _bulle(c, t[0] as String, sous: t[1] as String),
+            const SizedBox(height: 12),
+            Align(
+              alignment: Alignment.centerRight,
+              child: Wrap(
+                  alignment: WrapAlignment.end,
+                  runSpacing: 8,
+                  children: reponses),
+            ),
+          ]),
+        ),
+      ]),
     );
   }
 
@@ -786,49 +1192,101 @@ class _LxTuteurState extends State<_LxTuteur> {
         : _ecran == 'examen'
             ? 'Examen · ' + _lxtNiveaux[_niveau - 1]
             : (_doc?['titre'] ?? '').toString();
-    return Column(children: [
-      Padding(
-        padding: const EdgeInsets.fromLTRB(8, 6, 18, 6),
-        child: Row(children: [
-          IconButton(
-            icon: Icon(Icons.close_rounded, color: c.gris),
-            onPressed: () {
-              _tts.stop();
-              setState(() => _ecran = _max == 0 ? 'choix' : 'accueil');
-            },
-          ),
-          Expanded(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: LinearProgressIndicator(
-                value: (_etape + 1) / _etapes.length,
-                minHeight: 10,
-                backgroundColor: c.doux,
-                color: _LxtCouleurs.orange,
-              ),
-            ),
-          ),
-        ]),
-      ),
-      Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 18),
-        child: Text(titre,
-            style: TextStyle(
-                color: c.gris, fontSize: 14, fontWeight: FontWeight.w700)),
-      ),
-      Expanded(
-        child: _LxtEtape(
-          key: ValueKey('etape' + _ecran + _etape.toString()),
-          etape: e,
-          niveau: _ecran == 'test' ? _niveauVise - 1 : _niveau,
-          couleurs: c,
-          bulle: (t, {String? sous}) => _bulle(c, t, sous: sous),
-          dire: _dire,
-          noter: _noter,
-          suivant: _suivant,
+    final sombre = _LxtCouleurs().s;
+    // Le prof en GRAND en haut (il flotte et parle), la leçon en dessous
+    // dans un panneau qui défile.
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: sombre
+              ? [const Color(0xFF3B1E7A), c.fond]
+              : [const Color(0xFFC4B5FD), c.fond],
         ),
       ),
-    ]);
+      child: Column(children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(8, 6, 18, 0),
+          child: Row(children: [
+            IconButton(
+              icon: Icon(Icons.close_rounded, color: c.texte),
+              onPressed: () {
+                _tts.stop();
+                setState(() => _ecran =
+                    _ecran == 'test' || _max == 0 ? 'choix' : 'accueil');
+              },
+            ),
+            Expanded(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: LinearProgressIndicator(
+                  value: (_etape + 1) / _etapes.length,
+                  minHeight: 10,
+                  backgroundColor: c.doux,
+                  color: _LxtCouleurs.orange,
+                ),
+              ),
+            ),
+          ]),
+        ),
+        Expanded(
+          flex: 9,
+          child: Stack(children: [
+            Positioned.fill(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(24, 6, 24, 0),
+                child: _grandProf(_profActuel),
+              ),
+            ),
+            Positioned(
+              left: 16,
+              top: 6,
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                decoration: BoxDecoration(
+                  color: c.carte.withOpacity(0.9),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Text(titre,
+                    style: TextStyle(
+                        color: c.gris,
+                        fontSize: 12.5,
+                        fontWeight: FontWeight.w800)),
+              ),
+            ),
+          ]),
+        ),
+        Expanded(
+          flex: 11,
+          child: Container(
+            decoration: BoxDecoration(
+              color: c.fond,
+              borderRadius:
+                  const BorderRadius.vertical(top: Radius.circular(26)),
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.black.withOpacity(0.12),
+                    blurRadius: 16,
+                    offset: const Offset(0, -4)),
+              ],
+            ),
+            child: _LxtEtape(
+              key: ValueKey('etape' + _ecran + _etape.toString()),
+              etape: e,
+              niveau: _ecran == 'test' ? _niveauVise - 1 : _niveau,
+              couleurs: c,
+              bulle: (t, {String? sous}) => _bulle(c, t, sous: sous),
+              dire: _dire,
+              noter: _noter,
+              suivant: _suivant,
+              locale: _lxtVoix[widget.langue] ?? 'en-US',
+            ),
+          ),
+        ),
+      ]),
+    );
   }
 
   Widget _ecranFin(_LxtCouleurs c) {
@@ -844,8 +1302,9 @@ class _LxTuteurState extends State<_LxTuteur> {
               style: TextStyle(
                   color: c.texte, fontSize: 26, fontWeight: FontWeight.w900)),
           const SizedBox(height: 16),
-          _bulle(c, 'Bravo ! Voici ce qu\'il faut retenir :',
-              sous: (doc['resume'] ?? '').toString()),
+          _bulle(c,
+              'Bravo ! Voici ce qu\'il faut retenir : ' +
+                  (doc['resume'] ?? '').toString()),
           const SizedBox(height: 16),
           _carte(
               c,
@@ -859,8 +1318,44 @@ class _LxTuteurState extends State<_LxTuteur> {
                 Text((doc['devoir'] ?? '').toString(),
                     style: TextStyle(color: c.gris, fontSize: 14.5)),
               ])),
-          _bouton('Continuer', _LxtCouleurs.orange,
-              () => setState(() => _ecran = 'accueil')),
+          // « Passons à la leçon 2, tu es prêt(e) ? » → Oui : on enchaîne.
+          Builder(builder: (_) {
+            final l = _prochaineLecon;
+            final fr = _niveau <= 2;
+            final question = l != null
+                ? (fr
+                    ? 'Passons à la leçon numéro ' + l.toString() + '. Tu es prêt(e) ?'
+                    : 'Let\'s move on to lesson ' + l.toString() + '. Are you ready?')
+                : (fr
+                    ? 'Tu as fini les 10 leçons ! On passe l\'examen ?'
+                    : 'You finished all 10 lessons! Shall we take the exam?');
+            return Column(children: [
+              _bulle(c, question),
+              const SizedBox(height: 12),
+              Align(
+                alignment: Alignment.centerRight,
+                child: Wrap(alignment: WrapAlignment.end, runSpacing: 8, children: [
+                  _puce(fr ? 'Plus tard' : 'Later', false, () {
+                    _tts.stop();
+                    setState(() {
+                      _ecran = 'accueil';
+                      _dialogue = 2;
+                    });
+                    _saluer();
+                  }),
+                  _puce(fr ? 'Oui, on continue !' : 'Yes, let\'s go!', true, () {
+                    _tts.stop();
+                    _dialogue = 0;
+                    if (l != null) {
+                      _ouvrirLecon(l);
+                    } else {
+                      _ouvrirExamen();
+                    }
+                  }),
+                ]),
+              ),
+            ]);
+          }),
         ],
       );
     }
@@ -916,13 +1411,17 @@ class _LxTuteurState extends State<_LxTuteur> {
             _bouton('Aller au niveau ' + _lxtNiveaux[_niveau], _LxtCouleurs.orange, () {
               setState(() {
                 _niveau = _niveau + 1;
+                _dialogue = 0;
                 _ecran = _prof[_niveau.toString()] == null ? 'profs' : 'accueil';
               });
               _sauver();
+              if (_ecran == 'accueil') _saluer();
             }),
-          const SizedBox(height: 10),
-          _bouton('Retour aux leçons', _LxtCouleurs.violet,
-              () => setState(() => _ecran = 'accueil')),
+          if (!(ok && _niveau < 5)) ...[
+            const SizedBox(height: 10),
+            _bouton('Retour', _LxtCouleurs.violet,
+                () => setState(() => _ecran = 'accueil')),
+          ],
         ],
       ],
     );
@@ -958,11 +1457,12 @@ class _LxtRespireState extends State<_LxtRespire>
           final t = Curves.easeInOut.transform(_a.value);
           final fort = widget.actif;
           return Transform.translate(
-            offset: Offset(0, fort ? -5 * t : -2 * t),
+            offset: Offset(0, fort ? -10 * t : -7 * t),
             child: Transform.scale(
-                scale: 1 + (fort ? 0.05 : 0.02) * t,
+                scale: 1 + (fort ? 0.03 : 0.015) * t,
                 child: Transform.rotate(
-                    angle: fort ? 0.05 * (t - 0.5) : 0, child: e)),
+                    angle: fort ? 0.025 * (t - 0.5) : 0.01 * (t - 0.5),
+                    child: e)),
           );
         },
         child: widget.child,
@@ -981,6 +1481,7 @@ class _LxtEtape extends StatefulWidget {
     required this.dire,
     required this.noter,
     required this.suivant,
+    this.locale = 'en-US',
   });
   final Map<String, dynamic> etape;
   final int niveau;
@@ -989,6 +1490,7 @@ class _LxtEtape extends StatefulWidget {
   final Future<void> Function(String, {bool francais}) dire;
   final void Function(bool) noter;
   final VoidCallback suivant;
+  final String locale;
 
   @override
   State<_LxtEtape> createState() => _LxtEtapeState();
@@ -1000,6 +1502,15 @@ class _LxtEtapeState extends State<_LxtEtape> {
   final _champ = TextEditingController();
   List<String> _melange = [];
   final List<int> _pris = [];
+  // Micro : le prof écoute ce que l'élève dit.
+  final stt.SpeechToText _stt = stt.SpeechToText();
+  bool _sttPret = false;
+  bool _ecoute = false;
+  String? _motEcoute; // mot du vocabulaire en cours d'écoute
+  int _essais = 0;
+  String _entendu = '';
+  int? _score;
+  final Map<String, bool> _motsDits = {};
 
   Map<String, dynamic> get e => widget.etape;
   _LxtCouleurs get c => widget.couleurs;
@@ -1021,7 +1532,120 @@ class _LxtEtapeState extends State<_LxtEtape> {
   @override
   void dispose() {
     _champ.dispose();
+    try {
+      _stt.cancel();
+    } catch (_) {}
     super.dispose();
+  }
+
+  Future<List<String>?> _micro() async {
+    try {
+      if (!_sttPret) _sttPret = await _stt.initialize();
+      if (!_sttPret) return null;
+      final fin = Completer<List<String>?>();
+      List<String> dernier = [];
+      void finir() {
+        if (!fin.isCompleted) fin.complete(dernier.isEmpty ? null : dernier);
+      }
+      _stt.statusListener = (s) {
+        if (s == 'done' || s == 'notListening') {
+          Future.delayed(const Duration(milliseconds: 400), finir);
+        }
+      };
+      _stt.errorListener = (_) => finir();
+      await _stt.listen(
+        onResult: (r) {
+          final l = <String>[r.recognizedWords];
+          for (final a in r.alternates) {
+            if (!l.contains(a.recognizedWords)) l.add(a.recognizedWords);
+          }
+          dernier = l.where((t) => t.trim().isNotEmpty).toList();
+          if (r.finalResult) finir();
+        },
+        localeId: widget.locale.replaceAll('-', '_'),
+        listenFor: const Duration(seconds: 12),
+        pauseFor: const Duration(seconds: 3),
+      );
+      return await fin.future.timeout(const Duration(seconds: 16),
+          onTimeout: () => dernier.isEmpty ? null : dernier);
+    } catch (_) {
+      return null;
+    }
+  }
+
+  // % de mots de la phrase attendue retrouvés dans ce que l'élève a dit.
+  int _noteDiction(String attendu, List<String> props) {
+    final a = _norm(attendu).split(' ').where((m) => m.isNotEmpty).toList();
+    if (a.isEmpty) return 0;
+    var mieux = 0;
+    for (final p in props) {
+      final reste = _norm(p).split(' ').toList();
+      var n = 0;
+      for (final m in a) {
+        final k = reste.indexOf(m);
+        if (k >= 0) {
+          n++;
+          reste.removeAt(k);
+        }
+      }
+      if (n > mieux) mieux = n;
+    }
+    return (100 * mieux / a.length).round();
+  }
+
+  void _sonCourt(bool bon) {
+    try {
+      const FlutterScreentime().lexiSon(bon ? 'bon' : 'faux');
+    } catch (_) {}
+  }
+
+  // Étape « Répète » : le prof écoute et dit si c'est bien prononcé.
+  Future<void> _ecouterPhrase() async {
+    if (_ecoute) return;
+    setState(() => _ecoute = true);
+    final props = await _micro();
+    if (!mounted) return;
+    if (props == null) {
+      setState(() {
+        _ecoute = false;
+        _essais++;
+        _entendu = '';
+        _score = 0;
+      });
+      return;
+    }
+    final score = _noteDiction((e['en'] ?? '').toString(), props);
+    final ok = score >= 70;
+    _sonCourt(ok);
+    setState(() {
+      _ecoute = false;
+      _essais++;
+      _entendu = props.first;
+      _score = score;
+      if (ok) _juste = true;
+    });
+    widget.dire(ok
+        ? (score >= 95 ? 'Perfect!' : 'Great job!')
+        : 'Almost! Listen and try again.');
+  }
+
+  // Vocabulaire : on peut dire chaque mot au micro.
+  Future<void> _ecouterMot(String mot) async {
+    if (_ecoute) return;
+    setState(() {
+      _ecoute = true;
+      _motEcoute = mot;
+    });
+    final props = await _micro();
+    if (!mounted) return;
+    final ok = props != null && _noteDiction(mot, props) >= 70;
+    if (props != null) _sonCourt(ok);
+    setState(() {
+      _ecoute = false;
+      _motEcoute = null;
+      if (props != null) _motsDits[mot] = ok;
+    });
+    if (props != null) widget.dire(ok ? 'Good!' : 'Try again: ' + mot);
   }
 
   String _norm(String s) => s
@@ -1060,7 +1684,7 @@ class _LxtEtapeState extends State<_LxtEtape> {
                 color: c.texte, fontSize: 19, fontWeight: FontWeight.w900)),
       );
 
-  Widget _ligneSon(String en, String fr) => GestureDetector(
+  Widget _ligneSon(String en, String fr, {bool micro = false}) => GestureDetector(
         onTap: () => widget.dire(en),
         child: Container(
           margin: const EdgeInsets.only(bottom: 8),
@@ -1068,7 +1692,11 @@ class _LxtEtapeState extends State<_LxtEtape> {
           decoration: BoxDecoration(
             color: c.carte,
             borderRadius: BorderRadius.circular(14),
-            border: Border.all(color: c.bord),
+            border: Border.all(
+                color: _motsDits[en] == null
+                    ? c.bord
+                    : (_motsDits[en]! ? _LxtCouleurs.vert : _LxtCouleurs.rouge),
+                width: _motsDits[en] == null ? 1 : 2),
           ),
           child: Row(children: [
             const Icon(Icons.volume_up_rounded,
@@ -1087,6 +1715,20 @@ class _LxtEtapeState extends State<_LxtEtape> {
                       Text(fr, style: TextStyle(color: c.gris, fontSize: 14)),
                   ]),
             ),
+            if (micro)
+              IconButton(
+                tooltip: 'Dis-le',
+                icon: Icon(
+                    _ecoute && _motEcoute == en
+                        ? Icons.graphic_eq_rounded
+                        : (_motsDits[en] == true
+                            ? Icons.check_circle_rounded
+                            : Icons.mic_rounded),
+                    color: _motsDits[en] == true
+                        ? _LxtCouleurs.vert
+                        : _LxtCouleurs.violet),
+                onPressed: () => _ecouterMot(en),
+              ),
           ]),
         ),
       );
@@ -1135,13 +1777,17 @@ class _LxtEtapeState extends State<_LxtEtape> {
       case 'vocabulaire':
         return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           _titre('📖 Vocabulaire'),
+          Text('Touche un mot pour l\'écouter, puis 🎤 pour le dire.',
+              style: TextStyle(color: c.gris, fontSize: 13.5)),
+          const SizedBox(height: 10),
           for (final m in (e['mots'] as List? ?? []))
             _ligneSon(
                 (m as Map)['en'].toString(),
                 (m['fr'] ?? '').toString() +
                     ((m['pron'] ?? '').toString().isEmpty
                         ? ''
-                        : '  ·  « ' + m['pron'].toString() + ' »')),
+                        : '  ·  « ' + m['pron'].toString() + ' »'),
+                micro: true),
         ]);
       case 'dialogue':
         return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -1230,6 +1876,7 @@ class _LxtEtapeState extends State<_LxtEtape> {
           TextField(
             controller: _champ,
             enabled: _juste == null,
+            textCapitalization: TextCapitalization.sentences,
             minLines: 2,
             maxLines: 3,
             style: TextStyle(color: c.texte, fontSize: 16),
@@ -1243,6 +1890,13 @@ class _LxtEtapeState extends State<_LxtEtape> {
                   borderSide: BorderSide(color: c.bord)),
             ),
           ),
+          if (_juste != null &&
+              RegExp(r"(^|[^A-Za-z'])i('m|'ve|'d|'ll)?\b").hasMatch(_champ.text)) ...[
+            const SizedBox(height: 10),
+            Text('💡 En anglais, « I » (je) s\'écrit toujours avec une majuscule.',
+                style: const TextStyle(
+                    color: _LxtCouleurs.orange, fontWeight: FontWeight.w700)),
+          ],
           if (_juste == false && reps.isNotEmpty) ...[
             const SizedBox(height: 12),
             Text('Bonne réponse : ' + reps.first.toString(),
@@ -1255,13 +1909,54 @@ class _LxtEtapeState extends State<_LxtEtape> {
           _titre('🗣️ Écoute et répète à voix haute'),
           _ligneSon((e['en'] ?? '').toString(), (e['fr'] ?? '').toString()),
           const SizedBox(height: 6),
-          Text('Appuie pour écouter, puis répète 2 ou 3 fois.',
-              style: TextStyle(color: c.gris, fontSize: 14)),
+          Text(
+              _ecoute
+                  ? '🎤 Je t\'écoute… parle maintenant !'
+                  : 'Écoute, puis appuie sur 🎤 et dis la phrase.',
+              style: TextStyle(
+                  color: _ecoute ? _LxtCouleurs.violet : c.gris,
+                  fontSize: 14,
+                  fontWeight: _ecoute ? FontWeight.w800 : FontWeight.w400)),
+          if (_score != null) ...[
+            const SizedBox(height: 12),
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(14),
+              decoration: BoxDecoration(
+                color: (_juste == true ? _LxtCouleurs.vert : _LxtCouleurs.orange)
+                    .withOpacity(0.14),
+                borderRadius: BorderRadius.circular(14),
+              ),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                        _juste == true
+                            ? '✅ Bravo, c\'est bien prononcé ! ($_score %)'
+                            : (_entendu.isEmpty
+                                ? '🤔 Je n\'ai rien entendu. Parle plus près du micro.'
+                                : '💪 Presque ($_score %). Réécoute et réessaie !'),
+                        style: TextStyle(
+                            color: c.texte,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w800)),
+                    if (_entendu.isNotEmpty)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 4),
+                        child: Text('J\'ai entendu : « ' + _entendu + ' »',
+                            style: TextStyle(color: c.gris, fontSize: 13.5)),
+                      ),
+                  ]),
+            ),
+          ],
         ]);
       default:
         return const SizedBox();
     }
   }
+
+  // Étape « Répète » : il faut parler (2 essais ratés → on peut continuer).
+  bool get _micAFaire => _type == 'repeter' && _juste != true && _essais < 2;
 
   bool get _aVerifier =>
       _type == 'qcm' || _type == 'ecoute' || _type == 'ordre' || _type == 'traduire';
@@ -1301,9 +1996,11 @@ class _LxtEtapeState extends State<_LxtEtape> {
         child: SizedBox(
           width: double.infinity,
           child: ElevatedButton(
-            onPressed: _aVerifier && _juste == null ? _verifier : widget.suivant,
+            onPressed: _micAFaire
+                ? (_ecoute ? null : _ecouterPhrase)
+                : (_aVerifier && _juste == null ? _verifier : widget.suivant),
             style: ElevatedButton.styleFrom(
-              backgroundColor: _aVerifier && _juste == null
+              backgroundColor: _micAFaire || (_aVerifier && _juste == null)
                   ? _LxtCouleurs.violet
                   : _LxtCouleurs.orange,
               foregroundColor: Colors.white,
@@ -1312,7 +2009,12 @@ class _LxtEtapeState extends State<_LxtEtape> {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16)),
             ),
-            child: Text(_aVerifier && _juste == null ? 'VÉRIFIER' : 'CONTINUER',
+            child: Text(
+                _micAFaire
+                    ? (_ecoute
+                        ? '🎤 J\'ÉCOUTE…'
+                        : (_essais == 0 ? '🎤 À TOI DE DIRE' : '🎤 RÉESSAYER'))
+                    : (_aVerifier && _juste == null ? 'VÉRIFIER' : 'CONTINUER'),
                 style: const TextStyle(
                     fontSize: 16, fontWeight: FontWeight.w900)),
           ),
