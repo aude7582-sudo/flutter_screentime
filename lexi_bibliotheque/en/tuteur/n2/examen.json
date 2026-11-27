@@ -1,0 +1,131 @@
+{
+ "id": "en-n2-examen",
+ "langue": "en",
+ "niveau": 2,
+ "reussite": 9,
+ "etapes": [
+  {
+   "type": "qcm",
+   "question": "Past of « take »:",
+   "choix": [
+    "taked",
+    "took",
+    "taken"
+   ],
+   "bonne": 1,
+   "explication": "take – took – taken."
+  },
+  {
+   "type": "qcm",
+   "question": "« Abidjan is ___ than Korhogo. »",
+   "choix": [
+    "more big",
+    "bigger",
+    "biggest"
+   ],
+   "bonne": 1,
+   "explication": "bigger than."
+  },
+  {
+   "type": "qcm",
+   "question": "Le téléphone sonne : « I ___ get it! »",
+   "choix": [
+    "'ll",
+    "'m going to",
+    "go to"
+   ],
+   "bonne": 0,
+   "explication": "Décision immédiate → will."
+  },
+  {
+   "type": "qcm",
+   "question": "« Tournez à gauche » =",
+   "choix": [
+    "Turn on the left.",
+    "Turn left.",
+    "You turn to left."
+   ],
+   "bonne": 1,
+   "explication": "Turn left."
+  },
+  {
+   "type": "qcm",
+   "question": "« How ___ water do you drink? »",
+   "choix": [
+    "many",
+    "much",
+    "lot"
+   ],
+   "bonne": 1,
+   "explication": "water → much."
+  },
+  {
+   "type": "qcm",
+   "question": "« Tu n'es pas obligé » =",
+   "choix": [
+    "You mustn't.",
+    "You don't have to.",
+    "You shouldn't."
+   ],
+   "bonne": 1,
+   "explication": "don't have to."
+  },
+  {
+   "type": "qcm",
+   "question": "« ___ you ever been to Ghana? »",
+   "choix": [
+    "Did",
+    "Have",
+    "Do"
+   ],
+   "bonne": 1,
+   "explication": "Have you ever been…"
+  },
+  {
+   "type": "qcm",
+   "question": "« If it ___, we'll stay home. »",
+   "choix": [
+    "will rain",
+    "rains",
+    "rained"
+   ],
+   "bonne": 1,
+   "explication": "If + présent."
+  },
+  {
+   "type": "qcm",
+   "question": "« The woman ___ sells bread »",
+   "choix": [
+    "which",
+    "who",
+    "where"
+   ],
+   "bonne": 1,
+   "explication": "personne → who."
+  },
+  {
+   "type": "qcm",
+   "question": "Au téléphone : « Qui est à l'appareil ? »",
+   "choix": [
+    "Who are you?",
+    "Who's calling?",
+    "Who is it there?"
+   ],
+   "bonne": 1,
+   "explication": "Who's calling?"
+  },
+  {
+   "type": "traduire",
+   "fr": "Je voudrais le poulet, s'il vous plaît.",
+   "reponses": [
+    "I'd like the chicken, please.",
+    "I would like the chicken, please."
+   ]
+  },
+  {
+   "type": "ordre",
+   "en": "I have never flown in a plane",
+   "fr": "Je n'ai jamais pris l'avion"
+  }
+ ]
+}

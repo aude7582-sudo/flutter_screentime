@@ -1,0 +1,198 @@
+{
+ "id": "en-n2-l02",
+ "langue": "en",
+ "niveau": 2,
+ "lecon": 2,
+ "cecrl": "A2",
+ "titre": "Bigger, better, the best",
+ "objectifs": [
+  "Compare two things",
+  "Say which one is the best",
+  "Short and long adjectives"
+ ],
+ "etapes": [
+  {
+   "type": "explication",
+   "fr": "Pour comparer : adjectif court + -er + than. Adjectif long : more + adjectif + than.",
+   "en": "Abidjan is bigger than Bouaké. This phone is more expensive than that one.",
+   "exemples": [
+    {
+     "en": "big → bigger",
+     "fr": "grand → plus grand"
+    },
+    {
+     "en": "cheap → cheaper",
+     "fr": "pas cher → moins cher"
+    },
+    {
+     "en": "beautiful → more beautiful",
+     "fr": "beau → plus beau"
+    }
+   ]
+  },
+  {
+   "type": "explication",
+   "fr": "Le superlatif (le plus…) : the + adjectif-est, ou the most + adjectif long.",
+   "en": "It's the biggest city. It's the most beautiful beach.",
+   "exemples": [
+    {
+     "en": "the tallest building",
+     "fr": "le plus haut bâtiment"
+    },
+    {
+     "en": "the most interesting book",
+     "fr": "le livre le plus intéressant"
+    }
+   ]
+  },
+  {
+   "type": "explication",
+   "fr": "Attention aux irréguliers : good → better → the best ; bad → worse → the worst ; far → further → the furthest.",
+   "en": "Good, better, the best!",
+   "exemples": [
+    {
+     "en": "My English is better now.",
+     "fr": "Mon anglais est meilleur maintenant."
+    },
+    {
+     "en": "It was the worst day of my life!",
+     "fr": "C'était le pire jour de ma vie !"
+    }
+   ]
+  },
+  {
+   "type": "vocabulaire",
+   "mots": [
+    {
+     "en": "cheap",
+     "fr": "pas cher",
+     "pron": "tchip"
+    },
+    {
+     "en": "expensive",
+     "fr": "cher",
+     "pron": "iks-pèn-siv"
+    },
+    {
+     "en": "modern",
+     "fr": "moderne",
+     "pron": "mo-deurn"
+    },
+    {
+     "en": "crowded",
+     "fr": "bondé",
+     "pron": "kraou-did"
+    },
+    {
+     "en": "quiet",
+     "fr": "calme",
+     "pron": "kwaï-eut"
+    },
+    {
+     "en": "noisy",
+     "fr": "bruyant",
+     "pron": "noï-zi"
+    },
+    {
+     "en": "safe",
+     "fr": "sûr",
+     "pron": "sèïf"
+    },
+    {
+     "en": "dangerous",
+     "fr": "dangereux",
+     "pron": "dèïn-djeu-reuss"
+    }
+   ]
+  },
+  {
+   "type": "dialogue",
+   "lignes": [
+    {
+     "qui": "autre",
+     "en": "Which phone should I buy?",
+     "fr": "Quel téléphone je devrais acheter ?"
+    },
+    {
+     "qui": "prof",
+     "en": "This one is cheaper, but that one is faster.",
+     "fr": "Celui-ci est moins cher, mais celui-là est plus rapide."
+    },
+    {
+     "qui": "autre",
+     "en": "Which one has the best camera?",
+     "fr": "Lequel a le meilleur appareil photo ?"
+    },
+    {
+     "qui": "prof",
+     "en": "The second one. It's the most expensive, but it's the best.",
+     "fr": "Le deuxième. C'est le plus cher, mais c'est le meilleur."
+    }
+   ]
+  },
+  {
+   "type": "qcm",
+   "question": "« Lagos is ___ than Accra. »",
+   "choix": [
+    "big",
+    "bigger",
+    "biggest"
+   ],
+   "bonne": 1,
+   "explication": "Comparatif + than : bigger than."
+  },
+  {
+   "type": "qcm",
+   "question": "« This is ___ book I have. »",
+   "choix": [
+    "the more interesting",
+    "the most interesting",
+    "most interesting"
+   ],
+   "bonne": 1,
+   "explication": "Adjectif long → the most."
+  },
+  {
+   "type": "qcm",
+   "question": "Comparative of « good »:",
+   "choix": [
+    "gooder",
+    "more good",
+    "better"
+   ],
+   "bonne": 2,
+   "explication": "good → better → the best."
+  },
+  {
+   "type": "ordre",
+   "en": "Abidjan is more crowded than Grand-Bassam",
+   "fr": "Abidjan est plus bondée que Grand-Bassam"
+  },
+  {
+   "type": "traduire",
+   "fr": "C'est le pire restaurant de la ville.",
+   "reponses": [
+    "It's the worst restaurant in the city.",
+    "It is the worst restaurant in the city.",
+    "It's the worst restaurant in town."
+   ]
+  },
+  {
+   "type": "ecoute",
+   "en": "My brother is taller than me.",
+   "choix": [
+    "Mon frère est plus grand que moi.",
+    "Mon frère est plus petit que moi.",
+    "Mon frère est aussi grand que moi."
+   ],
+   "bonne": 0
+  },
+  {
+   "type": "repeter",
+   "en": "Rice is cheaper than meat, but meat is more delicious!",
+   "fr": "Le riz est moins cher que la viande, mais la viande est plus délicieuse !"
+  }
+ ],
+ "resume": "short adj + -er than / more + long adj than. the + -est / the most. good-better-best, bad-worse-worst.",
+ "devoir": "Compare two cities you know with 5 sentences."
+}

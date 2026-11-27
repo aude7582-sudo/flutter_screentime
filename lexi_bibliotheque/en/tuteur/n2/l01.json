@@ -1,0 +1,206 @@
+{
+ "id": "en-n2-l01",
+ "langue": "en",
+ "niveau": 2,
+ "lecon": 1,
+ "cecrl": "A2",
+ "titre": "Last weekend",
+ "objectifs": [
+  "Tell a story in the past",
+  "Common irregular verbs",
+  "Time words: first, then, after that"
+ ],
+ "etapes": [
+  {
+   "type": "explication",
+   "fr": "Beaucoup de verbes très courants sont irréguliers au passé : il faut les apprendre par cœur. Bonne nouvelle : c'est la même forme pour toutes les personnes.",
+   "en": "Many common verbs are irregular in the past. Learn them by heart!",
+   "exemples": [
+    {
+     "en": "go → went",
+     "fr": "aller → allé"
+    },
+    {
+     "en": "have → had",
+     "fr": "avoir → eu"
+    },
+    {
+     "en": "see → saw",
+     "fr": "voir → vu"
+    },
+    {
+     "en": "eat → ate",
+     "fr": "manger → mangé"
+    },
+    {
+     "en": "buy → bought",
+     "fr": "acheter → acheté"
+    },
+    {
+     "en": "take → took",
+     "fr": "prendre → pris"
+    },
+    {
+     "en": "come → came",
+     "fr": "venir → venu"
+    },
+    {
+     "en": "make → made",
+     "fr": "faire → fait"
+    }
+   ]
+  },
+  {
+   "type": "explication",
+   "fr": "Pour raconter dans l'ordre : first (d'abord), then (ensuite), after that (après ça), finally (enfin).",
+   "en": "First we went to the market, then we cooked.",
+   "exemples": [
+    {
+     "en": "First, I got up late.",
+     "fr": "D'abord, je me suis levé tard."
+    },
+    {
+     "en": "Then I had breakfast.",
+     "fr": "Ensuite j'ai pris le petit-déjeuner."
+    },
+    {
+     "en": "Finally, I went to bed.",
+     "fr": "Enfin, je suis allé me coucher."
+    }
+   ]
+  },
+  {
+   "type": "vocabulaire",
+   "mots": [
+    {
+     "en": "went",
+     "fr": "suis allé(e)",
+     "pron": "wènt"
+    },
+    {
+     "en": "saw",
+     "fr": "ai vu",
+     "pron": "so"
+    },
+    {
+     "en": "bought",
+     "fr": "ai acheté",
+     "pron": "bot"
+    },
+    {
+     "en": "took",
+     "fr": "ai pris",
+     "pron": "touk"
+    },
+    {
+     "en": "met",
+     "fr": "ai rencontré",
+     "pron": "mèt"
+    },
+    {
+     "en": "felt",
+     "fr": "me suis senti(e)",
+     "pron": "fèlt"
+    },
+    {
+     "en": "left",
+     "fr": "suis parti(e)",
+     "pron": "lèft"
+    },
+    {
+     "en": "got",
+     "fr": "ai obtenu / suis arrivé(e)",
+     "pron": "got"
+    }
+   ]
+  },
+  {
+   "type": "dialogue",
+   "lignes": [
+    {
+     "qui": "prof",
+     "en": "So, what did you do last weekend?",
+     "fr": "Alors, qu'as-tu fait le week-end dernier ?"
+    },
+    {
+     "qui": "eleve",
+     "en": "On Saturday I went to a wedding in Yamoussoukro.",
+     "fr": "Samedi je suis allé(e) à un mariage à Yamoussoukro."
+    },
+    {
+     "qui": "prof",
+     "en": "Lovely! Did you dance?",
+     "fr": "Super ! Tu as dansé ?"
+    },
+    {
+     "qui": "eleve",
+     "en": "Yes! We danced all night. Then on Sunday I slept until noon!",
+     "fr": "Oui ! On a dansé toute la nuit. Puis dimanche j'ai dormi jusqu'à midi !"
+    }
+   ]
+  },
+  {
+   "type": "qcm",
+   "question": "Past of « buy »:",
+   "choix": [
+    "buyed",
+    "bought",
+    "brought"
+   ],
+   "bonne": 1,
+   "explication": "buy → bought. Attention : brought = passé de bring (apporter)."
+  },
+  {
+   "type": "qcm",
+   "question": "« We ___ a great film yesterday. »",
+   "choix": [
+    "see",
+    "saw",
+    "seen"
+   ],
+   "bonne": 1,
+   "explication": "Passé simple : saw."
+  },
+  {
+   "type": "qcm",
+   "question": "« Did you ___ to the party? »",
+   "choix": [
+    "went",
+    "go",
+    "goes"
+   ],
+   "bonne": 1,
+   "explication": "Après did → verbe simple : go."
+  },
+  {
+   "type": "ordre",
+   "en": "First we ate then we went to the beach",
+   "fr": "D'abord nous avons mangé puis nous sommes allés à la plage"
+  },
+  {
+   "type": "traduire",
+   "fr": "J'ai rencontré mon ami au marché.",
+   "reponses": [
+    "I met my friend at the market.",
+    "I met my friend in the market."
+   ]
+  },
+  {
+   "type": "ecoute",
+   "en": "She left early because she felt tired.",
+   "choix": [
+    "Elle est partie tôt parce qu'elle se sentait fatiguée.",
+    "Elle est arrivée tôt parce qu'elle était fatiguée.",
+    "Elle est partie tard parce qu'elle était fatiguée."
+   ],
+   "bonne": 0
+  },
+  {
+   "type": "repeter",
+   "en": "Last weekend I went to the market, then I cooked for my family.",
+   "fr": "Le week-end dernier, je suis allé(e) au marché, puis j'ai cuisiné pour ma famille."
+  }
+ ],
+ "resume": "Irregular past: went, had, saw, ate, bought, took, came, made, met, left. Did + base verb. first, then, after that, finally.",
+ "devoir": "Write 6 sentences about your last weekend using first, then, after that and finally."
+}

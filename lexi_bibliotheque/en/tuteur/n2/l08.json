@@ -1,0 +1,167 @@
+{
+ "id": "en-n2-l08",
+ "langue": "en",
+ "niveau": 2,
+ "lecon": 8,
+ "cecrl": "A2",
+ "titre": "If it rains…",
+ "objectifs": [
+  "Talk about real possibilities",
+  "First conditional",
+  "Weather vocabulary"
+ ],
+ "etapes": [
+  {
+   "type": "explication",
+   "fr": "Conditionnel de type 1 (situation possible) : If + présent, … will + verbe. Jamais de « will » juste après « if » !",
+   "en": "If it rains, I will stay at home.",
+   "exemples": [
+    {
+     "en": "If you study, you'll pass.",
+     "fr": "Si tu étudies, tu réussiras."
+    },
+    {
+     "en": "If I have time, I'll call you.",
+     "fr": "Si j'ai le temps, je t'appellerai."
+    },
+    {
+     "en": "We'll go to the beach if it's sunny.",
+     "fr": "Nous irons à la plage s'il fait beau."
+    }
+   ]
+  },
+  {
+   "type": "vocabulaire",
+   "mots": [
+    {
+     "en": "sunny",
+     "fr": "ensoleillé",
+     "pron": "sa-ni"
+    },
+    {
+     "en": "rainy",
+     "fr": "pluvieux",
+     "pron": "rèï-ni"
+    },
+    {
+     "en": "cloudy",
+     "fr": "nuageux",
+     "pron": "klaou-di"
+    },
+    {
+     "en": "windy",
+     "fr": "venteux",
+     "pron": "winn-di"
+    },
+    {
+     "en": "hot",
+     "fr": "chaud",
+     "pron": "hot"
+    },
+    {
+     "en": "rainy season",
+     "fr": "saison des pluies",
+     "pron": "rèï-ni si-zeunn"
+    },
+    {
+     "en": "dry season",
+     "fr": "saison sèche",
+     "pron": "draï si-zeunn"
+    },
+    {
+     "en": "storm",
+     "fr": "orage",
+     "pron": "storm"
+    }
+   ]
+  },
+  {
+   "type": "explication",
+   "fr": "« unless » = sauf si (= if not).",
+   "en": "I'll come unless it rains.",
+   "exemples": [
+    {
+     "en": "Unless you hurry, you'll miss the bus.",
+     "fr": "Si tu ne te dépêches pas, tu vas rater le bus."
+    }
+   ]
+  },
+  {
+   "type": "dialogue",
+   "lignes": [
+    {
+     "qui": "eleve",
+     "en": "Are we going to the beach tomorrow?",
+     "fr": "On va à la plage demain ?"
+    },
+    {
+     "qui": "prof",
+     "en": "If the weather is good, we'll go.",
+     "fr": "S'il fait beau, on ira."
+    },
+    {
+     "qui": "eleve",
+     "en": "And if it rains?",
+     "fr": "Et s'il pleut ?"
+    },
+    {
+     "qui": "prof",
+     "en": "If it rains, we'll watch a film at home.",
+     "fr": "S'il pleut, on regardera un film à la maison."
+    }
+   ]
+  },
+  {
+   "type": "qcm",
+   "question": "« If you ___ late, the teacher will be angry. »",
+   "choix": [
+    "will arrive",
+    "arrive",
+    "arrived"
+   ],
+   "bonne": 1,
+   "explication": "Après if → présent."
+  },
+  {
+   "type": "qcm",
+   "question": "« If I see him, I ___ tell him. »",
+   "choix": [
+    "will",
+    "would",
+    "am"
+   ],
+   "bonne": 0,
+   "explication": "Type 1 : will."
+  },
+  {
+   "type": "ordre",
+   "en": "If it is sunny we will go out",
+   "fr": "S'il fait beau nous sortirons"
+  },
+  {
+   "type": "traduire",
+   "fr": "Si tu m'aides, je t'aiderai.",
+   "reponses": [
+    "If you help me, I'll help you.",
+    "If you help me, I will help you."
+   ]
+  },
+  {
+   "type": "ecoute",
+   "en": "It's very cloudy today.",
+   "choix": [
+    "Il fait très nuageux aujourd'hui.",
+    "Il fait très chaud aujourd'hui.",
+    "Il y a beaucoup de vent aujourd'hui."
+   ],
+   "bonne": 0
+  },
+  {
+   "type": "repeter",
+   "en": "If I practise every day, I'll speak English fluently.",
+   "fr": "Si je pratique tous les jours, je parlerai anglais couramment."
+  }
+ ],
+ "resume": "If + present, will + verb. Never « will » after if. unless = if not. Weather: sunny, rainy, cloudy, windy.",
+ "devoir": "Finish these sentences: If I have money… / If it rains this weekend… / If I pass my exam…"
+}

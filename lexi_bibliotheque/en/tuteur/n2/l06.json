@@ -1,0 +1,166 @@
+{
+ "id": "en-n2-l06",
+ "langue": "en",
+ "niveau": 2,
+ "lecon": 6,
+ "cecrl": "A2",
+ "titre": "You should rest",
+ "objectifs": [
+  "Talk about health",
+  "Give advice with should",
+  "Rules with must / have to"
+ ],
+ "etapes": [
+  {
+   "type": "vocabulaire",
+   "mots": [
+    {
+     "en": "headache",
+     "fr": "mal de tête",
+     "pron": "hèd-èïk"
+    },
+    {
+     "en": "fever",
+     "fr": "fièvre",
+     "pron": "fi-veur"
+    },
+    {
+     "en": "cough",
+     "fr": "toux",
+     "pron": "kof"
+    },
+    {
+     "en": "stomach ache",
+     "fr": "mal de ventre",
+     "pron": "sta-meuk èïk"
+    },
+    {
+     "en": "sore throat",
+     "fr": "mal de gorge",
+     "pron": "sor srot"
+    },
+    {
+     "en": "medicine",
+     "fr": "médicament",
+     "pron": "mèd-sinn"
+    },
+    {
+     "en": "rest",
+     "fr": "se reposer",
+     "pron": "rèst"
+    }
+   ]
+  },
+  {
+   "type": "explication",
+   "fr": "Pour dire où on a mal : « I have a headache », « My back hurts ». Pour un conseil : « should » + verbe.",
+   "en": "You should drink water.",
+   "exemples": [
+    {
+     "en": "You should see a doctor.",
+     "fr": "Tu devrais voir un médecin."
+    },
+    {
+     "en": "You shouldn't work today.",
+     "fr": "Tu ne devrais pas travailler aujourd'hui."
+    }
+   ]
+  },
+  {
+   "type": "explication",
+   "fr": "« must » = obligation forte ou règle personnelle ; « have to » = obligation qui vient de l'extérieur ; « don't have to » = ce n'est PAS obligatoire (≠ mustn't = interdit !).",
+   "en": "You mustn't smoke here. You don't have to come.",
+   "exemples": [
+    {
+     "en": "I have to take this medicine twice a day.",
+     "fr": "Je dois prendre ce médicament deux fois par jour."
+    },
+    {
+     "en": "You mustn't drive after this pill.",
+     "fr": "Tu ne dois pas conduire après ce comprimé."
+    },
+    {
+     "en": "You don't have to pay.",
+     "fr": "Tu n'es pas obligé de payer."
+    }
+   ]
+  },
+  {
+   "type": "dialogue",
+   "lignes": [
+    {
+     "qui": "eleve",
+     "en": "I don't feel well. I have a fever and a sore throat.",
+     "fr": "Je ne me sens pas bien. J'ai de la fièvre et mal à la gorge."
+    },
+    {
+     "qui": "prof",
+     "en": "Oh no! You should rest and drink a lot of water.",
+     "fr": "Oh non ! Tu devrais te reposer et boire beaucoup d'eau."
+    },
+    {
+     "qui": "eleve",
+     "en": "Do I have to see a doctor?",
+     "fr": "Je dois voir un médecin ?"
+    },
+    {
+     "qui": "prof",
+     "en": "If the fever doesn't go down tomorrow, you must go.",
+     "fr": "Si la fièvre ne baisse pas demain, tu dois y aller."
+    }
+   ]
+  },
+  {
+   "type": "qcm",
+   "question": "« Tu n'es pas obligé de venir » =",
+   "choix": [
+    "You mustn't come.",
+    "You don't have to come.",
+    "You shouldn't come."
+   ],
+   "bonne": 1,
+   "explication": "don't have to = pas obligé."
+  },
+  {
+   "type": "qcm",
+   "question": "Conseil :",
+   "choix": [
+    "You should sleep more.",
+    "You should to sleep more.",
+    "You should sleeping more."
+   ],
+   "bonne": 0,
+   "explication": "should + verbe simple."
+  },
+  {
+   "type": "ordre",
+   "en": "You should see a doctor",
+   "fr": "Tu devrais voir un médecin"
+  },
+  {
+   "type": "traduire",
+   "fr": "J'ai mal à la tête.",
+   "reponses": [
+    "I have a headache.",
+    "I've got a headache."
+   ]
+  },
+  {
+   "type": "ecoute",
+   "en": "You mustn't take this with alcohol.",
+   "choix": [
+    "Tu ne dois pas prendre ça avec de l'alcool.",
+    "Tu n'es pas obligé de prendre ça avec de l'alcool.",
+    "Tu devrais prendre ça avec de l'alcool."
+   ],
+   "bonne": 0
+  },
+  {
+   "type": "repeter",
+   "en": "I have a cough. I think I should rest today.",
+   "fr": "J'ai de la toux. Je pense que je devrais me reposer aujourd'hui."
+  }
+ ],
+ "resume": "I have a headache / my back hurts. should = advice. must / have to = obligation. mustn't = forbidden. don't have to = not necessary.",
+ "devoir": "Give 4 pieces of advice to a friend who is always tired."
+}

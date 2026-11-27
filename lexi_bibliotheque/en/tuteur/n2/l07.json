@@ -1,0 +1,178 @@
+{
+ "id": "en-n2-l07",
+ "langue": "en",
+ "niveau": 2,
+ "lecon": 7,
+ "cecrl": "A2",
+ "titre": "Have you ever…?",
+ "objectifs": [
+  "Talk about life experiences",
+  "Present perfect with ever / never",
+  "Past participles"
+ ],
+ "etapes": [
+  {
+   "type": "explication",
+   "fr": "Le present perfect = have/has + participe passé. On l'utilise pour une expérience dans la vie, SANS dire quand.",
+   "en": "I have visited Ghana. She has never flown.",
+   "exemples": [
+    {
+     "en": "I've been to Ghana.",
+     "fr": "Je suis déjà allé(e) au Ghana."
+    },
+    {
+     "en": "Have you ever eaten snails?",
+     "fr": "As-tu déjà mangé des escargots ?"
+    },
+    {
+     "en": "I've never seen snow.",
+     "fr": "Je n'ai jamais vu la neige."
+    }
+   ]
+  },
+  {
+   "type": "explication",
+   "fr": "Si on dit QUAND (yesterday, in 2020, last year), on revient au passé simple !",
+   "en": "I have been to Ghana. I went there in 2022.",
+   "exemples": [
+    {
+     "en": "Have you ever been to Dakar? — Yes, I went there last year.",
+     "fr": "Tu es déjà allé à Dakar ? — Oui, j'y suis allé l'an dernier."
+    }
+   ]
+  },
+  {
+   "type": "vocabulaire",
+   "mots": [
+    {
+     "en": "been",
+     "fr": "été / allé",
+     "pron": "bine"
+    },
+    {
+     "en": "seen",
+     "fr": "vu",
+     "pron": "sine"
+    },
+    {
+     "en": "eaten",
+     "fr": "mangé",
+     "pron": "i-teunn"
+    },
+    {
+     "en": "flown",
+     "fr": "volé (en avion)",
+     "pron": "flone"
+    },
+    {
+     "en": "met",
+     "fr": "rencontré",
+     "pron": "mèt"
+    },
+    {
+     "en": "done",
+     "fr": "fait",
+     "pron": "dann"
+    },
+    {
+     "en": "won",
+     "fr": "gagné",
+     "pron": "wann"
+    },
+    {
+     "en": "ever / never",
+     "fr": "déjà / jamais",
+     "pron": "è-veur / nè-veur"
+    }
+   ]
+  },
+  {
+   "type": "dialogue",
+   "lignes": [
+    {
+     "qui": "prof",
+     "en": "Have you ever travelled abroad?",
+     "fr": "As-tu déjà voyagé à l'étranger ?"
+    },
+    {
+     "qui": "eleve",
+     "en": "Yes, I have. I've been to Ghana and Togo.",
+     "fr": "Oui. Je suis allé(e) au Ghana et au Togo."
+    },
+    {
+     "qui": "prof",
+     "en": "Have you ever taken a plane?",
+     "fr": "As-tu déjà pris l'avion ?"
+    },
+    {
+     "qui": "eleve",
+     "en": "No, never! I took the bus both times.",
+     "fr": "Non, jamais ! J'ai pris le car les deux fois."
+    }
+   ]
+  },
+  {
+   "type": "qcm",
+   "question": "« ___ you ever met a famous person? »",
+   "choix": [
+    "Did",
+    "Have",
+    "Has"
+   ],
+   "bonne": 1,
+   "explication": "Present perfect question : Have you ever…"
+  },
+  {
+   "type": "qcm",
+   "question": "« I ___ to Accra in 2021. »",
+   "choix": [
+    "have been",
+    "went",
+    "have gone"
+   ],
+   "bonne": 1,
+   "explication": "Date précise → passé simple : went."
+  },
+  {
+   "type": "qcm",
+   "question": "Participle of « eat »:",
+   "choix": [
+    "ate",
+    "eaten",
+    "eated"
+   ],
+   "bonne": 1,
+   "explication": "eat – ate – eaten."
+  },
+  {
+   "type": "ordre",
+   "en": "She has never seen the sea",
+   "fr": "Elle n'a jamais vu la mer"
+  },
+  {
+   "type": "traduire",
+   "fr": "As-tu déjà gagné un concours ?",
+   "reponses": [
+    "Have you ever won a competition?",
+    "Have you ever won a contest?"
+   ]
+  },
+  {
+   "type": "ecoute",
+   "en": "We've already finished.",
+   "choix": [
+    "Nous avons déjà fini.",
+    "Nous allons finir.",
+    "Nous n'avons pas fini."
+   ],
+   "bonne": 0
+  },
+  {
+   "type": "repeter",
+   "en": "I've never been to London, but I'd love to go!",
+   "fr": "Je ne suis jamais allé(e) à Londres, mais j'adorerais y aller !"
+  }
+ ],
+ "resume": "have/has + past participle = life experience (no time given). ever / never / already. With a precise time → past simple.",
+ "devoir": "Ask 3 people around you « Have you ever…? » questions and write their answers."
+}

@@ -1,0 +1,183 @@
+{
+ "id": "en-n2-l09",
+ "langue": "en",
+ "niveau": 2,
+ "lecon": 9,
+ "cecrl": "A2",
+ "titre": "The man who…",
+ "objectifs": [
+  "Describe people and things",
+  "Relative pronouns who / which / that / where",
+  "Physical description"
+ ],
+ "etapes": [
+  {
+   "type": "explication",
+   "fr": "who = pour une personne ; which = pour une chose ; that = les deux ; where = pour un lieu.",
+   "en": "The woman who sells fish is my aunt.",
+   "exemples": [
+    {
+     "en": "The man who lives next door is a doctor.",
+     "fr": "L'homme qui habite à côté est médecin."
+    },
+    {
+     "en": "The phone which I bought is broken.",
+     "fr": "Le téléphone que j'ai acheté est cassé."
+    },
+    {
+     "en": "This is the market where I work.",
+     "fr": "C'est le marché où je travaille."
+    }
+   ]
+  },
+  {
+   "type": "vocabulaire",
+   "mots": [
+    {
+     "en": "tall / short",
+     "fr": "grand / petit",
+     "pron": "tol / chort"
+    },
+    {
+     "en": "slim",
+     "fr": "mince",
+     "pron": "slim"
+    },
+    {
+     "en": "curly hair",
+     "fr": "cheveux bouclés",
+     "pron": "keur-li hèr"
+    },
+    {
+     "en": "braids",
+     "fr": "tresses",
+     "pron": "brèïdz"
+    },
+    {
+     "en": "beard",
+     "fr": "barbe",
+     "pron": "bird"
+    },
+    {
+     "en": "glasses",
+     "fr": "lunettes",
+     "pron": "gla-siz"
+    },
+    {
+     "en": "friendly",
+     "fr": "sympathique",
+     "pron": "frènd-li"
+    },
+    {
+     "en": "shy",
+     "fr": "timide",
+     "pron": "chaï"
+    }
+   ]
+  },
+  {
+   "type": "explication",
+   "fr": "Pour demander une description : « What does she look like? » (physique) ≠ « What is she like? » (caractère).",
+   "en": "",
+   "exemples": [
+    {
+     "en": "What does he look like? — He's tall with a beard.",
+     "fr": "Il est comment physiquement ? — Grand avec une barbe."
+    },
+    {
+     "en": "What's she like? — She's friendly.",
+     "fr": "Elle est comment ? — Sympathique."
+    }
+   ]
+  },
+  {
+   "type": "dialogue",
+   "lignes": [
+    {
+     "qui": "autre",
+     "en": "Who's your new teacher?",
+     "fr": "C'est qui ton nouveau prof ?"
+    },
+    {
+     "qui": "eleve",
+     "en": "The woman who is wearing glasses, over there.",
+     "fr": "La femme qui porte des lunettes, là-bas."
+    },
+    {
+     "qui": "autre",
+     "en": "What's she like?",
+     "fr": "Elle est comment ?"
+    },
+    {
+     "qui": "eleve",
+     "en": "She's very friendly. She's the teacher who helped me last year.",
+     "fr": "Très sympa. C'est la prof qui m'a aidé l'an dernier."
+    }
+   ]
+  },
+  {
+   "type": "qcm",
+   "question": "« The book ___ you gave me is great. »",
+   "choix": [
+    "who",
+    "which",
+    "where"
+   ],
+   "bonne": 1,
+   "explication": "Une chose → which (ou that)."
+  },
+  {
+   "type": "qcm",
+   "question": "« That's the restaurant ___ we met. »",
+   "choix": [
+    "which",
+    "who",
+    "where"
+   ],
+   "bonne": 2,
+   "explication": "Un lieu → where."
+  },
+  {
+   "type": "qcm",
+   "question": "Question about appearance:",
+   "choix": [
+    "What is he like?",
+    "What does he look like?",
+    "How is he like?"
+   ],
+   "bonne": 1,
+   "explication": "look like = physique."
+  },
+  {
+   "type": "ordre",
+   "en": "The girl who has braids is my sister",
+   "fr": "La fille qui a des tresses est ma sœur"
+  },
+  {
+   "type": "traduire",
+   "fr": "L'homme qui conduit le taxi est mon oncle.",
+   "reponses": [
+    "The man who drives the taxi is my uncle.",
+    "The man that drives the taxi is my uncle.",
+    "The man who is driving the taxi is my uncle."
+   ]
+  },
+  {
+   "type": "ecoute",
+   "en": "She's a bit shy but very kind.",
+   "choix": [
+    "Elle est un peu timide mais très gentille.",
+    "Elle est un peu fatiguée mais très gentille.",
+    "Elle est un peu grande mais très gentille."
+   ],
+   "bonne": 0
+  },
+  {
+   "type": "repeter",
+   "en": "My best friend is the girl who always makes me laugh.",
+   "fr": "Ma meilleure amie est la fille qui me fait toujours rire."
+  }
+ ],
+ "resume": "who (people), which (things), that (both), where (places). What does she look like? (body) / What is she like? (personality).",
+ "devoir": "Describe 3 people you know with a « who » sentence each."
+}

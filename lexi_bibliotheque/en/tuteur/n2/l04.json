@@ -1,0 +1,177 @@
+{
+ "id": "en-n2-l04",
+ "langue": "en",
+ "niveau": 2,
+ "lecon": 4,
+ "cecrl": "A2",
+ "titre": "Directions in town",
+ "objectifs": [
+  "Ask for directions",
+  "Give directions with the imperative",
+  "Prepositions of place"
+ ],
+ "etapes": [
+  {
+   "type": "vocabulaire",
+   "mots": [
+    {
+     "en": "turn left",
+     "fr": "tourner à gauche",
+     "pron": "teurn lèft"
+    },
+    {
+     "en": "turn right",
+     "fr": "tourner à droite",
+     "pron": "teurn raït"
+    },
+    {
+     "en": "go straight on",
+     "fr": "aller tout droit",
+     "pron": "go strèït onn"
+    },
+    {
+     "en": "next to",
+     "fr": "à côté de",
+     "pron": "nèkst tou"
+    },
+    {
+     "en": "opposite",
+     "fr": "en face de",
+     "pron": "o-po-zit"
+    },
+    {
+     "en": "between",
+     "fr": "entre",
+     "pron": "bi-twine"
+    },
+    {
+     "en": "at the corner",
+     "fr": "au coin",
+     "pron": "at ze kor-neur"
+    },
+    {
+     "en": "crossroads",
+     "fr": "carrefour",
+     "pron": "kross-rodz"
+    },
+    {
+     "en": "roundabout",
+     "fr": "rond-point",
+     "pron": "raound-a-baout"
+    }
+   ]
+  },
+  {
+   "type": "explication",
+   "fr": "Pour demander poliment : « Excuse me, how do I get to…? » ou « Where is the nearest…? ».",
+   "en": "Excuse me, where is the nearest pharmacy?",
+   "exemples": [
+    {
+     "en": "How do I get to the station?",
+     "fr": "Comment je vais à la gare ?"
+    },
+    {
+     "en": "Is it far from here?",
+     "fr": "C'est loin d'ici ?"
+    }
+   ]
+  },
+  {
+   "type": "explication",
+   "fr": "Pour indiquer le chemin, on utilise l'impératif : le verbe tout seul, sans « you ».",
+   "en": "Go straight on, then take the second street on the left.",
+   "exemples": [
+    {
+     "en": "Take the first right.",
+     "fr": "Prenez la première à droite."
+    },
+    {
+     "en": "Cross the road.",
+     "fr": "Traversez la route."
+    },
+    {
+     "en": "It's on your left.",
+     "fr": "C'est sur votre gauche."
+    }
+   ]
+  },
+  {
+   "type": "dialogue",
+   "lignes": [
+    {
+     "qui": "eleve",
+     "en": "Excuse me, how do I get to the post office?",
+     "fr": "Excusez-moi, comment je vais à la poste ?"
+    },
+    {
+     "qui": "autre",
+     "en": "Go straight on until the roundabout, then turn right.",
+     "fr": "Allez tout droit jusqu'au rond-point, puis tournez à droite."
+    },
+    {
+     "qui": "eleve",
+     "en": "Is it far?",
+     "fr": "C'est loin ?"
+    },
+    {
+     "qui": "autre",
+     "en": "No, about five minutes. It's opposite the bank.",
+     "fr": "Non, environ cinq minutes. C'est en face de la banque."
+    }
+   ]
+  },
+  {
+   "type": "qcm",
+   "question": "« La pharmacie est entre la banque et l'école » =",
+   "choix": [
+    "between the bank and the school",
+    "next the bank and the school",
+    "opposite the bank and the school"
+   ],
+   "bonne": 0,
+   "explication": "entre = between."
+  },
+  {
+   "type": "qcm",
+   "question": "Impératif correct :",
+   "choix": [
+    "You turn left.",
+    "Turn left.",
+    "To turn left."
+   ],
+   "bonne": 1,
+   "explication": "Impératif = verbe seul."
+  },
+  {
+   "type": "ordre",
+   "en": "Take the second street on the right",
+   "fr": "Prenez la deuxième rue à droite"
+  },
+  {
+   "type": "traduire",
+   "fr": "Excusez-moi, où est la gare ?",
+   "reponses": [
+    "Excuse me, where is the station?",
+    "Excuse me, where's the station?",
+    "Excuse me, where is the train station?"
+   ]
+  },
+  {
+   "type": "ecoute",
+   "en": "It's next to the mosque.",
+   "choix": [
+    "C'est à côté de la mosquée.",
+    "C'est en face de la mosquée.",
+    "C'est derrière la mosquée."
+   ],
+   "bonne": 0
+  },
+  {
+   "type": "repeter",
+   "en": "Go straight on, turn left at the crossroads, and it's on your right.",
+   "fr": "Allez tout droit, tournez à gauche au carrefour, c'est sur votre droite."
+  }
+ ],
+ "resume": "How do I get to…? Where is the nearest…? Imperative: go, turn, take, cross. next to, opposite, between, at the corner.",
+ "devoir": "Explain in English how to go from your house to the nearest shop."
+}

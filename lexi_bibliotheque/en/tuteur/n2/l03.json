@@ -1,0 +1,168 @@
+{
+ "id": "en-n2-l03",
+ "langue": "en",
+ "niveau": 2,
+ "lecon": 3,
+ "cecrl": "A2",
+ "titre": "Plans for tomorrow",
+ "objectifs": [
+  "Talk about plans",
+  "be going to vs will",
+  "Make predictions"
+ ],
+ "etapes": [
+  {
+   "type": "explication",
+   "fr": "« be going to » = un projet déjà décidé. « will » = une décision prise au moment où on parle, une promesse ou une prédiction.",
+   "en": "I'm going to visit my aunt tomorrow (plan). OK, I'll call you tonight (decision now).",
+   "exemples": [
+    {
+     "en": "I'm going to study medicine.",
+     "fr": "Je vais étudier la médecine (c'est décidé)."
+    },
+    {
+     "en": "It's hot. I'll open the window.",
+     "fr": "Il fait chaud. Je vais ouvrir la fenêtre (je décide maintenant)."
+    },
+    {
+     "en": "I'll help you, I promise.",
+     "fr": "Je t'aiderai, promis."
+    }
+   ]
+  },
+  {
+   "type": "explication",
+   "fr": "Pour les prédictions : « I think it will rain » (opinion) ; mais si on VOIT les signes : « Look at the clouds! It's going to rain. »",
+   "en": ""
+  },
+  {
+   "type": "vocabulaire",
+   "mots": [
+    {
+     "en": "tomorrow",
+     "fr": "demain",
+     "pron": "tou-mo-ro"
+    },
+    {
+     "en": "next week",
+     "fr": "la semaine prochaine",
+     "pron": "nèkst wik"
+    },
+    {
+     "en": "soon",
+     "fr": "bientôt",
+     "pron": "soun"
+    },
+    {
+     "en": "plan",
+     "fr": "projet",
+     "pron": "plann"
+    },
+    {
+     "en": "promise",
+     "fr": "promettre",
+     "pron": "pro-miss"
+    },
+    {
+     "en": "maybe",
+     "fr": "peut-être",
+     "pron": "mèï-bi"
+    },
+    {
+     "en": "probably",
+     "fr": "probablement",
+     "pron": "pro-ba-bli"
+    }
+   ]
+  },
+  {
+   "type": "dialogue",
+   "lignes": [
+    {
+     "qui": "prof",
+     "en": "What are you going to do after your exams?",
+     "fr": "Que vas-tu faire après tes examens ?"
+    },
+    {
+     "qui": "eleve",
+     "en": "I'm going to look for a job in Abidjan.",
+     "fr": "Je vais chercher un travail à Abidjan."
+    },
+    {
+     "qui": "prof",
+     "en": "Great! I think you'll find one quickly.",
+     "fr": "Super ! Je pense que tu en trouveras un rapidement."
+    },
+    {
+     "qui": "eleve",
+     "en": "I hope so! I'll send you my CV.",
+     "fr": "J'espère ! Je t'enverrai mon CV."
+    }
+   ]
+  },
+  {
+   "type": "qcm",
+   "question": "Le téléphone sonne. « ___ answer it! »",
+   "choix": [
+    "I'm going to",
+    "I'll",
+    "I will going to"
+   ],
+   "bonne": 1,
+   "explication": "Décision immédiate → I'll."
+  },
+  {
+   "type": "qcm",
+   "question": "« Look at those clouds! It ___ rain. »",
+   "choix": [
+    "will",
+    "is going to",
+    "goes to"
+   ],
+   "bonne": 1,
+   "explication": "On voit les signes → is going to."
+  },
+  {
+   "type": "qcm",
+   "question": "« Next year I ___ start a business. » (c'est déjà décidé)",
+   "choix": [
+    "will",
+    "am going to",
+    "going to"
+   ],
+   "bonne": 1,
+   "explication": "Projet décidé → am going to."
+  },
+  {
+   "type": "ordre",
+   "en": "I am going to travel next month",
+   "fr": "Je vais voyager le mois prochain"
+  },
+  {
+   "type": "traduire",
+   "fr": "Je t'appellerai ce soir.",
+   "reponses": [
+    "I'll call you tonight.",
+    "I will call you tonight.",
+    "I'll call you this evening."
+   ]
+  },
+  {
+   "type": "ecoute",
+   "en": "Don't worry, everything will be fine.",
+   "choix": [
+    "Ne t'inquiète pas, tout ira bien.",
+    "Ne t'inquiète pas, tout va bien.",
+    "Ne t'inquiète pas, c'était bien."
+   ],
+   "bonne": 0
+  },
+  {
+   "type": "repeter",
+   "en": "Next year I'm going to speak English very well!",
+   "fr": "L'année prochaine, je vais très bien parler anglais !"
+  }
+ ],
+ "resume": "be going to = plan / visible prediction. will = decision now, promise, opinion about the future.",
+ "devoir": "Write 3 plans (going to) and 2 promises (will) for next week."
+}

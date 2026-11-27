@@ -1,0 +1,189 @@
+{
+ "id": "en-n2-l05",
+ "langue": "en",
+ "niveau": 2,
+ "lecon": 5,
+ "cecrl": "A2",
+ "titre": "At the restaurant",
+ "objectifs": [
+  "Order food politely",
+  "would like",
+  "much / many, countable / uncountable"
+ ],
+ "etapes": [
+  {
+   "type": "explication",
+   "fr": "« I would like » (I'd like) est la façon polie de dire « je veux ». « I want » peut sembler impoli au restaurant.",
+   "en": "I'd like the grilled fish, please.",
+   "exemples": [
+    {
+     "en": "I'd like a bottle of water.",
+     "fr": "Je voudrais une bouteille d'eau."
+    },
+    {
+     "en": "Would you like some dessert?",
+     "fr": "Voulez-vous un dessert ?"
+    }
+   ]
+  },
+  {
+   "type": "explication",
+   "fr": "Indénombrables (on ne peut pas compter) : water, rice, money, bread → much. Dénombrables : chairs, plates, people → many.",
+   "en": "How much rice? How many plates?",
+   "exemples": [
+    {
+     "en": "There isn't much time.",
+     "fr": "Il n'y a pas beaucoup de temps."
+    },
+    {
+     "en": "How many people are there?",
+     "fr": "Combien de personnes y a-t-il ?"
+    }
+   ]
+  },
+  {
+   "type": "vocabulaire",
+   "mots": [
+    {
+     "en": "menu",
+     "fr": "carte, menu",
+     "pron": "mè-niou"
+    },
+    {
+     "en": "starter",
+     "fr": "entrée",
+     "pron": "star-teur"
+    },
+    {
+     "en": "main course",
+     "fr": "plat principal",
+     "pron": "mèïn kors"
+    },
+    {
+     "en": "dessert",
+     "fr": "dessert",
+     "pron": "di-zeurt"
+    },
+    {
+     "en": "the bill",
+     "fr": "l'addition",
+     "pron": "ze bil"
+    },
+    {
+     "en": "spicy",
+     "fr": "épicé",
+     "pron": "spaï-si"
+    },
+    {
+     "en": "grilled",
+     "fr": "grillé",
+     "pron": "grild"
+    },
+    {
+     "en": "tip",
+     "fr": "pourboire",
+     "pron": "tip"
+    }
+   ]
+  },
+  {
+   "type": "dialogue",
+   "lignes": [
+    {
+     "qui": "autre",
+     "en": "Good evening. Are you ready to order?",
+     "fr": "Bonsoir. Vous êtes prêts à commander ?"
+    },
+    {
+     "qui": "eleve",
+     "en": "Yes. I'd like the grilled chicken with attiéké, please.",
+     "fr": "Oui. Je voudrais le poulet grillé avec de l'attiéké, s'il vous plaît."
+    },
+    {
+     "qui": "autre",
+     "en": "Would you like something to drink?",
+     "fr": "Voulez-vous quelque chose à boire ?"
+    },
+    {
+     "qui": "eleve",
+     "en": "A fresh juice, please. Is the sauce spicy?",
+     "fr": "Un jus frais. La sauce est épicée ?"
+    },
+    {
+     "qui": "autre",
+     "en": "A little. I can bring it on the side.",
+     "fr": "Un peu. Je peux la servir à part."
+    },
+    {
+     "qui": "eleve",
+     "en": "Perfect. And could we have the bill later?",
+     "fr": "Parfait. Et l'addition plus tard, s'il vous plaît."
+    }
+   ]
+  },
+  {
+   "type": "qcm",
+   "question": "Le plus poli :",
+   "choix": [
+    "I want rice.",
+    "Give me rice.",
+    "I'd like some rice, please."
+   ],
+   "bonne": 2,
+   "explication": "I'd like… please."
+  },
+  {
+   "type": "qcm",
+   "question": "« How ___ money do you have? »",
+   "choix": [
+    "many",
+    "much",
+    "lot"
+   ],
+   "bonne": 1,
+   "explication": "money est indénombrable → much."
+  },
+  {
+   "type": "qcm",
+   "question": "« How ___ glasses do we need? »",
+   "choix": [
+    "many",
+    "much",
+    "more"
+   ],
+   "bonne": 0,
+   "explication": "glasses se comptent → many."
+  },
+  {
+   "type": "ordre",
+   "en": "Could we have the bill please",
+   "fr": "Pourrions-nous avoir l'addition s'il vous plaît"
+  },
+  {
+   "type": "traduire",
+   "fr": "Je voudrais un jus d'orange, s'il vous plaît.",
+   "reponses": [
+    "I'd like an orange juice, please.",
+    "I would like an orange juice, please.",
+    "I'd like some orange juice, please."
+   ]
+  },
+  {
+   "type": "ecoute",
+   "en": "Is service included?",
+   "choix": [
+    "Le service est compris ?",
+    "Le service est rapide ?",
+    "Le serveur est là ?"
+   ],
+   "bonne": 0
+  },
+  {
+   "type": "repeter",
+   "en": "Excuse me, I'd like to order, please.",
+   "fr": "Excusez-moi, je voudrais commander, s'il vous plaît."
+  }
+ ],
+ "resume": "I'd like… / Would you like…? much (uncountable) / many (countable). menu, starter, main course, the bill.",
+ "devoir": "Imagine you are at a restaurant: write the full conversation (6 lines)."
+}

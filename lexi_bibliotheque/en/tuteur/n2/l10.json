@@ -1,0 +1,188 @@
+{
+ "id": "en-n2-l10",
+ "langue": "en",
+ "niveau": 2,
+ "lecon": 10,
+ "cecrl": "A2",
+ "titre": "On the phone",
+ "objectifs": [
+  "Make and answer phone calls",
+  "Polite requests: could you, may I",
+  "Phone phrasal verbs"
+ ],
+ "etapes": [
+  {
+   "type": "explication",
+   "fr": "Au téléphone, on se présente avec « This is … » (pas « I am »). Pour demander quelqu'un : « Can I speak to …, please? »",
+   "en": "Hello, this is Awa. Can I speak to Mr Koné, please?",
+   "exemples": [
+    {
+     "en": "Who's calling?",
+     "fr": "Qui est à l'appareil ?"
+    },
+    {
+     "en": "Hold on, please.",
+     "fr": "Ne quittez pas."
+    },
+    {
+     "en": "He isn't here at the moment.",
+     "fr": "Il n'est pas là en ce moment."
+    }
+   ]
+  },
+  {
+   "type": "explication",
+   "fr": "Demandes polies : « Could you…? » (pourriez-vous) et « May I…? » (puis-je, très poli).",
+   "en": "Could you repeat that, please?",
+   "exemples": [
+    {
+     "en": "Could you speak more slowly?",
+     "fr": "Pourriez-vous parler plus lentement ?"
+    },
+    {
+     "en": "May I leave a message?",
+     "fr": "Puis-je laisser un message ?"
+    }
+   ]
+  },
+  {
+   "type": "vocabulaire",
+   "mots": [
+    {
+     "en": "call back",
+     "fr": "rappeler",
+     "pron": "kol bak"
+    },
+    {
+     "en": "hang up",
+     "fr": "raccrocher",
+     "pron": "hang eup"
+    },
+    {
+     "en": "hold on",
+     "fr": "patienter",
+     "pron": "hold onn"
+    },
+    {
+     "en": "pick up",
+     "fr": "décrocher",
+     "pron": "pik eup"
+    },
+    {
+     "en": "get through",
+     "fr": "joindre quelqu'un",
+     "pron": "guèt srou"
+    },
+    {
+     "en": "voicemail",
+     "fr": "messagerie vocale",
+     "pron": "voïss-mèïl"
+    },
+    {
+     "en": "battery",
+     "fr": "batterie",
+     "pron": "ba-teu-ri"
+    },
+    {
+     "en": "network",
+     "fr": "réseau",
+     "pron": "nèt-weurk"
+    }
+   ]
+  },
+  {
+   "type": "dialogue",
+   "lignes": [
+    {
+     "qui": "autre",
+     "en": "Hello, Koné Services.",
+     "fr": "Allô, Koné Services."
+    },
+    {
+     "qui": "eleve",
+     "en": "Good morning, this is Awa Traoré. Could I speak to Mr Koné, please?",
+     "fr": "Bonjour, c'est Awa Traoré. Pourrais-je parler à M. Koné ?"
+    },
+    {
+     "qui": "autre",
+     "en": "I'm sorry, he's in a meeting. May I take a message?",
+     "fr": "Désolé, il est en réunion. Puis-je prendre un message ?"
+    },
+    {
+     "qui": "eleve",
+     "en": "Yes, please. Could you ask him to call me back this afternoon?",
+     "fr": "Oui. Pourriez-vous lui demander de me rappeler cet après-midi ?"
+    },
+    {
+     "qui": "autre",
+     "en": "Of course. Could you spell your name, please?",
+     "fr": "Bien sûr. Pourriez-vous épeler votre nom ?"
+    }
+   ]
+  },
+  {
+   "type": "qcm",
+   "question": "Au téléphone, pour te présenter :",
+   "choix": [
+    "I am Awa.",
+    "This is Awa.",
+    "Here is Awa."
+   ],
+   "bonne": 1,
+   "explication": "Au téléphone : This is…"
+  },
+  {
+   "type": "qcm",
+   "question": "« raccrocher » =",
+   "choix": [
+    "hang up",
+    "pick up",
+    "call back"
+   ],
+   "bonne": 0,
+   "explication": "hang up = raccrocher."
+  },
+  {
+   "type": "qcm",
+   "question": "Le plus poli :",
+   "choix": [
+    "Repeat!",
+    "Could you repeat that, please?",
+    "You repeat?"
+   ],
+   "bonne": 1,
+   "explication": "Could you…, please?"
+  },
+  {
+   "type": "ordre",
+   "en": "Could you call me back later",
+   "fr": "Pourriez-vous me rappeler plus tard"
+  },
+  {
+   "type": "traduire",
+   "fr": "Puis-je laisser un message ?",
+   "reponses": [
+    "May I leave a message?",
+    "Can I leave a message?",
+    "Could I leave a message?"
+   ]
+  },
+  {
+   "type": "ecoute",
+   "en": "Sorry, the network is bad.",
+   "choix": [
+    "Désolé, le réseau est mauvais.",
+    "Désolé, la batterie est faible.",
+    "Désolé, je suis occupé."
+   ],
+   "bonne": 0
+  },
+  {
+   "type": "repeter",
+   "en": "Hello, this is … Could I speak to the manager, please?",
+   "fr": "Bonjour, c'est … Pourrais-je parler au responsable, s'il vous plaît ?"
+  }
+ ],
+ "resume": "This is… / Can I speak to…? / Hold on. Could you…? May I…? call back, hang up, pick up, hold on.",
+ "devoir": "Practise a phone call with a friend: one calls, the other takes a message."
+}
