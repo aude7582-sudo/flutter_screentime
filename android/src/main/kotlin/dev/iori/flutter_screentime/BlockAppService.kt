@@ -237,6 +237,12 @@ class BlockAppService : Service() {
         val view = overlayView ?: return
 
         view.setBackgroundColor(configuration.backgroundColor)
+        // Léxi : renard au panneau STOP pour « Pas encore ! », renard zen
+        // (casque + téléphone verrouillé) pour la concentration et la nuit.
+        view.findViewById<android.widget.ImageView>(R.id.block_overlay_image)?.setImageResource(
+            if (configuration.title.contains("Pas encore")) R.drawable.lexi_renard_bloque
+            else R.drawable.lexi_renard_zen
+        )
         view.findViewById<TextView>(R.id.block_overlay_title).apply {
             text = configuration.title
             setTextColor(configuration.textColor)
