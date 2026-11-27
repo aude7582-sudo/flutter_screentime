@@ -1,0 +1,136 @@
+{
+ "id": "en-n5-l08",
+ "langue": "en",
+ "niveau": 5,
+ "lecon": 8,
+ "cecrl": "C1",
+ "titre": "Between the lines",
+ "objectifs": [
+  "Understand implied meaning",
+  "Recognise irony and tone",
+  "Polite indirect language"
+ ],
+ "etapes": [
+  {
+   "type": "explication",
+   "fr": "",
+   "en": "Native speakers often say things indirectly. You must understand what they really mean.",
+   "exemples": [
+    {
+     "en": "« That's an interesting idea… » (said slowly)",
+     "fr": "= je ne suis pas convaincu"
+    },
+    {
+     "en": "« I'll think about it. »",
+     "fr": "= souvent non"
+    },
+    {
+     "en": "« With all due respect… »",
+     "fr": "= je ne suis pas d'accord"
+    },
+    {
+     "en": "« Oh great, another meeting! »",
+     "fr": "= ironie : pas content du tout"
+    }
+   ]
+  },
+  {
+   "type": "vocabulaire",
+   "mots": [
+    {
+     "en": "irony / ironic",
+     "fr": "ironie / ironique",
+     "pron": "aï-reu-ni"
+    },
+    {
+     "en": "imply",
+     "fr": "sous-entendre",
+     "pron": "imm-plaï"
+    },
+    {
+     "en": "infer",
+     "fr": "déduire",
+     "pron": "inn-feur"
+    },
+    {
+     "en": "understatement",
+     "fr": "euphémisme",
+     "pron": "eun-deur-stèït-meunt"
+    },
+    {
+     "en": "tone",
+     "fr": "ton",
+     "pron": "tone"
+    },
+    {
+     "en": "hint",
+     "fr": "allusion",
+     "pron": "hint"
+    }
+   ]
+  },
+  {
+   "type": "qcm",
+   "question": "Your boss says « We might want to rethink this slide. » He means…",
+   "choix": [
+    "The slide is perfect.",
+    "Please change the slide.",
+    "He wants to rest."
+   ],
+   "bonne": 1,
+   "explication": "Indirect request: change it."
+  },
+  {
+   "type": "qcm",
+   "question": "« Not bad at all! » usually means…",
+   "choix": [
+    "It's bad.",
+    "It's good.",
+    "I don't know."
+   ],
+   "bonne": 1,
+   "explication": "Understatement = it's good."
+  },
+  {
+   "type": "qcm",
+   "question": "« Oh, brilliant, the bus is late again. » Tone?",
+   "choix": [
+    "sincere",
+    "ironic",
+    "happy"
+   ],
+   "bonne": 1,
+   "explication": "Ironic."
+  },
+  {
+   "type": "ordre",
+   "en": "What are you implying",
+   "fr": "Qu'est-ce que tu sous-entends"
+  },
+  {
+   "type": "traduire",
+   "fr": "Avec tout le respect que je vous dois, je ne suis pas d'accord.",
+   "reponses": [
+    "With all due respect, I disagree.",
+    "With all due respect, I don't agree."
+   ]
+  },
+  {
+   "type": "ecoute",
+   "en": "I'm not entirely convinced.",
+   "choix": [
+    "Je ne suis pas totalement convaincu.",
+    "Je suis totalement convaincu.",
+    "Je suis très content."
+   ],
+   "bonne": 0
+  },
+  {
+   "type": "repeter",
+   "en": "With all due respect, I see things a little differently.",
+   "fr": "Avec tout le respect que je vous dois, je vois les choses un peu autrement."
+  }
+ ],
+ "resume": "Indirect language: I'll think about it, interesting idea, with all due respect, we might want to… Irony and understatement.",
+ "devoir": "Watch a short English video and note 3 things people say indirectly."
+}

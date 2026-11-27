@@ -1,0 +1,141 @@
+{
+ "id": "en-n5-l04",
+ "langue": "en",
+ "niveau": 5,
+ "lecon": 4,
+ "cecrl": "C1",
+ "titre": "He might have missed it",
+ "objectifs": [
+  "Make deductions about the past",
+  "Modal perfects",
+  "Degrees of certainty"
+ ],
+ "etapes": [
+  {
+   "type": "explication",
+   "fr": "",
+   "en": "Modal + have + past participle for deductions about the past: must have (sure), might/may/could have (possible), can't have (impossible), should have (criticism).",
+   "exemples": [
+    {
+     "en": "She must have forgotten.",
+     "fr": "Elle a dû oublier."
+    },
+    {
+     "en": "He might have missed the bus.",
+     "fr": "Il a peut-être raté le bus."
+    },
+    {
+     "en": "They can't have finished already!",
+     "fr": "Ils ne peuvent pas avoir déjà fini !"
+    },
+    {
+     "en": "You should have told me.",
+     "fr": "Tu aurais dû me le dire."
+    }
+   ]
+  },
+  {
+   "type": "vocabulaire",
+   "mots": [
+    {
+     "en": "deduce",
+     "fr": "déduire",
+     "pron": "di-diouss"
+    },
+    {
+     "en": "evidence",
+     "fr": "preuve, indice",
+     "pron": "è-vi-deuns"
+    },
+    {
+     "en": "apparently",
+     "fr": "apparemment",
+     "pron": "a-pa-reunt-li"
+    },
+    {
+     "en": "presumably",
+     "fr": "vraisemblablement",
+     "pron": "pri-ziou-ma-bli"
+    }
+   ]
+  },
+  {
+   "type": "dialogue",
+   "lignes": [
+    {
+     "qui": "autre",
+     "en": "Kofi isn't answering his phone.",
+     "fr": "Kofi ne répond pas."
+    },
+    {
+     "qui": "eleve",
+     "en": "He might have left it at home, or his battery may have died.",
+     "fr": "Il l'a peut-être laissé à la maison, ou sa batterie est peut-être morte."
+    },
+    {
+     "qui": "autre",
+     "en": "He can't have forgotten the meeting — he organised it!",
+     "fr": "Il ne peut pas avoir oublié la réunion, c'est lui qui l'a organisée !"
+    },
+    {
+     "qui": "eleve",
+     "en": "True. He must have been stuck in traffic.",
+     "fr": "C'est vrai. Il a dû rester coincé dans les embouteillages."
+    }
+   ]
+  },
+  {
+   "type": "qcm",
+   "question": "« Elle a dû se tromper » (sûr) =",
+   "choix": [
+    "She must have made a mistake.",
+    "She might make a mistake.",
+    "She should have made a mistake."
+   ],
+   "bonne": 0,
+   "explication": "must have = sûr."
+  },
+  {
+   "type": "qcm",
+   "question": "« Tu aurais dû venir » =",
+   "choix": [
+    "You must have come.",
+    "You should have come.",
+    "You can't have come."
+   ],
+   "bonne": 1,
+   "explication": "should have = reproche."
+  },
+  {
+   "type": "ordre",
+   "en": "They might have taken the wrong road",
+   "fr": "Ils ont peut-être pris la mauvaise route"
+  },
+  {
+   "type": "traduire",
+   "fr": "Il ne peut pas avoir dit ça.",
+   "reponses": [
+    "He can't have said that.",
+    "He cannot have said that.",
+    "He couldn't have said that."
+   ]
+  },
+  {
+   "type": "ecoute",
+   "en": "You could have warned me!",
+   "choix": [
+    "Tu aurais pu me prévenir !",
+    "Tu peux me prévenir !",
+    "Tu m'as prévenu !"
+   ],
+   "bonne": 0
+  },
+  {
+   "type": "repeter",
+   "en": "The ground is wet. It must have rained during the night.",
+   "fr": "Le sol est mouillé. Il a dû pleuvoir pendant la nuit."
+  }
+ ],
+ "resume": "must have (certain), may/might/could have (possible), can't have (impossible), should have (regret/criticism).",
+ "devoir": "Look at a photo and make 5 deductions about what happened."
+}

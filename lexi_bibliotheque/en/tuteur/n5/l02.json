@@ -1,0 +1,105 @@
+{
+ "id": "en-n5-l02",
+ "langue": "en",
+ "niveau": 5,
+ "lecon": 2,
+ "cecrl": "C1",
+ "titre": "What I need is…",
+ "objectifs": [
+  "Emphasise information",
+  "Cleft sentences",
+  "Natural focus in speech"
+ ],
+ "etapes": [
+  {
+   "type": "explication",
+   "fr": "",
+   "en": "Cleft sentences put the important information in focus: « It is/was… that… » and « What… is/was… ».",
+   "exemples": [
+    {
+     "en": "It was Awa who solved the problem.",
+     "fr": "C'est Awa qui a résolu le problème."
+    },
+    {
+     "en": "What I need is a long holiday.",
+     "fr": "Ce dont j'ai besoin, c'est de longues vacances."
+    },
+    {
+     "en": "What surprised me was his calm.",
+     "fr": "Ce qui m'a surpris, c'est son calme."
+    },
+    {
+     "en": "All I want is some peace.",
+     "fr": "Tout ce que je veux, c'est un peu de paix."
+    }
+   ]
+  },
+  {
+   "type": "explication",
+   "fr": "",
+   "en": "« The reason why… is that… », « The thing is… » are very common in spoken English.",
+   "exemples": [
+    {
+     "en": "The reason why I'm late is that the road was flooded.",
+     "fr": "La raison de mon retard, c'est que la route était inondée."
+    },
+    {
+     "en": "The thing is, I don't have time.",
+     "fr": "Le problème, c'est que je n'ai pas le temps."
+    }
+   ]
+  },
+  {
+   "type": "qcm",
+   "question": "Emphasise « the price »: « The price shocked me. » →",
+   "choix": [
+    "What shocked me was the price.",
+    "What was shocked me the price.",
+    "It shocked me what the price."
+   ],
+   "bonne": 0,
+   "explication": "What + verb… was…"
+  },
+  {
+   "type": "qcm",
+   "question": "« C'est lui qui m'a aidé » =",
+   "choix": [
+    "It was him that helped me.",
+    "He was who helped me.",
+    "It helped me him."
+   ],
+   "bonne": 0,
+   "explication": "It was… that/who…"
+  },
+  {
+   "type": "ordre",
+   "en": "What I love about this city is the food",
+   "fr": "Ce que j'aime dans cette ville c'est la nourriture"
+  },
+  {
+   "type": "traduire",
+   "fr": "Ce dont il a besoin, c'est de confiance.",
+   "reponses": [
+    "What he needs is confidence.",
+    "What he needs is self-confidence."
+   ]
+  },
+  {
+   "type": "ecoute",
+   "en": "It wasn't the money that mattered.",
+   "choix": [
+    "Ce n'était pas l'argent qui comptait.",
+    "L'argent comptait beaucoup.",
+    "Il n'avait pas d'argent."
+   ],
+   "bonne": 0
+  },
+  {
+   "type": "repeter",
+   "en": "What really matters is how you treat people.",
+   "fr": "Ce qui compte vraiment, c'est comment tu traites les gens."
+  }
+ ],
+ "resume": "It is/was X that/who… / What… is… / All I want is… / The reason why… is that… / The thing is…",
+ "devoir": "Write 5 cleft sentences about your goals."
+}

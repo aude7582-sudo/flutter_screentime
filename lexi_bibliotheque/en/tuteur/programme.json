@@ -1,102 +1,379 @@
 {
-  "langue": "en",
-  "nom": "Anglais",
-  "reference": "Cadre européen commun de référence (CECRL) — inventaire British Council / EAQUALS",
-  "niveaux": [
+ "langue": "en",
+ "nom": "Anglais",
+ "reference": "Cadre européen commun de référence (CECRL) — inventaire British Council / EAQUALS",
+ "niveaux": [
+  {
+   "niveau": 1,
+   "nom": "Débutant",
+   "cecrl": "A1",
+   "profs": [
+    "kenza",
+    "kevin",
+    "lexi",
+    "koko"
+   ],
+   "langue_prof": "Surtout en français, avec les mots anglais expliqués un par un.",
+   "lecons": [
     {
-      "niveau": 1,
-      "nom": "Débutant",
-      "cecrl": "A1",
-      "profs": ["kenza", "kevin", "lexi", "koko"],
-      "langue_prof": "Surtout en français, avec les mots anglais expliqués un par un.",
-      "lecons": [
-        {"n": 1, "titre": "Hello! Se présenter", "grammaire": "I am / I'm, my name is", "theme": "salutations, prénom, âge"},
-        {"n": 2, "titre": "Where are you from?", "grammaire": "verbe be (I/you/he/she), questions", "theme": "pays, villes, nationalités"},
-        {"n": 3, "titre": "My family", "grammaire": "possessifs my/your/his/her, have got", "theme": "la famille"},
-        {"n": 4, "titre": "Numbers, time and days", "grammaire": "nombres 1-100, What time is it?", "theme": "l'heure, les jours, les mois"},
-        {"n": 5, "titre": "My day", "grammaire": "présent simple (I/you/we/they)", "theme": "la routine du matin au soir"},
-        {"n": 6, "titre": "He works, she studies", "grammaire": "présent simple 3e personne (-s), do/does", "theme": "métiers et études"},
-        {"n": 7, "titre": "At the market", "grammaire": "there is/are, some/any, How much is it?", "theme": "nourriture, prix, acheter"},
-        {"n": 8, "titre": "I can swim!", "grammaire": "can / can't", "theme": "capacités, loisirs"},
-        {"n": 9, "titre": "Right now", "grammaire": "présent continu (I am eating)", "theme": "ce qu'on fait maintenant"},
-        {"n": 10, "titre": "Yesterday", "grammaire": "passé simple de be (was/were) et verbes réguliers (-ed)", "theme": "raconter sa journée d'hier"}
-      ]
+     "n": 1,
+     "titre": "Hello! Se présenter",
+     "grammaire": "I am / I'm, my name is",
+     "theme": "salutations, prénom, âge"
     },
     {
-      "niveau": 2,
-      "nom": "Intermédiaire",
-      "cecrl": "A2",
-      "profs": ["zeynab", "abdul", "doudou"],
-      "langue_prof": "Surtout en anglais, avec des explications en français quand c'est difficile.",
-      "lecons": [
-        {"n": 1, "titre": "Last weekend", "grammaire": "passé simple : verbes irréguliers fréquents", "theme": "raconter un week-end"},
-        {"n": 2, "titre": "Bigger, better, the best", "grammaire": "comparatifs et superlatifs", "theme": "comparer des villes, des téléphones"},
-        {"n": 3, "titre": "Plans for tomorrow", "grammaire": "be going to / will", "theme": "projets, prédictions"},
-        {"n": 4, "titre": "Directions in town", "grammaire": "impératif, prépositions de lieu", "theme": "demander et indiquer le chemin"},
-        {"n": 5, "titre": "At the restaurant", "grammaire": "would like, some/any, much/many", "theme": "commander, payer"},
-        {"n": 6, "titre": "You should rest", "grammaire": "should / must / have to", "theme": "santé, conseils, règles"},
-        {"n": 7, "titre": "Have you ever…?", "grammaire": "present perfect (expérience), ever/never", "theme": "expériences de vie"},
-        {"n": 8, "titre": "If it rains…", "grammaire": "conditionnel de type 1 (if + présent, will)", "theme": "météo, conséquences"},
-        {"n": 9, "titre": "The man who…", "grammaire": "relatives who/which/that", "theme": "décrire des personnes et des objets"},
-        {"n": 10, "titre": "On the phone", "grammaire": "could you…?, may I…?, phrasal verbs (call back, hang up)", "theme": "appels et messages"}
-      ]
+     "n": 2,
+     "titre": "Where are you from?",
+     "grammaire": "verbe be (I/you/he/she), questions",
+     "theme": "pays, villes, nationalités"
     },
     {
-      "niveau": 3,
-      "nom": "Difficile",
-      "cecrl": "B1",
-      "profs": ["letty", "nassis"],
-      "langue_prof": "En anglais, avec une phrase en français pour vérifier que tu as compris.",
-      "lecons": [
-        {"n": 1, "titre": "Since and for", "grammaire": "present perfect continu, since/for", "theme": "habitudes et durées"},
-        {"n": 2, "titre": "When I was a child", "grammaire": "used to, passé continu", "theme": "souvenirs d'enfance"},
-        {"n": 3, "titre": "Before I had arrived", "grammaire": "past perfect", "theme": "raconter une histoire"},
-        {"n": 4, "titre": "If I were rich", "grammaire": "conditionnel de type 2", "theme": "rêves, hypothèses"},
-        {"n": 5, "titre": "It was built in 1960", "grammaire": "passif (présent, passé, present perfect)", "theme": "monuments, inventions"},
-        {"n": 6, "titre": "She said that…", "grammaire": "discours rapporté (affirmations et questions)", "theme": "rapporter une conversation"},
-        {"n": 7, "titre": "Job interview", "grammaire": "questions formelles, connecteurs because / so / although", "theme": "travail, CV"},
-        {"n": 8, "titre": "Giving your opinion", "grammaire": "I think / In my opinion / I agree", "theme": "débattre poliment"},
-        {"n": 9, "titre": "Travel problems", "grammaire": "phrasal verbs du voyage (check in, break down, set off)", "theme": "aéroport, hôtel, imprévus"},
-        {"n": 10, "titre": "Writing an email", "grammaire": "registre formel / informel", "theme": "écrire un e-mail clair"}
-      ]
+     "n": 3,
+     "titre": "My family",
+     "grammaire": "possessifs my/your/his/her, have got",
+     "theme": "la famille"
     },
     {
-      "niveau": 4,
-      "nom": "Avancé",
-      "cecrl": "B2",
-      "profs": ["karine", "sagesse"],
-      "langue_prof": "Tout en anglais ; le français seulement pour les pièges.",
-      "lecons": [
-        {"n": 1, "titre": "If I had known", "grammaire": "conditionnel de type 3 et conditionnels mixtes", "theme": "regrets, autres scénarios"},
-        {"n": 2, "titre": "I wish…", "grammaire": "wish / if only", "theme": "souhaits et regrets"},
-        {"n": 3, "titre": "Getting things done", "grammaire": "causatif have/get something done", "theme": "services, réparations"},
-        {"n": 4, "titre": "By 2030", "grammaire": "futur perfect et futur continu", "theme": "l'avenir, la technologie"},
-        {"n": 5, "titre": "Pros and cons", "grammaire": "connecteurs de contraste (however, whereas, despite)", "theme": "argumenter"},
-        {"n": 6, "titre": "To do or doing?", "grammaire": "gérondif ou infinitif (stop, remember, try)", "theme": "nuances de sens"},
-        {"n": 7, "titre": "Idioms everyone uses", "grammaire": "expressions idiomatiques (break the ice, a piece of cake…)", "theme": "parler naturellement"},
-        {"n": 8, "titre": "Meetings and negotiation", "grammaire": "suggestions et compromis (how about, I'd rather)", "theme": "monde professionnel"},
-        {"n": 9, "titre": "The news", "grammaire": "passif avancé (it is said that…)", "theme": "comprendre l'actualité"},
-        {"n": 10, "titre": "Telling a great story", "grammaire": "temps du récit combinés", "theme": "raconter avec suspense"}
-      ]
+     "n": 4,
+     "titre": "Numbers, time and days",
+     "grammaire": "nombres 1-100, What time is it?",
+     "theme": "l'heure, les jours, les mois"
     },
     {
-      "niveau": 5,
-      "nom": "Expert",
-      "cecrl": "C1",
-      "profs": ["malika", "malik"],
-      "langue_prof": "100 % anglais, comme avec un natif.",
-      "lecons": [
-        {"n": 1, "titre": "Never have I seen…", "grammaire": "inversion (never, rarely, not only)", "theme": "insister avec style"},
-        {"n": 2, "titre": "What I need is…", "grammaire": "phrases clivées (it is… that, what… is)", "theme": "mettre en valeur une idée"},
-        {"n": 3, "titre": "Should you need help", "grammaire": "conditionnels formels et inversés", "theme": "langue formelle"},
-        {"n": 4, "titre": "He might have missed it", "grammaire": "modaux au passé (must have, might have, can't have)", "theme": "déductions"},
-        {"n": 5, "titre": "Sounding natural", "grammaire": "collocations et phrasal verbs avancés (come across, bounce back)", "theme": "anglais naturel"},
-        {"n": 6, "titre": "Academic English", "grammaire": "nominalisation, langage prudent (it appears that)", "theme": "études, exposés"},
-        {"n": 7, "titre": "Public speaking", "grammaire": "structure d'un discours, procédés rhétoriques", "theme": "parler en public"},
-        {"n": 8, "titre": "Between the lines", "grammaire": "implicite, ironie, ton", "theme": "comprendre ce qui n'est pas dit"},
-        {"n": 9, "titre": "Debate club", "grammaire": "concession et réfutation (granted, that said)", "theme": "débattre à haut niveau"},
-        {"n": 10, "titre": "Final masterclass", "grammaire": "révision générale C1", "theme": "grand examen final"}
-      ]
+     "n": 5,
+     "titre": "My day",
+     "grammaire": "présent simple (I/you/we/they)",
+     "theme": "la routine du matin au soir"
+    },
+    {
+     "n": 6,
+     "titre": "He works, she studies",
+     "grammaire": "présent simple 3e personne (-s), do/does",
+     "theme": "métiers et études"
+    },
+    {
+     "n": 7,
+     "titre": "At the market",
+     "grammaire": "there is/are, some/any, How much is it?",
+     "theme": "nourriture, prix, acheter"
+    },
+    {
+     "n": 8,
+     "titre": "I can swim!",
+     "grammaire": "can / can't",
+     "theme": "capacités, loisirs"
+    },
+    {
+     "n": 9,
+     "titre": "Right now",
+     "grammaire": "présent continu (I am eating)",
+     "theme": "ce qu'on fait maintenant"
+    },
+    {
+     "n": 10,
+     "titre": "Yesterday",
+     "grammaire": "passé simple de be (was/were) et verbes réguliers (-ed)",
+     "theme": "raconter sa journée d'hier"
     }
-  ]
+   ]
+  },
+  {
+   "niveau": 2,
+   "nom": "Intermédiaire",
+   "cecrl": "A2",
+   "profs": [
+    "zeynab",
+    "abdul",
+    "doudou"
+   ],
+   "langue_prof": "Surtout en anglais, avec des explications en français quand c'est difficile.",
+   "lecons": [
+    {
+     "n": 1,
+     "titre": "Last weekend",
+     "grammaire": "passé simple : verbes irréguliers fréquents",
+     "theme": "raconter un week-end"
+    },
+    {
+     "n": 2,
+     "titre": "Bigger, better, the best",
+     "grammaire": "comparatifs et superlatifs",
+     "theme": "comparer des villes, des téléphones"
+    },
+    {
+     "n": 3,
+     "titre": "Plans for tomorrow",
+     "grammaire": "be going to / will",
+     "theme": "projets, prédictions"
+    },
+    {
+     "n": 4,
+     "titre": "Directions in town",
+     "grammaire": "impératif, prépositions de lieu",
+     "theme": "demander et indiquer le chemin"
+    },
+    {
+     "n": 5,
+     "titre": "At the restaurant",
+     "grammaire": "would like, some/any, much/many",
+     "theme": "commander, payer"
+    },
+    {
+     "n": 6,
+     "titre": "You should rest",
+     "grammaire": "should / must / have to",
+     "theme": "santé, conseils, règles"
+    },
+    {
+     "n": 7,
+     "titre": "Have you ever…?",
+     "grammaire": "present perfect (expérience), ever/never",
+     "theme": "expériences de vie"
+    },
+    {
+     "n": 8,
+     "titre": "If it rains…",
+     "grammaire": "conditionnel de type 1 (if + présent, will)",
+     "theme": "météo, conséquences"
+    },
+    {
+     "n": 9,
+     "titre": "The man who…",
+     "grammaire": "relatives who/which/that",
+     "theme": "décrire des personnes et des objets"
+    },
+    {
+     "n": 10,
+     "titre": "On the phone",
+     "grammaire": "could you…?, may I…?, phrasal verbs (call back, hang up)",
+     "theme": "appels et messages"
+    }
+   ]
+  },
+  {
+   "niveau": 3,
+   "nom": "Difficile",
+   "cecrl": "B1",
+   "profs": [
+    "letty",
+    "nassis"
+   ],
+   "langue_prof": "En anglais, avec une phrase en français pour vérifier que tu as compris.",
+   "lecons": [
+    {
+     "n": 1,
+     "titre": "Since and for",
+     "grammaire": "present perfect continu, since/for",
+     "theme": "habitudes et durées"
+    },
+    {
+     "n": 2,
+     "titre": "When I was a child",
+     "grammaire": "used to, passé continu",
+     "theme": "souvenirs d'enfance"
+    },
+    {
+     "n": 3,
+     "titre": "Before I had arrived",
+     "grammaire": "past perfect",
+     "theme": "raconter une histoire"
+    },
+    {
+     "n": 4,
+     "titre": "If I were rich",
+     "grammaire": "conditionnel de type 2",
+     "theme": "rêves, hypothèses"
+    },
+    {
+     "n": 5,
+     "titre": "It was built in 1960",
+     "grammaire": "passif (présent, passé, present perfect)",
+     "theme": "monuments, inventions"
+    },
+    {
+     "n": 6,
+     "titre": "She said that…",
+     "grammaire": "discours rapporté (affirmations et questions)",
+     "theme": "rapporter une conversation"
+    },
+    {
+     "n": 7,
+     "titre": "Job interview",
+     "grammaire": "questions formelles, connecteurs because / so / although",
+     "theme": "travail, CV"
+    },
+    {
+     "n": 8,
+     "titre": "Giving your opinion",
+     "grammaire": "I think / In my opinion / I agree",
+     "theme": "débattre poliment"
+    },
+    {
+     "n": 9,
+     "titre": "Travel problems",
+     "grammaire": "phrasal verbs du voyage (check in, break down, set off)",
+     "theme": "aéroport, hôtel, imprévus"
+    },
+    {
+     "n": 10,
+     "titre": "Writing an email",
+     "grammaire": "registre formel / informel",
+     "theme": "écrire un e-mail clair"
+    }
+   ]
+  },
+  {
+   "niveau": 4,
+   "nom": "Avancé",
+   "cecrl": "B2",
+   "profs": [
+    "karine",
+    "sagesse"
+   ],
+   "langue_prof": "Tout en anglais ; le français seulement pour les pièges.",
+   "lecons": [
+    {
+     "n": 1,
+     "titre": "If I had known",
+     "grammaire": "conditionnel de type 3 et conditionnels mixtes",
+     "theme": "regrets, autres scénarios"
+    },
+    {
+     "n": 2,
+     "titre": "I wish…",
+     "grammaire": "wish / if only",
+     "theme": "souhaits et regrets"
+    },
+    {
+     "n": 3,
+     "titre": "Getting things done",
+     "grammaire": "causatif have/get something done",
+     "theme": "services, réparations"
+    },
+    {
+     "n": 4,
+     "titre": "By 2030",
+     "grammaire": "futur perfect et futur continu",
+     "theme": "l'avenir, la technologie"
+    },
+    {
+     "n": 5,
+     "titre": "Pros and cons",
+     "grammaire": "connecteurs de contraste (however, whereas, despite)",
+     "theme": "argumenter"
+    },
+    {
+     "n": 6,
+     "titre": "To do or doing?",
+     "grammaire": "gérondif ou infinitif (stop, remember, try)",
+     "theme": "nuances de sens"
+    },
+    {
+     "n": 7,
+     "titre": "Idioms everyone uses",
+     "grammaire": "expressions idiomatiques (break the ice, a piece of cake…)",
+     "theme": "parler naturellement"
+    },
+    {
+     "n": 8,
+     "titre": "Meetings and negotiation",
+     "grammaire": "suggestions et compromis (how about, I'd rather)",
+     "theme": "monde professionnel"
+    },
+    {
+     "n": 9,
+     "titre": "The news",
+     "grammaire": "passif avancé (it is said that…)",
+     "theme": "comprendre l'actualité"
+    },
+    {
+     "n": 10,
+     "titre": "Telling a great story",
+     "grammaire": "temps du récit combinés",
+     "theme": "raconter avec suspense"
+    }
+   ]
+  },
+  {
+   "niveau": 5,
+   "nom": "Expert",
+   "cecrl": "C1",
+   "profs": [
+    "malika",
+    "malik"
+   ],
+   "langue_prof": "100 % anglais, comme avec un natif.",
+   "lecons": [
+    {
+     "n": 1,
+     "titre": "Never have I seen…",
+     "grammaire": "inversion (never, rarely, not only)",
+     "theme": "insister avec style"
+    },
+    {
+     "n": 2,
+     "titre": "What I need is…",
+     "grammaire": "phrases clivées (it is… that, what… is)",
+     "theme": "mettre en valeur une idée"
+    },
+    {
+     "n": 3,
+     "titre": "Should you need help",
+     "grammaire": "conditionnels formels et inversés",
+     "theme": "langue formelle"
+    },
+    {
+     "n": 4,
+     "titre": "He might have missed it",
+     "grammaire": "modaux au passé (must have, might have, can't have)",
+     "theme": "déductions"
+    },
+    {
+     "n": 5,
+     "titre": "Sounding natural",
+     "grammaire": "collocations et phrasal verbs avancés (come across, bounce back)",
+     "theme": "anglais naturel"
+    },
+    {
+     "n": 6,
+     "titre": "Academic English",
+     "grammaire": "nominalisation, langage prudent (it appears that)",
+     "theme": "études, exposés"
+    },
+    {
+     "n": 7,
+     "titre": "Public speaking",
+     "grammaire": "structure d'un discours, procédés rhétoriques",
+     "theme": "parler en public"
+    },
+    {
+     "n": 8,
+     "titre": "Between the lines",
+     "grammaire": "implicite, ironie, ton",
+     "theme": "comprendre ce qui n'est pas dit"
+    },
+    {
+     "n": 9,
+     "titre": "Debate club",
+     "grammaire": "concession et réfutation (granted, that said)",
+     "theme": "débattre à haut niveau"
+    },
+    {
+     "n": 10,
+     "titre": "Final masterclass",
+     "grammaire": "révision générale C1",
+     "theme": "grand examen final"
+    }
+   ]
+  }
+ ],
+ "placement": {
+  "regle": "Pour commencer au niveau N (N>1), il faut réussir l'examen du niveau N-1 (9/12). Sinon on propose le niveau N-1.",
+  "fichiers": {
+   "2": "n1/examen.json",
+   "3": "n2/examen.json",
+   "4": "n3/examen.json",
+   "5": "n4/examen.json"
+  }
+ }
 }

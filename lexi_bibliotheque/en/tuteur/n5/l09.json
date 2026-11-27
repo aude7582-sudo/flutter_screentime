@@ -1,0 +1,143 @@
+{
+ "id": "en-n5-l09",
+ "langue": "en",
+ "niveau": 5,
+ "lecon": 9,
+ "cecrl": "C1",
+ "titre": "Debate club",
+ "objectifs": [
+  "Defend a position",
+  "Concede and refute",
+  "Speak with authority"
+ ],
+ "etapes": [
+  {
+   "type": "explication",
+   "fr": "",
+   "en": "To debate at a high level: concede a point, then refute it. « Granted…, but… », « Admittedly…; however… », « That said… », « Be that as it may… ».",
+   "exemples": [
+    {
+     "en": "Granted, technology saves time, but it also isolates people.",
+     "fr": "Certes, la technologie fait gagner du temps, mais elle isole aussi les gens."
+    },
+    {
+     "en": "That said, we cannot ignore the benefits.",
+     "fr": "Cela dit, on ne peut pas ignorer les avantages."
+    }
+   ]
+  },
+  {
+   "type": "vocabulaire",
+   "mots": [
+    {
+     "en": "granted",
+     "fr": "certes",
+     "pron": "grann-tid"
+    },
+    {
+     "en": "admittedly",
+     "fr": "il faut l'admettre",
+     "pron": "ad-mi-tid-li"
+    },
+    {
+     "en": "refute",
+     "fr": "réfuter",
+     "pron": "ri-fiout"
+    },
+    {
+     "en": "compelling",
+     "fr": "convaincant",
+     "pron": "komm-pè-ling"
+    },
+    {
+     "en": "flawed",
+     "fr": "qui a des failles",
+     "pron": "flod"
+    },
+    {
+     "en": "by and large",
+     "fr": "dans l'ensemble",
+     "pron": "baï ann lardj"
+    }
+   ]
+  },
+  {
+   "type": "dialogue",
+   "lignes": [
+    {
+     "qui": "autre",
+     "en": "Online learning will replace schools.",
+     "fr": "L'apprentissage en ligne remplacera les écoles."
+    },
+    {
+     "qui": "eleve",
+     "en": "Granted, it is flexible and cheap. That said, schools teach social skills that no app can replace.",
+     "fr": "Certes, c'est flexible et peu cher. Cela dit, l'école enseigne des compétences sociales qu'aucune appli ne remplace."
+    },
+    {
+     "qui": "autre",
+     "en": "But many students learn faster online.",
+     "fr": "Mais beaucoup d'élèves apprennent plus vite en ligne."
+    },
+    {
+     "qui": "eleve",
+     "en": "Be that as it may, the most compelling evidence suggests a mix of both works best.",
+     "fr": "Quoi qu'il en soit, les preuves les plus solides montrent qu'un mélange des deux fonctionne le mieux."
+    }
+   ]
+  },
+  {
+   "type": "qcm",
+   "question": "« Certes… mais » =",
+   "choix": [
+    "Granted…, but…",
+    "Because…, so…",
+    "Unless…, then…"
+   ],
+   "bonne": 0,
+   "explication": "Granted…, but…"
+  },
+  {
+   "type": "qcm",
+   "question": "« That argument is flawed » means…",
+   "choix": [
+    "It is perfect.",
+    "It has weaknesses.",
+    "It is funny."
+   ],
+   "bonne": 1,
+   "explication": "flawed = with weaknesses."
+  },
+  {
+   "type": "ordre",
+   "en": "By and large the results were positive",
+   "fr": "Dans l'ensemble les résultats étaient positifs"
+  },
+  {
+   "type": "traduire",
+   "fr": "Cela dit, je comprends votre point de vue.",
+   "reponses": [
+    "That said, I understand your point of view.",
+    "That said, I understand your point.",
+    "Having said that, I understand your point of view."
+   ]
+  },
+  {
+   "type": "ecoute",
+   "en": "Admittedly, the cost is high.",
+   "choix": [
+    "Il faut l'admettre, le coût est élevé.",
+    "Le coût est très bas.",
+    "Le coût n'est pas connu."
+   ],
+   "bonne": 0
+  },
+  {
+   "type": "repeter",
+   "en": "Granted, it is expensive; however, it is a long-term investment.",
+   "fr": "Certes, c'est cher ; cependant, c'est un investissement à long terme."
+  }
+ ],
+ "resume": "Concede then refute: granted, admittedly, that said, be that as it may. compelling, flawed, by and large.",
+ "devoir": "Choose a debate topic and write both sides, then your conclusion."
+}

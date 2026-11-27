@@ -1,0 +1,131 @@
+{
+ "id": "en-n5-l07",
+ "langue": "en",
+ "niveau": 5,
+ "lecon": 7,
+ "cecrl": "C1",
+ "titre": "Public speaking",
+ "objectifs": [
+  "Structure a speech",
+  "Use rhetorical devices",
+  "Engage an audience"
+ ],
+ "etapes": [
+  {
+   "type": "explication",
+   "fr": "",
+   "en": "A great speech has: a hook, a clear structure (signposting), and a memorable ending. Use the rule of three, rhetorical questions and repetition.",
+   "exemples": [
+    {
+     "en": "Today I'd like to talk about…",
+     "fr": "Aujourd'hui, j'aimerais parler de…"
+    },
+    {
+     "en": "Firstly… Secondly… Finally…",
+     "fr": "Premièrement… Deuxièmement… Enfin…"
+    },
+    {
+     "en": "Have you ever wondered why…?",
+     "fr": "Vous êtes-vous déjà demandé pourquoi… ?"
+    },
+    {
+     "en": "We came, we learned, we succeeded.",
+     "fr": "Nous sommes venus, nous avons appris, nous avons réussi."
+    }
+   ]
+  },
+  {
+   "type": "vocabulaire",
+   "mots": [
+    {
+     "en": "audience",
+     "fr": "public",
+     "pron": "o-di-euns"
+    },
+    {
+     "en": "hook",
+     "fr": "accroche",
+     "pron": "houk"
+    },
+    {
+     "en": "signpost",
+     "fr": "annoncer le plan",
+     "pron": "saïn-post"
+    },
+    {
+     "en": "pause",
+     "fr": "pause",
+     "pron": "poz"
+    },
+    {
+     "en": "emphasise",
+     "fr": "insister sur",
+     "pron": "èm-fa-saïz"
+    },
+    {
+     "en": "wrap up",
+     "fr": "conclure",
+     "pron": "rap eup"
+    }
+   ]
+  },
+  {
+   "type": "explication",
+   "fr": "",
+   "en": "Example opening: « Good evening, everyone. Imagine a country where every child can read. Tonight, I want to share three ideas that could make this dream real. »"
+  },
+  {
+   "type": "qcm",
+   "question": "« Rule of three » means…",
+   "choix": [
+    "speaking for three minutes",
+    "grouping ideas in threes",
+    "three speakers"
+   ],
+   "bonne": 1,
+   "explication": "Grouping ideas in threes is memorable."
+  },
+  {
+   "type": "qcm",
+   "question": "A good hook is…",
+   "choix": [
+    "a boring list",
+    "a question or a surprising fact",
+    "reading your notes"
+   ],
+   "bonne": 1,
+   "explication": "Question or surprising fact."
+  },
+  {
+   "type": "ordre",
+   "en": "Let me wrap up with one final thought",
+   "fr": "Permettez-moi de conclure avec une dernière pensée"
+  },
+  {
+   "type": "traduire",
+   "fr": "Je voudrais commencer par une question.",
+   "reponses": [
+    "I'd like to start with a question.",
+    "I would like to start with a question.",
+    "I'd like to begin with a question."
+   ]
+  },
+  {
+   "type": "ecoute",
+   "en": "Thank you all for being here tonight.",
+   "choix": [
+    "Merci à tous d'être là ce soir.",
+    "Merci de partir ce soir.",
+    "Merci de votre question."
+   ],
+   "bonne": 0
+  },
+  {
+   "type": "repeter",
+   "en": "Imagine a world where everyone speaks at least two languages.",
+   "fr": "Imaginez un monde où tout le monde parle au moins deux langues."
+  }
+ ],
+ "resume": "Hook → signposting (firstly, secondly, finally) → strong ending. Rule of three, rhetorical questions, pauses.",
+ "devoir": "Prepare and record a 2-minute speech on a topic you love."
+}

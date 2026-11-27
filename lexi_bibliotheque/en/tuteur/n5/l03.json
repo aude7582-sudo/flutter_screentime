@@ -1,0 +1,121 @@
+{
+ "id": "en-n5-l03",
+ "langue": "en",
+ "niveau": 5,
+ "lecon": 3,
+ "cecrl": "C1",
+ "titre": "Should you need help",
+ "objectifs": [
+  "Write and speak formally",
+  "Inverted conditionals",
+  "Formal vocabulary"
+ ],
+ "etapes": [
+  {
+   "type": "explication",
+   "fr": "",
+   "en": "In formal English, « if » can be dropped by inverting: Should + subject, Were + subject + to, Had + subject + pp.",
+   "exemples": [
+    {
+     "en": "Should you need any help, please contact us.",
+     "fr": "Si vous avez besoin d'aide, contactez-nous."
+    },
+    {
+     "en": "Were I to accept, I would need a car.",
+     "fr": "Si je devais accepter, il me faudrait une voiture."
+    },
+    {
+     "en": "Had we known, we would have acted sooner.",
+     "fr": "Si nous avions su, nous aurions agi plus tôt."
+    }
+   ]
+  },
+  {
+   "type": "vocabulaire",
+   "mots": [
+    {
+     "en": "regarding",
+     "fr": "concernant",
+     "pron": "ri-gar-ding"
+    },
+    {
+     "en": "hereby",
+     "fr": "par la présente",
+     "pron": "hir-baï"
+    },
+    {
+     "en": "in accordance with",
+     "fr": "conformément à",
+     "pron": "inn a-kor-deuns wiz"
+    },
+    {
+     "en": "notwithstanding",
+     "fr": "nonobstant",
+     "pron": "not-wiz-stann-ding"
+    },
+    {
+     "en": "prior to",
+     "fr": "avant",
+     "pron": "praï-eur tou"
+    },
+    {
+     "en": "subsequently",
+     "fr": "par la suite",
+     "pron": "seub-si-kwènt-li"
+    }
+   ]
+  },
+  {
+   "type": "qcm",
+   "question": "« Should you have any questions » =",
+   "choix": [
+    "Vous devriez avoir des questions",
+    "Si vous avez des questions",
+    "Vous avez dû avoir des questions"
+   ],
+   "bonne": 1,
+   "explication": "Should you… = If you…"
+  },
+  {
+   "type": "qcm",
+   "question": "Formal version of « If I had known… »",
+   "choix": [
+    "Had I known…",
+    "Did I know…",
+    "Have I known…"
+   ],
+   "bonne": 0,
+   "explication": "Had I known."
+  },
+  {
+   "type": "ordre",
+   "en": "Should you require further information please contact us",
+   "fr": "Si vous avez besoin d'informations supplémentaires veuillez nous contacter"
+  },
+  {
+   "type": "traduire",
+   "fr": "Si nous avions reçu votre lettre, nous aurions répondu.",
+   "reponses": [
+    "Had we received your letter, we would have replied.",
+    "Had we received your letter, we would have answered."
+   ]
+  },
+  {
+   "type": "ecoute",
+   "en": "Prior to the meeting, please read the report.",
+   "choix": [
+    "Avant la réunion, veuillez lire le rapport.",
+    "Après la réunion, lisez le rapport.",
+    "Pendant la réunion, lisez le rapport."
+   ],
+   "bonne": 0
+  },
+  {
+   "type": "repeter",
+   "en": "Should you have any questions, do not hesitate to contact me.",
+   "fr": "Si vous avez des questions, n'hésitez pas à me contacter."
+  }
+ ],
+ "resume": "Should you…, Were I to…, Had I known… = formal if-clauses. regarding, prior to, subsequently, in accordance with.",
+ "devoir": "Write a formal letter (10 lines) using two inverted conditionals."
+}

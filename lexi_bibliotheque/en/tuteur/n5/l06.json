@@ -1,0 +1,125 @@
+{
+ "id": "en-n5-l06",
+ "langue": "en",
+ "niveau": 5,
+ "lecon": 6,
+ "cecrl": "C1",
+ "titre": "Academic English",
+ "objectifs": [
+  "Write academically",
+  "Nominalisation",
+  "Hedging language"
+ ],
+ "etapes": [
+  {
+   "type": "explication",
+   "fr": "",
+   "en": "Academic English prefers nouns to verbs (nominalisation) and cautious language (hedging).",
+   "exemples": [
+    {
+     "en": "The economy grew quickly. → The rapid growth of the economy…",
+     "fr": "L'économie a grandi vite → La croissance rapide de l'économie…"
+    },
+    {
+     "en": "It appears that…",
+     "fr": "Il semble que…"
+    },
+    {
+     "en": "This may suggest that…",
+     "fr": "Cela pourrait suggérer que…"
+    },
+    {
+     "en": "To a certain extent…",
+     "fr": "Dans une certaine mesure…"
+    }
+   ]
+  },
+  {
+   "type": "vocabulaire",
+   "mots": [
+    {
+     "en": "hypothesis",
+     "fr": "hypothèse",
+     "pron": "haï-po-ze-siss"
+    },
+    {
+     "en": "findings",
+     "fr": "résultats (d'étude)",
+     "pron": "faïn-dingz"
+    },
+    {
+     "en": "significant",
+     "fr": "significatif",
+     "pron": "sig-ni-fi-keunt"
+    },
+    {
+     "en": "tend to",
+     "fr": "avoir tendance à",
+     "pron": "tènd tou"
+    },
+    {
+     "en": "whereas",
+     "fr": "tandis que",
+     "pron": "wèr-az"
+    },
+    {
+     "en": "in conclusion",
+     "fr": "en conclusion",
+     "pron": "inn konn-klou-jeunn"
+    }
+   ]
+  },
+  {
+   "type": "qcm",
+   "question": "Nominalised form of « They decided »:",
+   "choix": [
+    "Their decision",
+    "They decision",
+    "The decide"
+   ],
+   "bonne": 0,
+   "explication": "decide → decision."
+  },
+  {
+   "type": "qcm",
+   "question": "Most cautious (hedged):",
+   "choix": [
+    "This proves that…",
+    "This may indicate that…",
+    "This is 100% true."
+   ],
+   "bonne": 1,
+   "explication": "may indicate = prudent."
+  },
+  {
+   "type": "ordre",
+   "en": "The findings suggest that young people tend to read less",
+   "fr": "Les résultats suggèrent que les jeunes ont tendance à lire moins"
+  },
+  {
+   "type": "traduire",
+   "fr": "Il semble que la situation s'améliore.",
+   "reponses": [
+    "It appears that the situation is improving.",
+    "It seems that the situation is improving."
+   ]
+  },
+  {
+   "type": "ecoute",
+   "en": "To a certain extent, the hypothesis was confirmed.",
+   "choix": [
+    "Dans une certaine mesure, l'hypothèse a été confirmée.",
+    "L'hypothèse a été totalement rejetée.",
+    "Nous n'avons pas d'hypothèse."
+   ],
+   "bonne": 0
+  },
+  {
+   "type": "repeter",
+   "en": "The results may suggest a significant change in behaviour.",
+   "fr": "Les résultats pourraient suggérer un changement de comportement significatif."
+  }
+ ],
+ "resume": "Nominalisation (decide → decision). Hedging: it appears that, may suggest, tend to, to a certain extent.",
+ "devoir": "Rewrite a short paragraph from one of your school notes in academic style."
+}

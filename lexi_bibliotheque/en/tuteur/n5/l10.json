@@ -1,0 +1,109 @@
+{
+ "id": "en-n5-l10",
+ "langue": "en",
+ "niveau": 5,
+ "lecon": 10,
+ "cecrl": "C1",
+ "titre": "Final masterclass",
+ "objectifs": [
+  "Review all C1 structures",
+  "Show fluency",
+  "Pass the final exam"
+ ],
+ "etapes": [
+  {
+   "type": "explication",
+   "fr": "Félicitations, tu es arrivé(e) à la dernière leçon de Léxi ! Aujourd'hui, on révise tout le niveau Expert.",
+   "en": "Congratulations! Today we review everything: inversion, cleft sentences, formal conditionals, modal perfects, collocations, hedging, rhetoric and debate."
+  },
+  {
+   "type": "qcm",
+   "question": "« Rarely ___ such talent. »",
+   "choix": [
+    "I have seen",
+    "have I seen",
+    "I saw"
+   ],
+   "bonne": 1,
+   "explication": "Inversion."
+  },
+  {
+   "type": "qcm",
+   "question": "« What I need ___ time. »",
+   "choix": [
+    "are",
+    "is",
+    "be"
+   ],
+   "bonne": 1,
+   "explication": "What… is…"
+  },
+  {
+   "type": "qcm",
+   "question": "« ___ you need assistance, call us. »",
+   "choix": [
+    "Should",
+    "Would",
+    "Had"
+   ],
+   "bonne": 0,
+   "explication": "Should you…"
+  },
+  {
+   "type": "qcm",
+   "question": "« She ___ have left; her car is still here. »",
+   "choix": [
+    "must",
+    "can't",
+    "should"
+   ],
+   "bonne": 1,
+   "explication": "Impossible → can't have."
+  },
+  {
+   "type": "qcm",
+   "question": "Natural: « ___ a decision »",
+   "choix": [
+    "do",
+    "make",
+    "take out"
+   ],
+   "bonne": 1,
+   "explication": "make a decision."
+  },
+  {
+   "type": "qcm",
+   "question": "Hedged sentence:",
+   "choix": [
+    "This proves everything.",
+    "This would seem to indicate a trend.",
+    "This is obviously true."
+   ],
+   "bonne": 1,
+   "explication": "Hedging."
+  },
+  {
+   "type": "qcm",
+   "question": "« Granted, it's risky; ___, it's worth it. »",
+   "choix": [
+    "that said",
+    "because",
+    "so that"
+   ],
+   "bonne": 0,
+   "explication": "that said."
+  },
+  {
+   "type": "ordre",
+   "en": "Not only is she brilliant but she is also kind",
+   "fr": "Non seulement elle est brillante mais elle est aussi gentille"
+  },
+  {
+   "type": "repeter",
+   "en": "Learning a language is not only a skill; it is a new way of seeing the world.",
+   "fr": "Apprendre une langue, ce n'est pas seulement une compétence ; c'est une nouvelle façon de voir le monde."
+  }
+ ],
+ "resume": "Inversion, cleft sentences, formal conditionals, modal perfects, collocations, hedging, rhetoric, concession. You are now an expert!",
+ "devoir": "Record a 3-minute talk about your learning journey with Léxi."
+}

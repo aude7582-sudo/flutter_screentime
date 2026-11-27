@@ -1,0 +1,130 @@
+{
+ "id": "en-n5-l01",
+ "langue": "en",
+ "niveau": 5,
+ "lecon": 1,
+ "cecrl": "C1",
+ "titre": "Never have I seen…",
+ "objectifs": [
+  "Use inversion for emphasis",
+  "Negative adverbials",
+  "Formal and dramatic style"
+ ],
+ "etapes": [
+  {
+   "type": "explication",
+   "fr": "",
+   "en": "After negative or restrictive adverbs at the start of a sentence, invert the subject and auxiliary, like in a question.",
+   "exemples": [
+    {
+     "en": "Never have I seen such a crowd.",
+     "fr": "Jamais je n'ai vu une telle foule."
+    },
+    {
+     "en": "Rarely do we get a chance like this.",
+     "fr": "Il est rare qu'on ait une telle chance."
+    },
+    {
+     "en": "Not only did she win, but she also broke the record.",
+     "fr": "Non seulement elle a gagné, mais elle a aussi battu le record."
+    },
+    {
+     "en": "Under no circumstances should you open this door.",
+     "fr": "En aucun cas vous ne devez ouvrir cette porte."
+    }
+   ]
+  },
+  {
+   "type": "explication",
+   "fr": "",
+   "en": "Other triggers: hardly… when, no sooner… than, only then, little did I know.",
+   "exemples": [
+    {
+     "en": "No sooner had I arrived than it started to rain.",
+     "fr": "À peine étais-je arrivé qu'il s'est mis à pleuvoir."
+    },
+    {
+     "en": "Little did I know that she was my cousin.",
+     "fr": "J'étais loin de me douter qu'elle était ma cousine."
+    }
+   ]
+  },
+  {
+   "type": "vocabulaire",
+   "mots": [
+    {
+     "en": "seldom",
+     "fr": "rarement",
+     "pron": "sèl-deum"
+    },
+    {
+     "en": "hardly",
+     "fr": "à peine",
+     "pron": "hard-li"
+    },
+    {
+     "en": "under no circumstances",
+     "fr": "en aucun cas",
+     "pron": "eun-deur no seur-keum-stann-siz"
+    },
+    {
+     "en": "only then",
+     "fr": "ce n'est qu'alors que",
+     "pron": "onn-li zèn"
+    }
+   ]
+  },
+  {
+   "type": "qcm",
+   "question": "Correct inversion:",
+   "choix": [
+    "Never I have heard that.",
+    "Never have I heard that.",
+    "Never I heard that."
+   ],
+   "bonne": 1,
+   "explication": "Never + have + I."
+  },
+  {
+   "type": "qcm",
+   "question": "« No sooner ___ than the phone rang. »",
+   "choix": [
+    "I had sat down",
+    "had I sat down",
+    "did I sat down"
+   ],
+   "bonne": 1,
+   "explication": "No sooner had I…"
+  },
+  {
+   "type": "ordre",
+   "en": "Not only did he lie but he also stole",
+   "fr": "Non seulement il a menti mais il a aussi volé"
+  },
+  {
+   "type": "traduire",
+   "fr": "J'étais loin de me douter qu'il partait.",
+   "reponses": [
+    "Little did I know that he was leaving.",
+    "Little did I know he was leaving."
+   ]
+  },
+  {
+   "type": "ecoute",
+   "en": "Seldom have I been so proud.",
+   "choix": [
+    "J'ai rarement été aussi fier.",
+    "Je suis souvent fier.",
+    "Je n'ai jamais été fier."
+   ],
+   "bonne": 0
+  },
+  {
+   "type": "repeter",
+   "en": "Never before have I worked with such a talented team.",
+   "fr": "Jamais auparavant je n'ai travaillé avec une équipe aussi talentueuse."
+  }
+ ],
+ "resume": "Negative adverbial + auxiliary + subject: Never have I…, Rarely do we…, Not only did…, No sooner had… than, Little did I know.",
+ "devoir": "Rewrite 5 ordinary sentences using inversion."
+}

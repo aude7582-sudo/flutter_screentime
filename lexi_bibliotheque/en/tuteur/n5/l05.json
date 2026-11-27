@@ -1,0 +1,143 @@
+{
+ "id": "en-n5-l05",
+ "langue": "en",
+ "niveau": 5,
+ "lecon": 5,
+ "cecrl": "C1",
+ "titre": "Sounding natural",
+ "objectifs": [
+  "Use collocations",
+  "Advanced phrasal verbs",
+  "Sound like a native speaker"
+ ],
+ "etapes": [
+  {
+   "type": "explication",
+   "fr": "",
+   "en": "Collocations are words that naturally go together. Natives say « make a decision », not « do a decision »; « heavy rain », not « strong rain ».",
+   "exemples": [
+    {
+     "en": "make a decision / take a break",
+     "fr": "prendre une décision / faire une pause"
+    },
+    {
+     "en": "heavy traffic / strong coffee",
+     "fr": "circulation dense / café fort"
+    },
+    {
+     "en": "pay attention / keep a promise",
+     "fr": "faire attention / tenir une promesse"
+    }
+   ]
+  },
+  {
+   "type": "vocabulaire",
+   "mots": [
+    {
+     "en": "come across",
+     "fr": "tomber sur",
+     "pron": "kam a-kross"
+    },
+    {
+     "en": "bounce back",
+     "fr": "rebondir",
+     "pron": "baouns bak"
+    },
+    {
+     "en": "figure out",
+     "fr": "comprendre, trouver",
+     "pron": "fi-gueur aout"
+    },
+    {
+     "en": "come up with",
+     "fr": "proposer (une idée)",
+     "pron": "kam eup wiz"
+    },
+    {
+     "en": "put up with",
+     "fr": "supporter",
+     "pron": "pout eup wiz"
+    },
+    {
+     "en": "run out of",
+     "fr": "manquer de",
+     "pron": "reun aout ov"
+    },
+    {
+     "en": "look into",
+     "fr": "examiner",
+     "pron": "louk inn-tou"
+    },
+    {
+     "en": "settle in",
+     "fr": "s'installer",
+     "pron": "sè-teul inn"
+    }
+   ]
+  },
+  {
+   "type": "qcm",
+   "question": "Natural collocation:",
+   "choix": [
+    "do a mistake",
+    "make a mistake",
+    "take a mistake"
+   ],
+   "bonne": 1,
+   "explication": "make a mistake."
+  },
+  {
+   "type": "qcm",
+   "question": "« We ran ___ of time. »",
+   "choix": [
+    "away",
+    "out",
+    "off"
+   ],
+   "bonne": 1,
+   "explication": "run out of."
+  },
+  {
+   "type": "qcm",
+   "question": "« She bounced ___ after her injury. »",
+   "choix": [
+    "back",
+    "up",
+    "out"
+   ],
+   "bonne": 0,
+   "explication": "bounce back = rebondir."
+  },
+  {
+   "type": "ordre",
+   "en": "I came across an old photo of my grandmother",
+   "fr": "Je suis tombé sur une vieille photo de ma grand-mère"
+  },
+  {
+   "type": "traduire",
+   "fr": "Je ne supporte plus ce bruit.",
+   "reponses": [
+    "I can't put up with this noise anymore.",
+    "I can't put up with this noise any more.",
+    "I can no longer put up with this noise."
+   ]
+  },
+  {
+   "type": "ecoute",
+   "en": "Let me look into it and get back to you.",
+   "choix": [
+    "Laisse-moi examiner ça et je te recontacte.",
+    "Laisse-moi regarder dehors et revenir.",
+    "Je ne peux pas t'aider."
+   ],
+   "bonne": 0
+  },
+  {
+   "type": "repeter",
+   "en": "We need to come up with a better plan.",
+   "fr": "Nous devons trouver un meilleur plan."
+  }
+ ],
+ "resume": "Collocations: make a decision, take a break, heavy rain, pay attention. Phrasal verbs: come across, bounce back, figure out, come up with, put up with, run out of.",
+ "devoir": "Write a paragraph about a difficult moment using 5 phrasal verbs from today."
+}

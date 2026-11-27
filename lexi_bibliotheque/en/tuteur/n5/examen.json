@@ -1,0 +1,132 @@
+{
+ "id": "en-n5-examen",
+ "langue": "en",
+ "niveau": 5,
+ "reussite": 9,
+ "etapes": [
+  {
+   "type": "qcm",
+   "question": "« Little ___ that he was watching. »",
+   "choix": [
+    "I knew",
+    "did I know",
+    "I did know"
+   ],
+   "bonne": 1,
+   "explication": "Inversion."
+  },
+  {
+   "type": "qcm",
+   "question": "« It was Kenza ___ won the prize. »",
+   "choix": [
+    "which",
+    "who",
+    "what"
+   ],
+   "bonne": 1,
+   "explication": "It was… who…"
+  },
+  {
+   "type": "qcm",
+   "question": "« ___ I known, I would have come. »",
+   "choix": [
+    "Had",
+    "Have",
+    "If had"
+   ],
+   "bonne": 0,
+   "explication": "Had I known."
+  },
+  {
+   "type": "qcm",
+   "question": "« He ___ have forgotten — he never forgets! »",
+   "choix": [
+    "must",
+    "can't",
+    "might"
+   ],
+   "bonne": 1,
+   "explication": "can't have."
+  },
+  {
+   "type": "qcm",
+   "question": "« We ran ___ of money. »",
+   "choix": [
+    "off",
+    "out",
+    "away"
+   ],
+   "bonne": 1,
+   "explication": "run out of."
+  },
+  {
+   "type": "qcm",
+   "question": "Most academic:",
+   "choix": [
+    "It's clear that people hate it.",
+    "It appears that many people are reluctant.",
+    "Everybody hates it."
+   ],
+   "bonne": 1,
+   "explication": "Hedging."
+  },
+  {
+   "type": "qcm",
+   "question": "A good speech opening:",
+   "choix": [
+    "Um, so, yeah…",
+    "Have you ever wondered why…?",
+    "I don't know what to say."
+   ],
+   "bonne": 1,
+   "explication": "Rhetorical question."
+  },
+  {
+   "type": "qcm",
+   "question": "« I'll think about it » often means…",
+   "choix": [
+    "Yes, definitely.",
+    "Probably not.",
+    "Tomorrow."
+   ],
+   "bonne": 1,
+   "explication": "Indirect no."
+  },
+  {
+   "type": "qcm",
+   "question": "« Certes » =",
+   "choix": [
+    "Granted",
+    "Therefore",
+    "Moreover"
+   ],
+   "bonne": 0,
+   "explication": "Granted."
+  },
+  {
+   "type": "qcm",
+   "question": "« Should you require help » =",
+   "choix": [
+    "If you require help",
+    "You must require help",
+    "You should help"
+   ],
+   "bonne": 0,
+   "explication": "If you…"
+  },
+  {
+   "type": "traduire",
+   "fr": "Ce qui compte, c'est l'effort.",
+   "reponses": [
+    "What matters is the effort.",
+    "What counts is the effort.",
+    "What matters is effort."
+   ]
+  },
+  {
+   "type": "ordre",
+   "en": "Never have I learned so much in so little time",
+   "fr": "Jamais je n'ai autant appris en si peu de temps"
+  }
+ ]
+}
