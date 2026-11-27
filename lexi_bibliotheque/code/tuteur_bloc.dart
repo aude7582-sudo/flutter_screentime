@@ -25,7 +25,7 @@ const List<List<Object>> _lxtProfs = [
   ['abdul', 'Abdul', 24, '🧔🏿', 'm', 2],
   ['doudou', 'Doudou', 0, '🐘', 'm', 2],
   ['letty', 'Letty', 26, '👩🏽', 'f', 3],
-  ['nassis', 'Nassis', 29, '👨🏾', 'm', 3],
+  ['narcisse', 'Narcisse', 29, '👨🏾', 'm', 3],
   ['karine', 'Karine', 30, '👩🏾‍💼', 'f', 4],
   ['sagesse', 'Sagesse', 0, '🦉', 'f', 4],
   ['malika', 'Malika', 35, '👩🏽‍🏫', 'f', 5],
